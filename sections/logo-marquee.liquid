@@ -1,0 +1,222 @@
+<section class="logo-marquee-section" id="shopify-section-{{ section.id }}">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-title">
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p>{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- assign logo_blocks = section.blocks | where: 'type', 'logo' -%}
+    {%- if logo_blocks.size > 0 -%}
+      <div class="logo-slider">
+        <div class="logo-track">
+          {%- comment -%} Render the logo set twice back-to-back so the CSS marquee animation loops seamlessly. {%- endcomment -%}
+          {%- for i in (1..2) -%}
+            {%- for block in logo_blocks -%}
+              <div class="logo-item" {% if i == 1 %}{{ block.shopify_attributes }}{% endif %} aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}">
+                    {{ block.settings.image | image_url: width: 400 | image_tag: alt: block.settings.title }}
+                  </a>
+                {%- else -%}
+                  {{ block.settings.image | image_url: width: 400 | image_tag: alt: block.settings.title }}
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .logo-marquee-section {
+    padding-bottom: 100px;
+  }
+
+  #shopify-section-{{ section.id }} .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    max-width: 950px;
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .section-title h2 {
+    color: #000;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    margin-bottom: 30px;
+  }
+
+  #shopify-section-{{ section.id }} .section-title p {
+    color: var(--sub-title-clr, #141211);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -1%;
+    margin-top: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .logo-slider {
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .logo-track {
+    display: flex;
+    width: max-content;
+    animation: logo-marquee-{{ section.id }} {{ section.settings.speed }}s linear infinite;
+    gap: 50px;
+  }
+
+  #shopify-section-{{ section.id }} .logo-item {
+    flex: 0 0 auto;
+    width: {{ section.settings.logo_width | default: 156 }}px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .logo-item img {
+    width: {% if section.settings.logo_fit == 'contain' %}auto{% else %}100%{% endif %};
+    max-width: 100%;
+  }
+
+  @keyframes logo-marquee-{{ section.id }} {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #shopify-section-{{ section.id }} .logo-track {
+      animation: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Logo marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Quality You Can Trust"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Every product is backed by rigorous quality standards, ISO-certified processes, and full traceability."
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 100,
+      "max": 300,
+      "step": 10,
+      "default": 150,
+      "label": "Logo width",
+      "unit": "px"
+    },
+    {
+      "type": "select",
+      "id": "logo_fit",
+      "label": "Logo sizing",
+      "options": [
+        { "value": "fill", "label": "Fill width" },
+        { "value": "contain", "label": "Auto width (contain)" }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "label": "Scroll speed",
+      "unit": "s"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Alt text / name"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quality You Can Trust",
+      "settings": {
+        "heading": "Quality You Can Trust",
+        "logo_width": 150,
+        "logo_fit": "fill"
+      },
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    },
+    {
+      "name": "Our Trusted Partners",
+      "settings": {
+        "heading": "Our Trusted Partners",
+        "logo_width": 260,
+        "logo_fit": "contain"
+      },
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    },
+    {
+      "name": "Where You'll Find Sulalat",
+      "settings": {
+        "heading": "Where You'll Find Sulalat",
+        "logo_width": 260,
+        "logo_fit": "contain"
+      },
+      "blocks": [
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" },
+        { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

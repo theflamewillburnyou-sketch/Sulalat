@@ -1,0 +1,280 @@
+<section class="categories-sec" id="shopify-section-{{ section.id }}">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-title">
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.text != blank -%}
+          <p>{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="swiper categorySlider">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'category_card' -%}
+            <div class="swiper-slide" {{ block.shopify_attributes }}>
+              <div class="category-card">
+                <a href="{{ block.settings.link | default: '#' }}">
+                  {%- if block.settings.image != blank -%}
+                    <div class="category-img">
+                      {{ block.settings.image | image_url: width: 500 | image_tag: alt: block.settings.title }}
+                    </div>
+                  {%- endif -%}
+                  {%- if block.settings.title != blank -%}
+                    <h4>{{ block.settings.title }}</h4>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p>{{ block.settings.text }}</p>
+                  {%- endif -%}
+                </a>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.show_view_all -%}
+          <div class="swiper-slide">
+            <div class="view-all">
+              <a href="{{ section.settings.view_all_link | default: '#' }}">
+                <h4>{{ section.settings.view_all_heading | newline_to_br }}</h4>
+                <span>{{ section.settings.view_all_label }} <i class="ri-arrow-right-up-line"></i></span>
+              </a>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .categories-sec {
+    overflow: hidden;
+    padding-bottom: 100px;
+  }
+
+  #shopify-section-{{ section.id }} .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+    max-width: 950px;
+    margin-inline: auto;
+  }
+
+  #shopify-section-{{ section.id }} .section-title h2 {
+    color: #000;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    margin-bottom: 30px;
+  }
+
+  #shopify-section-{{ section.id }} .section-title p {
+    color: var(--sub-title-clr, #141211);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -1%;
+    margin-top: 14px;
+  }
+
+  #shopify-section-{{ section.id }} .categorySlider {
+    overflow: visible;
+  }
+
+  #shopify-section-{{ section.id }} .categorySlider .swiper-slide {
+    width: 250px;
+  }
+
+  #shopify-section-{{ section.id }} .categories-sec .swiper-wrapper {
+    align-items: center;
+  }
+
+  #shopify-section-{{ section.id }} .category-card {
+    transition: .35s;
+  }
+
+  #shopify-section-{{ section.id }} .category-card a {
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .category-img {
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 18px;
+  }
+
+  #shopify-section-{{ section.id }} .category-img img {
+    width: 100%;
+    object-fit: cover;
+    transition: .5s;
+    border-radius: inherit;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .category-card h4 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #000;
+    font-weight: 500;
+  }
+
+  #shopify-section-{{ section.id }} .category-card p {
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -1%;
+  }
+
+  #shopify-section-{{ section.id }} .view-all {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 100%;
+  }
+
+  #shopify-section-{{ section.id }} .view-all a {
+    text-decoration: none;
+    color: #111;
+  }
+
+  #shopify-section-{{ section.id }} .view-all h4 {
+    font-size: 22px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  #shopify-section-{{ section.id }} .view-all span {
+    display: block;
+    margin-top: 10px;
+    color: var(--theme-clr, #53C295);
+    font-size: 18px;
+    font-weight: 500;
+  }
+{% endstyle %}
+
+<script>
+  (function () {
+    var root = document.getElementById('shopify-section-{{ section.id }}');
+    if (!root || typeof Swiper === 'undefined' || root.dataset.swiperInit === 'true') return;
+    root.dataset.swiperInit = 'true';
+
+    new Swiper(root.querySelector('.categorySlider'), {
+      slidesPerView: 'auto',
+      spaceBetween: 20,
+      freeMode: true,
+      grabCursor: true,
+      mousewheel: {
+        forceToAxis: true
+      },
+      breakpoints: {
+        0: { spaceBetween: 15 },
+        768: { spaceBetween: 20 },
+        1200: { spaceBetween: 20 }
+      }
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Category showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your All-in-One Partner in Excellence"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description",
+      "default": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike."
+    },
+    {
+      "type": "header",
+      "content": "\"View all\" tile"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show \"view all\" tile at the end",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "view_all_heading",
+      "label": "\"View all\" heading",
+      "info": "Press Enter/Return where you want a line break.",
+      "default": "Discover\nEverything We Offer"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "\"View all\" link label",
+      "default": "View All Products"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "\"View all\" link URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category_card",
+      "name": "Category card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description",
+          "default": "Category description."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category showcase",
+      "blocks": [
+        {
+          "type": "category_card",
+          "settings": { "title": "Specialty Coffee", "text": "World-Class Specialty Coffee." }
+        },
+        {
+          "type": "category_card",
+          "settings": { "title": "Craft Chocolate", "text": "Artisanal Bean-to-Bar Chocolate." }
+        },
+        {
+          "type": "category_card",
+          "settings": { "title": "Artisan Gelato", "text": "Authentic Italian Gelato." }
+        },
+        {
+          "type": "category_card",
+          "settings": { "title": "Equipment", "text": "Premium Equipment & Tools." }
+        },
+        {
+          "type": "category_card",
+          "settings": { "title": "Manufacturing", "text": "Sulalat's production capabilities." }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

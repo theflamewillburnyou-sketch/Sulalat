@@ -1,0 +1,292 @@
+<section class="site-banner" id="shopify-section-{{ section.id }}">
+  <div class="banner-bg-img">
+    {%- if section.settings.background_image != blank -%}
+      {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'eager', alt: section.settings.background_image.alt | default: 'banner-bg-img' }}
+    {%- endif -%}
+  </div>
+
+  <div class="banner-warp">
+    <div class="container">
+      {%- if section.settings.heading != blank -%}
+        <h1>{{ section.settings.heading | newline_to_br }}</h1>
+      {%- endif -%}
+
+      <div class="banner-btm">
+        {%- if section.blocks.size > 0 -%}
+          <div class="banner-cards">
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'banner_card' -%}
+                <div class="banner-card" {{ block.shopify_attributes }}>
+                  {%- if block.settings.title != blank -%}
+                    <h4>{{ block.settings.title }}</h4>
+                  {%- endif -%}
+                  {%- if block.settings.text != blank -%}
+                    <p>{{ block.settings.text }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.image != blank -%}
+                    <div class="banner-card-img">
+                      <a href="{{ block.settings.link | default: '#' }}">
+                        {{ block.settings.image | image_url: width: 800 | image_tag: alt: block.settings.title }}
+                        <div class="navi">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="24" viewBox="0 0 44 24" fill="none">
+                            <rect x="0.5" y="0.5" width="43" height="23" rx="11.5" stroke="white" />
+                            <g clip-path="url(#clip0_{{ block.id }})">
+                              <path d="M22 7.28589L26.714 11.9999L22 16.714" stroke="white"
+                                stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                              <path d="M17.286 11.9999H26.714" stroke="white"
+                                stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_{{ block.id }}">
+                                <rect x="22" y="0.686279" width="16" height="16" rx="8"
+                                  transform="rotate(45 22 0.686279)" fill="white" />
+                              </clipPath>
+                            </defs>
+                          </svg>
+                          {{ block.settings.link_label | default: 'Shop Now' }}
+                        </div>
+                      </a>
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.scroll_label != blank -%}
+          <div class="scroll-btm">
+            <a href="{{ section.settings.scroll_target | default: '#' }}">
+              <span>{{ section.settings.scroll_label }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                <path d="M24.0352 18.1421L18.1426 24.0346L12.25 18.1421" stroke="white"
+                  stroke-opacity="0.6" stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M18.1426 12.2495V24.0346" stroke="white" stroke-opacity="0.6"
+                  stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="18" cy="18" r="17.55" stroke="white" stroke-opacity="0.6" stroke-width="0.900003" />
+              </svg>
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #shopify-section-{{ section.id }} .site-banner {
+    position: relative;
+    isolation: isolate;
+  }
+
+  #shopify-section-{{ section.id }} .site-banner::before {
+    content: "";
+    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | default: 50 | divided_by: 100.0 }});
+    inset: 0;
+    position: absolute;
+  }
+
+  #shopify-section-{{ section.id }} .banner-bg-img {
+    height: {{ section.settings.banner_height | default: 900 }}px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-bg-img img {
+    width: 100%;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .banner-warp {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: start;
+    align-items: end;
+    padding-bottom: 50px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-warp h1 {
+    color: #fff;
+    font-weight: 400;
+    font-size: clamp(32px, 4vw, 60px);
+    line-height: 1.33;
+  }
+
+  #shopify-section-{{ section.id }} .banner-btm {
+    border-top: 2px solid rgb(196 246 226 / 20%);
+    margin-top: 40px;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    max-width: 572px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card-img {
+    position: relative;
+    margin-top: 26px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card-img img {
+    width: 100%;
+    border-radius: 20px;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card-img a {
+    display: block;
+    position: relative;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card-img .navi {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    color: #fff;
+    font-size: 16px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card h4 {
+    color: #fff;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  #shopify-section-{{ section.id }} .banner-card p {
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: -1%;
+    line-height: 24px;
+    font-weight: 300;
+  }
+
+  #shopify-section-{{ section.id }} .scroll-btm a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    color: #ffffffcc;
+    font-weight: 300;
+    text-decoration: none;
+  }
+
+  @media (max-width: 992px) {
+    #shopify-section-{{ section.id }} .banner-bg-img {
+      height: 700px;
+    }
+    #shopify-section-{{ section.id }} .banner-cards {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "banner_height",
+      "min": 400,
+      "max": 1100,
+      "step": 20,
+      "default": 900,
+      "label": "Banner height (desktop)",
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "label": "Overlay opacity",
+      "unit": "%"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Press Enter/Return where you want a line break.",
+      "default": "The Art of\nSaudi Specialty Coffee"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll link text",
+      "default": "Scroll"
+    },
+    {
+      "type": "url",
+      "id": "scroll_target",
+      "label": "Scroll link URL",
+      "info": "Use an anchor link, e.g. #shopify-section-template--index__coffee-experience, to scroll to the next section."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "banner_card",
+      "name": "Banner card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "For Coffee Enthusiasts"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and café solutions with uncompromising quality and safety."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card link"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Shop Now"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [
+        { "type": "banner_card" },
+        { "type": "banner_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
