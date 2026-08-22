@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
-      {
+{
   "type": "header",
   "name": "Header Group",
   "sections": {
@@ -17,13 +17,13 @@
         "8501117e-b017-47b9-8a6e-c0c9b40cb858": {
           "type": "announcement",
           "settings": {
-            "text": "<p><strong>Free help & advice<\/strong> <a href=\"#\">Learn more<\/a><\/p>"
+            "text": "<p><strong>Free help & advice</strong> <a href=\"#\">Learn more</a></p>"
           }
         },
         "3288704d-ae55-4097-ad1d-de5a6201a999": {
           "type": "announcement",
           "settings": {
-            "text": "<p><strong>Gift cards now available<\/strong> <a href=\"#\">Learn more<\/a><\/p>"
+            "text": "<p><strong>Gift cards now available</strong> <a href=\"#\">Learn more</a></p>"
           }
         }
       },
@@ -36,7 +36,7 @@
         "link1_label": "Brands",
         "link2": "#",
         "link2_label": "FAQ",
-        "enable_country_selector": true,
+        "enable_country_selector": false,
         "enable_language_selector": true,
         "bg_color": "#141414",
         "text_color": "#ffffff",
@@ -60,8 +60,14 @@
             "show_product_images": true,
             "aspect_ratio": "1",
             "badge1_color": "#ff580d",
+            "badge1_link": "",
+            "badge1_text": "",
             "badge2_color": "#00a6ed",
-            "badge3_color": "#b0ff00"
+            "badge2_link": "",
+            "badge2_text": "",
+            "badge3_color": "#b0ff00",
+            "badge3_link": "",
+            "badge3_text": ""
           }
         }
       },
@@ -71,20 +77,27 @@
       "settings": {
         "enable_sticky": true,
         "mobile_menu_position": "burger-left",
+        "logo_text": "",
         "logo_type_scale": "2",
         "logo": "{{ shop.brand.logo }}",
         "logo_width": 160,
         "logo_h1": true,
-        "logo_center": false,
+        "logo_center": true,
         "enable_search": true,
         "minimise_search_mobile": false,
         "minimise_search_desktop": false,
-        "menu_center": false,
+        "menu": "main-menu",
+        "menu_center": true,
+        "link_toggle": "mobile",
         "repeat_links": true,
         "menu_featured_link": "Sale",
-        "cta_show": true,
+        "enable_customer_account_component": false,
+        "customer_account_menu": "customer-account-main-menu",
+        "quicklinks_menu": "",
+        "cta_show": false,
         "cta_icon": "phone",
         "cta_label": "Expert help",
+        "cta_link": "",
         "cta_border_color": "rgba(0,0,0,0)",
         "cta_bg_color": "#6f7376",
         "cta_text_color": "#ffffff",
@@ -139,6 +152,7 @@
         "sections--17646025539872__433b6b0d-810b-4d34-902a-c5760d80945a-1675092667476dc2c2-2",
         "sections--17646025539872__433b6b0d-810b-4d34-902a-c5760d80945a-1675092667476dc2c2-3"
       ],
+      "disabled": true,
       "settings": {
         "heading": "",
         "heading_align": "text-start",
@@ -169,7 +183,7 @@
         "sections--17646025539872__883c3065-1506-4c0c-af62-4e0f6bc49c84-167509257206b82108-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Huge savings across all ranges sitewide<\/p>",
+            "text": "<p>Huge savings across all ranges sitewide</p>",
             "enlarge_text": false,
             "show_on_mobile": false,
             "show_on_desktop": true
@@ -187,6 +201,7 @@
         "sections--17646025539872__883c3065-1506-4c0c-af62-4e0f6bc49c84-167509257206b82108-1",
         "58b7ef29-75b8-489c-8f40-d7eb6859d517"
       ],
+      "disabled": true,
       "settings": {
         "section_height": "xsmall",
         "color_scheme": "3",

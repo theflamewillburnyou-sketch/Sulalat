@@ -9,21 +9,451 @@
  */
 {
   "sections": {
+    "hero_banner_Biw7cE": {
+      "type": "hero-banner",
+      "blocks": {
+        "banner_card_Bqb4z6": {
+          "type": "banner_card",
+          "settings": {
+            "title": "For Coffee Enthusiasts",
+            "text": "As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and café solutions with uncompromising quality and safety.",
+            "link": "",
+            "link_label": "Shop Now"
+          }
+        },
+        "banner_card_jgGmhU": {
+          "type": "banner_card",
+          "settings": {
+            "title": "For Coffee Enthusiasts",
+            "text": "As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and café solutions with uncompromising quality and safety.",
+            "link": "",
+            "link_label": "Shop Now"
+          }
+        }
+      },
+      "block_order": [
+        "banner_card_Bqb4z6",
+        "banner_card_jgGmhU"
+      ],
+      "disabled": true,
+      "name": "Hero banner",
+      "settings": {
+        "banner_height": 900,
+        "overlay_opacity": 50,
+        "heading": "The Art of\nSaudi Specialty Coffee",
+        "scroll_label": "Scroll",
+        "scroll_target": ""
+      }
+    },
+    "coffee_experience_zP7fdV": {
+      "type": "coffee-experience",
+      "blocks": {
+        "left_slide_x6qGce": {
+          "type": "left_slide",
+          "settings": {}
+        },
+        "left_slide_KDMWiL": {
+          "type": "left_slide",
+          "settings": {}
+        },
+        "left_slide_PeAPmD": {
+          "type": "left_slide",
+          "settings": {}
+        },
+        "right_slide_pgkmTR": {
+          "type": "right_slide",
+          "settings": {}
+        },
+        "right_slide_4LcnTe": {
+          "type": "right_slide",
+          "settings": {}
+        },
+        "right_slide_QtRNLQ": {
+          "type": "right_slide",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "left_slide_x6qGce",
+        "left_slide_KDMWiL",
+        "left_slide_PeAPmD",
+        "right_slide_pgkmTR",
+        "right_slide_4LcnTe",
+        "right_slide_QtRNLQ"
+      ],
+      "disabled": true,
+      "name": "Coffee experience",
+      "settings": {
+        "heading": "Shaping Exceptional Coffee Experiences Through",
+        "heading_highlight": "Passion and Precision",
+        "content_heading": "Driven by Excellence",
+        "content_heading_highlight": "Crafted for You",
+        "text_1": "Sulalat is a Saudi pioneer in specialty coffee, artisanal chocolate, gelato, and innovative cafe solutions.",
+        "text_2": "With ISO-certified roasting, private-label services, and premium equipment distribution, we empower professionals and enthusiasts alike to create world-class experiences."
+      }
+    },
+    "category_showcase_7DCCpJ": {
+      "type": "category-showcase",
+      "blocks": {
+        "category_card_KfrghQ": {
+          "type": "category_card",
+          "settings": {
+            "title": "Specialty Coffee",
+            "text": "World-Class Specialty Coffee.",
+            "link": ""
+          }
+        },
+        "category_card_Taid4G": {
+          "type": "category_card",
+          "settings": {
+            "title": "Craft Chocolate",
+            "text": "Artisanal Bean-to-Bar Chocolate.",
+            "link": ""
+          }
+        },
+        "category_card_JPtTt3": {
+          "type": "category_card",
+          "settings": {
+            "title": "Artisan Gelato",
+            "text": "Authentic Italian Gelato.",
+            "link": ""
+          }
+        },
+        "category_card_7rdqiz": {
+          "type": "category_card",
+          "settings": {
+            "title": "Equipment",
+            "text": "Premium Equipment & Tools.",
+            "link": ""
+          }
+        },
+        "category_card_wNgyJc": {
+          "type": "category_card",
+          "settings": {
+            "title": "Manufacturing",
+            "text": "Sulalat's production capabilities.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_card_KfrghQ",
+        "category_card_Taid4G",
+        "category_card_JPtTt3",
+        "category_card_7rdqiz",
+        "category_card_wNgyJc"
+      ],
+      "disabled": true,
+      "name": "Category showcase",
+      "settings": {
+        "heading": "Your All-in-One Partner in Excellence",
+        "text": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike.",
+        "show_view_all": true,
+        "view_all_heading": "Discover\nEverything We Offer",
+        "view_all_label": "View All Products",
+        "view_all_link": ""
+      }
+    },
+    "logo_marquee_fJDnCH": {
+      "type": "logo-marquee",
+      "blocks": {
+        "logo_mUQ8GV": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_TUaLtj": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_dd7QMQ": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_ENPctd": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_eTrwUD": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_9DXJcw": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_mUQ8GV",
+        "logo_TUaLtj",
+        "logo_dd7QMQ",
+        "logo_ENPctd",
+        "logo_eTrwUD",
+        "logo_9DXJcw"
+      ],
+      "disabled": true,
+      "name": "Quality You Can Trust",
+      "settings": {
+        "heading": "Quality You Can Trust",
+        "text": "Every product is backed by rigorous quality standards, ISO-certified processes, and full traceability.",
+        "logo_width": 150,
+        "logo_fit": "fill",
+        "speed": 30
+      }
+    },
+    "partner_split_LycNdj": {
+      "type": "partner-split",
+      "disabled": true,
+      "name": "Partner split",
+      "settings": {
+        "heading": "Partner with a Pioneer",
+        "text_1": "Looking to scale your coffee business? Partner with Sulalat for consistent quality, reliable supply, and end-to-end support.",
+        "text_2": "Instead, you'll work with a partner invested in your growth.",
+        "button_label": "Explore Partnership Options",
+        "button_link": "",
+        "image_position": "right"
+      }
+    },
+    "coffee_shop_slider_GxAGXi": {
+      "type": "coffee-shop-slider",
+      "blocks": {
+        "slide_LYRFpV": {
+          "type": "slide",
+          "settings": {
+            "link": ""
+          }
+        },
+        "slide_DN8iXR": {
+          "type": "slide",
+          "settings": {
+            "link": ""
+          }
+        },
+        "slide_9VUaR4": {
+          "type": "slide",
+          "settings": {
+            "link": ""
+          }
+        },
+        "slide_THNrVf": {
+          "type": "slide",
+          "settings": {
+            "link": ""
+          }
+        },
+        "slide_3MPFdQ": {
+          "type": "slide",
+          "settings": {
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_LYRFpV",
+        "slide_DN8iXR",
+        "slide_9VUaR4",
+        "slide_THNrVf",
+        "slide_3MPFdQ"
+      ],
+      "disabled": true,
+      "name": "Coffee shop slider",
+      "settings": {
+        "heading": "Visit Our Coffee Shop",
+        "text_1": "Step into our coffee shop and enjoy freshly brewed coffee crafted from premium beans. Whether you're stopping by for your morning espresso, meeting friends, or looking for a cozy place to relax, our baristas are ready to serve the perfect cup.",
+        "text_2": "Discover our signature drinks, freshly roasted beans, and a warm atmosphere made for every coffee enthusiast.",
+        "button_1_label": "Visit Our Coffee Shop",
+        "button_1_link": "",
+        "button_2_label": "Find Us on the Map",
+        "button_2_link": ""
+      }
+    },
+    "logo_marquee_hQHtbm": {
+      "type": "logo-marquee",
+      "blocks": {
+        "logo_4gGgjF": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_F98rH3": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_UqG4dr": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_BM6hg4": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_YNMjhM": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_4gGgjF",
+        "logo_F98rH3",
+        "logo_UqG4dr",
+        "logo_BM6hg4",
+        "logo_YNMjhM"
+      ],
+      "disabled": true,
+      "name": "Our Trusted Partners",
+      "settings": {
+        "heading": "Our Trusted Partners",
+        "text": "Every product is backed by rigorous quality standards, ISO-certified processes, and full traceability.",
+        "logo_width": 260,
+        "logo_fit": "contain",
+        "speed": 30
+      }
+    },
+    "blog_showcase_Mh9KUa": {
+      "type": "blog-showcase",
+      "blocks": {
+        "article_T9B9th": {
+          "type": "article",
+          "settings": {
+            "title": "Behind the Bar: Crafting Signature Drinks",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mattis sit phasellus mollis sit aliquam sit nullam neque ultrices.",
+            "date": "05 August 2025",
+            "link": ""
+          }
+        },
+        "article_DLJyzg": {
+          "type": "article",
+          "settings": {
+            "title": "How to Choose the Right Roast",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit mattis sit phasellus mollis sit aliquam ...",
+            "date": "05 August 2025",
+            "link": ""
+          }
+        },
+        "article_Mp7yp3": {
+          "type": "article",
+          "settings": {
+            "title": "Specialty Coffee, in the Arab world.",
+            "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit mattis sit phasellus mollis sit aliquam ...",
+            "date": "05 August 2025",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "article_T9B9th",
+        "article_DLJyzg",
+        "article_Mp7yp3"
+      ],
+      "disabled": true,
+      "name": "Blog showcase",
+      "settings": {
+        "heading": "Explore the World of Coffee",
+        "text": "From our roastery to your cup, learn about the stories, science, and passion behind every batch.",
+        "button_label": "View All News",
+        "button_link": ""
+      }
+    },
+    "logo_marquee_VCBLzL": {
+      "type": "logo-marquee",
+      "blocks": {
+        "logo_nGnCjR": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_iYPWLi": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_zfBRHe": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_GW9zdg": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        },
+        "logo_9VWJGG": {
+          "type": "logo",
+          "settings": {
+            "title": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_nGnCjR",
+        "logo_iYPWLi",
+        "logo_zfBRHe",
+        "logo_GW9zdg",
+        "logo_9VWJGG"
+      ],
+      "disabled": true,
+      "name": "Where You'll Find Sulalat",
+      "settings": {
+        "heading": "Where You'll Find Sulalat",
+        "text": "Every product is backed by rigorous quality standards, ISO-certified processes, and full traceability.",
+        "logo_width": 260,
+        "logo_fit": "contain",
+        "speed": 30
+      }
+    },
     "bb7588e2-322e-49f2-87bb-8d05dd3697ec": {
       "type": "navigation-slideshow",
       "blocks": {
         "b9291c89-a91c-4a67-a0d9-bfea1a1d18d0": {
           "type": "slide",
           "settings": {
-            "image_desktop": "",
-            "image_mobile": "",
             "overlay_text_align": "text-start",
             "mob_center_text": true,
             "subheading": "",
             "heading": "Smart tech. <br>Smart prices.",
             "heading_size": "h0",
             "heading_h1": false,
-            "text": "<p><strong>Save up to 50%<br\/><\/strong>on over 1,000 products!<\/p>",
+            "text": "<p><strong>Save up to 50%<br/></strong>on over 1,000 products!</p>",
             "enlarge_text": true,
             "button_1_label": "Shop Smart Tech",
             "button_1_link": "",
@@ -37,15 +467,13 @@
         "4944b957-0b7e-4a63-9ab6-f97eecba1b2f": {
           "type": "slide",
           "settings": {
-            "image_desktop": "",
-            "image_mobile": "",
             "overlay_text_align": "text-start",
             "mob_center_text": true,
             "subheading": "",
             "heading": "Top specs. <br>Low prices.",
             "heading_size": "h0",
             "heading_h1": false,
-            "text": "<p><strong>Save up to 50%<br\/><\/strong>on over 1,000 products!<\/p>",
+            "text": "<p><strong>Save up to 50%<br/></strong>on over 1,000 products!</p>",
             "enlarge_text": true,
             "button_1_label": "Shop Laptops",
             "button_1_link": "",
@@ -59,15 +487,13 @@
         "c4fcb261-beb3-4c16-80a3-8584fe04d0f9": {
           "type": "slide",
           "settings": {
-            "image_desktop": "",
-            "image_mobile": "",
             "overlay_text_align": "text-start",
             "mob_center_text": true,
             "subheading": "",
             "heading": "Amazing deals <br>on electricals.",
             "heading_size": "h0",
             "heading_h1": false,
-            "text": "<p><strong>Save up to 50%<br\/><\/strong>on over 1,000 products!<\/p>",
+            "text": "<p><strong>Save up to 50%<br/></strong>on over 1,000 products!</p>",
             "enlarge_text": true,
             "button_1_label": "Shop Home Tech",
             "button_1_link": "",
@@ -88,6 +514,7 @@
         "height_mode": "auto",
         "fixed_height_desktop": 620,
         "fixed_height_mobile": 360,
+        "quick_nav_menu": "main-menu",
         "quick_nav_title": "Shop our range",
         "quick_nav_image_ratio": "1",
         "quick_nav_image_fit": "cover",
@@ -120,37 +547,37 @@
         "template--17646024294688__b7c18b78-f517-4220-a6c6-ff4ab88b41ff-1675097479abc2632c-0": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         },
         "template--17646024294688__b7c18b78-f517-4220-a6c6-ff4ab88b41ff-1675097479abc2632c-3": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         },
         "47f4b468-b3b1-4c1f-b906-a46a206beb71": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         },
         "template--17646024294688__b7c18b78-f517-4220-a6c6-ff4ab88b41ff-1675097479abc2632c-2": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         },
         "80501b44-f33e-44b5-90cb-a4c5cea7553e": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         },
         "92ac9a91-a3c3-477c-8a27-ccae7d6e59a1": {
           "type": "collection",
           "settings": {
-            "image": ""
+            "collection": ""
           }
         }
       },
@@ -182,7 +609,6 @@
         "template--17646024294688__2cfe881f-8ca3-4df7-95e4-f5b39015d791-16750976533d9e79c5-0": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 2,
             "rows": 2,
@@ -207,7 +633,6 @@
         "template--17646024294688__2cfe881f-8ca3-4df7-95e4-f5b39015d791-16750976533d9e79c5-1": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 1,
             "rows": 1,
@@ -232,13 +657,12 @@
         "template--17646024294688__2cfe881f-8ca3-4df7-95e4-f5b39015d791-16750976533d9e79c5-2": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 1,
             "rows": 1,
             "line1_text": "Save up to",
             "line1_text_type_scale": "--h6-font-size",
-            "line2_text": "1\/3",
+            "line2_text": "1/3",
             "line2_text_type_scale": "h2",
             "line3_text": "",
             "line3_text_type_scale": "--h5-font-size",
@@ -257,7 +681,6 @@
         "template--17646024294688__2cfe881f-8ca3-4df7-95e4-f5b39015d791-16750976533d9e79c5-3": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 2,
             "rows": 1,
@@ -314,7 +737,7 @@
         "template--17937594614048__8920e5de-3c38-4881-9157-068a30f16121-16768866707e61c625-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Hurry! Offers end soon.<\/p>",
+            "text": "<p>Hurry! Offers end soon.</p>",
             "enlarge_text": true
           }
         },
@@ -347,7 +770,6 @@
         "fcfd3bc5-11d0-43b5-8d4b-ca59a170c6dd"
       ],
       "settings": {
-        "image": "",
         "height_mode": "fixed",
         "fixed_height_desktop": 600,
         "fixed_height_mobile": 440,
@@ -379,7 +801,7 @@
         "show_promo_info": false,
         "image_ratio": "1",
         "promo_title": "Promotion title",
-        "content": "<p>Promotion text<\/p>",
+        "content": "<p>Promotion text</p>",
         "link_url": "",
         "button_label": "Button",
         "color_scheme": "none",
@@ -400,7 +822,7 @@
         "6c4e69a1-9cf9-4045-8abb-e3d8ceb30b23": {
           "type": "text",
           "settings": {
-            "text": "<p>Smart watches just got smarter...<\/p>",
+            "text": "<p>Smart watches just got smarter...</p>",
             "enlarge_text": true
           }
         },
@@ -419,8 +841,8 @@
         "90617dd2-3fd4-4de9-b743-6301d904e700"
       ],
       "settings": {
+        "video_external": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "video_description": "",
-        "poster_image": "",
         "video_height": "md",
         "overlay_text_align": "text-center",
         "overlay_position": "justify-center items-center",
@@ -439,12 +861,11 @@
         "template--17646024294688__eb683620-4832-4859-a362-dfff515f867c-1675184658ddacfe8e-0": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 2,
             "rows": 1,
             "subheading": "",
-            "title": "<p>Brand 1<\/p>",
+            "title": "<p>Brand 1</p>",
             "heading_size": "h3",
             "button_label": "",
             "button_link": "",
@@ -458,12 +879,11 @@
         "template--17646024294688__eb683620-4832-4859-a362-dfff515f867c-1675184658ddacfe8e-1": {
           "type": "media",
           "settings": {
-            "image": "",
             "link_url": "",
             "columns": 2,
             "rows": 1,
             "subheading": "",
-            "title": "<p>Brand 2<\/p>",
+            "title": "<p>Brand 2</p>",
             "heading_size": "h3",
             "button_label": "",
             "button_link": "",
@@ -500,7 +920,6 @@
         "613bc276-4272-48cf-b283-20a4f6430519": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -508,7 +927,6 @@
         "31c22117-99f6-4252-98b6-f3ee0fbf3323": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -516,7 +934,6 @@
         "97db6fd4-79dc-40f2-9af7-5bf324979d8e": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -524,7 +941,6 @@
         "80b36a51-0727-43b7-9f93-5bcc898ab912": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -532,7 +948,6 @@
         "64452c59-f584-463f-8bc2-96e2f2510a6b": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -540,7 +955,6 @@
         "585b584c-4345-4423-84bd-98f28b65bd17": {
           "type": "image",
           "settings": {
-            "image": "",
             "image_height": 48,
             "link": ""
           }
@@ -624,6 +1038,7 @@
         "heading_align": "text-center",
         "view_more_label": "",
         "view_more_link": "#",
+        "product_list": [],
         "empty_field_text": "-",
         "image_ratio": "1",
         "image_crop": "center",
@@ -638,6 +1053,7 @@
         "template--17646024294688__d1557094-e1ff-483a-a831-ec47e3ac8583-16751824192893615f-0": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "hotspot_x": 20,
             "hotspot_y": 56
           }
@@ -645,6 +1061,7 @@
         "template--17646024294688__d1557094-e1ff-483a-a831-ec47e3ac8583-16751824192893615f-1": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "hotspot_x": 56,
             "hotspot_y": 60
           }
@@ -652,6 +1069,7 @@
         "template--17646024294688__d1557094-e1ff-483a-a831-ec47e3ac8583-16751824192893615f-2": {
           "type": "hotspot",
           "settings": {
+            "product": "",
             "hotspot_x": 80,
             "hotspot_y": 64
           }
@@ -663,13 +1081,12 @@
         "template--17646024294688__d1557094-e1ff-483a-a831-ec47e3ac8583-16751824192893615f-2"
       ],
       "settings": {
-        "image": "",
         "layout": "image_first",
         "show_vendor": true,
         "show_content": true,
         "mob_center_text": true,
         "heading": "Smart. Secure. Sustainable.",
-        "text": "<p>Upgrade your home and let the devices do the hard work for you with our selection of the latest smart tech. Imagine what home could be.<\/p>",
+        "text": "<p>Upgrade your home and let the devices do the hard work for you with our selection of the latest smart tech. Imagine what home could be.</p>",
         "button_label": "Shop Smart Tech",
         "button_link": "",
         "hotspot_color": "#ffffff",
@@ -691,7 +1108,7 @@
         "template--17646024294688__53337ab6-3f88-45e9-8fe2-7d55ee55a74a-16752469146a26910e-1": {
           "type": "text",
           "settings": {
-            "text": "<p>Top deals on home entertainment<\/p>",
+            "text": "<p>Top deals on home entertainment</p>",
             "enlarge_text": true
           }
         },
@@ -713,8 +1130,6 @@
         "template--17646024294688__53337ab6-3f88-45e9-8fe2-7d55ee55a74a-16752469146a26910e-2"
       ],
       "settings": {
-        "image_desktop": "",
-        "image_mobile": "",
         "url": "",
         "height_mode": "fixed",
         "fixed_height_desktop": 640,
@@ -737,9 +1152,8 @@
         "template--17937594614048__c0877401-bf18-4a0d-a970-4846075a4d6f-1676478505ce30ce84-0": {
           "type": "feature",
           "settings": {
-            "image": "",
             "heading": "Pixel perfect",
-            "text": "<p>Immerse yourself in crystal-clear images and movies with the stunning 27\" 2560 x 1400 backlit LED screen.<\/p>",
+            "text": "<p>Immerse yourself in crystal-clear images and movies with the stunning 27\" 2560 x 1400 backlit LED screen.</p>",
             "content_align": "text-start",
             "hotspot_x": 24,
             "hotspot_y": 24
@@ -748,9 +1162,8 @@
         "template--17937594614048__c0877401-bf18-4a0d-a970-4846075a4d6f-1676478505ce30ce84-1": {
           "type": "feature",
           "settings": {
-            "image": "",
             "heading": "Powerful processing",
-            "text": "<p>With a choice of Intel's 12th Gen i7-1260P or i5-1240P processors, it won't let you down.<\/p>",
+            "text": "<p>With a choice of Intel's 12th Gen i7-1260P or i5-1240P processors, it won't let you down.</p>",
             "content_align": "text-start",
             "hotspot_x": 84,
             "hotspot_y": 32
@@ -759,9 +1172,8 @@
         "template--17937594614048__c0877401-bf18-4a0d-a970-4846075a4d6f-1676478505ce30ce84-2": {
           "type": "feature",
           "settings": {
-            "image": "",
-            "heading": "Rear I\/O connectors",
-            "text": "<p>You're always connected, featuring x2 HDMI ports, x2 USB 3.2 Type A ports and x1 LAN port.<\/p>",
+            "heading": "Rear I/O connectors",
+            "text": "<p>You're always connected, featuring x2 HDMI ports, x2 USB 3.2 Type A ports and x1 LAN port.</p>",
             "content_align": "text-start",
             "hotspot_x": 66,
             "hotspot_y": 66
@@ -774,15 +1186,15 @@
         "template--17937594614048__c0877401-bf18-4a0d-a970-4846075a4d6f-1676478505ce30ce84-2"
       ],
       "settings": {
+        "product": "",
         "show_content": true,
         "layout": "text_first",
         "text_align": "text-center",
         "mob_center_text": false,
         "heading_size": "h0",
         "enlarge_text": true,
-        "image": "",
         "title": "The ultimate desktop",
-        "description": "<p>Working hard has never looked this good<\/p>",
+        "description": "<p>Working hard has never looked this good</p>",
         "button_label": "Shop now",
         "button_link": "",
         "hotspot_color": "#ffffff",
@@ -803,7 +1215,7 @@
         "template--17646024294688__44b64c8e-4ea7-4c35-96f3-42d82b3c2069-167517588875579705-1": {
           "type": "text",
           "settings": {
-            "text": "<p>News, reviews & special offers<\/p>",
+            "text": "<p>News, reviews & special offers</p>",
             "enlarge_text": true
           }
         },
@@ -820,7 +1232,6 @@
       "settings": {
         "overlay_position": "justify-center",
         "text_align": "text-center",
-        "image": "",
         "color_scheme": "2",
         "full_width": true,
         "transparent_content_color": "#ffffff",
@@ -834,16 +1245,16 @@
         "title": "",
         "heading_align": "text-center",
         "show_view_all": false,
+        "collection": "",
         "layout": "carousel",
         "card_size_mobile": "small",
         "card_size": "small",
         "products_to_show": 8,
         "show_highlight_products": false,
         "show_promo_info": true,
-        "image": "",
         "image_ratio": "fill",
         "promo_title": "Rollbacks & more...",
-        "content": "<p>Save big with 1,000's of Rollbacks! We're committed to bringing you the best electrical products, at the best prices.<\/p>",
+        "content": "<p>Save big with 1,000's of Rollbacks! We're committed to bringing you the best electrical products, at the best prices.</p>",
         "link_url": "",
         "button_label": "Shop all Rollbacks",
         "color_scheme": "1",
@@ -856,10 +1267,10 @@
         "template--17646024294688__badaf8ee-9f48-44d6-8bb1-2853448d1112-16751805018cd7f25c-0": {
           "type": "column",
           "settings": {
-            "image": "",
             "heading": "Home Audio",
             "heading_bg_color": "#ff580d",
             "heading_text_color": "#ffffff",
+            "menu": "",
             "button_label": "Shop all",
             "button_link": "#"
           }
@@ -867,10 +1278,10 @@
         "template--17646024294688__badaf8ee-9f48-44d6-8bb1-2853448d1112-16751805018cd7f25c-1": {
           "type": "column",
           "settings": {
-            "image": "",
             "heading": "Smart Tech",
             "heading_bg_color": "#ff580d",
             "heading_text_color": "#ffffff",
+            "menu": "",
             "button_label": "Shop all",
             "button_link": "#"
           }
@@ -878,10 +1289,10 @@
         "template--17646024294688__badaf8ee-9f48-44d6-8bb1-2853448d1112-16751805018cd7f25c-2": {
           "type": "column",
           "settings": {
-            "image": "",
             "heading": "Digital Cameras",
             "heading_bg_color": "#ff580d",
             "heading_text_color": "#ffffff",
+            "menu": "",
             "button_label": "Shop all",
             "button_link": "#"
           }
@@ -889,10 +1300,10 @@
         "b1587b2c-7619-4d47-bc2f-4a1b495a8476": {
           "type": "column",
           "settings": {
-            "image": "",
             "heading": "Computing",
             "heading_bg_color": "#ff580d",
             "heading_text_color": "#ffffff",
+            "menu": "",
             "button_label": "Shop all",
             "button_link": "#"
           }
@@ -931,7 +1342,7 @@
           "settings": {
             "icon": "map_pin",
             "heading": "What countries do you ship to?",
-            "text": "<p>We currently ship to the United States, Canada, Australia and the UK. To enquire about shipping to a different destination, please contact us.<\/p>"
+            "text": "<p>We currently ship to the United States, Canada, Australia and the UK. To enquire about shipping to a different destination, please contact us.</p>"
           }
         },
         "template--17646024294688__7ff2d165-a729-4f5c-a6dc-805d6957f606-16751794779331fd75-2": {
@@ -939,7 +1350,7 @@
           "settings": {
             "icon": "calendar",
             "heading": "How long will it take to receive my order?",
-            "text": "<p>Standard shipping normally takes 3-5 days. Next day shipping is available on all domestic orders (for an additional charge). International shipping times depend on the products and destination (estimated at checkout).<\/p>"
+            "text": "<p>Standard shipping normally takes 3-5 days. Next day shipping is available on all domestic orders (for an additional charge). International shipping times depend on the products and destination (estimated at checkout).</p>"
           }
         },
         "template--17646024294688__7ff2d165-a729-4f5c-a6dc-805d6957f606-16751794779331fd75-3": {
@@ -953,7 +1364,7 @@
           "settings": {
             "icon": "return",
             "heading": "How do I return a product?",
-            "text": "<p>Items must be returned within 30 days after receiving your order. Items must be returned in the same condition in which they were received, be unworn\/unused, have any tags still attached, and include all the original packaging.<\/p>"
+            "text": "<p>Items must be returned within 30 days after receiving your order. Items must be returned in the same condition in which they were received, be unworn/unused, have any tags still attached, and include all the original packaging.</p>"
           }
         },
         "template--17646024294688__7ff2d165-a729-4f5c-a6dc-805d6957f606-16751794779331fd75-5": {
@@ -961,7 +1372,7 @@
           "settings": {
             "icon": "dollar_sign",
             "heading": "How long will it take to receive my refund?",
-            "text": "<p>Refunds are processed within 7 days from when we receive the item(s).<\/p>"
+            "text": "<p>Refunds are processed within 7 days from when we receive the item(s).</p>"
           }
         }
       },
@@ -979,30 +1390,18 @@
         "color_scheme": "1",
         "full_width": true
       }
-    },
-    "a997f7ce-68e5-41c1-b2d6-9e0b87e5cc39": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products for you",
-        "heading_align": "text-start",
-        "show_view_all": true,
-        "layout": "carousel",
-        "card_size_mobile": "small",
-        "card_size": "small",
-        "products_to_show": 8,
-        "show_highlight_products": false,
-        "show_promo_info": false,
-        "image_ratio": "1",
-        "promo_title": "Promotion title",
-        "content": "<p>Promotion text<\/p>",
-        "link_url": "",
-        "button_label": "Button",
-        "color_scheme": "none",
-        "button_style": "btn btn--secondary"
-      }
     }
   },
   "order": [
+    "hero_banner_Biw7cE",
+    "coffee_experience_zP7fdV",
+    "category_showcase_7DCCpJ",
+    "logo_marquee_fJDnCH",
+    "partner_split_LycNdj",
+    "coffee_shop_slider_GxAGXi",
+    "logo_marquee_hQHtbm",
+    "blog_showcase_Mh9KUa",
+    "logo_marquee_VCBLzL",
     "bb7588e2-322e-49f2-87bb-8d05dd3697ec",
     "b7c18b78-f517-4220-a6c6-ff4ab88b41ff",
     "2cfe881f-8ca3-4df7-95e4-f5b39015d791",
@@ -1018,7 +1417,6 @@
     "44b64c8e-4ea7-4c35-96f3-42d82b3c2069",
     "ff1b6812-c849-43f7-a4b7-6244fdb1f8d7",
     "badaf8ee-9f48-44d6-8bb1-2853448d1112",
-    "7ff2d165-a729-4f5c-a6dc-805d6957f606",
-    "a997f7ce-68e5-41c1-b2d6-9e0b87e5cc39"
+    "7ff2d165-a729-4f5c-a6dc-805d6957f606"
   ]
 }
