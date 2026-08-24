@@ -1,120 +1,159 @@
-<section class="site-banner" id="shopify-section-{{ section.id }}">
-  <div class="banner-bg-img">
-    {%- if section.settings.background_image != blank -%}
-      {{ section.settings.background_image | image_url: width: 2400 | image_tag: loading: 'eager', alt: section.settings.background_image.alt | default: 'banner-bg-img' }}
-    {%- endif -%}
+<section
+  class="site-banner"
+  data-section-id="{{ section.id }}"
+  {% if section.settings.banner_height_mobile != blank %}style="--banner-h-mobile: {{ section.settings.banner_height_mobile }}px;"{% endif %}
+>
+  <div class="banner-bg-img" style="--banner-h: {{ section.settings.banner_height | default: 900 }}px;">
+    {% if section.settings.banner_image != blank %}
+      <img
+        src="{{ section.settings.banner_image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.banner_image | image_url: width: 800 }} 800w,
+                {{ section.settings.banner_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.banner_image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.banner_image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt="{{ section.settings.banner_image.alt | default: section.settings.banner_image_alt | escape }}"
+        width="{{ section.settings.banner_image.width }}"
+        height="{{ section.settings.banner_image.height }}"
+        loading="eager"
+      >
+    {% else %}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'banner-placeholder-svg' }}
+    {% endif %}
   </div>
 
   <div class="banner-warp">
     <div class="container">
-      {%- if section.settings.heading != blank -%}
-        <h1>{{ section.settings.heading | newline_to_br }}</h1>
-      {%- endif -%}
+      {% if section.settings.heading != blank %}
+        <h1 style="color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h1>
+      {% endif %}
 
-      <div class="banner-btm">
-        {%- if section.blocks.size > 0 -%}
-          <div class="banner-cards">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'banner_card' -%}
+      <div class="banner-btm" style="padding-bottom: {{ section.settings.content_padding_bottom }}px; border-top-color: {{ section.settings.divider_color }};">
+        {% if section.blocks.size > 0 %}
+          <div class="banner-cards" style="--card-columns: {{ section.settings.cards_per_row }};">
+            {% for block in section.blocks %}
+              {% if block.type == 'card' %}
                 <div class="banner-card" {{ block.shopify_attributes }}>
-                  {%- if block.settings.title != blank -%}
-                    <h4>{{ block.settings.title }}</h4>
-                  {%- endif -%}
-                  {%- if block.settings.text != blank -%}
-                    <p>{{ block.settings.text }}</p>
-                  {%- endif -%}
-                  {%- if block.settings.image != blank -%}
-                    <div class="banner-card-img">
-                      <a href="{{ block.settings.link | default: '#' }}">
-                        {{ block.settings.image | image_url: width: 800 | image_tag: alt: block.settings.title }}
-                        <div class="navi">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="44" height="24" viewBox="0 0 44 24" fill="none">
-                            <rect x="0.5" y="0.5" width="43" height="23" rx="11.5" stroke="white" />
-                            <g clip-path="url(#clip0_{{ block.id }})">
-                              <path d="M22 7.28589L26.714 11.9999L22 16.714" stroke="white"
-                                stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                              <path d="M17.286 11.9999H26.714" stroke="white"
-                                stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_{{ block.id }}">
-                                <rect x="22" y="0.686279" width="16" height="16" rx="8"
-                                  transform="rotate(45 22 0.686279)" fill="white" />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          {{ block.settings.link_label | default: 'Shop Now' }}
-                        </div>
-                      </a>
-                    </div>
-                  {%- endif -%}
+                  {% if block.settings.heading != blank %}
+                    <h4 style="color: {{ block.settings.text_color }};">{{ block.settings.heading }}</h4>
+                  {% endif %}
+                  {% if block.settings.text != blank %}
+                    <p style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</p>
+                  {% endif %}
+                  <div class="banner-card-img">
+                    <a
+                      href="{{ block.settings.link | default: '#' }}"
+                      aria-label="{{ block.settings.heading | strip_html | default: 'View more' | escape }}"
+                    >
+                      {% if block.settings.image != blank %}
+                        <img
+                          src="{{ block.settings.image | image_url: width: 800 }}"
+                          srcset="{{ block.settings.image | image_url: width: 400 }} 400w,
+                                  {{ block.settings.image | image_url: width: 800 }} 800w"
+                          sizes="(max-width: 749px) 100vw, 40vw"
+                          alt="{{ block.settings.image.alt | default: block.settings.image_alt | escape }}"
+                          width="{{ block.settings.image.width }}"
+                          height="{{ block.settings.image.height }}"
+                          loading="lazy"
+                        >
+                      {% else %}
+                        {{ 'product-1' | placeholder_svg_tag: 'banner-card-placeholder-svg' }}
+                      {% endif %}
+                      <div class="navi" style="color: {{ block.settings.button_color | default: '#ffffff' }};">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="24" viewBox="0 0 44 24" fill="none" aria-hidden="true" focusable="false">
+                          <rect x="0.5" y="0.5" width="43" height="23" rx="11.5" stroke="currentColor" />
+                          <g clip-path="url(#clip0_2101_653_{{ block.id }})">
+                            <path d="M22 7.28589L26.714 11.9999L22 16.714" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M17.286 11.9999H26.714" stroke="currentColor" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round" />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_2101_653_{{ block.id }}">
+                              <rect x="22" y="0.686279" width="16" height="16" rx="8" transform="rotate(45 22 0.686279)" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                        <span>{{ block.settings.button_text | default: 'Shop Now' }}</span>
+                      </div>
+                    </a>
+                  </div>
                 </div>
-              {%- endif -%}
-            {%- endfor -%}
+              {% endif %}
+            {% endfor %}
           </div>
-        {%- endif -%}
+        {% endif %}
 
-        {%- if section.settings.scroll_label != blank -%}
+        {% if section.settings.show_scroll_link %}
           <div class="scroll-btm">
-            <a href="{{ section.settings.scroll_target | default: '#' }}">
-              <span>{{ section.settings.scroll_label }}</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
-                <path d="M24.0352 18.1421L18.1426 24.0346L12.25 18.1421" stroke="white"
-                  stroke-opacity="0.6" stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M18.1426 12.2495V24.0346" stroke="white" stroke-opacity="0.6"
-                  stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
-                <circle cx="18" cy="18" r="17.55" stroke="white" stroke-opacity="0.6" stroke-width="0.900003" />
+            <a href="{{ section.settings.scroll_link | default: '#' }}" style="color: {{ section.settings.scroll_icon_color }};">
+              <span>{{ section.settings.scroll_text | default: 'Scroll' }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true" focusable="false">
+                <path d="M24.0352 18.1421L18.1426 24.0346L12.25 18.1421" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M18.1426 12.2495V24.0346" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="18" cy="18" r="17.55" stroke="currentColor" stroke-opacity="0.6" stroke-width="0.900003" />
               </svg>
             </a>
           </div>
-        {%- endif -%}
+        {% endif %}
       </div>
     </div>
   </div>
 </section>
 
-{% style %}
-  #shopify-section-{{ section.id }} .site-banner {
+<style>
+  /* site banner start */
+  .site-banner[data-section-id="{{ section.id }}"] {
     position: relative;
     isolation: isolate;
   }
 
-  #shopify-section-{{ section.id }} .site-banner::before {
+  .site-banner[data-section-id="{{ section.id }}"]::before {
     content: "";
-    background: rgba(0, 0, 0, {{ section.settings.overlay_opacity | default: 50 | divided_by: 100.0 }});
+    background: {{ section.settings.overlay_color }};
     inset: 0;
     position: absolute;
+    z-index: 1;
+    pointer-events: none;
   }
 
-  #shopify-section-{{ section.id }} .banner-bg-img {
-    height: {{ section.settings.banner_height | default: 900 }}px;
+  .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img {
+    height: var(--banner-h, 900px);
   }
 
-  #shopify-section-{{ section.id }} .banner-bg-img img {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img img,
+  .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img svg.banner-placeholder-svg {
     width: 100%;
     display: block;
     height: 100%;
     object-fit: cover;
   }
 
-  #shopify-section-{{ section.id }} .banner-warp {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-warp {
     position: absolute;
     inset: 0;
     display: flex;
-    justify-content: start;
+    justify-content: {{ section.settings.content_alignment | default: 'flex-start' }};
     align-items: end;
     padding-bottom: 50px;
+    z-index: 2;
   }
 
-  #shopify-section-{{ section.id }} .banner-warp h1 {
-    color: #fff;
+  .site-banner[data-section-id="{{ section.id }}"] .container {
+    width: 100%;
+    max-width: {{ section.settings.container_max_width | default: 1400 }}px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
     font-weight: 400;
-    font-size: clamp(32px, 4vw, 60px);
+    font-size: clamp(32px, 4vw, {{ section.settings.heading_max_size | default: 60 }}px);
     line-height: 1.33;
+    margin: 0;
   }
 
-  #shopify-section-{{ section.id }} .banner-btm {
-    border-top: 2px solid rgb(196 246 226 / 20%);
+  .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
+    border-top: 2px solid;
     margin-top: 40px;
     padding-top: 20px;
     display: flex;
@@ -123,147 +162,294 @@
     gap: 20px;
   }
 
-  #shopify-section-{{ section.id }} .banner-cards {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(var(--card-columns, 2), 1fr);
     gap: 30px;
     width: 100%;
-    max-width: 572px;
+    max-width: {{ section.settings.cards_max_width | default: 572 }}px;
   }
 
-  #shopify-section-{{ section.id }} .banner-card-img {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img {
     position: relative;
     margin-top: 26px;
   }
 
-  #shopify-section-{{ section.id }} .banner-card-img img {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img img,
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img svg.banner-card-placeholder-svg {
     width: 100%;
-    border-radius: 20px;
-    display: block;
+    border-radius: {{ section.settings.card_image_radius | default: 20 }}px;
   }
 
-  #shopify-section-{{ section.id }} .banner-card-img a {
-    display: block;
-    position: relative;
-  }
-
-  #shopify-section-{{ section.id }} .banner-card-img .navi {
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
     display: flex;
     gap: 10px;
     align-items: center;
     justify-content: center;
     position: absolute;
     inset: 0;
-    color: #fff;
     font-size: 16px;
   }
 
-  #shopify-section-{{ section.id }} .banner-card h4 {
-    color: #fff;
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
     font-size: 22px;
     font-weight: 500;
     margin-bottom: 12px;
+    margin-top: 0;
   }
 
-  #shopify-section-{{ section.id }} .banner-card p {
-    color: #fff;
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card p {
     font-size: 16px;
     letter-spacing: -1%;
     line-height: 24px;
     font-weight: 300;
+    margin: 0;
   }
 
-  #shopify-section-{{ section.id }} .scroll-btm a {
+  .site-banner[data-section-id="{{ section.id }}"] .scroll-btm a {
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 18px;
-    color: #ffffffcc;
     font-weight: 300;
     text-decoration: none;
   }
 
-  @media (max-width: 992px) {
-    #shopify-section-{{ section.id }} .banner-bg-img {
-      height: 700px;
-    }
-    #shopify-section-{{ section.id }} .banner-cards {
-      grid-template-columns: 1fr;
+  @media screen and (max-width: 989px) {
+    .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
       max-width: 100%;
     }
   }
-{% endstyle %}
+
+  @media screen and (max-width: 749px) {
+    .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img {
+      height: var(--banner-h-mobile, 500px);
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-warp {
+      align-items: end;
+      padding-bottom: 30px;
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
+      justify-content: flex-start;
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 br {
+      display: none;
+    }
+  }
+  /* site banner end */
+</style>
 
 {% schema %}
 {
-  "name": "Hero banner",
+  "name": "Site Banner",
+  "tag": "section",
+  "class": "site-banner-section",
   "settings": [
     {
+      "type": "header",
+      "content": "Background"
+    },
+    {
       "type": "image_picker",
-      "id": "background_image",
+      "id": "banner_image",
       "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "banner_image_alt",
+      "label": "Background image alt text (used if image has none)",
+      "default": "Banner background image"
     },
     {
       "type": "range",
       "id": "banner_height",
       "min": 400,
-      "max": 1100,
-      "step": 20,
-      "default": 900,
+      "max": 1200,
+      "step": 50,
+      "unit": "px",
       "label": "Banner height (desktop)",
-      "unit": "px"
+      "default": 900
     },
     {
       "type": "range",
-      "id": "overlay_opacity",
+      "id": "banner_height_mobile",
+      "min": 300,
+      "max": 900,
+      "step": 25,
+      "unit": "px",
+      "label": "Banner height (mobile)",
+      "default": 500
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#00000080"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>The Art of<br>Saudi Specialty Coffee</p>"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_max_size",
+      "min": 32,
+      "max": 90,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading max font size",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "flex-start", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "flex-end", "label": "Right" }
+      ],
+      "default": "flex-start"
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "min": 1000,
+      "max": 1800,
+      "step": 20,
+      "unit": "px",
+      "label": "Content container max width",
+      "default": 1400
+    },
+    {
+      "type": "header",
+      "content": "Cards"
+    },
+    {
+      "type": "range",
+      "id": "cards_per_row",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Cards per row (desktop)",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "cards_max_width",
+      "min": 300,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Cards block max width",
+      "default": 570
+    },
+    {
+      "type": "range",
+      "id": "card_image_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card image border radius",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
       "min": 0,
       "max": 100,
       "step": 5,
-      "default": 50,
-      "label": "Overlay opacity",
-      "unit": "%"
+      "unit": "px",
+      "label": "Bottom row top spacing",
+      "default": 50
     },
     {
-      "type": "textarea",
-      "id": "heading",
-      "label": "Heading",
-      "info": "Press Enter/Return where you want a line break.",
-      "default": "The Art of\nSaudi Specialty Coffee"
+      "type": "color",
+      "id": "divider_color",
+      "label": "Divider line color",
+      "default": "#C4F6E233"
+    },
+    {
+      "type": "header",
+      "content": "Scroll link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_scroll_link",
+      "label": "Show scroll link",
+      "default": true
     },
     {
       "type": "text",
-      "id": "scroll_label",
+      "id": "scroll_text",
       "label": "Scroll link text",
       "default": "Scroll"
     },
     {
       "type": "url",
-      "id": "scroll_target",
-      "label": "Scroll link URL",
-      "info": "Use an anchor link, e.g. #shopify-section-template--index__coffee-experience, to scroll to the next section."
+      "id": "scroll_link",
+      "label": "Scroll link URL"
+    },
+    {
+      "type": "color",
+      "id": "scroll_icon_color",
+      "label": "Scroll icon/text color",
+      "default": "#ffffff"
     }
   ],
   "blocks": [
     {
-      "type": "banner_card",
-      "name": "Banner card",
+      "type": "card",
+      "name": "Banner Card",
       "settings": [
         {
           "type": "text",
-          "id": "title",
-          "label": "Title",
+          "id": "heading",
+          "label": "Card heading",
           "default": "For Coffee Enthusiasts"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
-          "label": "Description",
-          "default": "As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and café solutions with uncompromising quality and safety."
+          "label": "Card text",
+          "default": "<p>As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and cafe solutions with uncompromising quality and safety.</p>"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Card text color",
+          "default": "#ffffff"
         },
         {
           "type": "image_picker",
           "id": "image",
           "label": "Card image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Card image alt text (used if image has none)",
+          "default": "Banner card image"
         },
         {
           "type": "url",
@@ -272,19 +458,40 @@
         },
         {
           "type": "text",
-          "id": "link_label",
-          "label": "Link label",
+          "id": "button_text",
+          "label": "Button/overlay text",
           "default": "Shop Now"
+        },
+        {
+          "type": "color",
+          "id": "button_color",
+          "label": "Button/overlay icon and text color",
+          "default": "#ffffff"
         }
       ]
     }
   ],
+  "max_blocks": 4,
   "presets": [
     {
-      "name": "Hero banner",
+      "name": "Site Banner",
       "blocks": [
-        { "type": "banner_card" },
-        { "type": "banner_card" }
+        {
+          "type": "card",
+          "settings": {
+            "heading": "For Coffee Enthusiasts",
+            "text": "<p>As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and cafe solutions with uncompromising quality and safety.</p>",
+            "button_text": "Shop Now"
+          }
+        },
+        {
+          "type": "card",
+          "settings": {
+            "heading": "For Business Partners",
+            "text": "<p>Running a cafe, hotel, or distribution business? Partner with Sulalat for scalable wholesale solutions and trusted supply.</p>",
+            "button_text": "Shop Now"
+          }
+        }
       ]
     }
   ]

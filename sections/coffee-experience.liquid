@@ -1,269 +1,662 @@
-<section class="about-section" id="shopify-section-{{ section.id }}">
-  <div class="container">
-    {%- if section.settings.heading != blank or section.settings.heading_highlight != blank -%}
-      <div class="section-title">
-        <h2>
-          {{ section.settings.heading }}
-          {%- if section.settings.heading_highlight != blank -%}
-            <span>{{ section.settings.heading_highlight }}</span>
-          {%- endif -%}
-        </h2>
-      </div>
-    {%- endif -%}
+<section
+  class="about-section"
+  data-section-id="{{ section.id }}"
+  style="
+    --about-padding-top: {{ section.settings.section_padding_top }}px;
+    --about-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --about-container-max: {{ section.settings.container_max_width }}px;
+    --about-grid-gap: {{ section.settings.grid_gap }}px;
+    --about-heading-color: {{ section.settings.heading_color }};
+    --about-text-color: {{ section.settings.text_color }};
+    --about-overlay-color: {{ section.settings.overlay_color }};
+    --about-overlay-opacity: {% if section.settings.overlay_enabled %}{{ section.settings.overlay_opacity }}{% else %}0{% endif %};
+    --about-bg-color: {{ section.settings.section_bg_color }};
+    --about-heading-size: {{ section.settings.heading_size }}px;
+    --about-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --about-about-heading-size: {{ section.settings.about_heading_size }}px;
+    --about-body-size: {{ section.settings.body_text_size }}px;
+  "
+>
+  <style>
+    .about-section[data-section-id="{{ section.id }}"] {
+      padding: var(--about-padding-top) 0 var(--about-padding-bottom);
+      background: var(--about-bg-color);
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-container {
+      max-width: var(--about-container-max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      max-width: 950px;
+      margin-inline: auto;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .section-title h2 {
+      color: var(--about-heading-color);
+      font-size: var(--about-heading-size);
+      font-weight: 400;
+      margin-bottom: 30px;
+      line-height: 1.2;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .section-title h2 span {
+      display: block;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .section-title p {
+      color: var(--about-text-color);
+      font-size: var(--about-body-size);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin-top: 14px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--about-grid-gap);
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-left {
+      width: calc(41.4% - (var(--about-grid-gap) / 2));
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-right {
+      width: calc(58.6% - (var(--about-grid-gap) / 2));
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slider {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slider-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+      will-change: transform;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slide {
+      flex: 0 0 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 75%,
+        rgba(0, 0, 0, 1) 100%
+      );
+      opacity: var(--about-overlay-opacity);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slide:hover .about-slide-image {
+      transform: scale(1.2);
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slide-image {
+      transition: transform 1.8s ease-in-out;
+      width: 100%;
+      display: block;
+      border-radius: inherit;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-slide svg.placeholder-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination {
+      position: absolute;
+      bottom: 25px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination button {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: none;
+      opacity: 0.3;
+      cursor: pointer;
+      padding: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination button:hover,
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination button:focus {
+      opacity: 0.7;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination button:focus-visible {
+      outline: 2px solid #ffffff;
+      outline-offset: 2px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-pagination button.active {
+      opacity: 1;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-content {
+      margin-top: 42px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
+      font-size: var(--about-about-heading-size);
+      font-weight: 400;
+      color: var(--about-heading-color);
+      line-height: 1.2;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-content h3 span {
+      display: block;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-text {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 35px;
+      margin-top: 42px;
+    }
+
+    .about-section[data-section-id="{{ section.id }}"] .about-text p {
+      color: var(--about-text-color);
+      font-size: var(--about-body-size);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 991px) {
+      .about-section[data-section-id="{{ section.id }}"] .about-left,
+      .about-section[data-section-id="{{ section.id }}"] .about-right {
+        width: 100%;
+      }
+      .about-section[data-section-id="{{ section.id }}"] .about-text {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .about-section[data-section-id="{{ section.id }}"] .section-title h2 {
+        font-size: var(--about-heading-size-mobile);
+      }
+      .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
+        font-size: 24px;
+      }
+      .about-section[data-section-id="{{ section.id }}"] .section-title {
+        margin-bottom: 40px;
+      }
+      .about-section[data-section-id="{{ section.id }}"] .about-content {
+        margin-top: 30px;
+      }
+      .about-section[data-section-id="{{ section.id }}"] .about-text {
+        margin-top: 30px;
+      }
+    }
+  </style>
+
+  <div class="about-container">
+    <div class="section-title">
+      <h2>
+        {{ section.settings.heading_part_1 | escape }}
+        {% if section.settings.heading_part_2 != blank %}
+          <span>{{ section.settings.heading_part_2 | escape }}</span>
+        {% endif %}
+      </h2>
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading | escape }}</p>
+      {% endif %}
+    </div>
 
     <div class="about-grid">
       <div class="about-left">
-        <div class="swiper leftSwiper">
-          <div class="swiper-wrapper">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'left_slide' -%}
-                <div class="swiper-slide" {{ block.shopify_attributes }}>
-                  {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 900 | image_tag: alt: block.settings.image.alt | default: 'about image' }}
-                  {%- endif -%}
+        {% assign left_slides = section.blocks | where: 'type', 'left_slide' %}
+        {% if left_slides.size > 0 %}
+          <div class="about-slider" data-about-slider>
+            <div class="about-slider-track">
+              {% for block in left_slides %}
+                <div class="about-slide" {{ block.shopify_attributes }}>
+                  {% if block.settings.image != blank %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 1200 }}"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      class="about-slide-image"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
                 </div>
-              {%- endif -%}
-            {%- endfor -%}
+              {% endfor %}
+            </div>
+            <div class="about-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
+        {% endif %}
+
+        <div class="about-content">
+          <h3>
+            {{ section.settings.about_heading_part_1 | escape }}
+            {% if section.settings.about_heading_part_2 != blank %}
+              <span>{{ section.settings.about_heading_part_2 | escape }}</span>
+            {% endif %}
+          </h3>
         </div>
-        {%- if section.settings.content_heading != blank or section.settings.content_heading_highlight != blank -%}
-          <div class="about-content">
-            <h3>
-              {{ section.settings.content_heading }}
-              {%- if section.settings.content_heading_highlight != blank -%}
-                <span>{{ section.settings.content_heading_highlight }}</span>
-              {%- endif -%}
-            </h3>
-          </div>
-        {%- endif -%}
       </div>
 
       <div class="about-right">
-        <div class="swiper rightSwiper">
-          <div class="swiper-wrapper">
-            {%- for block in section.blocks -%}
-              {%- if block.type == 'right_slide' -%}
-                <div class="swiper-slide" {{ block.shopify_attributes }}>
-                  {%- if block.settings.image != blank -%}
-                    {{ block.settings.image | image_url: width: 1200 | image_tag: alt: block.settings.image.alt | default: 'about image' }}
-                  {%- endif -%}
+        {% assign right_slides = section.blocks | where: 'type', 'right_slide' %}
+        {% if right_slides.size > 0 %}
+          <div class="about-slider" data-about-slider>
+            <div class="about-slider-track">
+              {% for block in right_slides %}
+                <div class="about-slide" {{ block.shopify_attributes }}>
+                  {% if block.settings.image != blank %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 1200 }}"
+                      alt="{{ block.settings.image.alt | escape }}"
+                      class="about-slide-image"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
                 </div>
-              {%- endif -%}
-            {%- endfor -%}
+              {% endfor %}
+            </div>
+            <div class="about-pagination"></div>
           </div>
-          <div class="swiper-pagination"></div>
+        {% endif %}
+
+        <div class="about-text">
+          <p>{{ section.settings.text_left | escape }}</p>
+          <p>{{ section.settings.text_right | escape }}</p>
         </div>
-        {%- if section.settings.text_1 != blank or section.settings.text_2 != blank -%}
-          <div class="about-text">
-            {%- if section.settings.text_1 != blank -%}
-              <p>{{ section.settings.text_1 }}</p>
-            {%- endif -%}
-            {%- if section.settings.text_2 != blank -%}
-              <p>{{ section.settings.text_2 }}</p>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!section) return;
+
+      function initSlider(slider) {
+        if (slider.dataset.initialized === 'true') return;
+        slider.dataset.initialized = 'true';
+
+        var track = slider.querySelector('.about-slider-track');
+        var slides = Array.prototype.slice.call(track ? track.children : []);
+        var pagination = slider.querySelector('.about-pagination');
+        var dots = [];
+        var currentIndex = 0;
+        var timer = null;
+        var autoplay = {{ section.settings.autoplay_enabled | default: false | json }};
+        var delay = {{ section.settings.autoplay_delay | default: 5 | json }} * 1000;
+        var pauseOnHover = {{ section.settings.pause_on_hover | default: true | json }};
+
+        if (slides.length === 0) {
+          slider.style.display = 'none';
+          return;
+        }
+
+        if (slides.length === 1 && pagination) {
+          pagination.style.display = 'none';
+        }
+
+        function createDots() {
+          if (!pagination) return;
+          pagination.innerHTML = '';
+          for (var i = 0; i < slides.length; i++) {
+            (function (index) {
+              var btn = document.createElement('button');
+              btn.type = 'button';
+              btn.setAttribute('aria-label', 'Go to slide ' + (index + 1));
+              btn.className = 'about-pagination-dot' + (index === currentIndex ? ' active' : '');
+              btn.addEventListener('click', function () {
+                goTo(index);
+                restartAutoplay();
+              });
+              pagination.appendChild(btn);
+              dots.push(btn);
+            })(i);
+          }
+        }
+
+        function updateDots() {
+          dots.forEach(function (dot, i) {
+            dot.classList.toggle('active', i === currentIndex);
+          });
+        }
+
+        function goTo(index) {
+          if (slides.length === 0) return;
+          currentIndex = (index + slides.length) % slides.length;
+          track.style.transform = 'translateX(' + (-currentIndex * 100) + '%)';
+          updateDots();
+        }
+
+        function startAutoplay() {
+          if (!autoplay || slides.length <= 1) return;
+          stopAutoplay();
+          timer = setInterval(function () {
+            goTo(currentIndex + 1);
+          }, delay);
+        }
+
+        function stopAutoplay() {
+          if (timer) {
+            clearInterval(timer);
+            timer = null;
+          }
+        }
+
+        function restartAutoplay() {
+          if (!autoplay || slides.length <= 1) return;
+          stopAutoplay();
+          startAutoplay();
+        }
+
+        if (pauseOnHover && autoplay) {
+          slider.addEventListener('mouseenter', stopAutoplay);
+          slider.addEventListener('mouseleave', startAutoplay);
+        }
+
+        // Basic touch/swipe support for mobile
+        var startX = 0;
+        var isDragging = false;
+
+        slider.addEventListener(
+          'touchstart',
+          function (e) {
+            if (e.target.closest('.about-pagination')) return;
+            if (slides.length <= 1) return;
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            track.style.transition = 'none';
+            if (pauseOnHover && autoplay) stopAutoplay();
+          },
+          { passive: true }
+        );
+
+        slider.addEventListener(
+          'touchmove',
+          function (e) {
+            if (!isDragging) return;
+            var diff = e.touches[0].clientX - startX;
+            track.style.transform =
+              'translateX(calc(' + -currentIndex * 100 + '% + ' + diff + 'px))';
+          },
+          { passive: true }
+        );
+
+        slider.addEventListener(
+          'touchend',
+          function (e) {
+            if (!isDragging) return;
+            isDragging = false;
+            track.style.transition = '';
+            var diff = e.changedTouches[0].clientX - startX;
+            if (Math.abs(diff) > 50) {
+              if (diff < 0) {
+                goTo(currentIndex + 1);
+              } else {
+                goTo(currentIndex - 1);
+              }
+            } else {
+              goTo(currentIndex);
+            }
+            if (pauseOnHover && autoplay) startAutoplay();
+          },
+          { passive: true }
+        );
+
+        createDots();
+        goTo(0);
+        startAutoplay();
+      }
+
+      function initAll(root) {
+        var sliders = root.querySelectorAll('[data-about-slider]');
+        for (var i = 0; i < sliders.length; i++) {
+          initSlider(sliders[i]);
+        }
+      }
+
+      initAll(section);
+    })();
+  </script>
 </section>
-
-{% style %}
-  #shopify-section-{{ section.id }} .about-section {
-    padding: 100px 0;
-  }
-
-  #shopify-section-{{ section.id }} .section-title {
-    text-align: center;
-    margin-bottom: 60px;
-    max-width: 950px;
-    margin-inline: auto;
-  }
-
-  #shopify-section-{{ section.id }} .section-title h2 {
-    color: #000;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 400;
-    margin-bottom: 30px;
-  }
-
-  #shopify-section-{{ section.id }} .section-title h2 span {
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap, 25px);
-  }
-
-  #shopify-section-{{ section.id }} .about-left {
-    width: calc(41.4% - (var(--gap, 25px) / 2));
-  }
-
-  #shopify-section-{{ section.id }} .about-right {
-    width: calc(58.6% - (var(--gap, 25px) / 2));
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-slide {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-slide:before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 100%);
-    opacity: 0.7;
-    z-index: 2;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-slide:hover img {
-    transform: scale(1.2);
-  }
-
-  #shopify-section-{{ section.id }} .about-grid img {
-    transition: all 1.8s ease-in-out;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: inherit;
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-pagination {
-    bottom: 25px;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-pagination span {
-    background: #ffffff;
-    border-radius: 50%;
-    opacity: 0.3;
-    width: 14px;
-    height: 14px;
-    display: inline-block;
-  }
-
-  #shopify-section-{{ section.id }} .about-grid .swiper-pagination span.swiper-pagination-bullet-active {
-    opacity: 1;
-  }
-
-  #shopify-section-{{ section.id }} .about-content {
-    margin-top: 42px;
-  }
-
-  #shopify-section-{{ section.id }} .about-content h3 {
-    font-size: 30px;
-    font-weight: 400;
-    color: #000;
-  }
-
-  #shopify-section-{{ section.id }} .about-content h3 span {
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .about-text {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr;
-    gap: 35px;
-    margin-top: 42px;
-  }
-
-  #shopify-section-{{ section.id }} .about-text p {
-    color: var(--light-text, #535353);
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  @media (max-width: 992px) {
-    #shopify-section-{{ section.id }} .about-section {
-      padding: 60px 0;
-    }
-    #shopify-section-{{ section.id }} .about-left,
-    #shopify-section-{{ section.id }} .about-right {
-      width: 100%;
-    }
-    #shopify-section-{{ section.id }} .about-text {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-  }
-{% endstyle %}
-
-<script>
-  (function () {
-    var root = document.getElementById('shopify-section-{{ section.id }}');
-    if (!root || typeof Swiper === 'undefined' || root.dataset.swiperInit === 'true') return;
-    root.dataset.swiperInit = 'true';
-
-    new Swiper(root.querySelector('.leftSwiper'), {
-      loop: true,
-      speed: 800,
-      pagination: {
-        el: root.querySelector('.leftSwiper .swiper-pagination'),
-        clickable: true
-      }
-    });
-
-    new Swiper(root.querySelector('.rightSwiper'), {
-      loop: true,
-      speed: 800,
-      pagination: {
-        el: root.querySelector('.rightSwiper .swiper-pagination'),
-        clickable: true
-      }
-    });
-  })();
-</script>
 
 {% schema %}
 {
-  "name": "Coffee experience",
+  "name": "About Section",
+  "tag": "section",
+  "class": "about-section-wrapper",
   "settings": [
     {
+      "type": "header",
+      "content": "Content"
+    },
+    {
       "type": "text",
-      "id": "heading",
-      "label": "Heading",
+      "id": "heading_part_1",
+      "label": "Heading part 1",
       "default": "Shaping Exceptional Coffee Experiences Through"
     },
     {
       "type": "text",
-      "id": "heading_highlight",
-      "label": "Heading (highlighted line)",
+      "id": "heading_part_2",
+      "label": "Heading part 2",
       "default": "Passion and Precision"
     },
     {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
       "type": "text",
-      "id": "content_heading",
-      "label": "Left image caption",
+      "id": "about_heading_part_1",
+      "label": "About heading part 1",
       "default": "Driven by Excellence"
     },
     {
       "type": "text",
-      "id": "content_heading_highlight",
-      "label": "Left image caption (highlighted line)",
+      "id": "about_heading_part_2",
+      "label": "About heading part 2",
       "default": "Crafted for You"
     },
     {
       "type": "textarea",
-      "id": "text_1",
-      "label": "Paragraph 1",
+      "id": "text_left",
+      "label": "Left text",
       "default": "Sulalat is a Saudi pioneer in specialty coffee, artisanal chocolate, gelato, and innovative cafe solutions."
     },
     {
       "type": "textarea",
-      "id": "text_2",
-      "label": "Paragraph 2",
+      "id": "text_right",
+      "label": "Right text",
       "default": "With ISO-certified roasting, private-label services, and premium equipment distribution, we empower professionals and enthusiasts alike to create world-class experiences."
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Image overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "default": 0.7
+    },
+    {
+      "type": "checkbox",
+      "id": "overlay_enabled",
+      "label": "Show image overlay",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "container_max_width",
+      "label": "Container max width",
+      "min": 800,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Grid gap",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 20,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile font size",
+      "min": 18,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "about_heading_size",
+      "label": "About heading font size",
+      "min": 18,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "body_text_size",
+      "label": "Body text size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_enabled",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on hover",
+      "default": true
     }
   ],
   "blocks": [
     {
       "type": "left_slide",
-      "name": "Left slide image",
+      "name": "Left Slide",
+      "limit": 6,
       "settings": [
         {
           "type": "image_picker",
@@ -274,7 +667,8 @@
     },
     {
       "type": "right_slide",
-      "name": "Right slide image",
+      "name": "Right Slide",
+      "limit": 6,
       "settings": [
         {
           "type": "image_picker",
@@ -286,14 +680,26 @@
   ],
   "presets": [
     {
-      "name": "Coffee experience",
+      "name": "About Section",
       "blocks": [
-        { "type": "left_slide" },
-        { "type": "left_slide" },
-        { "type": "left_slide" },
-        { "type": "right_slide" },
-        { "type": "right_slide" },
-        { "type": "right_slide" }
+        {
+          "type": "left_slide"
+        },
+        {
+          "type": "left_slide"
+        },
+        {
+          "type": "left_slide"
+        },
+        {
+          "type": "right_slide"
+        },
+        {
+          "type": "right_slide"
+        },
+        {
+          "type": "right_slide"
+        }
       ]
     }
   ]

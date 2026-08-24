@@ -1,239 +1,302 @@
-<section class="coffee-shop" id="shopify-section-{{ section.id }}">
-  <div class="container">
-    {%- if section.settings.heading != blank -%}
-      <div class="section-title">
-        <h2>{{ section.settings.heading }}</h2>
-        {%- if section.settings.text_1 != blank -%}
-          <p>{{ section.settings.text_1 }}</p>
-        {%- endif -%}
-        {%- if section.settings.text_2 != blank -%}
-          <p>{{ section.settings.text_2 }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+<section
+  class="coffee-shop"
+  data-section-id="{{ section.id }}"
+  style="
+    --coffee-padding-top: {{ section.settings.section_padding_top }}px;
+    --coffee-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --coffee-bg: {{ section.settings.section_bg_color }};
+    --coffee-heading-color: {{ section.settings.heading_color }};
+    --coffee-text-color: {{ section.settings.text_color }};
+    --coffee-heading-size: {{ section.settings.heading_size }}px;
+    --coffee-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --coffee-body-size: {{ section.settings.body_size }}px;
+    --coffee-slide-width: {{ section.settings.slide_width }}%;
+    --coffee-image-height: {{ section.settings.image_height }}px;
+    --coffee-transition-speed: {{ section.settings.transition_speed }}ms;
+    --coffee-primary-btn-bg: {{ section.settings.primary_btn_bg }};
+    --coffee-primary-btn-text: {{ section.settings.primary_btn_text }};
+    --coffee-primary-btn-hover-bg: {{ section.settings.primary_btn_hover_bg }};
+    --coffee-primary-btn-hover-text: {{ section.settings.primary_btn_hover_text }};
+    --coffee-secondary-btn-bg: {{ section.settings.secondary_btn_bg }};
+    --coffee-secondary-btn-text: {{ section.settings.secondary_btn_text }};
+    --coffee-secondary-btn-border: {{ section.settings.secondary_btn_border }};
+    --coffee-secondary-btn-hover-bg: {{ section.settings.secondary_btn_hover_bg }};
+    --coffee-secondary-btn-hover-text: {{ section.settings.secondary_btn_hover_text }};
+  "
+>
+  <style>
+    .coffee-shop[data-section-id="{{ section.id }}"] {
+      overflow: hidden;
+      padding-top: var(--coffee-padding-top);
+      padding-bottom: var(--coffee-padding-bottom);
+      background: var(--coffee-bg);
+    }
 
-    {%- if section.settings.button_1_label != blank or section.settings.button_2_label != blank -%}
-      <div class="shop-btns">
-        {%- if section.settings.button_1_label != blank -%}
-          <a href="{{ section.settings.button_1_link | default: '#' }}" class="primary-btn">
-            {{ section.settings.button_1_label }}
-          </a>
-        {%- endif -%}
-        {%- if section.settings.button_2_label != blank -%}
-          <a href="{{ section.settings.button_2_link | default: '#' }}" class="secondary-btn">
-            {{ section.settings.button_2_label }}
-          </a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    .coffee-shop[data-section-id="{{ section.id }}"] .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .section-title {
+      text-align: center;
+      margin-bottom: 30px;
+      max-width: 950px;
+      margin-inline: auto;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .section-title h2 {
+      color: var(--coffee-heading-color);
+      font-size: var(--coffee-heading-size);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 30px;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .section-title p {
+      color: var(--coffee-text-color);
+      font-size: var(--coffee-body-size);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin-top: 14px;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .shop-btns {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 45px;
+      margin-bottom: 60px;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn,
+    .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 4px;
+      font-size: var(--coffee-body-size);
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn {
+      background-color: var(--coffee-primary-btn-bg);
+      color: var(--coffee-primary-btn-text);
+      border: 1px solid transparent;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn:hover {
+      background-color: var(--coffee-primary-btn-hover-bg);
+      color: var(--coffee-primary-btn-hover-text);
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
+      background-color: var(--coffee-secondary-btn-bg);
+      color: var(--coffee-secondary-btn-text);
+      border: 1px solid var(--coffee-secondary-btn-border);
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn:hover {
+      background-color: var(--coffee-secondary-btn-hover-bg);
+      color: var(--coffee-secondary-btn-hover-text);
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .swiper.coffeeShopSlider {
+      overflow: visible;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider .swiper-slide {
+      width: var(--coffee-slide-width);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: opacity var(--coffee-transition-speed) ease;
+      opacity: 0.4;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider .swiper-slide-active {
+      opacity: 1;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider img {
+      width: 100%;
+      height: var(--coffee-image-height);
+      object-fit: cover;
+      display: block;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider svg.placeholder-svg {
+      width: 100%;
+      height: var(--coffee-image-height);
+      display: block;
+    }
+
+    @media (max-width: 767px) {
+      .coffee-shop[data-section-id="{{ section.id }}"] .section-title h2 {
+        font-size: var(--coffee-heading-size-mobile);
+      }
+      .coffee-shop[data-section-id="{{ section.id }}"] .shop-btns {
+        margin-top: 30px;
+        margin-bottom: 40px;
+      }
+      .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider .swiper-slide {
+        width: 90%;
+      }
+      .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider img,
+      .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider svg.placeholder-svg {
+        height: 350px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="section-title">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.paragraph_1 != blank %}
+        <p>{{ section.settings.paragraph_1 | escape }}</p>
+      {% endif %}
+      {% if section.settings.paragraph_2 != blank %}
+        <p>{{ section.settings.paragraph_2 | escape }}</p>
+      {% endif %}
+    </div>
+
+    <div class="shop-btns">
+      {% if section.settings.button_1_text != blank %}
+        <a
+          href="{% if section.settings.button_1_link != blank %}{{ section.settings.button_1_link }}{% else %}#{% endif %}"
+          class="primary-btn"
+        >
+          {{ section.settings.button_1_text | escape }}
+        </a>
+      {% endif %}
+      {% if section.settings.button_2_text != blank %}
+        <a
+          href="{% if section.settings.button_2_link != blank %}{{ section.settings.button_2_link }}{% else %}#{% endif %}"
+          class="secondary-btn"
+        >
+          {{ section.settings.button_2_text | escape }}
+        </a>
+      {% endif %}
+    </div>
   </div>
 
-  {%- assign slide_blocks = section.blocks | where: 'type', 'slide' -%}
-  {%- if slide_blocks.size > 0 -%}
-    <div class="swiper coffeeShopSlider">
-      <div class="swiper-wrapper">
-        {%- for block in slide_blocks -%}
-          <div class="swiper-slide" {{ block.shopify_attributes }}>
-            {%- if block.settings.link != blank -%}
-              <a href="{{ block.settings.link }}">
-            {%- endif -%}
-            {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 1600 | image_tag: alt: block.settings.image.alt | default: section.settings.heading }}
-            {%- endif -%}
-            {%- if block.settings.link != blank -%}
-              </a>
-            {%- endif -%}
-          </div>
-        {%- endfor -%}
-      </div>
+  <div class="swiper coffeeShopSlider" data-coffee-slider>
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <img
+              src="{{ block.settings.image | image_url: width: 1200 }}"
+              alt="{{ block.settings.image.alt | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+      {% endfor %}
     </div>
-  {%- endif -%}
-</section>
+  </div>
 
-{% style %}
-  #shopify-section-{{ section.id }} .coffee-shop {
-    overflow: hidden;
-    padding-bottom: 100px;
-  }
+  <script>
+    (function () {
+      var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!section) return;
 
-  #shopify-section-{{ section.id }} .section-title {
-    text-align: center;
-    margin-bottom: 0;
-    max-width: 950px;
-    margin-inline: auto;
-  }
+      var sliderContainer = section.querySelector('[data-coffee-slider]');
+      if (!sliderContainer) return;
 
-  #shopify-section-{{ section.id }} .section-title h2 {
-    color: #000;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 400;
-    margin-bottom: 30px;
-  }
+      function loadSwiper(callback) {
+        if (window.Swiper) {
+          callback();
+          return;
+        }
 
-  #shopify-section-{{ section.id }} .section-title p {
-    color: var(--sub-title-clr, #141211);
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -1%;
-  }
+        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+          document.head.appendChild(link);
+        }
 
-  #shopify-section-{{ section.id }} .section-title p + p {
-    margin-top: 10px;
-  }
-
-  #shopify-section-{{ section.id }} .shop-btns {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 45px;
-    margin-bottom: 60px;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn,
-  #shopify-section-{{ section.id }} .secondary-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding: 11px 60px;
-    border-radius: 80px;
-    font-size: 16px;
-    font-family: var(--secondary-font);
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn {
-    background: var(--theme-clr, #53C295);
-    border: 1px solid var(--theme-clr, #53C295);
-    color: #fff;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn:hover {
-    color: var(--theme-clr, #53C295);
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 0;
-    height: 100%;
-    background: #fff;
-    transition: all 0.5s ease-in-out;
-    z-index: -1;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn:hover::before {
-    right: auto;
-    left: 0;
-    width: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .secondary-btn {
-    background: transparent;
-    border: 1px solid var(--theme-clr, #53C295);
-    color: var(--theme-clr, #53C295);
-  }
-
-  #shopify-section-{{ section.id }} .secondary-btn:hover {
-    color: #fff;
-  }
-
-  #shopify-section-{{ section.id }} .secondary-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 100%;
-    background: var(--theme-clr, #53C295);
-    transition: all 0.5s ease-in-out;
-    z-index: -1;
-  }
-
-  #shopify-section-{{ section.id }} .secondary-btn:hover::before {
-    right: auto;
-    left: 0;
-    width: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .coffeeShopSlider {
-    overflow: visible;
-  }
-
-  #shopify-section-{{ section.id }} .coffeeShopSlider .swiper-slide {
-    width: 58%;
-    border-radius: 20px;
-    overflow: hidden;
-    transition: .6s;
-  }
-
-  #shopify-section-{{ section.id }} .coffeeShopSlider img {
-    width: 100%;
-    height: 600px;
-    object-fit: cover;
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .coffeeShopSlider .swiper-slide:not(.swiper-slide-active) {
-    opacity: .4;
-  }
-
-  #shopify-section-{{ section.id }} .coffeeShopSlider .swiper-slide-active {
-    opacity: 1;
-  }
-
-  @media (max-width: 992px) {
-    #shopify-section-{{ section.id }} .coffeeShopSlider .swiper-slide {
-      width: 85%;
-    }
-    #shopify-section-{{ section.id }} .coffeeShopSlider img {
-      height: 400px;
-    }
-  }
-{% endstyle %}
-
-<script>
-  (function () {
-    var root = document.getElementById('shopify-section-{{ section.id }}');
-    if (!root || typeof Swiper === 'undefined' || root.dataset.swiperInit === 'true') return;
-    root.dataset.swiperInit = 'true';
-
-    new Swiper(root.querySelector('.coffeeShopSlider'), {
-      slidesPerView: 'auto',
-      centeredSlides: true,
-      spaceBetween: 40,
-      loop: false,
-      speed: 1000,
-      grabCursor: true,
-      watchSlidesProgress: true,
-      autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      },
-      breakpoints: {
-        0: { spaceBetween: 15 },
-        768: { spaceBetween: 25 },
-        1200: { spaceBetween: 40 }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        script.onload = callback;
+        script.onerror = function () {
+          console.warn('Swiper failed to load. Coffee slider may not function.');
+          sliderContainer.style.overflowX = 'auto';
+          sliderContainer.style.webkitOverflowScrolling = 'touch';
+        };
+        document.head.appendChild(script);
       }
-    });
-  })();
-</script>
+
+      function initSlider() {
+        if (!window.Swiper) return;
+
+        if (sliderContainer.swiper) {
+          sliderContainer.swiper.destroy(true, true);
+        }
+
+        var autoplayEnabled = {{ section.settings.autoplay_enabled | default: false | json }};
+        var autoplayDelay = {{ section.settings.autoplay_delay | default: 5000 | json }};
+
+        sliderContainer.swiper = new window.Swiper(sliderContainer, {
+          slidesPerView: 'auto',
+          loop: true,
+          centeredSlides: true,
+          spaceBetween: 0,
+          speed: parseInt('{{ section.settings.transition_speed }}', 10) || 600,
+          grabCursor: true,
+          autoplay: autoplayEnabled ? { delay: autoplayDelay, disableOnInteraction: false } : false,
+          breakpoints: {
+            768: {
+              centeredSlides: true,
+              slidesPerView: 'auto'
+            },
+            0: {
+              slidesPerView: 1,
+              centeredSlides: true,
+              spaceBetween: 10
+            }
+          }
+        });
+      }
+
+      loadSwiper(initSlider);
+
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
+          section = document.querySelector('[data-section-id="{{ section.id }}"]');
+          sliderContainer = section ? section.querySelector('[data-coffee-slider]') : null;
+          if (sliderContainer) {
+            loadSwiper(initSlider);
+          }
+        }
+      });
+
+      document.addEventListener('shopify:section:unload', function (e) {
+        if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
+          if (sliderContainer && sliderContainer.swiper) {
+            sliderContainer.swiper.destroy(true, true);
+            sliderContainer.swiper = null;
+          }
+        }
+      });
+    })();
+  </script>
+</section>
 
 {% schema %}
 {
-  "name": "Coffee shop slider",
+  "name": "Coffee Shop Slider",
+  "tag": "section",
+  "class": "coffee-shop-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -242,23 +305,19 @@
     },
     {
       "type": "textarea",
-      "id": "text_1",
-      "label": "Paragraph 1",
+      "id": "paragraph_1",
+      "label": "First paragraph",
       "default": "Step into our coffee shop and enjoy freshly brewed coffee crafted from premium beans. Whether you're stopping by for your morning espresso, meeting friends, or looking for a cozy place to relax, our baristas are ready to serve the perfect cup."
     },
     {
       "type": "textarea",
-      "id": "text_2",
-      "label": "Paragraph 2",
+      "id": "paragraph_2",
+      "label": "Second paragraph",
       "default": "Discover our signature drinks, freshly roasted beans, and a warm atmosphere made for every coffee enthusiast."
     },
     {
-      "type": "header",
-      "content": "Buttons"
-    },
-    {
       "type": "text",
-      "id": "button_1_label",
+      "id": "button_1_text",
       "label": "Primary button text",
       "default": "Visit Our Coffee Shop"
     },
@@ -269,7 +328,7 @@
     },
     {
       "type": "text",
-      "id": "button_2_label",
+      "id": "button_2_text",
       "label": "Secondary button text",
       "default": "Find Us on the Map"
     },
@@ -277,35 +336,229 @@
       "type": "url",
       "id": "button_2_link",
       "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "range",
+      "id": "slide_width",
+      "label": "Slide width",
+      "min": 30,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Image height",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Transition speed",
+      "min": 100,
+      "max": 1000,
+      "step": 50,
+      "unit": "ms",
+      "default": 600
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_enabled",
+      "label": "Enable autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_bg",
+      "label": "Primary button background",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_text",
+      "label": "Primary button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_hover_bg",
+      "label": "Primary button hover background",
+      "default": "#b08d5f"
+    },
+    {
+      "type": "color",
+      "id": "primary_btn_hover_text",
+      "label": "Primary button hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "secondary_btn_bg",
+      "label": "Secondary button background",
+      "default": "transparent"
+    },
+    {
+      "type": "color",
+      "id": "secondary_btn_text",
+      "label": "Secondary button text",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "secondary_btn_border",
+      "label": "Secondary button border",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "secondary_btn_hover_bg",
+      "label": "Secondary button hover background",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "secondary_btn_hover_text",
+      "label": "Secondary button hover text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile font size",
+      "min": 18,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     }
   ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide image",
+      "name": "Slide",
+      "limit": 8,
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
           "label": "Image"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link (optional)"
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Coffee shop slider",
+      "name": "Coffee Shop Slider",
       "blocks": [
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" },
-        { "type": "slide" }
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
       ]
     }
   ]

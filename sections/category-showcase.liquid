@@ -1,183 +1,313 @@
-<section class="categories-sec" id="shopify-section-{{ section.id }}">
+<section
+  class="categories-sec"
+  data-section-id="{{ section.id }}"
+  style="
+    --categories-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --categories-padding-top: {{ section.settings.section_padding_top }}px;
+    --categories-bg: {{ section.settings.section_bg_color }};
+    --categories-heading-color: {{ section.settings.heading_color }};
+    --categories-text-color: {{ section.settings.text_color }};
+    --categories-card-text-color: {{ section.settings.card_text_color }};
+    --categories-card-title-color: {{ section.settings.card_title_color }};
+    --categories-link-color: {{ section.settings.link_color }};
+    --categories-heading-size: {{ section.settings.heading_size }}px;
+    --categories-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --categories-body-size: {{ section.settings.body_size }}px;
+    --categories-card-title-size: {{ section.settings.card_title_size }}px;
+    --categories-slide-width: {{ section.settings.slide_width }}px;
+    --categories-gap: {{ section.settings.space_between }}px;
+  "
+>
+  <style>
+    /* Swiper overrides for this section */
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider {
+      overflow: visible;
+    }
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-wrapper {
+      align-items: center;
+    }
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
+      width: var(--categories-slide-width);
+      flex-shrink: 0;
+    }
+
+    /* Base styles */
+    .categories-sec[data-section-id="{{ section.id }}"] {
+      overflow: hidden;
+      padding-top: var(--categories-padding-top);
+      padding-bottom: var(--categories-padding-bottom);
+      background: var(--categories-bg);
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      max-width: 950px;
+      margin-inline: auto;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .section-title h2 {
+      color: var(--categories-heading-color);
+      font-size: var(--categories-heading-size);
+      font-weight: 400;
+      margin-bottom: 30px;
+      line-height: 1.2;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .section-title p {
+      color: var(--categories-text-color);
+      font-size: var(--categories-body-size);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin-top: 14px;
+    }
+
+    /* Category card */
+    .categories-sec[data-section-id="{{ section.id }}"] .category-card {
+      transition: 0.35s;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .category-card a {
+      text-decoration: none;
+      display: block;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .category-img {
+      overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .category-img img {
+      width: 100%;
+      object-fit: cover;
+      transition: 0.5s;
+      border-radius: inherit;
+      display: block;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .category-card h4 {
+      font-size: var(--categories-card-title-size);
+      margin-bottom: 8px;
+      color: var(--categories-card-title-color);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .category-card p {
+      color: var(--categories-card-text-color);
+      font-size: var(--categories-body-size);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+
+    /* View all card */
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      height: 100%;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all a {
+      text-decoration: none;
+      color: var(--categories-link-color);
+      display: block;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all h4 {
+      font-size: var(--categories-card-title-size);
+      font-weight: 500;
+      color: var(--categories-card-title-color);
+      line-height: 1.3;
+      margin-bottom: 10px;
+      white-space: pre-line;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--categories-link-color);
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+      .categories-sec[data-section-id="{{ section.id }}"] .section-title h2 {
+        font-size: var(--categories-heading-size-mobile);
+      }
+      .categories-sec[data-section-id="{{ section.id }}"] .section-title {
+        margin-bottom: 40px;
+      }
+      .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+  </style>
+
   <div class="container">
-    {%- if section.settings.heading != blank -%}
-      <div class="section-title">
-        <h2>{{ section.settings.heading }}</h2>
-        {%- if section.settings.text != blank -%}
-          <p>{{ section.settings.text }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    <div class="section-title">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      <p>{{ section.settings.subheading | escape }}</p>
+    </div>
 
-    <div class="swiper categorySlider">
+    <div class="swiper categorySlider" data-category-slider>
       <div class="swiper-wrapper">
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'category_card' -%}
-            <div class="swiper-slide" {{ block.shopify_attributes }}>
-              <div class="category-card">
-                <a href="{{ block.settings.link | default: '#' }}">
-                  {%- if block.settings.image != blank -%}
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'category' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                <div class="category-card">
+                  <a href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}">
                     <div class="category-img">
-                      {{ block.settings.image | image_url: width: 500 | image_tag: alt: block.settings.title }}
+                      {% if block.settings.image != blank %}
+                        <img
+                          src="{{ block.settings.image | image_url: width: 600 }}"
+                          alt="{{ block.settings.image.alt | escape }}"
+                          loading="lazy"
+                        >
+                      {% else %}
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
                     </div>
-                  {%- endif -%}
-                  {%- if block.settings.title != blank -%}
-                    <h4>{{ block.settings.title }}</h4>
-                  {%- endif -%}
-                  {%- if block.settings.text != blank -%}
-                    <p>{{ block.settings.text }}</p>
-                  {%- endif -%}
-                </a>
+                    <h4>{{ block.settings.title | escape }}</h4>
+                    <p>{{ block.settings.text | escape }}</p>
+                  </a>
+                </div>
               </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-
-        {%- if section.settings.show_view_all -%}
-          <div class="swiper-slide">
-            <div class="view-all">
-              <a href="{{ section.settings.view_all_link | default: '#' }}">
-                <h4>{{ section.settings.view_all_heading | newline_to_br }}</h4>
-                <span>{{ section.settings.view_all_label }} <i class="ri-arrow-right-up-line"></i></span>
-              </a>
-            </div>
-          </div>
-        {%- endif -%}
+            {% when 'view_all' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                <div class="view-all">
+                  <a href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}">
+                    <h4>{{ block.settings.heading | escape | newline_to_br }}</h4>
+                    <span>
+                      {{ block.settings.text | escape }}
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 17L17 7M17 7H8M17 7V16" />
+                      </svg>
+                    </span>
+                  </a>
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
       </div>
     </div>
   </div>
-</section>
 
-{% style %}
-  #shopify-section-{{ section.id }} .categories-sec {
-    overflow: hidden;
-    padding-bottom: 100px;
-  }
+  <script>
+    (function () {
+      var section = document.querySelector('[data-section-id="{{ section.id }}"]');
+      if (!section) return;
 
-  #shopify-section-{{ section.id }} .section-title {
-    text-align: center;
-    margin-bottom: 60px;
-    max-width: 950px;
-    margin-inline: auto;
-  }
+      var swiperContainer = section.querySelector('[data-category-slider]');
+      if (!swiperContainer) return;
 
-  #shopify-section-{{ section.id }} .section-title h2 {
-    color: #000;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 400;
-    margin-bottom: 30px;
-  }
+      function loadSwiper(callback) {
+        if (window.Swiper) {
+          callback();
+          return;
+        }
 
-  #shopify-section-{{ section.id }} .section-title p {
-    color: var(--sub-title-clr, #141211);
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -1%;
-    margin-top: 14px;
-  }
+        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+          document.head.appendChild(link);
+        }
 
-  #shopify-section-{{ section.id }} .categorySlider {
-    overflow: visible;
-  }
-
-  #shopify-section-{{ section.id }} .categorySlider .swiper-slide {
-    width: 250px;
-  }
-
-  #shopify-section-{{ section.id }} .categories-sec .swiper-wrapper {
-    align-items: center;
-  }
-
-  #shopify-section-{{ section.id }} .category-card {
-    transition: .35s;
-  }
-
-  #shopify-section-{{ section.id }} .category-card a {
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .category-img {
-    overflow: hidden;
-    border-radius: 12px;
-    margin-bottom: 18px;
-  }
-
-  #shopify-section-{{ section.id }} .category-img img {
-    width: 100%;
-    object-fit: cover;
-    transition: .5s;
-    border-radius: inherit;
-    display: block;
-  }
-
-  #shopify-section-{{ section.id }} .category-card h4 {
-    font-size: 22px;
-    margin-bottom: 8px;
-    color: #000;
-    font-weight: 500;
-  }
-
-  #shopify-section-{{ section.id }} .category-card p {
-    color: rgba(0, 0, 0, 0.9);
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: -1%;
-  }
-
-  #shopify-section-{{ section.id }} .view-all {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    height: 100%;
-  }
-
-  #shopify-section-{{ section.id }} .view-all a {
-    text-decoration: none;
-    color: #111;
-  }
-
-  #shopify-section-{{ section.id }} .view-all h4 {
-    font-size: 22px;
-    font-weight: 500;
-    color: #000;
-  }
-
-  #shopify-section-{{ section.id }} .view-all span {
-    display: block;
-    margin-top: 10px;
-    color: var(--theme-clr, #53C295);
-    font-size: 18px;
-    font-weight: 500;
-  }
-{% endstyle %}
-
-<script>
-  (function () {
-    var root = document.getElementById('shopify-section-{{ section.id }}');
-    if (!root || typeof Swiper === 'undefined' || root.dataset.swiperInit === 'true') return;
-    root.dataset.swiperInit = 'true';
-
-    new Swiper(root.querySelector('.categorySlider'), {
-      slidesPerView: 'auto',
-      spaceBetween: 20,
-      freeMode: true,
-      grabCursor: true,
-      mousewheel: {
-        forceToAxis: true
-      },
-      breakpoints: {
-        0: { spaceBetween: 15 },
-        768: { spaceBetween: 20 },
-        1200: { spaceBetween: 20 }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        script.onload = callback;
+        script.onerror = function () {
+          console.warn('Swiper failed to load. The category slider may not work.');
+          swiperContainer.style.overflowX = 'auto';
+          swiperContainer.style.webkitOverflowScrolling = 'touch';
+        };
+        document.head.appendChild(script);
       }
-    });
-  })();
-</script>
+
+      function initSlider() {
+        if (!window.Swiper) return;
+
+        if (swiperContainer.swiper) {
+          swiperContainer.swiper.destroy(true, true);
+        }
+
+        var autoplayEnabled = {{ section.settings.autoplay_enabled | default: false | json }};
+        var autoplayDelay = {{ section.settings.autoplay_delay | default: 5000 | json }};
+
+        swiperContainer.swiper = new window.Swiper(swiperContainer, {
+          slidesPerView: 'auto',
+          spaceBetween: parseInt('{{ section.settings.space_between }}', 10) || 0,
+          loop: true,
+          loopedSlides: 3,
+          centeredSlides: false,
+          speed: 500,
+          grabCursor: true,
+          autoplay: autoplayEnabled ? { delay: autoplayDelay, disableOnInteraction: false } : false,
+          breakpoints: {
+            768: {
+              slidesPerView: 'auto',
+              spaceBetween: parseInt('{{ section.settings.space_between }}', 10) || 0,
+            }
+          }
+        });
+      }
+
+      loadSwiper(initSlider);
+
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
+          section = document.querySelector('[data-section-id="{{ section.id }}"]');
+          swiperContainer = section ? section.querySelector('[data-category-slider]') : null;
+          if (swiperContainer) {
+            loadSwiper(initSlider);
+          }
+        }
+      });
+
+      document.addEventListener('shopify:section:unload', function (e) {
+        if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
+          if (swiperContainer && swiperContainer.swiper) {
+            swiperContainer.swiper.destroy(true, true);
+            swiperContainer.swiper = null;
+          }
+        }
+      });
+    })();
+  </script>
+</section>
 
 {% schema %}
 {
-  "name": "Category showcase",
+  "name": "Categories Slider",
+  "tag": "section",
+  "class": "categories-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -186,43 +316,159 @@
     },
     {
       "type": "textarea",
-      "id": "text",
-      "label": "Description",
+      "id": "subheading",
+      "label": "Subheading",
       "default": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike."
     },
     {
       "type": "header",
-      "content": "\"View all\" tile"
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card text color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile font size",
+      "min": 18,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Card title font size",
+      "min": 16,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Slider Settings"
+    },
+    {
+      "type": "range",
+      "id": "slide_width",
+      "label": "Slide width",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "unit": "px",
+      "default": 250
+    },
+    {
+      "type": "range",
+      "id": "space_between",
+      "label": "Space between slides",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
     },
     {
       "type": "checkbox",
-      "id": "show_view_all",
-      "label": "Show \"view all\" tile at the end",
-      "default": true
+      "id": "autoplay_enabled",
+      "label": "Enable autoplay",
+      "default": false
     },
     {
-      "type": "textarea",
-      "id": "view_all_heading",
-      "label": "\"View all\" heading",
-      "info": "Press Enter/Return where you want a line break.",
-      "default": "Discover\nEverything We Offer"
-    },
-    {
-      "type": "text",
-      "id": "view_all_label",
-      "label": "\"View all\" link label",
-      "default": "View All Products"
-    },
-    {
-      "type": "url",
-      "id": "view_all_link",
-      "label": "\"View all\" link URL"
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
     }
   ],
   "blocks": [
     {
-      "type": "category_card",
-      "name": "Category card",
+      "type": "category",
+      "name": "Category Card",
       "settings": [
         {
           "type": "image_picker",
@@ -233,13 +479,37 @@
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Category"
+          "default": "Specialty Coffee"
         },
         {
           "type": "text",
           "id": "text",
-          "label": "Description",
-          "default": "Category description."
+          "label": "Text",
+          "default": "World-Class Specialty Coffee."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "view_all",
+      "name": "View All Card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Discover\nEverything We Offer"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "View All Products"
         },
         {
           "type": "url",
@@ -251,27 +521,49 @@
   ],
   "presets": [
     {
-      "name": "Category showcase",
+      "name": "Categories Slider",
       "blocks": [
         {
-          "type": "category_card",
-          "settings": { "title": "Specialty Coffee", "text": "World-Class Specialty Coffee." }
+          "type": "category",
+          "settings": {
+            "title": "Specialty Coffee",
+            "text": "World-Class Specialty Coffee."
+          }
         },
         {
-          "type": "category_card",
-          "settings": { "title": "Craft Chocolate", "text": "Artisanal Bean-to-Bar Chocolate." }
+          "type": "category",
+          "settings": {
+            "title": "Craft Chocolate",
+            "text": "Artisanal Bean-to-Bar Chocolate."
+          }
         },
         {
-          "type": "category_card",
-          "settings": { "title": "Artisan Gelato", "text": "Authentic Italian Gelato." }
+          "type": "category",
+          "settings": {
+            "title": "Artisan Gelato",
+            "text": "Authentic Italian Gelato."
+          }
         },
         {
-          "type": "category_card",
-          "settings": { "title": "Equipment", "text": "Premium Equipment & Tools." }
+          "type": "category",
+          "settings": {
+            "title": "Equipment",
+            "text": "Premium Equipment & Tools."
+          }
         },
         {
-          "type": "category_card",
-          "settings": { "title": "Manufacturing", "text": "Sulalat's production capabilities." }
+          "type": "category",
+          "settings": {
+            "title": "Manufacturing",
+            "text": "Sulalat's production capabilities."
+          }
+        },
+        {
+          "type": "view_all",
+          "settings": {
+            "heading": "Discover\nEverything We Offer",
+            "text": "View All Products"
+          }
         }
       ]
     }

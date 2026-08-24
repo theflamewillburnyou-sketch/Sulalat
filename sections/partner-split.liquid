@@ -1,163 +1,170 @@
-<section class="partner-section" id="shopify-section-{{ section.id }}">
+<section
+  class="partner-section"
+  data-section-id="{{ section.id }}"
+  style="
+    --partner-padding-top: {{ section.settings.section_padding_top }}px;
+    --partner-padding-bottom: {{ section.settings.section_padding_bottom }}px;
+    --partner-bg: {{ section.settings.section_bg_color }};
+    --partner-heading-color: {{ section.settings.heading_color }};
+    --partner-text-color: {{ section.settings.text_color }};
+    --partner-button-bg: {{ section.settings.button_bg_color }};
+    --partner-button-text: {{ section.settings.button_text_color }};
+    --partner-button-hover-bg: {{ section.settings.button_hover_bg_color }};
+    --partner-heading-size: {{ section.settings.heading_size }}px;
+    --partner-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --partner-body-size: {{ section.settings.body_size }}px;
+    --partner-button-size: {{ section.settings.button_size }}px;
+    --partner-content-padding: {{ section.settings.content_padding }}px;
+  "
+>
+  <style>
+    .partner-section[data-section-id="{{ section.id }}"] {
+      padding-top: var(--partner-padding-top);
+      padding-bottom: var(--partner-padding-bottom);
+      background: transparent;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      border-radius: 20px;
+      background: var(--partner-bg);
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+      width: 40%;
+      padding: var(--partner-content-padding);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-image {
+      width: 60%;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .section-title {
+      margin-bottom: 40px;
+      margin-inline: 0;
+      text-align: left;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .section-title h2 {
+      color: var(--partner-heading-color);
+      font-size: var(--partner-heading-size);
+      font-weight: 400;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-content p {
+      color: var(--partner-text-color);
+      line-height: 1.5;
+      font-size: var(--partner-body-size);
+      margin: 0;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-content p + p {
+      margin-top: 25px;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .partner-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .primary-btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 12px 28px;
+      border-radius: 4px;
+      background-color: var(--partner-button-bg);
+      color: var(--partner-button-text);
+      font-size: var(--partner-button-size);
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .primary-btn:hover {
+      background-color: var(--partner-button-hover-bg);
+      color: var(--partner-button-text);
+    }
+
+    @media (max-width: 991px) {
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        width: 100%;
+        padding: 40px 30px;
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .partner-image {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .partner-section[data-section-id="{{ section.id }}"] .section-title h2 {
+        font-size: var(--partner-heading-size-mobile);
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+
   <div class="container">
     <div class="partner-wrapper">
+      <!-- Content -->
       <div class="partner-content">
-        {%- if section.settings.heading != blank -%}
-          <div class="section-title">
-            <h2>{{ section.settings.heading }}</h2>
-          </div>
-        {%- endif -%}
-
-        {%- if section.settings.text_1 != blank -%}
-          <p>{{ section.settings.text_1 }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.text_2 != blank -%}
-          <p>{{ section.settings.text_2 }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_link | default: '#' }}" class="primary-btn">{{ section.settings.button_label }}</a>
-        {%- endif -%}
+        <div class="section-title">
+          <h2>{{ section.settings.heading | escape }}</h2>
+        </div>
+        <p>{{ section.settings.paragraph_1 | escape }}</p>
+        <p>{{ section.settings.paragraph_2 | escape }}</p>
+        <a href="{% if section.settings.button_link != blank %}{{ section.settings.button_link }}{% else %}#{% endif %}" class="primary-btn">
+          {{ section.settings.button_text | escape }}
+        </a>
       </div>
-
+      <!-- Image -->
       <div class="partner-image">
-        {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 1400 | image_tag: alt: section.settings.image.alt | default: section.settings.heading }}
-        {%- endif -%}
+        {% if section.settings.image != blank %}
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            alt="{{ section.settings.image.alt | escape }}"
+            loading="lazy"
+          >
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
       </div>
     </div>
   </div>
 </section>
 
-{% style %}
-  #shopify-section-{{ section.id }} .partner-section {
-    padding: 100px 0;
-  }
-
-  #shopify-section-{{ section.id }} .partner-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    border-radius: 20px;
-    background: var(--light-theme, #E7F5EF);
-    {%- if section.settings.image_position == 'left' -%}
-    flex-direction: row-reverse;
-    {%- endif -%}
-  }
-
-  #shopify-section-{{ section.id }} .partner-content {
-    width: 40%;
-    padding: 76px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-  }
-
-  #shopify-section-{{ section.id }} .partner-image {
-    width: 60%;
-  }
-
-  #shopify-section-{{ section.id }} .partner-section .section-title {
-    margin-bottom: 40px;
-    margin-inline: 0;
-    text-align: left;
-    max-width: none;
-  }
-
-  #shopify-section-{{ section.id }} .section-title h2 {
-    color: #000;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 400;
-  }
-
-  #shopify-section-{{ section.id }} .partner-image img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-  }
-
-  #shopify-section-{{ section.id }} .partner-content p {
-    color: var(--sub-title-clr, #141211);
-    line-height: 24px;
-    font-size: 16px;
-  }
-
-  #shopify-section-{{ section.id }} .partner-content p + p {
-    margin-top: 25px;
-  }
-
-  #shopify-section-{{ section.id }} .partner-content .primary-btn {
-    margin-top: 40px;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn {
-    background: var(--theme-clr, #53C295);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid var(--theme-clr, #53C295);
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-    padding: 11px 60px;
-    border-radius: 80px;
-    font-size: 16px;
-    font-family: var(--secondary-font);
-    color: #fff;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-    font-weight: 500;
-    text-decoration: none;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn:hover {
-    color: var(--theme-clr, #53C295);
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 0;
-    height: 100%;
-    background: #fff;
-    transition: all 0.5s ease-in-out;
-    z-index: -1;
-  }
-
-  #shopify-section-{{ section.id }} .primary-btn:hover::before {
-    right: auto;
-    left: 0;
-    width: 100%;
-  }
-
-  @media (max-width: 992px) {
-    #shopify-section-{{ section.id }} .partner-section {
-      padding: 60px 0;
-    }
-    #shopify-section-{{ section.id }} .partner-wrapper {
-      flex-direction: column-reverse;
-    }
-    #shopify-section-{{ section.id }} .partner-content,
-    #shopify-section-{{ section.id }} .partner-image {
-      width: 100%;
-    }
-    #shopify-section-{{ section.id }} .partner-content {
-      padding: 40px 30px;
-    }
-  }
-{% endstyle %}
-
 {% schema %}
 {
-  "name": "Partner split",
+  "name": "Partner Section",
+  "tag": "section",
+  "class": "partner-section-wrapper",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -166,21 +173,21 @@
     },
     {
       "type": "textarea",
-      "id": "text_1",
-      "label": "Paragraph 1",
-      "default": "Looking to scale your coffee business? Partner with Sulalat for consistent quality, reliable supply, and end-to-end support."
+      "id": "paragraph_1",
+      "label": "First paragraph",
+      "default": "Running a café, hotel, or distribution business? Partner with Sulalat for scalable wholesale solutions and trusted supply."
     },
     {
       "type": "textarea",
-      "id": "text_2",
-      "label": "Paragraph 2",
-      "default": "Instead, you'll work with a partner invested in your growth."
+      "id": "paragraph_2",
+      "label": "Second paragraph",
+      "default": "Unlock growth with Saudi Arabia's trusted B2B coffee solutions provider."
     },
     {
       "type": "text",
-      "id": "button_label",
+      "id": "button_text",
       "label": "Button text",
-      "default": "Explore Partnership Options"
+      "default": "Explore Business Solutions"
     },
     {
       "type": "url",
@@ -193,19 +200,123 @@
       "label": "Image"
     },
     {
-      "type": "select",
-      "id": "image_position",
-      "label": "Image position",
-      "options": [
-        { "value": "right", "label": "Right" },
-        { "value": "left", "label": "Left" }
-      ],
-      "default": "right"
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Partner background color",
+      "default": "#f5f1eb"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#555555"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background",
+      "default": "#c7a17a"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg_color",
+      "label": "Button hover background",
+      "default": "#b08d5f"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Section top padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Section bottom padding",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 20,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 75
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 20,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading mobile font size",
+      "min": 18,
+      "max": 36,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "body_size",
+      "label": "Body text size",
+      "min": 13,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "button_size",
+      "label": "Button font size",
+      "min": 12,
+      "max": 22,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     }
   ],
   "presets": [
     {
-      "name": "Partner split"
+      "name": "Partner Section"
     }
   ]
 }

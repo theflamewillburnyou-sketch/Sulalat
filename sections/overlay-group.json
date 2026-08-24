@@ -28,10 +28,10 @@
         "shipping_calculator_default_country": "United States",
         "promoted_products_visibility": "empty-cart",
         "promoted_products_heading": "Hot deals on tech...",
+        "promoted_products_list": [],
         "promoted_products_layout": "carousel",
         "show_media_promotion": true,
         "media_promotion_visibility": "non-empty-cart",
-        "image": "",
         "link_url": "",
         "media_promotion_min_height": 160,
         "content": "<h5>The latest Tech.</h5>",
@@ -50,27 +50,41 @@
       "blocks": {
         "compare-1": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "show_line": false
+          }
         },
         "compare-2": {
           "type": "vendor",
-          "settings": {}
+          "settings": {
+            "show_line": false
+          }
         },
         "compare-3": {
           "type": "title",
-          "settings": {}
+          "settings": {
+            "show_line": false
+          }
         },
         "compare-4": {
           "type": "price",
-          "settings": {}
+          "settings": {
+            "show_line": false
+          }
         },
         "compare-5": {
           "type": "description",
-          "settings": {}
+          "settings": {
+            "truncate_description": false,
+            "words_to_show": 20,
+            "show_line": false
+          }
         },
         "compare-6": {
           "type": "variants",
-          "settings": {}
+          "settings": {
+            "show_line": false
+          }
         }
       },
       "block_order": [
