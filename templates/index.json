@@ -310,7 +310,7 @@
         "paragraph_2": "Unlock growth with Saudi Arabia's trusted B2B coffee solutions provider.",
         "button_text": "Explore Business Solutions",
         "button_link": "",
-        "image": "shopify://shop_images/partner-image.png",
+        "image": "shopify://shop_images/aboiut-img-2.png",
         "section_bg_color": "#e7f5ef",
         "heading_color": "#000000",
         "text_color": "#141211",
@@ -465,6 +465,34 @@
         "pause_on_hover": false
       }
     },
+    "blog_showcase_Mh9KUa": {
+      "type": "blog-showcase",
+      "name": "Blog showcase",
+      "settings": {
+        "heading": "Explore the World of Coffee",
+        "subheading": "From our roastery to your cup, learn about the stories, science, and passion behind every batch.",
+        "blog": "news",
+        "button_text": "See More",
+        "button_link": "",
+        "section_bg_color": "#ffffff",
+        "heading_color": "#000000",
+        "text_color": "#141211",
+        "meta_color": "#53c295",
+        "link_color": "#53c295",
+        "link_hover_color": "#61c19a",
+        "button_bg_color": "#53c295",
+        "button_text_color": "#ffffff",
+        "button_hover_bg_color": "#45ad82",
+        "button_hover_text_color": "#ffffff",
+        "section_padding_top": 0,
+        "section_padding_bottom": 100,
+        "heading_size": 36,
+        "heading_size_mobile": 24,
+        "body_size": 16,
+        "card_title_size": 22,
+        "card_title_size_mobile": 18
+      }
+    },
     "trust_partner_aQ8Ntj": {
       "type": "trust-partner",
       "blocks": {
@@ -535,34 +563,6 @@
         "logo_gap": 50,
         "animation_duration": 30,
         "pause_on_hover": false
-      }
-    },
-    "blog_showcase_Mh9KUa": {
-      "type": "blog-showcase",
-      "name": "Blog showcase",
-      "settings": {
-        "heading": "Explore the World of Coffee",
-        "subheading": "From our roastery to your cup, learn about the stories, science, and passion behind every batch.",
-        "blog": "",
-        "button_text": "See More",
-        "button_link": "",
-        "section_bg_color": "#ffffff",
-        "heading_color": "#000000",
-        "text_color": "#141211",
-        "meta_color": "#53c295",
-        "link_color": "#53c295",
-        "link_hover_color": "#61c19a",
-        "button_bg_color": "#53c295",
-        "button_text_color": "#ffffff",
-        "button_hover_bg_color": "#45ad82",
-        "button_hover_text_color": "#ffffff",
-        "section_padding_top": 0,
-        "section_padding_bottom": 100,
-        "heading_size": 36,
-        "heading_size_mobile": 24,
-        "body_size": 16,
-        "card_title_size": 22,
-        "card_title_size_mobile": 18
       }
     }
   },

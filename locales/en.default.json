@@ -234,7 +234,7 @@
     },
     "footer": {
       "payment_methods": "Payment methods accepted",
-      "copyright_html": "&copy; {{ year }} <a href=\"{{ shop_url }}\">{{ shop_name }}</a>.",
+      "copyright_html": "&copy; {{ year }}. <a href=\"{{ shop_url }}\">{{ shop_name }}</a> | All Rights Reserved",
       "back_to_top": "Back to top"
     },
     "collection": {
