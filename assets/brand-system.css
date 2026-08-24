@@ -1,0 +1,185 @@
+/*
+  Sulalat brand system — aligned to sulalat-main reference (style.css)
+*/
+
+:root {
+  /* Reference: --theme-clr / --light-theme */
+  --brand-primary: #53c295;
+  --brand-primary-hover: #45ad82;
+  --brand-primary-deep: #006c4e;
+  --brand-primary-text: #ffffff;
+  --brand-on-surface: #141211;
+  --brand-body-text: #535353;
+  --brand-muted-text: #535353;
+  --brand-surface: #ffffff;
+  --brand-surface-soft: #e7f5ef;
+  --brand-surface-inset: #ffffff;
+  --brand-border: rgba(0, 0, 0, 0.2);
+  --brand-mint: #e7f5ef;
+  --brand-footer-bg: #eef9f4;
+  --brand-divider-tint: rgba(196, 246, 226, 0.2);
+  --brand-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  /* Typography — keep theme faces; reference uses Roboto + Greycliff CF */
+  --brand-font-heading: "Noto Serif", Georgia, serif;
+  --brand-font-body: "Be Vietnam Pro", "Nunito Sans", sans-serif;
+
+  --body-font-family: var(--brand-font-body);
+  --navigation-font-family: var(--brand-font-body);
+
+  /* Shape + spacing from reference */
+  --brand-radius-sm: 12px;
+  --brand-radius-md: 18px;
+  --brand-radius-lg: 20px;
+  --brand-radius-pill: 80px;
+  --brand-section-title-gap: 60px;
+  --brand-container-max: 1440px;
+  --brand-container-padding-x: 20px;
+  --brand-section-padding: 100px;
+  --brand-gap: 25px;
+}
+
+/* Shared primary / secondary buttons (reference .primary-btn / .secondary-btn) */
+.primary-btn,
+.brand-cta--primary {
+  background: var(--brand-primary);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--brand-primary);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 11px 60px;
+  border-radius: var(--brand-radius-pill);
+  font-size: 16px;
+  font-family: "Greycliff CF", var(--brand-font-body);
+  color: #fff;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: color 0.5s ease-in-out;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.primary-btn:hover,
+.brand-cta--primary:hover {
+  color: var(--brand-primary);
+}
+
+.primary-btn::before,
+.brand-cta--primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 100%;
+  background: #fff;
+  transition: width 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.primary-btn:hover::before,
+.brand-cta--primary:hover::before {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+.secondary-btn,
+.brand-cta--secondary {
+  background: transparent;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--brand-primary);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 11px 60px;
+  border-radius: var(--brand-radius-pill);
+  font-size: 16px;
+  font-family: "Greycliff CF", var(--brand-font-body);
+  color: var(--brand-primary);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: color 0.5s ease-in-out;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.secondary-btn:hover,
+.brand-cta--secondary:hover {
+  color: #fff;
+}
+
+.secondary-btn::before,
+.brand-cta--secondary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 100%;
+  background: var(--brand-primary);
+  transition: width 0.5s ease-in-out;
+  z-index: -1;
+}
+
+.secondary-btn:hover::before,
+.brand-cta--secondary:hover::before {
+  right: auto;
+  left: 0;
+  width: 100%;
+}
+
+.brand-focus-ring:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+.brand-card {
+  border-radius: var(--brand-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--brand-shadow);
+}
+
+body {
+  font-family: var(--brand-font-body);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h0, .h1, .h2, .h3, .h4, .h5, .h6,
+.section__heading,
+.ff-heading {
+  font-family: var(--brand-font-heading);
+}
+
+@media (min-width: 769px) {
+  .main-nav__item--primary {
+    font-family: var(--brand-font-body);
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primary-btn,
+  .secondary-btn,
+  .brand-cta--primary,
+  .brand-cta--secondary,
+  .brand-card {
+    transition: none;
+  }
+
+  .primary-btn::before,
+  .secondary-btn::before,
+  .brand-cta--primary::before,
+  .brand-cta--secondary::before {
+    transition: none;
+  }
+}

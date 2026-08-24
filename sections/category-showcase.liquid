@@ -19,19 +19,6 @@
   "
 >
   <style>
-    /* Swiper overrides for this section */
-    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider {
-      overflow: visible;
-    }
-    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-wrapper {
-      align-items: center;
-    }
-    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
-      width: var(--categories-slide-width);
-      flex-shrink: 0;
-    }
-
-    /* Base styles */
     .categories-sec[data-section-id="{{ section.id }}"] {
       overflow: hidden;
       padding-top: var(--categories-padding-top);
@@ -40,9 +27,9 @@
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .container {
-      max-width: 1200px;
+      max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .section-title {
@@ -54,7 +41,7 @@
 
     .categories-sec[data-section-id="{{ section.id }}"] .section-title h2 {
       color: var(--categories-heading-color);
-      font-size: var(--categories-heading-size);
+      font-size: clamp(24px, 3vw, var(--categories-heading-size));
       font-weight: 400;
       margin-bottom: 30px;
       line-height: 1.2;
@@ -63,12 +50,24 @@
     .categories-sec[data-section-id="{{ section.id }}"] .section-title p {
       color: var(--categories-text-color);
       font-size: var(--categories-body-size);
-      line-height: 1.5;
+      line-height: 24px;
       letter-spacing: -0.01em;
       margin-top: 14px;
     }
 
-    /* Category card */
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider {
+      overflow: visible;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-wrapper {
+      align-items: center;
+    }
+
+    .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
+      width: var(--categories-slide-width);
+      flex-shrink: 0;
+    }
+
     .categories-sec[data-section-id="{{ section.id }}"] .category-card {
       transition: 0.35s;
     }
@@ -76,6 +75,7 @@
     .categories-sec[data-section-id="{{ section.id }}"] .category-card a {
       text-decoration: none;
       display: block;
+      color: inherit;
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .category-img {
@@ -84,12 +84,13 @@
       margin-bottom: 18px;
     }
 
-    .categories-sec[data-section-id="{{ section.id }}"] .category-img img {
+    .categories-sec[data-section-id="{{ section.id }}"] .category-img img,
+    .categories-sec[data-section-id="{{ section.id }}"] .category-img svg.placeholder-svg {
       width: 100%;
+      display: block;
       object-fit: cover;
       transition: 0.5s;
       border-radius: inherit;
-      display: block;
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .category-card h4 {
@@ -103,21 +104,22 @@
     .categories-sec[data-section-id="{{ section.id }}"] .category-card p {
       color: var(--categories-card-text-color);
       font-size: var(--categories-body-size);
-      line-height: 1.5;
+      line-height: 24px;
       letter-spacing: -0.01em;
+      margin: 0;
     }
 
-    /* View all card */
     .categories-sec[data-section-id="{{ section.id }}"] .view-all {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       height: 100%;
+      min-height: 200px;
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .view-all a {
       text-decoration: none;
-      color: var(--categories-link-color);
+      color: #111;
       display: block;
     }
 
@@ -126,40 +128,38 @@
       font-weight: 500;
       color: var(--categories-card-title-color);
       line-height: 1.3;
-      margin-bottom: 10px;
+      margin: 0;
       white-space: pre-line;
     }
 
     .categories-sec[data-section-id="{{ section.id }}"] .view-all span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display: block;
+      margin-top: 10px;
       color: var(--categories-link-color);
       font-size: 18px;
       font-weight: 500;
     }
 
+    .categories-sec[data-section-id="{{ section.id }}"] .view-all span i,
     .categories-sec[data-section-id="{{ section.id }}"] .view-all svg {
-      width: 20px;
-      height: 20px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
+      width: 18px;
+      height: 18px;
+      margin-left: 4px;
     }
 
-    /* Responsive */
     @media (max-width: 767px) {
       .categories-sec[data-section-id="{{ section.id }}"] .section-title h2 {
         font-size: var(--categories-heading-size-mobile);
       }
+
       .categories-sec[data-section-id="{{ section.id }}"] .section-title {
         margin-bottom: 40px;
       }
+
       .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
-        width: 80%;
-        max-width: 300px;
+        width: min(80vw, 300px);
       }
     }
   </style>
@@ -167,7 +167,9 @@
   <div class="container">
     <div class="section-title">
       <h2>{{ section.settings.heading | escape }}</h2>
-      <p>{{ section.settings.subheading | escape }}</p>
+      {% if section.settings.subheading != blank %}
+        <p>{{ section.settings.subheading | escape }}</p>
+      {% endif %}
     </div>
 
     <div class="swiper categorySlider" data-category-slider>
@@ -201,7 +203,7 @@
                     <h4>{{ block.settings.heading | escape | newline_to_br }}</h4>
                     <span>
                       {{ block.settings.text | escape }}
-                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <path d="M7 17L17 7M17 7H8M17 7V16" />
                       </svg>
                     </span>
@@ -219,8 +221,8 @@
       var section = document.querySelector('[data-section-id="{{ section.id }}"]');
       if (!section) return;
 
-      var swiperContainer = section.querySelector('[data-category-slider]');
-      if (!swiperContainer) return;
+      var sliderEl = section.querySelector('[data-category-slider]');
+      if (!sliderEl) return;
 
       function loadSwiper(callback) {
         if (window.Swiper) {
@@ -235,41 +237,36 @@
           document.head.appendChild(link);
         }
 
+        var existing = document.querySelector('script[src*="swiper-bundle.min.js"]');
+        if (existing) {
+          existing.addEventListener('load', callback);
+          if (window.Swiper) callback();
+          return;
+        }
+
         var script = document.createElement('script');
         script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
         script.onload = callback;
-        script.onerror = function () {
-          console.warn('Swiper failed to load. The category slider may not work.');
-          swiperContainer.style.overflowX = 'auto';
-          swiperContainer.style.webkitOverflowScrolling = 'touch';
-        };
         document.head.appendChild(script);
       }
 
       function initSlider() {
         if (!window.Swiper) return;
+        if (sliderEl.swiper) sliderEl.swiper.destroy(true, true);
 
-        if (swiperContainer.swiper) {
-          swiperContainer.swiper.destroy(true, true);
-        }
+        var gap = parseInt('{{ section.settings.space_between }}', 10);
+        if (isNaN(gap) || gap <= 0) gap = 20;
 
-        var autoplayEnabled = {{ section.settings.autoplay_enabled | default: false | json }};
-        var autoplayDelay = {{ section.settings.autoplay_delay | default: 5000 | json }};
-
-        swiperContainer.swiper = new window.Swiper(swiperContainer, {
+        sliderEl.swiper = new window.Swiper(sliderEl, {
           slidesPerView: 'auto',
-          spaceBetween: parseInt('{{ section.settings.space_between }}', 10) || 0,
-          loop: true,
-          loopedSlides: 3,
-          centeredSlides: false,
-          speed: 500,
+          spaceBetween: gap,
+          freeMode: true,
           grabCursor: true,
-          autoplay: autoplayEnabled ? { delay: autoplayDelay, disableOnInteraction: false } : false,
+          mousewheel: { forceToAxis: true },
           breakpoints: {
-            768: {
-              slidesPerView: 'auto',
-              spaceBetween: parseInt('{{ section.settings.space_between }}', 10) || 0,
-            }
+            0: { spaceBetween: Math.min(gap, 15) },
+            768: { spaceBetween: gap },
+            1200: { spaceBetween: gap }
           }
         });
       }
@@ -279,19 +276,8 @@
       document.addEventListener('shopify:section:load', function (e) {
         if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
           section = document.querySelector('[data-section-id="{{ section.id }}"]');
-          swiperContainer = section ? section.querySelector('[data-category-slider]') : null;
-          if (swiperContainer) {
-            loadSwiper(initSlider);
-          }
-        }
-      });
-
-      document.addEventListener('shopify:section:unload', function (e) {
-        if (e.target && e.target.querySelector('[data-section-id="{{ section.id }}"]')) {
-          if (swiperContainer && swiperContainer.swiper) {
-            swiperContainer.swiper.destroy(true, true);
-            swiperContainer.swiper = null;
-          }
+          sliderEl = section ? section.querySelector('[data-category-slider]') : null;
+          if (sliderEl) loadSwiper(initSlider);
         }
       });
     })();
@@ -334,7 +320,7 @@
       "type": "color",
       "id": "text_color",
       "label": "Text color",
-      "default": "#666666"
+      "default": "#141211"
     },
     {
       "type": "color",
@@ -346,13 +332,13 @@
       "type": "color",
       "id": "card_text_color",
       "label": "Card text color",
-      "default": "#444444"
+      "default": "#000000"
     },
     {
       "type": "color",
       "id": "link_color",
       "label": "Link color",
-      "default": "#c7a17a"
+      "default": "#53c295"
     },
     {
       "type": "color",
@@ -446,7 +432,7 @@
       "max": 40,
       "step": 2,
       "unit": "px",
-      "default": 0
+      "default": 20
     },
     {
       "type": "checkbox",

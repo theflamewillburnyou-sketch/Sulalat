@@ -28,7 +28,10 @@
         <h1 style="color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h1>
       {% endif %}
 
-      <div class="banner-btm" style="padding-bottom: {{ section.settings.content_padding_bottom }}px; border-top-color: {{ section.settings.divider_color }};">
+      <div
+        class="banner-btm"
+        style="border-top-color: {{ section.settings.divider_color }};"
+      >
         {% if section.blocks.size > 0 %}
           <div class="banner-cards" style="--card-columns: {{ section.settings.cards_per_row }};">
             {% for block in section.blocks %}
@@ -38,8 +41,11 @@
                     <h4 style="color: {{ block.settings.text_color }};">{{ block.settings.heading }}</h4>
                   {% endif %}
                   {% if block.settings.text != blank %}
-                    <p style="color: {{ block.settings.text_color }};">{{ block.settings.text }}</p>
+                    <div class="banner-card-text" style="color: {{ block.settings.text_color }};">
+                      {{ block.settings.text }}
+                    </div>
                   {% endif %}
+
                   <div class="banner-card-img">
                     <a
                       href="{{ block.settings.link | default: '#' }}"
@@ -54,7 +60,8 @@
                           alt="{{ block.settings.image.alt | default: block.settings.image_alt | escape }}"
                           width="{{ block.settings.image.width }}"
                           height="{{ block.settings.image.height }}"
-                          loading="lazy"
+                          loading="eager"
+                          fetchpriority="high"
                         >
                       {% else %}
                         {{ 'product-1' | placeholder_svg_tag: 'banner-card-placeholder-svg' }}
@@ -100,7 +107,7 @@
 </section>
 
 <style>
-  /* site banner start */
+  /* Matched to sulalat-main reference hero */
   .site-banner[data-section-id="{{ section.id }}"] {
     position: relative;
     isolation: isolate;
@@ -133,7 +140,7 @@
     display: flex;
     justify-content: {{ section.settings.content_alignment | default: 'flex-start' }};
     align-items: end;
-    padding-bottom: 50px;
+    padding-bottom: {{ section.settings.content_padding_bottom | default: 50 }}px;
     z-index: 2;
   }
 
@@ -146,10 +153,17 @@
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
+    color: #fff;
     font-weight: 400;
     font-size: clamp(32px, 4vw, {{ section.settings.heading_max_size | default: 60 }}px);
     line-height: 1.33;
     margin: 0;
+  }
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 p {
+    margin: 0;
+    font: inherit;
+    color: inherit;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
@@ -178,7 +192,14 @@
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img img,
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img svg.banner-card-placeholder-svg {
     width: 100%;
+    display: block;
     border-radius: {{ section.settings.card_image_radius | default: 20 }}px;
+  }
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img a {
+    position: relative;
+    display: block;
+    text-decoration: none;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
@@ -188,19 +209,23 @@
     justify-content: center;
     position: absolute;
     inset: 0;
+    color: #fff;
     font-size: 16px;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
+    color: #fff;
     font-size: 22px;
     font-weight: 500;
-    margin-bottom: 12px;
-    margin-top: 0;
+    margin: 0 0 12px;
   }
 
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-text,
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-text p,
   .site-banner[data-section-id="{{ section.id }}"] .banner-card p {
+    color: #fff;
     font-size: 16px;
-    letter-spacing: -1%;
+    letter-spacing: -0.01em;
     line-height: 24px;
     font-weight: 300;
     margin: 0;
@@ -211,6 +236,7 @@
     align-items: center;
     gap: 10px;
     font-size: 18px;
+    color: #ffffffcc;
     font-weight: 300;
     text-decoration: none;
   }
@@ -243,7 +269,6 @@
       display: none;
     }
   }
-  /* site banner end */
 </style>
 
 {% schema %}
@@ -338,7 +363,7 @@
       "step": 20,
       "unit": "px",
       "label": "Content container max width",
-      "default": 1400
+      "default": 1440
     },
     {
       "type": "header",
@@ -380,7 +405,7 @@
       "max": 100,
       "step": 5,
       "unit": "px",
-      "label": "Bottom row top spacing",
+      "label": "Banner content bottom padding",
       "default": 50
     },
     {

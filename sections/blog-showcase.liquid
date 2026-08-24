@@ -26,9 +26,9 @@
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .container {
-      max-width: 1200px;
+      max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .section-title {
@@ -62,6 +62,12 @@
 
     .blog-section[data-section-id="{{ section.id }}"] .featured-blog {
       width: calc((100% - 60px) * 0.48);
+      display: flex;
+    }
+
+    .blog-section[data-section-id="{{ section.id }}"] .featured-blog .blog-image {
+      width: 100%;
+      min-height: 420px;
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .blog-list {
@@ -144,6 +150,16 @@
       font-weight: 300;
     }
 
+    .blog-section[data-section-id="{{ section.id }}"] .blog-overlay .blog-read-more {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
     .blog-section[data-section-id="{{ section.id }}"] .blog-card {
       display: flex;
       justify-content: space-between;
@@ -214,19 +230,13 @@
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .primary-btn {
-      display: inline-block;
-      padding: 12px 28px;
-      border-radius: 4px;
-      background-color: {{ section.settings.button_bg_color }};
+      background: {{ section.settings.button_bg_color }};
+      border-color: {{ section.settings.button_bg_color }};
       color: {{ section.settings.button_text_color }};
-      font-size: var(--blog-body-size);
-      text-decoration: none;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .primary-btn:hover {
-      background-color: {{ section.settings.button_hover_bg_color }};
-      color: {{ section.settings.button_hover_text_color }};
+      color: {{ section.settings.button_bg_color }};
     }
 
     @media (max-width: 991px) {
@@ -289,7 +299,7 @@
             <div class="blog-overlay">
               <h3>{{ featured_article.title | escape }}</h3>
               <p>{{ featured_article.excerpt_or_content | strip_html | truncate: 100 }}</p>
-              <span>{{ featured_article.published_at | date: "%d %B %Y" }}</span>
+              <span class="blog-read-more">Read More</span>
             </div>
           </a>
         </article>
@@ -326,7 +336,38 @@
       {% endif %}
 
       {% if selected_blog == blank or selected_blog.articles_count == 0 %}
-        <p style="text-align: center; width: 100%;">Please select a blog in the section settings.</p>
+        <article class="featured-blog">
+          <a href="#" class="blog-image">
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            <div class="blog-overlay">
+              <h3>The Art of Specialty Coffee Roasting</h3>
+              <p>Discover how Sulalat sources and roasts premium beans for world-class flavor.</p>
+              <span class="blog-read-more">Read More</span>
+            </div>
+          </a>
+        </article>
+        <div class="blog-list">
+          <article class="blog-card">
+            <div class="blog-content">
+              <h3><a href="#">From Bean to Cup</a></h3>
+              <p>Follow the journey of our specialty beans across the Kingdom.</p>
+              <span>Read More</span>
+            </div>
+            <a href="#" class="blog-thumb">
+              {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          </article>
+          <article class="blog-card">
+            <div class="blog-content">
+              <h3><a href="#">Inside Our Training Academy</a></h3>
+              <p>Learn barista skills and brewing techniques with Sulalat experts.</p>
+              <span>Read More</span>
+            </div>
+            <a href="#" class="blog-thumb">
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          </article>
+        </div>
       {% endif %}
     </div>
 
@@ -406,7 +447,7 @@
       "type": "color",
       "id": "meta_color",
       "label": "Date/meta color",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
@@ -418,7 +459,7 @@
       "type": "color",
       "id": "link_hover_color",
       "label": "Link hover color",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "header",
@@ -428,7 +469,7 @@
       "type": "color",
       "id": "button_bg_color",
       "label": "Button background",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
@@ -440,7 +481,7 @@
       "type": "color",
       "id": "button_hover_bg_color",
       "label": "Button hover background",
-      "default": "#b08d5f"
+      "default": "#4eaa84"
     },
     {
       "type": "color",

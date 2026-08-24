@@ -8,6 +8,138 @@
     "theme_support_url": "https://cleancanvas.co.uk/support/enterprise"
   },
   {
+    "name": "Brand style",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Sulalat brand guide tokens. Change these in the customizer to update brand colors, mint surfaces, and radii across the theme. Heading and body fonts stay in Typography."
+      },
+      {
+        "type": "header",
+        "content": "Brand colors"
+      },
+      {
+        "type": "color",
+        "id": "brand_primary",
+        "label": "Primary",
+        "info": "Main CTA and accent (mint).",
+        "default": "#61c19a"
+      },
+      {
+        "type": "color",
+        "id": "brand_primary_hover",
+        "label": "Primary hover",
+        "default": "#4eaa84"
+      },
+      {
+        "type": "color",
+        "id": "brand_deep",
+        "label": "Deep / links",
+        "info": "Darker mint for links and emphasis.",
+        "default": "#006c4e"
+      },
+      {
+        "type": "color",
+        "id": "brand_on_primary",
+        "label": "Text on primary",
+        "default": "#ffffff"
+      },
+      {
+        "type": "header",
+        "content": "Text"
+      },
+      {
+        "type": "color",
+        "id": "brand_heading",
+        "label": "Headings",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "brand_body",
+        "label": "Body text",
+        "default": "#4a4a4a"
+      },
+      {
+        "type": "color",
+        "id": "brand_muted",
+        "label": "Muted text",
+        "default": "#757575"
+      },
+      {
+        "type": "header",
+        "content": "Surfaces"
+      },
+      {
+        "type": "color",
+        "id": "brand_surface",
+        "label": "Page background",
+        "default": "#fbf9f9"
+      },
+      {
+        "type": "color",
+        "id": "brand_surface_soft",
+        "label": "Soft surface",
+        "default": "#f5f3f3"
+      },
+      {
+        "type": "color",
+        "id": "brand_card",
+        "label": "Card background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "brand_border",
+        "label": "Border",
+        "default": "#dbdad9"
+      },
+      {
+        "type": "color",
+        "id": "brand_mint",
+        "label": "Mint panel",
+        "info": "Partner split, newsletter bar, and similar brand surfaces.",
+        "default": "#d8f3e7"
+      },
+      {
+        "type": "header",
+        "content": "Shape"
+      },
+      {
+        "type": "range",
+        "id": "brand_radius_card",
+        "min": 0,
+        "max": 32,
+        "step": 2,
+        "unit": "px",
+        "label": "Card corner radius",
+        "default": 16
+      },
+      {
+        "type": "range",
+        "id": "brand_radius_button",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "label": "Button corner radius",
+        "info": "26px or higher reads as a pill.",
+        "default": 26
+      },
+      {
+        "type": "header",
+        "content": "Apply brand"
+      },
+      {
+        "type": "checkbox",
+        "id": "brand_apply_to_theme",
+        "label": "Apply brand colors to theme buttons, links, and page background",
+        "info": "When on, Brand style overrides the Colors group for primary buttons, links, headings, body text, and page background.",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "Colors",
     "settings": [
       {
@@ -18,31 +150,31 @@
         "type": "color",
         "id": "bg_color",
         "label": "Page background",
-        "default": "#ffffff"
+        "default": "#fbf9f9"
       },
       {
         "type": "color",
         "id": "heading_color",
         "label": "Headings",
-        "default": "#333333"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
         "id": "text_color",
         "label": "Body text",
-        "default": "#555555"
+        "default": "#4a4a4a"
       },
       {
         "type": "color",
         "id": "link_color",
         "label": "Links",
-        "default": "#0000ee"
+        "default": "#006c4e"
       },
       {
         "type": "color",
         "id": "star_color",
         "label": "Rating stars",
-        "default": "#f7c346"
+        "default": "#c9a227"
       },
       {
         "type": "header",
@@ -52,7 +184,7 @@
         "type": "color",
         "id": "button_bg_color",
         "label": "Background",
-        "default": "#333333"
+        "default": "#61c19a"
       },
       {
         "type": "color",
@@ -74,7 +206,7 @@
         "type": "color",
         "id": "button_alt_text_color",
         "label": "Border and text",
-        "default": "#333333"
+        "default": "#61c19a"
       },
       {
         "type": "header",
@@ -84,7 +216,7 @@
         "type": "color",
         "id": "color_scheme_1_bg",
         "label": "Background",
-        "default": "#eeeeee"
+        "default": "#f5f3f3"
       },
       {
         "type": "color_background",
@@ -96,19 +228,19 @@
         "type": "color",
         "id": "color_scheme_1_heading",
         "label": "Headings",
-        "default": "#333333"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
         "id": "color_scheme_1_text",
         "label": "Text",
-        "default": "#333333"
+        "default": "#4a4a4a"
       },
       {
         "type": "color",
         "id": "color_scheme_1_btn_bg",
         "label": "Button background",
-        "default": "#333333"
+        "default": "#61c19a"
       },
       {
         "type": "color",
@@ -124,7 +256,7 @@
         "type": "color",
         "id": "color_scheme_2_bg",
         "label": "Background",
-        "default": "#FF580D"
+        "default": "#1a1a1a"
       },
       {
         "type": "color_background",
@@ -142,13 +274,13 @@
         "type": "color",
         "id": "color_scheme_2_text",
         "label": "Text",
-        "default": "#ffffff"
+        "default": "#f2f0f0"
       },
       {
         "type": "color",
         "id": "color_scheme_2_btn_bg",
         "label": "Button background",
-        "default": "#292F36"
+        "default": "#61c19a"
       },
       {
         "type": "color",
@@ -164,7 +296,7 @@
         "type": "color",
         "id": "color_scheme_3_bg",
         "label": "Background",
-        "default": "#1a66d2"
+        "default": "#61c19a"
       },
       {
         "type": "color_background",
@@ -188,7 +320,7 @@
         "type": "color",
         "id": "color_scheme_3_btn_bg",
         "label": "Button background",
-        "default": "#333333"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
@@ -204,19 +336,19 @@
         "type": "color",
         "id": "panel_bg_color",
         "label": "Background",
-        "default": "#f6f7f7"
+        "default": "#f5f3f3"
       },
       {
         "type": "color",
         "id": "panel_heading_color",
         "label": "Headings",
-        "default": "#333333"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
         "id": "panel_text_color",
         "label": "Text",
-        "default": "#555555"
+        "default": "#4a4a4a"
       },
       {
         "type": "header",
@@ -232,7 +364,7 @@
         "type": "color",
         "id": "drawer_text_color",
         "label": "Text",
-        "default": "#555555"
+        "default": "#1a1a1a"
       },
       {
         "type": "header",
@@ -242,37 +374,37 @@
         "type": "color",
         "id": "error_bg_color",
         "label": "Error background",
-        "default": "#fcedee"
+        "default": "#fceee9"
       },
       {
         "type": "color",
         "id": "error_text_color",
         "label": "Error text",
-        "default": "#b40c1c"
+        "default": "#9b2c14"
       },
       {
         "type": "color",
         "id": "success_bg_color",
         "label": "Success background",
-        "default": "#e8f6ea"
+        "default": "#e7f6ef"
       },
       {
         "type": "color",
         "id": "success_text_color",
         "label": "Success text",
-        "default": "#2c7e3f"
+        "default": "#006c4e"
       },
       {
         "type": "color",
         "id": "info_bg_color",
         "label": "Info background",
-        "default": "#E4EDFA"
+        "default": "#e7f6ef"
       },
       {
         "type": "color",
         "id": "info_text_color",
         "label": "Info text",
-        "default": "#1A66D2"
+        "default": "#006c4e"
       },
       {
         "type": "header",
@@ -299,7 +431,7 @@
         "id": "blend_bg_color",
         "label": "Blend background color",
         "info": "Choose a very light color",
-        "default": "#fefefe"
+        "default": "#fbf9f9"
       }
     ]
   },
@@ -314,7 +446,7 @@
         "type": "font_picker",
         "id": "heading_font",
         "label": "Font",
-        "default": "nunito_sans_n7"
+        "default": "noto_serif_n6"
       },
       {
         "type": "checkbox",
@@ -382,8 +514,8 @@
         "type": "font_picker",
         "id": "navigation_font",
         "label": "Font",
-        "default": "nunito_sans_n7",
-        "info": "The body font will be used for third-level menu items."
+        "default": "nunito_sans_n6",
+        "info": "The body font will be used for third-level menu items. Storefront body/nav also use Be Vietnam Pro from the brand system."
       }
     ]
   },
@@ -402,7 +534,7 @@
         "max": 3000,
         "step": 30,
         "unit": "px",
-        "default": 1320
+        "default": 1290
       },
       {
         "type": "select",
@@ -422,7 +554,7 @@
             "label": "Large"
           }
         ],
-        "default": "48"
+        "default": "64"
       },
       {
         "type": "header",
@@ -456,7 +588,7 @@
         "max": 26,
         "step": 1,
         "unit": "px",
-        "default": 21
+        "default": 26
       },
       {
         "type": "header",
@@ -770,7 +902,7 @@
         "type": "color",
         "id": "coll_border_color",
         "label": "Image border color",
-        "default": "#E1E1E1"
+        "default": "#dbdad9"
       }
     ]
   },
@@ -991,13 +1123,13 @@
         "type": "color",
         "id": "card_text_color",
         "label": "Box text color",
-        "default": "#555555"
+        "default": "#1a1a1a"
       },
       {
         "type": "color",
         "id": "card_border_color",
         "label": "Box border color",
-        "default": "#E1E1E1"
+        "default": "#dbdad9"
       },
       {
         "type": "header",
@@ -1023,7 +1155,7 @@
         "type": "color",
         "id": "card_highlight_border_color",
         "label": "Highlight border color",
-        "default": "#E1E1E1"
+        "default": "#61c19a"
       }
     ]
   },
@@ -1269,7 +1401,7 @@
         "type": "color",
         "id": "sale_label_bg_color",
         "label": "Sale background",
-        "default": "#d52f5a"
+        "default": "#c45c38"
       },
       {
         "type": "color",
@@ -1789,7 +1921,7 @@
         "type": "color",
         "id": "new_label_bg_color",
         "label": "New background",
-        "default": "#212b36"
+        "default": "#61c19a"
       },
       {
         "type": "color",
@@ -2177,7 +2309,7 @@
         "type": "color",
         "id": "custom_label_bg_color",
         "label": "Custom background",
-        "default": "#2C7E3F"
+        "default": "#61c19a"
       },
       {
         "type": "color",
@@ -2641,7 +2773,7 @@
         "type": "color",
         "id": "speech_icon_color",
         "label": "Speech pulse color",
-        "default": "#ff0000"
+        "default": "#61c19a"
       }
     ]
   },

@@ -1,5 +1,5 @@
 {% # theme-check-disable LiquidTag, TemplateLength %}
-
+<script src="{{ 'custom-select.js' | asset_url }}" defer="defer"></script>
 {%- liquid
   assign has_mega_nav_pills = false
   assign has_mega_nav_columns = false
@@ -47,9 +47,134 @@
     --shake-delay: 4s;
   {% endif %}
   }
+
+  .header__localization {
+    display: inline-block;
+    position: relative;
+    z-index: 31;
+    margin-inline-end: 4px;
+    overflow: visible;
+  }
+
+  .header__localization .custom-select__btn {
+    --input-text-color: var(--text-color);
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: rgb(var(--text-color));
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: nowrap;
+  }
+
+  .header__localization .custom-select__btn > .icon {
+    right: 0;
+    width: 20px;
+    padding-inline-start: 0;
+  }
+
+  .header__localization .localization__selector {
+    display: inline-block;
+  }
+
+  .header__localization .custom-select__listbox {
+    min-width: 180px;
+  }
+
+  {% if request.page_type == 'index' %}
+    /*
+      Homepage overlay header: sit on top of the hero, white UI, no dark bar.
+    */
+    .shopify-section.cc-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      width: 100%;
+      background: transparent !important;
+    }
+
+    store-header.header.header--overlay,
+    store-header.header.header--overlay.bg-theme-bg {
+      --bg-color: 0 0 0;
+      --search-bg-color: 0 0 0;
+      --nav-bg-color: 0 0 0;
+      --text-color: 255 255 255;
+      --nav-text-color: 255 255 255;
+      --icon-color: 255 255 255;
+      background: transparent !important;
+      background-color: transparent !important;
+      border-bottom: 0;
+      color: #ffffff;
+      box-shadow: none;
+      transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
+    }
+
+    store-header.header.header--overlay .header__grid,
+    store-header.header.header--overlay .main-menu,
+    store-header.header.header--overlay .main-menu__content {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
+    store-header.header.header--overlay .main-menu {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    store-header.header.header--overlay .logo__text,
+    store-header.header.header--overlay .logo__link,
+    store-header.header.header--overlay .header__icon,
+    store-header.header.header--overlay .header__icon .icon,
+    store-header.header.header--overlay .main-nav__item--primary,
+    store-header.header.header--overlay .main-nav__toggle-btn,
+    store-header.header.header--overlay .custom-select__btn,
+    store-header.header.header--overlay .custom-select__btn > .icon,
+    store-header.header.header--overlay .search .icon,
+    store-header.header.header--overlay .search__submit {
+      color: #ffffff !important;
+    }
+
+    store-header.header.header--overlay .main-nav__item--primary {
+      text-transform: none;
+      letter-spacing: 0.01em;
+      font-weight: 500;
+      font-size: 0.9375rem;
+    }
+
+    store-header.header.header--overlay .search__input {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none;
+      color: #ffffff;
+    }
+
+    store-header.header.header--overlay .search__input::placeholder {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    store-header.header.header--overlay .custom-select__btn {
+      --input-text-color: 255 255 255;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+    }
+
+    store-header.header.header--overlay.is-scrolled {
+      background-color: rgba(26, 26, 26, 0.78) !important;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    store-header.header.header--overlay.is-scrolled .main-menu {
+      border-bottom-color: transparent;
+    }
+  {% endif %}
 {%- endstyle -%}
 
-<store-header class="header bg-theme-bg text-theme-text{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
+<store-header class="header bg-theme-bg text-theme-text{% if request.page_type == 'index' %} header--overlay{% endif %}{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
   {%- if section.settings.enable_sticky -%} data-is-sticky="true"{%- endif -%}
   {%- if search_is_minimised -%} data-is-search-minimised="true"{%- endif -%}
   style="--header-transition-speed: 300ms">
@@ -113,6 +238,11 @@
     {%- endif -%}
 
     <div class="header__icons flex justify-end mis-auto js-closes-menu">
+      {%- if section.settings.enable_language_selector or section.settings.enable_country_selector -%}
+        <div class="header__localization">
+          {% render 'localization-form', id: 'header-localization', hide_labels: true %}
+        </div>
+      {%- endif -%}
       {%- if section.settings.enable_search and search_is_minimised -%}
         {%- unless section.settings.logo_center and section.settings.minimise_search_mobile == false and section.settings.minimise_search_desktop -%}
           {%- liquid
@@ -130,6 +260,31 @@
           </a>
         {%- endunless -%}
       {%- endif -%}
+
+      <a class="header__icon{% if settings.cart_shaking and cart != empty %} header__icon--cart-shake has-motion{% endif %} relative" id="cart-icon" href="{{ routes.cart_url }}"{% if settings.cart_shaking and cart != empty %} data-shake-frequency="{{ settings.cart_shaking_frequency }}"{% endif %}{% if settings.preload_links %} data-no-instant{% endif %}>
+        {%- if settings.cart_icon == 'bag' -%}
+          {%- render 'icon-bag' -%}
+          <span class="visually-hidden">{{ 'sections.header.bag' | t }}</span>
+        {%- elsif settings.cart_icon == 'basket' -%}
+          {%- render 'icon-basket' -%}
+          <span class="visually-hidden">{{ 'sections.header.basket' | t }}</span>
+        {%- else -%}
+          {%- render 'icon-cart' -%}
+          <span class="visually-hidden">{{ 'sections.header.cart' | t }}</span>
+        {%- endif -%}
+
+        <div id="cart-icon-bubble">
+          {%- if cart != empty -%}
+            <div class="header__cart-count absolute bg-theme-text text-theme-bg text-center">
+              {%- if cart.item_count < 10000 -%}
+                <span aria-hidden="true" class="header__cart-count-number">{{ cart.item_count }}</span>
+              {%- endif -%}
+              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+      </a>
+
       {%- if shop.customer_accounts_enabled -%}
         {%- if section.settings.enable_customer_account_component -%}
           <shopify-account menu="{{ section.settings.customer_account_menu }}">
@@ -158,30 +313,6 @@
           {%- endif -%}
         {%- endif -%}
       {%- endif -%}
-
-      <a class="header__icon{% if settings.cart_shaking and cart != empty %} header__icon--cart-shake has-motion{% endif %} relative" id="cart-icon" href="{{ routes.cart_url }}"{% if settings.cart_shaking and cart != empty %} data-shake-frequency="{{ settings.cart_shaking_frequency }}"{% endif %}{% if settings.preload_links %} data-no-instant{% endif %}>
-        {%- if settings.cart_icon == 'bag' -%}
-          {%- render 'icon-bag' -%}
-          <span class="visually-hidden">{{ 'sections.header.bag' | t }}</span>
-        {%- elsif settings.cart_icon == 'basket' -%}
-          {%- render 'icon-basket' -%}
-          <span class="visually-hidden">{{ 'sections.header.basket' | t }}</span>
-        {%- else -%}
-          {%- render 'icon-cart' -%}
-          <span class="visually-hidden">{{ 'sections.header.cart' | t }}</span>
-        {%- endif -%}
-
-        <div id="cart-icon-bubble">
-          {%- if cart != empty -%}
-            <div class="header__cart-count absolute bg-theme-text text-theme-bg text-center">
-              {%- if cart.item_count < 10000 -%}
-                <span aria-hidden="true" class="header__cart-count-number">{{ cart.item_count }}</span>
-              {%- endif -%}
-              <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-            </div>
-          {%- endif -%}
-        </div>
-      </a>
     </div>
 
     {%- if section.settings.menu != blank -%}
@@ -675,6 +806,22 @@
   </header>
 </store-header>
 
+{%- if request.page_type == 'index' -%}
+  <script>
+    (function () {
+      const header = document.querySelector('store-header.header--overlay');
+      if (!header) return;
+
+      const syncScrolled = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 40);
+      };
+
+      syncScrolled();
+      window.addEventListener('scroll', syncScrolled, { passive: true });
+    })();
+  </script>
+{%- endif -%}
+
 {%- if has_mega_nav_pills -%}
   <link rel="stylesheet" href="{{ 'navigation-mega-pills.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
@@ -884,6 +1031,28 @@
       "id": "customer_account_menu",
       "label": "Customer account menu",
       "default": "customer-account-main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Country/Region selector",
+      "info": "To add a country/region, go to your [payment settings](/admin/settings/payments)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable country/region selector",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable language selector",
+      "default": true
     },
     {
       "type": "header",

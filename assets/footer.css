@@ -1,8 +1,85 @@
 .footer {
   padding: calc(2 * var(--space-unit)) 0 calc(10 * var(--space-unit));
 }
-.back-to-top + .footer {
+.back-to-top + .footer-newsletter-bar,
+.footer-newsletter-bar + .footer {
   border-top: 0;
+}
+.footer-newsletter-bar {
+  background: var(--brand-footer-bg, var(--newsletter-bar-bg, #eef9f4));
+  color: #1a1a1a;
+  padding: 64px 0;
+}
+.footer-newsletter-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: var(--brand-container-max, 1440px);
+  margin: 0 auto;
+  padding: 0 var(--brand-container-padding-x, 20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 64px;
+}
+.footer-newsletter-bar__copy {
+  flex: 1 1 280px;
+  max-width: 500px;
+}
+.footer-newsletter-bar__copy h2 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 400;
+  line-height: 1.3;
+  color: #000;
+}
+.footer-newsletter-bar__copy .rte,
+.footer-newsletter-bar__copy .rte p {
+  margin: 8px 0 0;
+  color: #4a4a4a;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.footer-newsletter-bar__form {
+  flex: 1 1 320px;
+  max-width: 703px;
+}
+.footer-newsletter-bar .input-with-button {
+  background: #ffffff;
+  border-radius: 42px;
+  overflow: hidden;
+  box-shadow: none;
+  border: 1px solid #e8e8e8;
+  padding: 2px;
+}
+.footer-newsletter-bar .input-with-button .input {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  height: 58px;
+  padding: 15px 30px;
+  font-size: 14px;
+}
+.footer-newsletter-bar .input-with-button .btn--primary {
+  margin: 0;
+  border-radius: 80px;
+  background: var(--brand-primary, #53c295);
+  color: #ffffff;
+  border: 1px solid var(--brand-primary, #53c295);
+  padding: 11px 40px;
+}
+.footer-newsletter-bar .input-with-button .btn--primary:hover {
+  background: #fff;
+  color: var(--brand-primary, #53c295);
+}
+@media (max-width: 768.98px) {
+  .footer-newsletter-bar__inner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .footer-newsletter-bar__form {
+    max-width: none;
+  }
 }
 .footer a:not(.btn) {
   color: currentColor;

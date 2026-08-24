@@ -257,7 +257,62 @@
     }
   {% endstyle -%}
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="{{ 'main.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'brand-system.css' | asset_url }}">
+  {%- style -%}
+    :root {
+      --brand-primary: {{ settings.brand_primary | default: '#53c295' }};
+      --brand-primary-hover: {{ settings.brand_primary_hover | default: '#45ad82' }};
+      --brand-primary-deep: {{ settings.brand_deep | default: '#006c4e' }};
+      --brand-primary-text: {{ settings.brand_on_primary | default: '#ffffff' }};
+      --brand-on-surface: {{ settings.brand_heading | default: '#1a1a1a' }};
+      --brand-body-text: {{ settings.brand_body | default: '#4a4a4a' }};
+      --brand-muted-text: {{ settings.brand_muted | default: '#757575' }};
+      --brand-surface: {{ settings.brand_surface | default: '#fbf9f9' }};
+      --brand-surface-soft: {{ settings.brand_surface_soft | default: '#f5f3f3' }};
+      --brand-surface-inset: {{ settings.brand_card | default: '#ffffff' }};
+      --brand-border: {{ settings.brand_border | default: '#dbdad9' }};
+      --brand-mint: {{ settings.brand_mint | default: '#d8f3e7' }};
+      --brand-divider-tint: {{ settings.brand_primary | color_modify: 'alpha', 0.2 }};
+      --brand-radius-sm: {{ settings.brand_radius_card | default: 16 | minus: 4 | at_least: 0 }}px;
+      --brand-radius-md: {{ settings.brand_radius_card | default: 16 }}px;
+      --brand-radius-lg: {{ settings.brand_radius_card | default: 16 }}px;
+      {%- if settings.brand_radius_button >= 26 -%}
+        --brand-radius-pill: 9999px;
+      {%- else -%}
+        --brand-radius-pill: {{ settings.brand_radius_button | default: 26 }}px;
+      {%- endif -%}
+    }
+
+    {%- if settings.brand_apply_to_theme -%}
+      :root {
+        --bg-color: {{ settings.brand_surface.rgba }};
+        --bg-color-og: {{ settings.brand_surface.rgba }};
+        --heading-color: {{ settings.brand_heading.rgb }};
+        --text-color: {{ settings.brand_body.rgb }};
+        --text-color-og: {{ settings.brand_body.rgb }};
+        --link-color: {{ settings.brand_deep.rgb }};
+        --link-color-og: {{ settings.brand_deep.rgb }};
+        --btn-bg-color: {{ settings.brand_primary.rgb }};
+        --btn-bg-hover-color: {{ settings.brand_primary_hover.rgb }};
+        --btn-text-color: {{ settings.brand_on_primary.rgb }};
+        --btn-bg-color-og: {{ settings.brand_primary.rgb }};
+        --btn-text-color-og: {{ settings.brand_on_primary.rgb }};
+        --btn-alt-text-color: {{ settings.brand_primary.rgb }};
+        --btn-border-radius: {{ settings.brand_radius_button | default: 26 }}px;
+        --input-border-radius: {{ settings.brand_radius_button | default: 26 }}px;
+      }
+
+      .btn--primary:hover,
+      .btn--primary:focus-visible {
+        --btn-bg-hover-color: {{ settings.brand_primary_hover.rgb }};
+      }
+    {%- endif -%}
+  {%- endstyle -%}
   <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
 
   {%- unless settings.body_font.system? -%}

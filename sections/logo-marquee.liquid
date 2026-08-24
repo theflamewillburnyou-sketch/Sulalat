@@ -24,9 +24,9 @@
     }
 
     .certifications[data-section-id="{{ section.id }}"] .container {
-      max-width: 1200px;
+      max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .certifications[data-section-id="{{ section.id }}"] .section-title {
@@ -86,6 +86,7 @@
 
     .certifications[data-section-id="{{ section.id }}"] .logo-item img {
       width: 100%;
+      height: auto;
       display: block;
       object-fit: contain;
     }

@@ -25,9 +25,9 @@
     }
 
     .partner-section[data-section-id="{{ section.id }}"] .container {
-      max-width: 1200px;
+      max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .partner-section[data-section-id="{{ section.id }}"] .partner-wrapper {
@@ -67,7 +67,7 @@
 
     .partner-section[data-section-id="{{ section.id }}"] .partner-content p {
       color: var(--partner-text-color);
-      line-height: 1.5;
+      line-height: 24px;
       font-size: var(--partner-body-size);
       margin: 0;
     }
@@ -90,20 +90,19 @@
     }
 
     .partner-section[data-section-id="{{ section.id }}"] .primary-btn {
-      display: inline-block;
       margin-top: 40px;
-      padding: 12px 28px;
-      border-radius: 4px;
-      background-color: var(--partner-button-bg);
+      background: var(--partner-button-bg);
+      border-color: var(--partner-button-bg);
       color: var(--partner-button-text);
       font-size: var(--partner-button-size);
-      text-decoration: none;
-      transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .partner-section[data-section-id="{{ section.id }}"] .primary-btn:hover {
-      background-color: var(--partner-button-hover-bg);
-      color: var(--partner-button-text);
+      color: var(--partner-button-bg);
+    }
+
+    .partner-section[data-section-id="{{ section.id }}"] .primary-btn::before {
+      background: #fff;
     }
 
     @media (max-width: 991px) {
@@ -207,7 +206,7 @@
       "type": "color",
       "id": "section_bg_color",
       "label": "Partner background color",
-      "default": "#f5f1eb"
+      "default": "#f5f3f3"
     },
     {
       "type": "color",
@@ -225,7 +224,7 @@
       "type": "color",
       "id": "button_bg_color",
       "label": "Button background",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
@@ -237,7 +236,7 @@
       "type": "color",
       "id": "button_hover_bg_color",
       "label": "Button hover background",
-      "default": "#b08d5f"
+      "default": "#4eaa84"
     },
     {
       "type": "range",

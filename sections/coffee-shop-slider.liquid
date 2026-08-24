@@ -33,14 +33,14 @@
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .container {
-      max-width: 1200px;
+      max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .section-title {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 60px;
       max-width: 950px;
       margin-inline: auto;
     }
@@ -72,35 +72,31 @@
 
     .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn,
     .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
-      display: inline-block;
-      padding: 12px 28px;
-      border-radius: 4px;
-      font-size: var(--coffee-body-size);
-      text-decoration: none;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
+      /* Uses brand-system .primary-btn / .secondary-btn */
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn {
-      background-color: var(--coffee-primary-btn-bg);
+      background: var(--coffee-primary-btn-bg);
+      border-color: var(--coffee-primary-btn-bg);
       color: var(--coffee-primary-btn-text);
-      border: 1px solid transparent;
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn:hover {
-      background-color: var(--coffee-primary-btn-hover-bg);
-      color: var(--coffee-primary-btn-hover-text);
+      color: var(--coffee-primary-btn-bg);
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
-      background-color: var(--coffee-secondary-btn-bg);
+      background: var(--coffee-secondary-btn-bg);
       color: var(--coffee-secondary-btn-text);
-      border: 1px solid var(--coffee-secondary-btn-border);
+      border-color: var(--coffee-secondary-btn-border);
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn:hover {
-      background-color: var(--coffee-secondary-btn-hover-bg);
-      color: var(--coffee-secondary-btn-hover-text);
+      color: #fff;
+    }
+
+    .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn::before {
+      background: var(--coffee-secondary-btn-hover-bg, var(--coffee-secondary-btn-border));
     }
 
     .coffee-shop[data-section-id="{{ section.id }}"] .swiper.coffeeShopSlider {
@@ -111,7 +107,7 @@
       width: var(--coffee-slide-width);
       border-radius: 20px;
       overflow: hidden;
-      transition: opacity var(--coffee-transition-speed) ease;
+      transition: opacity 0.6s ease;
       opacity: 0.4;
     }
 
@@ -238,27 +234,25 @@
           sliderContainer.swiper.destroy(true, true);
         }
 
-        var autoplayEnabled = {{ section.settings.autoplay_enabled | default: false | json }};
-        var autoplayDelay = {{ section.settings.autoplay_delay | default: 5000 | json }};
+        var autoplayEnabled = {{ section.settings.autoplay_enabled | default: true | json }};
+        var autoplayDelaySec = {{ section.settings.autoplay_delay | default: 3 | json }};
+        var autoplayDelay = (parseFloat(autoplayDelaySec) || 3) * 1000;
 
         sliderContainer.swiper = new window.Swiper(sliderContainer, {
           slidesPerView: 'auto',
-          loop: true,
+          loop: false,
           centeredSlides: true,
-          spaceBetween: 0,
-          speed: parseInt('{{ section.settings.transition_speed }}', 10) || 600,
+          spaceBetween: 40,
+          speed: parseInt('{{ section.settings.transition_speed }}', 10) || 1000,
           grabCursor: true,
-          autoplay: autoplayEnabled ? { delay: autoplayDelay, disableOnInteraction: false } : false,
+          watchSlidesProgress: true,
+          autoplay: autoplayEnabled
+            ? { delay: autoplayDelay, disableOnInteraction: false, pauseOnMouseEnter: true }
+            : false,
           breakpoints: {
-            768: {
-              centeredSlides: true,
-              slidesPerView: 'auto'
-            },
-            0: {
-              slidesPerView: 1,
-              centeredSlides: true,
-              spaceBetween: 10
-            }
+            0: { spaceBetween: 15 },
+            768: { spaceBetween: 25 },
+            1200: { spaceBetween: 40 }
           }
         });
       }
@@ -417,7 +411,7 @@
       "type": "color",
       "id": "primary_btn_bg",
       "label": "Primary button background",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
@@ -429,7 +423,7 @@
       "type": "color",
       "id": "primary_btn_hover_bg",
       "label": "Primary button hover background",
-      "default": "#b08d5f"
+      "default": "#4eaa84"
     },
     {
       "type": "color",
@@ -447,19 +441,19 @@
       "type": "color",
       "id": "secondary_btn_text",
       "label": "Secondary button text",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
       "id": "secondary_btn_border",
       "label": "Secondary button border",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",
       "id": "secondary_btn_hover_bg",
       "label": "Secondary button hover background",
-      "default": "#c7a17a"
+      "default": "#61c19a"
     },
     {
       "type": "color",

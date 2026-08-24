@@ -26,7 +26,7 @@
     .about-section[data-section-id="{{ section.id }}"] .about-container {
       max-width: var(--about-container-max);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--brand-container-padding-x, 20px);
     }
 
     .about-section[data-section-id="{{ section.id }}"] .section-title {
@@ -86,7 +86,8 @@
       flex: 0 0 100%;
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: var(--brand-radius-sm);
+      height: 100%;
     }
 
     .about-section[data-section-id="{{ section.id }}"] .about-slide::before {
@@ -110,6 +111,7 @@
     .about-section[data-section-id="{{ section.id }}"] .about-slide-image {
       transition: transform 1.8s ease-in-out;
       width: 100%;
+      height: auto;
       display: block;
       border-radius: inherit;
     }
@@ -182,7 +184,8 @@
     .about-section[data-section-id="{{ section.id }}"] .about-text p {
       color: var(--about-text-color);
       font-size: var(--about-body-size);
-      line-height: 1.5;
+      line-height: 24px;
+      margin: 0;
     }
 
     @media (max-width: 991px) {
@@ -190,6 +193,7 @@
       .about-section[data-section-id="{{ section.id }}"] .about-right {
         width: 100%;
       }
+
       .about-section[data-section-id="{{ section.id }}"] .about-text {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -288,8 +292,12 @@
         {% endif %}
 
         <div class="about-text">
-          <p>{{ section.settings.text_left | escape }}</p>
-          <p>{{ section.settings.text_right | escape }}</p>
+          {% if section.settings.text_left != blank %}
+            <p>{{ section.settings.text_left | escape }}</p>
+          {% endif %}
+          {% if section.settings.text_right != blank %}
+            <p>{{ section.settings.text_right | escape }}</p>
+          {% endif %}
         </div>
       </div>
     </div>

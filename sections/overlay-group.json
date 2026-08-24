@@ -124,7 +124,7 @@
             "hide_on_end": true,
             "countdown_size": "22",
             "use_custom_colors": true,
-            "count_color": "#ff580d",
+            "count_color": "#61c19a",
             "count_bg_color": "#ffffff",
             "count_bg_grad": ""
           }
@@ -135,7 +135,7 @@
             "button_1_label": "Shop Flash Sale",
             "button_1_style": "btn btn--primary",
             "button_1_link": "",
-            "btn_1_bg_color": "#ff580d",
+            "btn_1_bg_color": "#61c19a",
             "btn_1_text_color": "#ffffff",
             "button_2_label": "",
             "button_2_style": "btn btn--secondary",
@@ -161,7 +161,7 @@
         "text_align": "text-center",
         "padding": "large",
         "shrink_width": false,
-        "heading_color": "#ff580d",
+        "heading_color": "#61c19a",
         "text_color": "#ffffff",
         "bg_color": "#292f36",
         "bg_grad": "linear-gradient(225deg, rgba(51, 59, 67, 0.88) 8%, rgba(41, 47, 54, 1) 56%, rgba(20, 20, 20, 1) 92%)",

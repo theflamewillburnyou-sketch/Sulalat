@@ -79,9 +79,9 @@
         "text": {
           "type": "text",
           "settings": {
-            "image_width": 150,
-            "heading": "Talk about your store",
-            "text": "<p>Share store details, promotions, or brand content with your customers.</p>",
+            "image_width": 160,
+            "heading": "",
+            "text": "",
             "button_label": "",
             "button_link": "",
             "enable_follow_on_shop": false,
@@ -92,23 +92,37 @@
         "link-list-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Footer links",
+            "heading": "Pages",
             "menu": "footer"
           }
         },
         "link-list-2": {
           "type": "link_list",
           "settings": {
-            "heading": "Footer links",
+            "heading": "Support",
+            "menu": "footer"
+          }
+        },
+        "link-list-3": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Legal",
+            "menu": "footer"
+          }
+        },
+        "link-list-4": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Contact Us",
             "menu": "footer"
           }
         },
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "heading": "Newsletter",
-            "text": "<p>Sign up for exclusive offers, original stories, events and more.</p>",
-            "collapse_mobile": true
+            "heading": "Sign up for our newsletter to receive updates and exclusive discounts",
+            "text": "",
+            "collapse_mobile": false
           }
         }
       },
@@ -116,17 +130,20 @@
         "text",
         "link-list-1",
         "link-list-2",
+        "link-list-3",
+        "link-list-4",
         "newsletter"
       ],
       "settings": {
         "show_back_to_top": false,
-        "show_payment_icons": true,
+        "show_payment_icons": false,
         "show_powered_by": false,
         "enable_country_selector": false,
-        "enable_language_selector": true,
+        "enable_language_selector": false,
         "secondary_menu": "",
-        "bg_color": "#141414",
-        "text_color": "#ffffff"
+        "bg_color": "#eef9f4",
+        "text_color": "#1a1a1a",
+        "newsletter_bar_bg": "#eef9f4"
       }
     }
   },
