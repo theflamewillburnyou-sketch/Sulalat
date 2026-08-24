@@ -257,10 +257,7 @@
     }
   {% endstyle -%}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
+  {{ 'custom-fonts.css' | asset_url | stylesheet_tag }}
   <link rel="stylesheet" href="{{ 'main.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'brand-system.css' | asset_url }}">
   {%- style -%}

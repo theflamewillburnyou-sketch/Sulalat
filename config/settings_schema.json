@@ -515,7 +515,7 @@
         "id": "navigation_font",
         "label": "Font",
         "default": "nunito_sans_n6",
-        "info": "The body font will be used for third-level menu items. Storefront body/nav also use Be Vietnam Pro from the brand system."
+        "info": "The body font will be used for third-level menu items."
       }
     ]
   },

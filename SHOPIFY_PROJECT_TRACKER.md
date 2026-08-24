@@ -186,6 +186,9 @@
   - Blog + trust marquees + footer newsletter bar styling
 - Updated `templates/index.json` + `config/settings_data.json` accent colors
 
+`2026-08-24` (typography)
+- Removed extra installed fonts (Be Vietnam Pro Google Fonts, Noto Serif, Greycliff CF). Storefront now uses only Theme Settings typography (`heading_font`, `body_font`, `navigation_font`).
+
 ## Responsive Rules
 
 - Theme breakpoints present in `layout/theme.liquid`:

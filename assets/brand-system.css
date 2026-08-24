@@ -20,13 +20,6 @@
   --brand-divider-tint: rgba(196, 246, 226, 0.2);
   --brand-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 
-  /* Typography — keep theme faces; reference uses Roboto + Greycliff CF */
-  --brand-font-heading: "Noto Serif", Georgia, serif;
-  --brand-font-body: "Be Vietnam Pro", "Nunito Sans", sans-serif;
-
-  --body-font-family: var(--brand-font-body);
-  --navigation-font-family: var(--brand-font-body);
-
   /* Shape + spacing from reference */
   --brand-radius-sm: 12px;
   --brand-radius-md: 18px;
@@ -53,7 +46,7 @@
   padding: 11px 60px;
   border-radius: var(--brand-radius-pill);
   font-size: 16px;
-  font-family: "Greycliff CF", var(--brand-font-body);
+  font-family: var(--body-font-family);
   color: #fff;
   flex-shrink: 0;
   cursor: pointer;
@@ -101,7 +94,7 @@
   padding: 11px 60px;
   border-radius: var(--brand-radius-pill);
   font-size: 16px;
-  font-family: "Greycliff CF", var(--brand-font-body);
+  font-family: var(--body-font-family);
   color: var(--brand-primary);
   flex-shrink: 0;
   cursor: pointer;
@@ -146,20 +139,8 @@
   box-shadow: var(--brand-shadow);
 }
 
-body {
-  font-family: var(--brand-font-body);
-}
-
-h1, h2, h3, h4, h5, h6,
-.h0, .h1, .h2, .h3, .h4, .h5, .h6,
-.section__heading,
-.ff-heading {
-  font-family: var(--brand-font-heading);
-}
-
 @media (min-width: 769px) {
   .main-nav__item--primary {
-    font-family: var(--brand-font-body);
     font-size: 17px;
     font-weight: 300;
     letter-spacing: 0.03em;
