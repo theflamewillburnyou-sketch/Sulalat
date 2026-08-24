@@ -144,8 +144,8 @@
     .categories-sec[data-section-id="{{ section.id }}"] .view-all svg {
       display: inline-block;
       vertical-align: middle;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       margin-left: 4px;
     }
 
@@ -200,7 +200,7 @@
               <div class="swiper-slide" {{ block.shopify_attributes }}>
                 <div class="view-all">
                   <a href="{% if block.settings.link != blank %}{{ block.settings.link }}{% else %}#{% endif %}">
-                    <h4>{{ block.settings.heading | escape | newline_to_br }}</h4>
+                    <h4>{{ block.settings.heading | escape }}</h4>
                     <span>
                       {{ block.settings.text | escape }}
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

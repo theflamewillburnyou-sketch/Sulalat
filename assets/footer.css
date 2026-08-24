@@ -51,6 +51,7 @@
   box-shadow: none;
   border: 1px solid #e8e8e8;
   padding: 2px;
+  align-items: stretch;
 }
 .footer-newsletter-bar .input-with-button .input {
   background: transparent;
@@ -109,6 +110,8 @@
 }
 .footer .social {
   display: inline-flex;
+  margin:0;
+  gap:20px;
 }
 
 .footer__main > .footer-col:first-child .disclosure {
@@ -134,7 +137,7 @@
 }
 
 .footer-block__image {
-  margin-bottom: calc(6 * var(--space-unit));
+  /* margin-bottom: calc(6 * var(--space-unit)); */
 }
 
 .footer-block__heading {

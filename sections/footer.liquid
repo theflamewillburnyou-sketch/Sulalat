@@ -60,7 +60,7 @@
 
             {%- when 'text' -%}
               <div class="footer-col footer-col--text footer-col--not-collapsed{% if section.blocks.size == 1 %} footer-col--text-full-width{% endif %}" {{ block.shopify_attributes }}{% if settings.animations_enabled != "disabled" %} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.07 }}s"{% endif %}>
-                <div class="footer-block mb-8 {{ block.settings.text_align }}">
+                <div class="footer-block {{ block.settings.text_align }}">
                   {%- if block.settings.image != blank -%}
                     <div class="media relative" style="max-width: {{ block.settings.image_width }}px;">
                       {% render 'image', class: "footer-block__image", image: block.settings.image, src_width: block.settings.image_width, srcset_2x: true %}

@@ -260,6 +260,7 @@
   {{ 'custom-fonts.css' | asset_url | stylesheet_tag }}
   <link rel="stylesheet" href="{{ 'main.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'brand-system.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'custom-style.css' | asset_url }}">
   {%- style -%}
     :root {
       --brand-primary: {{ settings.brand_primary | default: '#53c295' }};

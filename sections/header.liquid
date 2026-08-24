@@ -52,7 +52,6 @@
     display: inline-block;
     position: relative;
     z-index: 31;
-    margin-inline-end: 4px;
     overflow: visible;
   }
 
@@ -120,9 +119,10 @@
       background-color: transparent !important;
     }
 
-    store-header.header.header--overlay .main-menu {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
+  store-header.header.header--overlay .main-menu {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 40px;
+  }
 
     store-header.header.header--overlay .logo__text,
     store-header.header.header--overlay .logo__link,
@@ -137,11 +137,25 @@
       color: #ffffff !important;
     }
 
+    form.search.relative.search--product-types {
+      max-width: 450px;
+    }
+
+    header #main-menu-content .main-nav {
+      gap: 50px;
+      margin: 0;
+    }
+
+    header #main-menu-content .main-nav .main-nav__row {
+      margin: 0;
+    }
+
     store-header.header.header--overlay .main-nav__item--primary {
       text-transform: none;
-      letter-spacing: 0.01em;
-      font-weight: 500;
-      font-size: 0.9375rem;
+      font-size: 17px;
+      font-weight: 300;
+      letter-spacing: 3%;
+      padding: 0;
     }
 
     store-header.header.header--overlay .search__input {
@@ -155,21 +169,43 @@
       color: rgba(255, 255, 255, 0.72);
     }
 
-    store-header.header.header--overlay .custom-select__btn {
-      --input-text-color: 255 255 255;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-    }
+ store-header.header.header--overlay .custom-select__btn {
+    --input-text-color: 255 255 255;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    border-right: 1px solid rgb(255 255 255 / 20%);
+}
 
     store-header.header.header--overlay.is-scrolled {
-      background-color: rgba(26, 26, 26, 0.78) !important;
+      /* background-color: rgba(26, 26, 26, 0.78) !important;
       backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px); */
     }
 
     store-header.header.header--overlay.is-scrolled .main-menu {
       border-bottom-color: transparent;
+    }
+
+    store-header.header.header--overlay .search__input::placeholder {
+      color: rgb(255 255 255 / 50%);
+      font-weight:300;
+    } 
+
+
+    header .header__icons {
+      gap: 30px;
+      align-items: center;
+    }
+    header .header__icons a.header__icon {
+      margin: 0;
+      padding: 0;
+      width: 18px;
+    }
+
+    button#header-localization-language-button {
+      font-weight: 300;
+      border:0;
     }
   {% endif %}
 {%- endstyle -%}

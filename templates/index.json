@@ -291,7 +291,7 @@
         "text_color": "#141211",
         "section_bg_color": "#ffffff",
         "section_padding_top": 0,
-        "section_padding_bottom": 100,
+        "section_padding_bottom": 0,
         "heading_size": 36,
         "heading_size_mobile": 24,
         "body_size": 16,
