@@ -190,8 +190,22 @@
     store-header.header.header--overlay .search__input::placeholder {
       color: rgb(255 255 255 / 50%);
       font-weight:300;
-    } 
+    }
 
+    store-header.header.header--overlay {
+      --nav-child-bg-color: 0 0 0;
+      --nav-child-text-color: 255 255 255;
+      --nav-line-color: rgba(255, 255, 255, 0.2);
+    }
+
+    store-header.header.header--overlay .main-nav__child.mega-nav--columns {
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12.5px);
+      -webkit-backdrop-filter: blur(12.5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 0 0 20px 20px;
+      box-shadow: none;
+    }
 
     header .header__icons {
       gap: 30px;
@@ -451,10 +465,12 @@
                             assign flex_auto = true
                           else
                             assign child_nav_classes = "md:grid md:nav-gap-x-16 md:nav-gap-y-4 md:grid-cols-3"
-                            if mega_nav.settings.promo_position == "bottom" or promo_count == 0
-                              assign child_nav_classes = child_nav_classes | append: " lg:grid-cols-4"
-                            else
-                              assign child_nav_classes = child_nav_classes | append: " self-start xl:grid-cols-4"
+                            if num_columns >= 4
+                              if mega_nav.settings.promo_position == "bottom" or promo_count == 0
+                                assign child_nav_classes = child_nav_classes | append: " lg:grid-cols-4"
+                              else
+                                assign child_nav_classes = child_nav_classes | append: " self-start xl:grid-cols-4"
+                              endif
                             endif
                           endif
                         elsif mega_nav.type == "sidebar"

@@ -277,9 +277,9 @@
     </div>
 
     {% assign selected_blog = section.settings.blog %}
+    {% assign featured_article = nil %}
     {% if selected_blog != blank and selected_blog.articles_count > 0 %}
-      {% assign featured_article = selected_blog.articles[0] %}
-      {% assign list_articles = selected_blog.articles | offset: 1 | limit: 2 %}
+      {% assign featured_article = selected_blog.articles.first %}
     {% endif %}
 
     <div class="blog-grid">
@@ -305,10 +305,10 @@
         </article>
       {% endif %}
 
-      {% if list_articles and list_articles.size > 0 %}
-        <!-- Blog List -->
+      {% if selected_blog != blank and selected_blog.articles_count > 1 %}
+        <!-- Blog List: next 2 articles only (skip featured) -->
         <div class="blog-list">
-          {% for article in list_articles %}
+          {% for article in selected_blog.articles offset: 1 limit: 2 %}
             <article class="blog-card">
               <div class="blog-content">
                 <h3>
