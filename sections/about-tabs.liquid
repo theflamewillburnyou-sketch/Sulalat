@@ -3,6 +3,10 @@
   assign culture_blocks = section.blocks | where: 'type', 'culture_value'
   assign certificate_blocks = section.blocks | where: 'type', 'certificate'
   assign social_blocks = section.blocks | where: 'type', 'social_farm'
+  assign executive_blocks = section.blocks | where: 'type', 'executive_member'
+  assign team_blocks = section.blocks | where: 'type', 'team_member'
+  assign partner_blocks = section.blocks | where: 'type', 'partner_logo'
+  assign career_blocks = section.blocks | where: 'type', 'career_position'
 -%}
 
 <section class="about-tabs" data-section-id="{{ section.id }}">
@@ -609,6 +613,765 @@
       display: inline-flex;
     }
 
+    /* Leadership & Team */
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-team {
+      padding: 100px 0 80px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
+      margin-top: 100px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 50px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro h2 {
+      margin: 0 0 16px;
+      color: #000;
+      font-size: clamp(32px, 3.2vw, 48px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider {
+      overflow: visible;
+      margin: 0 auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-wrapper {
+      align-items: stretch;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide {
+      height: auto;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+      opacity: 0.55;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide-active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-slider .swiper-slide {
+      width: min(520px, 72vw);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-slider .swiper-slide {
+      width: min(220px, 42vw);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #f3f3f3;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-slider .leadership-card-image {
+      aspect-ratio: 4 / 5;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-slider .leadership-card-image {
+      aspect-ratio: 3 / 4;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-linkedin {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-linkedin {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-linkedin svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      max-width: 520px;
+      margin: 28px auto 0;
+      min-height: 72px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta-text h3 {
+      margin: 0 0 6px;
+      color: #000;
+      font-size: 28px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta-text p {
+      margin: 0;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn {
+      flex-shrink: 0;
+      padding: 12px 28px;
+      white-space: nowrap;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn.is-hidden {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta {
+      text-align: center;
+      max-width: 320px;
+      margin: 28px auto 0;
+      min-height: 72px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta h3 {
+      margin: 0 0 8px;
+      color: #000;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta p {
+      margin: 0;
+      color: var(--brand-body-text, #535353);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta-line {
+      width: 48px;
+      height: 2px;
+      background: #d7d7d7;
+      margin: 16px auto 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 36px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-progress {
+      position: relative;
+      flex: 1;
+      height: 3px;
+      background: #e5e5e5;
+      border-radius: 999px;
+      overflow: hidden;
+      max-width: 420px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-progress-bar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--brand-primary, #53c295);
+      border-radius: inherit;
+      transition: width 0.45s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button {
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      border: 1px solid var(--brand-primary, #53c295);
+      background: transparent;
+      color: var(--brand-primary, #53c295);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: 0.3s;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button svg {
+      display: block;
+    }
+
+    /* Partners */
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-section {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-intro h2 {
+      margin: 0 0 14px;
+      color: #000;
+      font-size: clamp(32px, 3.2vw, 48px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-intro p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-filter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 36px;
+      margin-bottom: 48px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn {
+      appearance: none;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 4px;
+      margin: 0;
+      cursor: pointer;
+      font-family: var(--body-font-family);
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 500;
+      color: #9a9a9a;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn.active {
+      color: #000;
+      border-bottom-color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partner-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 160px;
+      padding: 28px 24px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partner-card:hover {
+      border-color: var(--brand-primary, #53c295);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partner-card.is-hidden {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partner-card img,
+    .about-tabs[data-section-id="{{ section.id }}"] .partner-card svg.placeholder-svg {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 72px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-empty {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-empty.is-visible {
+      display: block;
+    }
+
+    /* Careers */
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-section {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-why {
+      text-align: center;
+      max-width: 980px;
+      margin: 0 auto 90px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-why h2 {
+      margin: 0 0 18px;
+      color: #000;
+      font-size: clamp(32px, 3.2vw, 48px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-why p {
+      margin: 0 auto 40px;
+      max-width: 760px;
+      font-size: 16px;
+      line-height: 26px;
+      letter-spacing: -0.01em;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      aspect-ratio: 2.35 / 1;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #f3f3f3;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-positions {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 40px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro h2 {
+      margin: 0 0 14px;
+      color: #000;
+      font-size: clamp(32px, 3.2vw, 48px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card {
+      display: grid;
+      grid-template-columns: auto minmax(160px, 220px) 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 22px 28px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card:hover {
+      border-color: var(--brand-primary, #53c295);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-meta {
+      min-width: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-location {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      line-height: 1.3;
+      color: #9a9a9a;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #dff5eb;
+      color: var(--brand-primary, #53c295);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card:hover .career-card-arrow {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card {
+      width: 100%;
+      appearance: none;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-card-title {
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-section.is-detail .careers-overview {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-detail {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-section.is-detail .careers-detail {
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #9a9a9a;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb a,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb button {
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb a:hover,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb button:hover {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-sep {
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-top: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      opacity: 0.55;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-current {
+      color: var(--brand-primary, #53c295);
+      font-weight: 500;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-home svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-detail-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-detail-main {
+      padding-right: 48px;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-panel {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-panel.is-active {
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-panel h2 {
+      margin: 0 0 10px;
+      color: #000;
+      font-size: clamp(32px, 3vw, 44px);
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-posted {
+      margin: 0 0 36px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #9a9a9a;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-block {
+      margin-bottom: 32px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-detail-block h3 {
+      margin: 0 0 16px;
+      color: #000;
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-check-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .career-check-list li::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      border-radius: 50%;
+      background: var(--brand-primary, #53c295) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.2l2.8 2.8 6.2-6.2' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+      flex-shrink: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply h2 {
+      margin: 0 0 28px;
+      color: #000;
+      font-size: clamp(32px, 3vw, 44px);
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .input,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form input[type="text"],
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form input[type="email"],
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form input[type="tel"],
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form input[type="url"] {
+      width: 100%;
+      height: 52px;
+      padding: 0 22px;
+      border: 1px solid #e0e0e0;
+      border-radius: 999px;
+      background: #fff;
+      font-family: var(--body-font-family);
+      font-size: 15px;
+      color: #000;
+      outline: none;
+      box-shadow: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .input:focus,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form input:focus {
+      border-color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-file-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-file-field .input {
+      padding-right: 118px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-browse {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #dff5eb;
+      color: var(--brand-primary, #53c295);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-browse input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .primary-btn {
+      align-self: flex-start;
+      margin-top: 8px;
+      min-width: 160px;
+      border: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status--success {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status--error {
+      color: #b42318;
+    }
+
     @media (max-width: 991px) {
       .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
         grid-template-columns: 1fr;
@@ -675,6 +1438,60 @@
         gap: 60px;
       }
 
+      .about-tabs[data-section-id="{{ section.id }}"] .executive-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        max-width: min(520px, 72vw);
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .team-progress {
+        order: 2;
+        flex: 1 1 100%;
+        max-width: none;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .partners-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .partner-card {
+        min-height: 130px;
+        padding: 20px 16px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card {
+        grid-template-columns: auto 1fr auto;
+        gap: 16px;
+        padding: 18px 20px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-text {
+        grid-column: 1 / -1;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image {
+        aspect-ratio: 2 / 1;
+        border-radius: 999px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-detail-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-detail-main {
+        padding-right: 0;
+        border-right: none;
+        padding-bottom: 32px;
+        border-bottom: 1px solid #e8e8e8;
+      }
+
       .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
         padding: 18px 24px;
         font-size: 15px;
@@ -689,8 +1506,50 @@
       .about-tabs[data-section-id="{{ section.id }}"] .who-we-are,
       .about-tabs[data-section-id="{{ section.id }}"] .vision-mission,
       .about-tabs[data-section-id="{{ section.id }}"] .certificates,
-      .about-tabs[data-section-id="{{ section.id }}"] .social-responsibility {
+      .about-tabs[data-section-id="{{ section.id }}"] .social-responsibility,
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-team,
+      .about-tabs[data-section-id="{{ section.id }}"] .partners-section,
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-section {
         padding: 60px 0;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
+        margin-top: 64px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-why {
+        margin-bottom: 56px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card {
+        grid-template-columns: auto 1fr;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow {
+        grid-column: 2;
+        justify-self: end;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-text {
+        grid-column: 1 / -1;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .partners-filter {
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .partners-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .executive-meta-text h3 {
+        font-size: 22px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button {
+        width: 44px;
+        height: 44px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-list {
@@ -1080,44 +1939,528 @@
 
     <!-- Leadership & Team -->
     <div class="tab-panel" id="leadership-{{ section.id }}" role="tabpanel">
-      <div class="container">
-        <div class="tab-placeholder">
-          {% if section.settings.leadership_content != blank %}
-            {{ section.settings.leadership_content }}
-          {% else %}
-            <h2>{{ section.settings.tab_leadership_label | escape }}</h2>
-            <p>{{ section.settings.placeholder_text | escape }}</p>
+      <section class="leadership-team">
+        <div class="container">
+          {% if executive_blocks.size > 0 %}
+            <div class="leadership-block executive-team">
+              <div class="leadership-intro">
+                {% if section.settings.executive_heading != blank %}
+                  <h2>{{ section.settings.executive_heading | escape }}</h2>
+                {% endif %}
+                {% if section.settings.executive_subheading != blank %}
+                  <p>{{ section.settings.executive_subheading | escape }}</p>
+                {% endif %}
+              </div>
+
+              <div class="swiper leadership-slider executive-slider" data-executive-slider>
+                <div class="swiper-wrapper">
+                  {% for block in executive_blocks %}
+                    <div
+                      class="swiper-slide"
+                      data-name="{{ block.settings.name | escape }}"
+                      data-role="{{ block.settings.role | escape }}"
+                      data-button-label="{{ block.settings.button_label | escape }}"
+                      data-button-link="{{ block.settings.button_link | escape }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <div class="leadership-card-image">
+                        {% if block.settings.image != blank %}
+                          {{
+                            block.settings.image
+                            | image_url: width: 1000
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '320, 480, 640, 800, 1000',
+                              sizes: '(min-width: 992px) 520px, 72vw',
+                              alt: block.settings.name
+                          }}
+                        {% else %}
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                        {% if block.settings.linkedin_url != blank %}
+                          <a
+                            class="leadership-linkedin"
+                            href="{{ block.settings.linkedin_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="{{ block.settings.name | escape }} on LinkedIn"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                          </a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="executive-meta" data-executive-meta>
+                <div class="executive-meta-text">
+                  <h3 data-executive-name></h3>
+                  <p data-executive-role></p>
+                </div>
+                <a class="primary-btn is-hidden" data-executive-button href="#">Explore More</a>
+              </div>
+
+              <div class="team-slider-footer">
+                <div class="team-progress" aria-hidden="true">
+                  <span class="team-progress-bar" data-executive-progress></span>
+                </div>
+                <div class="team-nav-buttons">
+                  <button type="button" class="executive-prev" aria-label="Previous executive">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="executive-next" aria-label="Next executive">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if team_blocks.size > 0 %}
+            <div class="leadership-block people-team">
+              <div class="leadership-intro">
+                {% if section.settings.people_heading != blank %}
+                  <h2>{{ section.settings.people_heading | escape }}</h2>
+                {% endif %}
+                {% if section.settings.people_subheading != blank %}
+                  <p>{{ section.settings.people_subheading | escape }}</p>
+                {% endif %}
+              </div>
+
+              <div class="swiper leadership-slider people-slider" data-people-slider>
+                <div class="swiper-wrapper">
+                  {% for block in team_blocks %}
+                    <div
+                      class="swiper-slide"
+                      data-name="{{ block.settings.name | escape }}"
+                      data-role="{{ block.settings.role | escape }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <div class="leadership-card-image">
+                        {% if block.settings.image != blank %}
+                          {{
+                            block.settings.image
+                            | image_url: width: 600
+                            | image_tag:
+                              loading: 'lazy',
+                              widths: '200, 320, 400, 600',
+                              sizes: '(min-width: 992px) 220px, 42vw',
+                              alt: block.settings.name
+                          }}
+                        {% else %}
+                          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="people-meta" data-people-meta>
+                <h3 data-people-name></h3>
+                <p data-people-role></p>
+                <div class="people-meta-line" aria-hidden="true"></div>
+              </div>
+
+              <div class="team-slider-footer">
+                <div class="team-progress" aria-hidden="true">
+                  <span class="team-progress-bar" data-people-progress></span>
+                </div>
+                <div class="team-nav-buttons">
+                  <button type="button" class="people-prev" aria-label="Previous team member">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <button type="button" class="people-next" aria-label="Next team member">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          {% if executive_blocks.size == 0 and team_blocks.size == 0 %}
+            <div class="tab-placeholder">
+              <h2>{{ section.settings.tab_leadership_label | escape }}</h2>
+              <p>{{ section.settings.placeholder_text | escape }}</p>
+            </div>
           {% endif %}
         </div>
-      </div>
+      </section>
     </div>
 
     <!-- Partners -->
     <div class="tab-panel" id="partners-{{ section.id }}" role="tabpanel">
-      <div class="container">
-        <div class="tab-placeholder">
-          {% if section.settings.partners_content != blank %}
-            {{ section.settings.partners_content }}
+      <section class="partners-section" data-partners>
+        <div class="container">
+          {% if partner_blocks.size > 0 %}
+            <div class="partners-intro">
+              {% if section.settings.partners_heading != blank %}
+                <h2>{{ section.settings.partners_heading | escape }}</h2>
+              {% endif %}
+              {% if section.settings.partners_subheading != blank %}
+                <p>{{ section.settings.partners_subheading | escape }}</p>
+              {% endif %}
+            </div>
+
+            <div class="partners-filter" role="tablist" aria-label="Partner categories">
+              <button
+                type="button"
+                class="partners-filter-btn active"
+                role="tab"
+                aria-selected="true"
+                data-partner-category="distributor"
+              >
+                {{ section.settings.partners_distributor_label | default: 'Distributor' | escape }}
+              </button>
+              <button
+                type="button"
+                class="partners-filter-btn"
+                role="tab"
+                aria-selected="false"
+                data-partner-category="supplier"
+              >
+                {{ section.settings.partners_supplier_label | default: 'Supplier' | escape }}
+              </button>
+            </div>
+
+            <div class="partners-grid" data-partners-grid>
+              {% for block in partner_blocks %}
+                {%- assign partner_category = block.settings.category | default: 'distributor' -%}
+                {%- capture partner_inner -%}
+                  {% if block.settings.image != blank %}
+                    {{
+                      block.settings.image
+                      | image_url: width: 400
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '160, 240, 320, 400',
+                        sizes: '(min-width: 992px) 240px, 45vw',
+                        alt: block.settings.title
+                    }}
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                {%- endcapture -%}
+
+                {% if block.settings.link != blank %}
+                  <a
+                    class="partner-card{% unless partner_category == 'distributor' %} is-hidden{% endunless %}"
+                    href="{{ block.settings.link }}"
+                    data-partner-item
+                    data-category="{{ partner_category | escape }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ partner_inner }}
+                  </a>
+                {% else %}
+                  <div
+                    class="partner-card{% unless partner_category == 'distributor' %} is-hidden{% endunless %}"
+                    data-partner-item
+                    data-category="{{ partner_category | escape }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ partner_inner }}
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <p class="partners-empty" data-partners-empty>
+              {{ section.settings.placeholder_text | default: 'Coming soon' | escape }}
+            </p>
           {% else %}
-            <h2>{{ section.settings.tab_partners_label | escape }}</h2>
-            <p>{{ section.settings.placeholder_text | escape }}</p>
+            <div class="tab-placeholder">
+              <h2>{{ section.settings.tab_partners_label | escape }}</h2>
+              <p>{{ section.settings.placeholder_text | escape }}</p>
+            </div>
           {% endif %}
         </div>
-      </div>
+      </section>
     </div>
 
     <!-- Careers -->
     <div class="tab-panel" id="careers-{{ section.id }}" role="tabpanel">
-      <div class="container">
-        <div class="tab-placeholder">
-          {% if section.settings.careers_content != blank %}
-            {{ section.settings.careers_content }}
-          {% else %}
-            <h2>{{ section.settings.tab_careers_label | escape }}</h2>
-            <p>{{ section.settings.placeholder_text | escape }}</p>
+      <section class="careers-section" data-careers>
+        <div class="container">
+          <div class="careers-overview" data-careers-overview>
+            <div class="careers-why">
+              {% if section.settings.careers_why_heading != blank %}
+                <h2>{{ section.settings.careers_why_heading | escape }}</h2>
+              {% endif %}
+              {% if section.settings.careers_why_text != blank %}
+                <p>{{ section.settings.careers_why_text | escape | newline_to_br }}</p>
+              {% endif %}
+              {% if section.settings.careers_image != blank or section.settings.careers_why_heading != blank %}
+                <div class="careers-hero-image">
+                  {% if section.settings.careers_image != blank %}
+                    {{
+                      section.settings.careers_image
+                      | image_url: width: 1600
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '600, 900, 1200, 1600',
+                        sizes: '(min-width: 992px) 900px, 92vw',
+                        alt: section.settings.careers_why_heading
+                    }}
+                  {% else %}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="careers-positions">
+              <div class="careers-positions-intro">
+                {% if section.settings.careers_positions_heading != blank %}
+                  <h2>{{ section.settings.careers_positions_heading | escape }}</h2>
+                {% endif %}
+                {% if section.settings.careers_positions_subheading != blank %}
+                  <p>{{ section.settings.careers_positions_subheading | escape }}</p>
+                {% endif %}
+              </div>
+
+              {% if career_blocks.size > 0 %}
+                <div class="careers-list">
+                  {% for block in career_blocks %}
+                    <button
+                      type="button"
+                      class="career-card"
+                      data-open-career="{{ block.id }}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <span class="career-card-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                          <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                          <rect x="3.5" y="6.5" width="17" height="13" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
+                          <path d="M3.5 11.5h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                      </span>
+                      <div class="career-card-meta">
+                        {% if block.settings.location != blank %}
+                          <span class="career-card-location">{{ block.settings.location | escape }}</span>
+                        {% endif %}
+                        {% if block.settings.title != blank %}
+                          <span class="career-card-title">{{ block.settings.title | escape }}</span>
+                        {% endif %}
+                      </div>
+                      {% if block.settings.description != blank %}
+                        <span class="career-card-text">{{ block.settings.description | escape }}</span>
+                      {% else %}
+                        <span class="career-card-text"></span>
+                      {% endif %}
+                      <span class="career-card-arrow" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  {% endfor %}
+                </div>
+              {% elsif section.settings.careers_why_heading == blank and section.settings.careers_positions_heading == blank %}
+                <div class="tab-placeholder">
+                  <h2>{{ section.settings.tab_careers_label | escape }}</h2>
+                  <p>{{ section.settings.placeholder_text | escape }}</p>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          {% if career_blocks.size > 0 %}
+            <div class="careers-detail" data-careers-detail>
+              <nav class="careers-breadcrumb" aria-label="Breadcrumb">
+                <a class="careers-breadcrumb-home" href="{{ routes.root_url }}" aria-label="Home">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+                <span class="careers-breadcrumb-sep" aria-hidden="true"></span>
+                <button type="button" data-careers-back>
+                  {{ section.settings.tab_careers_label | default: 'Careers' | escape }}
+                </button>
+                <span class="careers-breadcrumb-sep" aria-hidden="true"></span>
+                <span class="careers-breadcrumb-current">
+                  {{ section.settings.careers_detail_label | default: 'Job Detail' | escape }}
+                </span>
+              </nav>
+
+              <div class="careers-detail-layout">
+                <div class="careers-detail-main">
+                  {% for block in career_blocks %}
+                    {%- liquid
+                      assign role_lines = block.settings.roles | newline_to_br | split: '<br />'
+                      assign qualification_lines = block.settings.qualifications | newline_to_br | split: '<br />'
+                      assign skill_lines = block.settings.skills | newline_to_br | split: '<br />'
+                    -%}
+                    <article
+                      class="career-detail-panel"
+                      data-career-panel="{{ block.id }}"
+                      data-career-title="{{ block.settings.title | escape }}"
+                    >
+                      {% if block.settings.title != blank %}
+                        <h2>{{ block.settings.title | escape }}</h2>
+                      {% endif %}
+                      {% if block.settings.posted_label != blank %}
+                        <p class="career-detail-posted">{{ block.settings.posted_label | escape }}</p>
+                      {% endif %}
+
+                      {% if block.settings.roles_heading != blank or block.settings.roles != blank %}
+                        <div class="career-detail-block">
+                          {% if block.settings.roles_heading != blank %}
+                            <h3>{{ block.settings.roles_heading | escape }}</h3>
+                          {% endif %}
+                          {% if block.settings.roles != blank %}
+                            <ul class="career-check-list">
+                              {% for line in role_lines %}
+                                {% assign clean_line = line | strip_html | strip %}
+                                {% if clean_line != blank %}
+                                  <li>{{ clean_line | escape }}</li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.qualifications_heading != blank or block.settings.qualifications != blank %}
+                        <div class="career-detail-block">
+                          {% if block.settings.qualifications_heading != blank %}
+                            <h3>{{ block.settings.qualifications_heading | escape }}</h3>
+                          {% endif %}
+                          {% if block.settings.qualifications != blank %}
+                            <ul class="career-check-list">
+                              {% for line in qualification_lines %}
+                                {% assign clean_line = line | strip_html | strip %}
+                                {% if clean_line != blank %}
+                                  <li>{{ clean_line | escape }}</li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+
+                      {% if block.settings.skills_heading != blank or block.settings.skills != blank %}
+                        <div class="career-detail-block">
+                          {% if block.settings.skills_heading != blank %}
+                            <h3>{{ block.settings.skills_heading | escape }}</h3>
+                          {% endif %}
+                          {% if block.settings.skills != blank %}
+                            <ul class="career-check-list">
+                              {% for line in skill_lines %}
+                                {% assign clean_line = line | strip_html | strip %}
+                                {% if clean_line != blank %}
+                                  <li>{{ clean_line | escape }}</li>
+                                {% endif %}
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </div>
+                      {% endif %}
+                    </article>
+                  {% endfor %}
+                </div>
+
+                <div class="careers-apply">
+                  <h2>{{ section.settings.careers_apply_heading | default: 'Apply Online' | escape }}</h2>
+
+                  {%- assign careers_form_id = 'CareersApply-' | append: section.id -%}
+                  {% form 'contact', id: careers_form_id, class: 'careers-apply-form' %}
+                    {% if form.posted_successfully? %}
+                      <p class="careers-form-status careers-form-status--success" data-careers-submitted>
+                        {{ section.settings.careers_success_message | default: 'Thanks — your application has been submitted.' | escape }}
+                      </p>
+                    {% elsif form.errors %}
+                      <p class="careers-form-status careers-form-status--error" data-careers-submitted>
+                        {{ form.errors | default_errors }}
+                      </p>
+                    {% endif %}
+
+                    <input type="hidden" name="contact[Job title]" value="" data-career-job-field>
+                    <input
+                      class="input"
+                      type="text"
+                      name="contact[First name]"
+                      placeholder="First Name *"
+                      required
+                      autocomplete="given-name"
+                    >
+                    <input
+                      class="input"
+                      type="text"
+                      name="contact[Last name]"
+                      placeholder="Last Name *"
+                      required
+                      autocomplete="family-name"
+                    >
+                    <input
+                      class="input"
+                      type="email"
+                      name="contact[email]"
+                      placeholder="Email Address *"
+                      required
+                      autocomplete="email"
+                    >
+                    <input
+                      class="input"
+                      type="tel"
+                      name="contact[Contact number]"
+                      placeholder="Contact Number *"
+                      required
+                      autocomplete="tel"
+                    >
+                    <input
+                      class="input"
+                      type="text"
+                      name="contact[City]"
+                      placeholder="City *"
+                      required
+                      autocomplete="address-level2"
+                    >
+                    <input
+                      class="input"
+                      type="url"
+                      name="contact[LinkedIn URL]"
+                      placeholder="LinkedIn URL"
+                      autocomplete="url"
+                    >
+                    <div class="careers-file-field">
+                      <input
+                        class="input"
+                        type="text"
+                        name="contact[Resume filename]"
+                        placeholder="Attach Resume *"
+                        readonly
+                        required
+                        data-resume-filename
+                        tabindex="-1"
+                      >
+                      <label class="careers-browse">
+                        {{ section.settings.careers_browse_label | default: 'Browse' | escape }}
+                        <input type="file" accept=".pdf,.doc,.docx" data-resume-input aria-label="Attach resume">
+                      </label>
+                    </div>
+                    <button type="submit" class="primary-btn">
+                      {{ section.settings.careers_submit_label | default: 'Submit' | escape }}
+                    </button>
+                  {% endform %}
+                </div>
+              </div>
+            </div>
           {% endif %}
         </div>
-      </div>
+      </section>
     </div>
   </div>
 
@@ -1135,6 +2478,13 @@
       var nextBtn = section.querySelector('.timeline-next');
       var timelineImage = null;
       var timelineContent = null;
+      var executiveSwiper = null;
+      var peopleSwiper = null;
+
+      function refreshLeadershipSliders() {
+        if (executiveSwiper) executiveSwiper.update();
+        if (peopleSwiper) peopleSwiper.update();
+      }
 
       function initTabs() {
         if (section.dataset.tabsBound === 'true') return;
@@ -1158,7 +2508,118 @@
 
           var target = section.querySelector('#' + tab + '-' + sectionId);
           if (target) target.classList.add('active');
+
+          if (tab === 'leadership') {
+            window.requestAnimationFrame(refreshLeadershipSliders);
+          }
+
+          if (tab !== 'careers') {
+            closeCareerDetail();
+          }
         });
+      }
+
+      function openCareerDetail(careerId) {
+        var careersRoot = section.querySelector('[data-careers]');
+        if (!careersRoot) return;
+
+        careersRoot.classList.add('is-detail');
+        careersRoot.querySelectorAll('[data-career-panel]').forEach(function (panel) {
+          panel.classList.toggle('is-active', panel.getAttribute('data-career-panel') === careerId);
+        });
+
+        var activePanel = careersRoot.querySelector('[data-career-panel].is-active');
+        var jobField = careersRoot.querySelector('[data-career-job-field]');
+        if (activePanel && jobField) {
+          jobField.value = activePanel.getAttribute('data-career-title') || '';
+        }
+
+        var tabsWrapper = section.querySelector('.tabs-wrapper');
+        if (tabsWrapper) {
+          tabsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      function closeCareerDetail() {
+        var careersRoot = section.querySelector('[data-careers]');
+        if (!careersRoot) return;
+        careersRoot.classList.remove('is-detail');
+        careersRoot.querySelectorAll('[data-career-panel]').forEach(function (panel) {
+          panel.classList.remove('is-active');
+        });
+      }
+
+      function initCareersDetail() {
+        var careersRoot = section.querySelector('[data-careers]');
+        if (!careersRoot || careersRoot.dataset.bound === 'true') return;
+        careersRoot.dataset.bound = 'true';
+
+        careersRoot.addEventListener('click', function (event) {
+          var openBtn = event.target.closest('[data-open-career]');
+          if (openBtn && careersRoot.contains(openBtn)) {
+            openCareerDetail(openBtn.getAttribute('data-open-career'));
+            return;
+          }
+
+          if (event.target.closest('[data-careers-back]')) {
+            closeCareerDetail();
+          }
+        });
+
+        var resumeInput = careersRoot.querySelector('[data-resume-input]');
+        var resumeFilename = careersRoot.querySelector('[data-resume-filename]');
+        if (resumeInput && resumeFilename) {
+          resumeInput.addEventListener('change', function () {
+            var file = resumeInput.files && resumeInput.files[0];
+            resumeFilename.value = file ? file.name : '';
+          });
+        }
+
+        if (careersRoot.querySelector('[data-careers-submitted]')) {
+          var firstCard = careersRoot.querySelector('[data-open-career]');
+          if (firstCard) {
+            openCareerDetail(firstCard.getAttribute('data-open-career'));
+          }
+        }
+      }
+
+      function filterPartners(category) {
+        var partnersRoot = section.querySelector('[data-partners]');
+        if (!partnersRoot) return;
+
+        var visibleCount = 0;
+        partnersRoot.querySelectorAll('[data-partner-item]').forEach(function (item) {
+          var match = item.getAttribute('data-category') === category;
+          item.classList.toggle('is-hidden', !match);
+          if (match) visibleCount += 1;
+        });
+
+        var emptyEl = partnersRoot.querySelector('[data-partners-empty]');
+        if (emptyEl) {
+          emptyEl.classList.toggle('is-visible', visibleCount === 0);
+        }
+      }
+
+      function initPartnersFilter() {
+        var partnersRoot = section.querySelector('[data-partners]');
+        if (!partnersRoot || partnersRoot.dataset.bound === 'true') return;
+        partnersRoot.dataset.bound = 'true';
+
+        partnersRoot.addEventListener('click', function (event) {
+          var btn = event.target.closest('[data-partner-category]');
+          if (!btn || !partnersRoot.contains(btn)) return;
+
+          var category = btn.getAttribute('data-partner-category');
+          partnersRoot.querySelectorAll('[data-partner-category]').forEach(function (filterBtn) {
+            var isActive = filterBtn === btn;
+            filterBtn.classList.toggle('active', isActive);
+            filterBtn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          filterPartners(category);
+        });
+
+        filterPartners('distributor');
       }
 
       function updateTimeline(index) {
@@ -1199,6 +2660,39 @@
           console.warn('Swiper failed to load. Timeline slider may not function.');
         };
         document.head.appendChild(script);
+      }
+
+      function setProgress(bar, index, total) {
+        if (!bar || !total) return;
+        bar.style.width = (((index + 1) / total) * 100) + '%';
+      }
+
+      function syncExecutiveMeta(slide) {
+        if (!slide) return;
+        var nameEl = section.querySelector('[data-executive-name]');
+        var roleEl = section.querySelector('[data-executive-role]');
+        var buttonEl = section.querySelector('[data-executive-button]');
+        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
+        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
+        if (buttonEl) {
+          var label = slide.getAttribute('data-button-label') || '';
+          var link = slide.getAttribute('data-button-link') || '';
+          if (label) {
+            buttonEl.textContent = label;
+            buttonEl.href = link || '#';
+            buttonEl.classList.remove('is-hidden');
+          } else {
+            buttonEl.classList.add('is-hidden');
+          }
+        }
+      }
+
+      function syncPeopleMeta(slide) {
+        if (!slide) return;
+        var nameEl = section.querySelector('[data-people-name]');
+        var roleEl = section.querySelector('[data-people-role]');
+        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
+        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
       }
 
       function initTimeline() {
@@ -1251,8 +2745,104 @@
         });
       }
 
+      function initLeadershipSliders() {
+        if (!window.Swiper) return;
+
+        var executiveEl = section.querySelector('[data-executive-slider]');
+        var peopleEl = section.querySelector('[data-people-slider]');
+        var executiveProgress = section.querySelector('[data-executive-progress]');
+        var peopleProgress = section.querySelector('[data-people-progress]');
+        var executivePrev = section.querySelector('.executive-prev');
+        var executiveNext = section.querySelector('.executive-next');
+        var peoplePrev = section.querySelector('.people-prev');
+        var peopleNext = section.querySelector('.people-next');
+
+        if (executiveEl) {
+          if (executiveEl.swiper) executiveEl.swiper.destroy(true, true);
+
+          executiveSwiper = new window.Swiper(executiveEl, {
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 28,
+            speed: 700,
+            grabCursor: true,
+            breakpoints: {
+              0: { spaceBetween: 16 },
+              768: { spaceBetween: 24 },
+              1200: { spaceBetween: 32 }
+            },
+            on: {
+              init: function () {
+                syncExecutiveMeta(this.slides[this.activeIndex]);
+                setProgress(executiveProgress, this.activeIndex, this.slides.length);
+              },
+              slideChange: function () {
+                syncExecutiveMeta(this.slides[this.activeIndex]);
+                setProgress(executiveProgress, this.activeIndex, this.slides.length);
+              }
+            }
+          });
+
+          if (executivePrev) {
+            executivePrev.onclick = function () {
+              executiveSwiper.slidePrev();
+            };
+          }
+          if (executiveNext) {
+            executiveNext.onclick = function () {
+              executiveSwiper.slideNext();
+            };
+          }
+        }
+
+        if (peopleEl) {
+          if (peopleEl.swiper) peopleEl.swiper.destroy(true, true);
+
+          peopleSwiper = new window.Swiper(peopleEl, {
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 20,
+            speed: 650,
+            grabCursor: true,
+            breakpoints: {
+              0: { spaceBetween: 12 },
+              768: { spaceBetween: 16 },
+              1200: { spaceBetween: 22 }
+            },
+            on: {
+              init: function () {
+                syncPeopleMeta(this.slides[this.activeIndex]);
+                setProgress(peopleProgress, this.activeIndex, this.slides.length);
+              },
+              slideChange: function () {
+                syncPeopleMeta(this.slides[this.activeIndex]);
+                setProgress(peopleProgress, this.activeIndex, this.slides.length);
+              }
+            }
+          });
+
+          if (peoplePrev) {
+            peoplePrev.onclick = function () {
+              peopleSwiper.slidePrev();
+            };
+          }
+          if (peopleNext) {
+            peopleNext.onclick = function () {
+              peopleSwiper.slideNext();
+            };
+          }
+        }
+      }
+
+      function initAllSliders() {
+        initTimeline();
+        initLeadershipSliders();
+      }
+
       initTabs();
-      loadSwiper(initTimeline);
+      initPartnersFilter();
+      initCareersDetail();
+      loadSwiper(initAllSliders);
 
       document.addEventListener('shopify:section:load', function (e) {
         if (e.target && e.target.querySelector('.about-tabs[data-section-id="' + sectionId + '"]')) {
@@ -1263,8 +2853,15 @@
           yearBtns = section.querySelectorAll('.year-btn');
           prevBtn = section.querySelector('.timeline-prev');
           nextBtn = section.querySelector('.timeline-next');
+          section.dataset.tabsBound = 'false';
+          var partnersRoot = section.querySelector('[data-partners]');
+          if (partnersRoot) partnersRoot.dataset.bound = 'false';
+          var careersRoot = section.querySelector('[data-careers]');
+          if (careersRoot) careersRoot.dataset.bound = 'false';
           initTabs();
-          loadSwiper(initTimeline);
+          initPartnersFilter();
+          initCareersDetail();
+          loadSwiper(initAllSliders);
         }
       });
 
@@ -1275,6 +2872,14 @@
           }
           if (contentSliderEl && contentSliderEl.swiper) {
             contentSliderEl.swiper.destroy(true, true);
+          }
+          if (executiveSwiper) {
+            executiveSwiper.destroy(true, true);
+            executiveSwiper = null;
+          }
+          if (peopleSwiper) {
+            peopleSwiper.destroy(true, true);
+            peopleSwiper = null;
           }
         }
       });
@@ -1326,7 +2931,7 @@
       "type": "text",
       "id": "tab_leadership_label",
       "label": "Leadership & Team tab",
-      "default": "Leadership & Team"
+      "default": "Our Leadership & Team"
     },
     {
       "type": "text",
@@ -1478,22 +3083,130 @@
     },
     {
       "type": "header",
-      "content": "Placeholder tabs"
+      "content": "Leadership — Executive Team"
     },
     {
-      "type": "richtext",
-      "id": "leadership_content",
-      "label": "Leadership & Team content"
+      "type": "text",
+      "id": "executive_heading",
+      "label": "Heading",
+      "default": "Executive Team"
     },
     {
-      "type": "richtext",
-      "id": "partners_content",
-      "label": "Partners content"
+      "type": "textarea",
+      "id": "executive_subheading",
+      "label": "Subheading",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
     },
     {
-      "type": "richtext",
-      "id": "careers_content",
-      "label": "Careers content"
+      "type": "header",
+      "content": "Leadership — People"
+    },
+    {
+      "type": "text",
+      "id": "people_heading",
+      "label": "Heading",
+      "default": "Meet the People Behind Sulalat"
+    },
+    {
+      "type": "textarea",
+      "id": "people_subheading",
+      "label": "Subheading",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "type": "header",
+      "content": "Partners"
+    },
+    {
+      "type": "text",
+      "id": "partners_heading",
+      "label": "Heading",
+      "default": "Our Partners"
+    },
+    {
+      "type": "textarea",
+      "id": "partners_subheading",
+      "label": "Subheading",
+      "default": "Our partners choose Sulalat for more than products"
+    },
+    {
+      "type": "text",
+      "id": "partners_distributor_label",
+      "label": "Distributor tab label",
+      "default": "Distributor"
+    },
+    {
+      "type": "text",
+      "id": "partners_supplier_label",
+      "label": "Supplier tab label",
+      "default": "Supplier"
+    },
+    {
+      "type": "header",
+      "content": "Careers — Why Join"
+    },
+    {
+      "type": "text",
+      "id": "careers_why_heading",
+      "label": "Heading",
+      "default": "Why Join Sulalat"
+    },
+    {
+      "type": "textarea",
+      "id": "careers_why_text",
+      "label": "Text",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+    },
+    {
+      "type": "image_picker",
+      "id": "careers_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Careers — Open Positions"
+    },
+    {
+      "type": "text",
+      "id": "careers_positions_heading",
+      "label": "Heading",
+      "default": "Open Positions"
+    },
+    {
+      "type": "textarea",
+      "id": "careers_positions_subheading",
+      "label": "Subheading",
+      "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    },
+    {
+      "type": "text",
+      "id": "careers_detail_label",
+      "label": "Job detail breadcrumb label",
+      "default": "Job Detail"
+    },
+    {
+      "type": "text",
+      "id": "careers_apply_heading",
+      "label": "Apply form heading",
+      "default": "Apply Online"
+    },
+    {
+      "type": "text",
+      "id": "careers_browse_label",
+      "label": "Resume browse label",
+      "default": "Browse"
+    },
+    {
+      "type": "text",
+      "id": "careers_submit_label",
+      "label": "Submit button label",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "careers_success_message",
+      "label": "Success message",
+      "default": "Thanks — your application has been submitted."
     }
   ],
   "blocks": [
@@ -1597,6 +3310,166 @@
             { "value": "right", "label": "Image right" }
           ],
           "default": "auto"
+        }
+      ]
+    },
+    {
+      "type": "executive_member",
+      "name": "Executive member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Rashid Al-Jarwa"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Chairman"
+        },
+        {
+          "type": "url",
+          "id": "linkedin_url",
+          "label": "LinkedIn URL"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore More"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "team_member",
+      "name": "Team member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Hamza Jared"
+        },
+        {
+          "type": "text",
+          "id": "role",
+          "label": "Role",
+          "default": "Company Advisor"
+        }
+      ]
+    },
+    {
+      "type": "partner_logo",
+      "name": "Partner logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Logo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Name",
+          "default": "Partner"
+        },
+        {
+          "type": "select",
+          "id": "category",
+          "label": "Category",
+          "options": [
+            { "value": "distributor", "label": "Distributor" },
+            { "value": "supplier", "label": "Supplier" }
+          ],
+          "default": "distributor"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "career_position",
+      "name": "Career position",
+      "settings": [
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location",
+          "default": "Saudi Arabia"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Job title",
+          "default": "Store Manager"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "List description",
+          "default": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+        },
+        {
+          "type": "text",
+          "id": "posted_label",
+          "label": "Posted label",
+          "default": "Posted 18 hours ago"
+        },
+        {
+          "type": "text",
+          "id": "roles_heading",
+          "label": "Roles heading",
+          "default": "Job Roles & Responsibilities:"
+        },
+        {
+          "type": "textarea",
+          "id": "roles",
+          "label": "Roles (one per line)",
+          "default": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must."
+        },
+        {
+          "type": "text",
+          "id": "qualifications_heading",
+          "label": "Qualifications heading",
+          "default": "Qualifications:"
+        },
+        {
+          "type": "textarea",
+          "id": "qualifications",
+          "label": "Qualifications (one per line)",
+          "default": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD."
+        },
+        {
+          "type": "text",
+          "id": "skills_heading",
+          "label": "Skills heading",
+          "default": "Skill Sets Required:"
+        },
+        {
+          "type": "textarea",
+          "id": "skills",
+          "label": "Skills (one per line)",
+          "default": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
         }
       ]
     }
@@ -1715,6 +3588,196 @@
             "text": "Sustainability isn't an add-on—it's woven into everything we do, from how we source to how we roast and ship.",
             "button_label": "Buy from Farm 4",
             "image_position": "auto"
+          }
+        },
+        {
+          "type": "executive_member",
+          "settings": {
+            "name": "Rashid Al-Jarwa",
+            "role": "Chairman",
+            "button_label": "Explore More"
+          }
+        },
+        {
+          "type": "executive_member",
+          "settings": {
+            "name": "Executive Member",
+            "role": "CEO",
+            "button_label": "Explore More"
+          }
+        },
+        {
+          "type": "executive_member",
+          "settings": {
+            "name": "Executive Member",
+            "role": "Managing Director",
+            "button_label": "Explore More"
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Hamza Jared",
+            "role": "Company Advisor"
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        {
+          "type": "team_member",
+          "settings": {
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Bialetti", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "acaia", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Flair", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Baratza", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "CAFEC", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Huskee", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Bialetti", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "acaia", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Flair", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Baratza", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "CAFEC", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Huskee", "category": "distributor" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Supplier Partner", "category": "supplier" }
+        },
+        {
+          "type": "partner_logo",
+          "settings": { "title": "Supplier Partner", "category": "supplier" }
+        },
+        {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
+          }
+        },
+        {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
+          }
+        },
+        {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
+          }
+        },
+        {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
+          }
+        },
+        {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         }
       ]

@@ -1,0 +1,158 @@
+<section class="solution-page-nav" data-section-id="{{ section.id }}">
+  <style>
+    .solution-page-nav[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #9a9a9a;
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb a:hover {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb-sep {
+      width: 6px;
+      height: 6px;
+      border-right: 1.5px solid currentColor;
+      border-top: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      opacity: 0.55;
+      flex-shrink: 0;
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb-current {
+      color: var(--brand-primary, #53c295);
+      font-weight: 500;
+    }
+
+    .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb-home svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+    }
+  </style>
+
+  <div class="container">
+    <nav class="solution-breadcrumb" aria-label="Breadcrumb">
+      <a class="solution-breadcrumb-home" href="{{ routes.root_url }}" aria-label="Home">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      {% if section.settings.crumb_1_label != blank %}
+        <span class="solution-breadcrumb-sep" aria-hidden="true"></span>
+        {% if section.settings.crumb_1_link != blank %}
+          <a href="{{ section.settings.crumb_1_link }}">{{ section.settings.crumb_1_label | escape }}</a>
+        {% else %}
+          <span>{{ section.settings.crumb_1_label | escape }}</span>
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.crumb_2_label != blank %}
+        <span class="solution-breadcrumb-sep" aria-hidden="true"></span>
+        {% if section.settings.crumb_2_link != blank %}
+          <a href="{{ section.settings.crumb_2_link }}">{{ section.settings.crumb_2_label | escape }}</a>
+        {% else %}
+          <span>{{ section.settings.crumb_2_label | escape }}</span>
+        {% endif %}
+      {% endif %}
+
+      {% if section.settings.crumb_3_label != blank %}
+        <span class="solution-breadcrumb-sep" aria-hidden="true"></span>
+        <span class="solution-breadcrumb-current">{{ section.settings.crumb_3_label | escape }}</span>
+      {% endif %}
+    </nav>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Solution page nav",
+  "tag": "section",
+  "class": "solution-page-nav-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "crumb_1_label",
+      "label": "Crumb 1 label",
+      "default": "Solutions"
+    },
+    {
+      "type": "url",
+      "id": "crumb_1_link",
+      "label": "Crumb 1 link"
+    },
+    {
+      "type": "text",
+      "id": "crumb_2_label",
+      "label": "Crumb 2 label",
+      "default": "Main Stream"
+    },
+    {
+      "type": "url",
+      "id": "crumb_2_link",
+      "label": "Crumb 2 link"
+    },
+    {
+      "type": "text",
+      "id": "crumb_3_label",
+      "label": "Current page label",
+      "default": "Services"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Solution page nav"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,74 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "sulalat_collection": {
+      "type": "main-collection-sulalat",
+      "blocks": {
+        "cat_all": {
+          "type": "category",
+          "settings": {
+            "label": "All Products",
+            "link": "/collections/all",
+            "is_all": true
+          }
+        },
+        "cat_coffee": {
+          "type": "category",
+          "settings": {
+            "label": "Coffee"
+          }
+        },
+        "cat_chocolate": {
+          "type": "category",
+          "settings": {
+            "label": "Chocolate"
+          }
+        },
+        "cat_capsules": {
+          "type": "category",
+          "settings": {
+            "label": "Capsules"
+          }
+        },
+        "cat_brewing": {
+          "type": "category",
+          "settings": {
+            "label": "Brewing Gear"
+          }
+        },
+        "cat_spare": {
+          "type": "category",
+          "settings": {
+            "label": "Spare Parts"
+          }
+        }
+      },
+      "block_order": [
+        "cat_all",
+        "cat_coffee",
+        "cat_chocolate",
+        "cat_capsules",
+        "cat_brewing",
+        "cat_spare"
+      ],
+      "settings": {
+        "nav_background": "#eefaf5",
+        "search_placeholder": "Search...",
+        "products_per_page": 9,
+        "load_more_label": "Load More",
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "sulalat_collection"
+  ]
+}

@@ -1,0 +1,416 @@
+{%- liquid
+  assign product_options = section.settings.product_options | newline_to_br | split: '<br />'
+  assign form_id = 'SolutionInquiry-' | append: section.id
+-%}
+
+<section class="solution-inquiry" data-section-id="{{ section.id }}">
+  <style>
+    .solution-inquiry[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border-radius: 24px;
+      background: {{ section.settings.card_background }};
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media {
+      min-height: 640px;
+      background: #f3f3f3;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media img,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      display: block;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content h2 {
+      margin: 0 0 14px;
+      color: #000;
+      font-size: clamp(32px, 3.2vw, 48px);
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content > p {
+      margin: 0 0 28px;
+      font-size: 16px;
+      line-height: 26px;
+      letter-spacing: -0.01em;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
+      width: 100%;
+      height: 52px;
+      padding: 0 22px;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      background: #fff;
+      font-family: var(--body-font-family);
+      font-size: 15px;
+      color: #000;
+      outline: none;
+      box-shadow: none;
+      appearance: none;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23535353' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 20px center;
+      padding-right: 48px;
+      color: #9a9a9a;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select:valid {
+      color: #000;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input:focus,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input:focus,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select:focus {
+      border-color: var(--brand-primary, #53c295);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-file-field {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-file-field .input {
+      padding-right: 118px;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: #dff5eb;
+      color: var(--brand-primary, #53c295);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      height: auto;
+      padding: 0;
+      border: 0;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .primary-btn {
+      align-self: flex-start;
+      margin-top: 8px;
+      min-width: 160px;
+      border: none;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status--success {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status--error {
+      color: #b42318;
+    }
+
+    @media (max-width: 991px) {
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media {
+        min-height: 320px;
+      }
+
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
+        padding: 36px 28px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .solution-inquiry[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="solution-inquiry-panel">
+      <div class="solution-inquiry-media">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1200, 1400',
+              sizes: '(min-width: 992px) 50vw, 100vw',
+              alt: section.settings.heading
+          }}
+        {% else %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+
+      <div class="solution-inquiry-content">
+        {% if section.settings.heading != blank %}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <p>{{ section.settings.text | escape | newline_to_br }}</p>
+        {% endif %}
+
+        {% form 'contact', id: form_id, class: 'solution-inquiry-form' %}
+          {% if form.posted_successfully? %}
+            <p class="solution-form-status solution-form-status--success">
+              {{ section.settings.success_message | escape }}
+            </p>
+          {% elsif form.errors %}
+            <p class="solution-form-status solution-form-status--error">
+              {{ form.errors | default_errors }}
+            </p>
+          {% endif %}
+
+          <input
+            class="input"
+            type="text"
+            name="contact[Full name]"
+            placeholder="Full Name *"
+            required
+            autocomplete="name"
+          >
+          <input
+            class="input"
+            type="email"
+            name="contact[email]"
+            placeholder="Email Address *"
+            required
+            autocomplete="email"
+          >
+          <input
+            class="input"
+            type="tel"
+            name="contact[Contact number]"
+            placeholder="Contact Number *"
+            required
+            autocomplete="tel"
+          >
+          <input
+            class="input"
+            type="text"
+            name="contact[City]"
+            placeholder="City *"
+            required
+            autocomplete="address-level2"
+          >
+          <select name="contact[Product]" required>
+            <option value="" disabled selected>{{ section.settings.product_placeholder | escape }}</option>
+            {% for option in product_options %}
+              {% assign clean_option = option | strip_html | strip %}
+              {% if clean_option != blank %}
+                <option value="{{ clean_option | escape }}">{{ clean_option | escape }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <div class="solution-file-field">
+            <input
+              class="input"
+              type="text"
+              name="contact[Document filename]"
+              placeholder="Attach Document"
+              readonly
+              data-inquiry-filename
+              tabindex="-1"
+            >
+            <label class="solution-browse">
+              {{ section.settings.browse_label | escape }}
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" data-inquiry-file aria-label="Attach document">
+            </label>
+          </div>
+          <button type="submit" class="primary-btn">
+            {{ section.settings.submit_label | escape }}
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var section = document.querySelector('.solution-inquiry[data-section-id="{{ section.id }}"]');
+      if (!section) return;
+      var fileInput = section.querySelector('[data-inquiry-file]');
+      var filenameInput = section.querySelector('[data-inquiry-filename]');
+      if (!fileInput || !filenameInput) return;
+
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files && fileInput.files[0];
+        filenameInput.value = file ? file.name : '';
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Solution inquiry",
+  "tag": "section",
+  "class": "solution-inquiry-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Let’s Build Something Together"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Submit your project details or upload documents directly through our B2B inquiry form. Our team will connect with you to design a tailored solution for your business needs."
+    },
+    {
+      "type": "text",
+      "id": "product_placeholder",
+      "label": "Product select placeholder",
+      "default": "Select the product"
+    },
+    {
+      "type": "textarea",
+      "id": "product_options",
+      "label": "Product options (one per line)",
+      "default": "Coffee\nChocolate\nGelato\nBakery\nEquipment"
+    },
+    {
+      "type": "text",
+      "id": "browse_label",
+      "label": "Browse label",
+      "default": "Browse"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — your inquiry has been submitted."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Panel background",
+      "default": "#eaf8f1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Solution inquiry"
+    }
+  ]
+}
+{% endschema %}

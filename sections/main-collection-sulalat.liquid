@@ -1,0 +1,622 @@
+{%- liquid
+  assign products_per_page = section.settings.products_per_page | default: 9
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+-%}
+
+<section class="sulalat-collection" data-section-id="{{ section.id }}" data-sulalat-collection>
+  <style>
+    .sulalat-collection[data-section-id="{{ section.id }}"] {
+      font-family: var(--body-font-family);
+      background: #fff;
+      padding: 0 0 {{ section.settings.padding_bottom }}px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav {
+      background: {{ section.settings.nav_background }};
+      padding: 18px 0;
+      margin-bottom: 36px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav__list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 18px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #000;
+      font-size: 16px;
+      line-height: 1.2;
+      font-weight: 400;
+      transition: 0.25s ease;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav__link.is-active,
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav__link:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-search {
+      position: relative;
+      margin-bottom: 22px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-search input {
+      width: 100%;
+      height: 52px;
+      padding: 0 52px 0 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      color: #000;
+      outline: none;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-search input:focus {
+      border-color: var(--brand-primary, #53c295);
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-search button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border: 0;
+      background: transparent;
+      color: #6b6b6b;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort select {
+      appearance: none;
+      height: 44px;
+      padding: 0 42px 0 18px;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23535353' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+      font-family: inherit;
+      font-size: 14px;
+      color: #000;
+      cursor: pointer;
+      outline: none;
+      min-width: 220px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-count {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      color: #9a9a9a;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sulalat-product-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .sulalat-product-card__media {
+      position: relative;
+      display: block;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      text-decoration: none;
+      background: #53c295;
+    }
+
+    .sulalat-product-card--magenta .sulalat-product-card__media {
+      background: #c44d8a;
+    }
+
+    .sulalat-product-card--beige .sulalat-product-card__media {
+      background: #cbb79a;
+    }
+
+    .sulalat-product-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-product-card__icon {
+      position: absolute;
+      inset: 0 0 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .sulalat-product-card__icon svg {
+      width: 72px;
+      height: 72px;
+    }
+
+    .sulalat-product-card__band {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      min-height: 48px;
+      padding: 10px 16px;
+      background: rgba(255, 255, 255, 0.92);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      text-align: center;
+    }
+
+    .sulalat-product-card__band-ar,
+    .sulalat-product-card__band-en {
+      font-size: 13px;
+      line-height: 1.3;
+      color: #111;
+    }
+
+    .sulalat-product-card__body {
+      padding-top: 18px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .sulalat-product-card__title {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .sulalat-product-card__title a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .sulalat-product-card__desc {
+      margin: 0 0 12px;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #8a8a8a;
+    }
+
+    .sulalat-product-card__price {
+      margin: 0 0 18px;
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .sulalat-product-card__price s {
+      margin-right: 8px;
+      color: #9a9a9a;
+      font-weight: 400;
+    }
+
+    .sulalat-product-card__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .sulalat-product-card__form {
+      display: contents;
+    }
+
+    .sulalat-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+      text-align: center;
+    }
+
+    .sulalat-btn--primary {
+      background: var(--brand-primary, #53c295);
+      border: 1px solid var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .sulalat-btn--primary:hover {
+      background: var(--brand-primary-hover, #45ad82);
+      border-color: var(--brand-primary-hover, #45ad82);
+    }
+
+    .sulalat-btn--outline {
+      background: transparent;
+      border: 1px solid var(--brand-primary, #53c295);
+      color: var(--brand-primary, #53c295);
+    }
+
+    .sulalat-btn--outline:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .sulalat-btn.is-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .sulalat-collection-load-more {
+      display: flex;
+      justify-content: center;
+      margin-top: 48px;
+    }
+
+    .sulalat-collection-load-more .sulalat-btn {
+      min-width: 180px;
+      min-height: 50px;
+      border-radius: 999px;
+      padding: 12px 36px;
+    }
+
+    .sulalat-collection-empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: #535353;
+    }
+
+    @media (max-width: 991px) {
+      .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 18px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-nav {
+        margin-bottom: 24px;
+      }
+
+      .sulalat-product-card__actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  {% if section.blocks.size > 0 %}
+    <div class="sulalat-collection-nav">
+      <div class="container">
+        <ul class="sulalat-collection-nav__list" role="list">
+          {% for block in section.blocks %}
+            {%- liquid
+              assign nav_label = block.settings.label
+              assign nav_url = block.settings.link
+              if block.settings.collection != blank
+                assign nav_url = block.settings.collection.url
+                if nav_label == blank
+                  assign nav_label = block.settings.collection.title
+                endif
+              endif
+              assign is_active = false
+              if block.settings.collection != blank and block.settings.collection.handle == collection.handle
+                assign is_active = true
+              elsif block.settings.is_all and collection.handle == 'all'
+                assign is_active = true
+              endif
+            -%}
+            {% if nav_label != blank and nav_url != blank %}
+              <li {{ block.shopify_attributes }}>
+                <a
+                  class="sulalat-collection-nav__link{% if is_active %} is-active{% endif %}"
+                  href="{{ nav_url }}"
+                  {% if is_active %}aria-current="page"{% endif %}
+                >
+                  {{ nav_label | escape }}
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="container">
+    <form class="sulalat-collection-search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="type" value="product">
+      <input
+        type="search"
+        name="q"
+        placeholder="{{ section.settings.search_placeholder | escape }}"
+        value="{{ search.terms | escape }}"
+        aria-label="{{ section.settings.search_placeholder | escape }}"
+      >
+      <button type="submit" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </form>
+
+    {%- paginate collection.products by products_per_page -%}
+      <div class="sulalat-collection-toolbar">
+        <form class="sulalat-collection-sort" action="{{ collection.url }}" method="get">
+          <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+          <select name="sort_by" id="SortBy-{{ section.id }}" onchange="this.form.submit()">
+            {% for option in collection.sort_options %}
+              <option
+                value="{{ option.value }}"
+                {% if option.value == sort_by %}selected{% endif %}
+              >
+                Sort by: {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </form>
+
+        <p class="sulalat-collection-count">
+          {%- if collection.products_count == 0 -%}
+            Showing 0 of 0 Products
+          {%- else -%}
+            Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} Products
+          {%- endif -%}
+        </p>
+      </div>
+
+      {% if collection.products.size == 0 %}
+        <div class="sulalat-collection-empty">
+          <p>{{ 'sections.collection.empty' | t | default: 'No products found in this collection.' }}</p>
+        </div>
+      {% else %}
+        <ul class="sulalat-collection-grid" role="list" data-product-grid>
+          {% for product in collection.products %}
+            <li>
+              {% render 'sulalat-product-card',
+                product: product,
+                collection: collection,
+                color_index: forloop.index0,
+                section_id: section.id
+              %}
+            </li>
+          {% endfor %}
+        </ul>
+
+        {% if paginate.next %}
+          <div class="sulalat-collection-load-more">
+            <a
+              class="sulalat-btn sulalat-btn--primary"
+              href="{{ paginate.next.url }}"
+              data-load-more
+            >
+              {{ section.settings.load_more_label | escape }}
+            </a>
+          </div>
+        {% endif %}
+      {% endif %}
+    {%- endpaginate -%}
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.sulalat-collection[data-section-id="{{ section.id }}"]');
+      if (!root) return;
+
+      var loadMore = root.querySelector('[data-load-more]');
+      var grid = root.querySelector('[data-product-grid]');
+      if (!loadMore || !grid) return;
+
+      loadMore.addEventListener('click', function (event) {
+        event.preventDefault();
+        var url = loadMore.getAttribute('href');
+        if (!url || loadMore.dataset.loading === 'true') return;
+
+        loadMore.dataset.loading = 'true';
+        loadMore.textContent = 'Loading...';
+
+        fetch(url)
+          .then(function (response) { return response.text(); })
+          .then(function (html) {
+            var doc = new DOMParser().parseFromString(html, 'text/html');
+            var nextRoot = doc.querySelector('.sulalat-collection[data-section-id="{{ section.id }}"]');
+            if (!nextRoot) return;
+
+            var nextItems = nextRoot.querySelectorAll('[data-product-grid] > li');
+            nextItems.forEach(function (item) {
+              grid.appendChild(item);
+            });
+
+            var nextButton = nextRoot.querySelector('[data-load-more]');
+            if (nextButton) {
+              loadMore.setAttribute('href', nextButton.getAttribute('href'));
+              loadMore.textContent = {{ section.settings.load_more_label | json }};
+              loadMore.dataset.loading = 'false';
+            } else {
+              loadMore.parentNode.remove();
+            }
+
+            var nextCount = nextRoot.querySelector('.sulalat-collection-count');
+            var currentCount = root.querySelector('.sulalat-collection-count');
+            if (nextCount && currentCount) {
+              currentCount.textContent = nextCount.textContent;
+            }
+          })
+          .catch(function () {
+            window.location.href = url;
+          });
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Sulalat collection",
+  "tag": "section",
+  "class": "sulalat-collection-section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "nav_background",
+      "label": "Category bar background",
+      "default": "#eefaf5"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Search..."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 6,
+      "max": 36,
+      "step": 3,
+      "label": "Products per page",
+      "default": 9
+    },
+    {
+      "type": "text",
+      "id": "load_more_label",
+      "label": "Load more label",
+      "default": "Load More"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Coffee"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link",
+          "info": "Used if no collection is selected"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_all",
+          "label": "Mark as All Products",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sulalat collection",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "label": "All Products",
+            "link": "/collections/all",
+            "is_all": true
+          }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Coffee" }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Chocolate" }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Capsules" }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Brewing Gear" }
+        },
+        {
+          "type": "category",
+          "settings": { "label": "Spare Parts" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

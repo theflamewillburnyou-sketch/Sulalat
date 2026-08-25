@@ -1377,10 +1377,15 @@ class MainMenu extends HTMLElement {
     removeTrapFocus();
     trapFocus(this);
 
-    document.body.classList.add('overflow-hidden');
+    document.body.classList.add('overflow-hidden', 'mobile-nav-open');
 
     if (!document.querySelector('store-header[data-is-sticky="true"]')) {
       document.body.classList.add('fixed');
+    }
+
+    // Mobile bottom-sheet: dim the page behind the panel
+    if (!theme.mediaMatches.md && this.overlay) {
+      this.toggleOverlay(true);
     }
   }
 
@@ -1391,7 +1396,11 @@ class MainMenu extends HTMLElement {
   closeMainMenu(transition = true) {
     this.mainContent.classList.remove('is-visible', 'main-menu__content--no-focus');
     this.mainToggle.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('overflow-hidden', 'fixed');
+    document.body.classList.remove('overflow-hidden', 'fixed', 'mobile-nav-open');
+
+    if (!theme.mediaMatches.md && this.overlay && this.overlayOpen) {
+      this.toggleOverlay(false);
+    }
 
     if (!transition) {
       this.mainContent.classList.remove('is-open');

@@ -1,0 +1,223 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/28e1c5b43866f2dc3a2496fa0241d8ed53c743cf.png",
+        "overlay_color": "#00000073",
+        "subtitle": "Solutions",
+        "heading": "<p>End-to-end coffee<br/>solutions.</p>",
+        "text": "<p>From specialty beans to café equipment — everything you need to build and grow.</p>",
+        "min_height": 520,
+        "min_height_mobile": 420,
+        "padding_top": 120,
+        "padding_bottom": 80,
+        "heading_size": 60,
+        "heading_line_height": 66,
+        "heading_size_mobile": 36,
+        "heading_line_height_mobile": 42
+      }
+    },
+    "coffee_showcase": {
+      "type": "solution-showcase",
+      "blocks": {
+        "coffee_whole_beans": {
+          "type": "slide",
+          "settings": {
+            "tag": "Coffee",
+            "heading": "Whole Beans",
+            "text": "Our Main Stream represents Sulalat's complete ecosystem — connecting coffee, chocolate, gelato, bakery, and equipment into one seamless value chain. Whether you're building a café, expanding a franchise, or perfecting your own craft, Sulalat provides the expertise and infrastructure to make it happen.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946.png"
+          }
+        },
+        "coffee_ground": {
+          "type": "slide",
+          "settings": {
+            "tag": "Coffee",
+            "heading": "Ground Coffee",
+            "text": "Freshly roasted and ground for convenience — crafted for cafés and home brewers who want consistency in every cup.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946_f48b696a-2574-4f9e-90ed-95a299d9e305.png"
+          }
+        },
+        "coffee_specialty": {
+          "type": "slide",
+          "settings": {
+            "tag": "Coffee",
+            "heading": "Specialty Blends",
+            "text": "Signature blends that balance heritage and innovation — curated for every style and setting.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946_f16d8575-0bc6-4429-976c-4678abcb2e88.png"
+          }
+        }
+      },
+      "block_order": [
+        "coffee_whole_beans",
+        "coffee_ground",
+        "coffee_specialty"
+      ],
+      "settings": {
+        "heading": "Coffee",
+        "subheading": "From bean to blend, Sulalat curates exceptional coffees for every style and setting — combining heritage with innovation.",
+        "layout_style": "split",
+        "media_position": "right",
+        "background_color": "#ffffff",
+        "card_background": "#eaf8f1",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "equipment_showcase": {
+      "type": "solution-showcase",
+      "blocks": {
+        "equip_commercial": {
+          "type": "slide",
+          "settings": {
+            "tag": "Industrial",
+            "heading": "Commercial Equipment",
+            "text": "Professional espresso machines, grinders, and brewing systems.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5.png"
+          }
+        },
+        "equip_home": {
+          "type": "slide",
+          "settings": {
+            "tag": "Home",
+            "heading": "Home Brewers",
+            "text": "Compact, precise brewing tools designed for enthusiasts who want café-quality results at home.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5_d2d8781f-621e-442a-8b21-872c4def8803.png"
+          }
+        },
+        "equip_support": {
+          "type": "slide",
+          "settings": {
+            "tag": "Support",
+            "heading": "Install & Support",
+            "text": "From supply to installation and ongoing support — every solution is built to perform with precision and durability.",
+            "button_label": "Shop Now",
+            "button_link": "",
+            "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5_09df8fd9-a41c-450a-a843-64796a90748f.png"
+          }
+        }
+      },
+      "block_order": [
+        "equip_commercial",
+        "equip_home",
+        "equip_support"
+      ],
+      "settings": {
+        "heading": "Equipments",
+        "subheading": "We supply, install, and support world-class brewing equipment from leading global brands. From compact home brewers to advanced café systems, every solution is built to perform with precision and durability.",
+        "layout_style": "joined",
+        "media_position": "left",
+        "background_color": "#ffffff",
+        "card_background": "#eaf8f1",
+        "padding_top": 40,
+        "padding_bottom": 40,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "chocolate_feature": {
+      "type": "solution-feature",
+      "settings": {
+        "tag": "Bean-to-Bar Perfection",
+        "heading": "Chocolate",
+        "text": "Sulalat chocolate is crafted from carefully selected cacao, transformed in-house from bean to finished product. Our chocolate serves both professionals and everyday connoisseurs.",
+        "button_label": "Learn More",
+        "button_link": "",
+        "image": "shopify://shop_images/c84ebf8026b51ddb6fb7085d2b165760da5a841b.png",
+        "media_position": "right",
+        "background_color": "#eaf8f1",
+        "card_background": "#eaf8f1",
+        "padding_top": 40,
+        "padding_bottom": 20,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 12
+      }
+    },
+    "gelato_feature": {
+      "type": "solution-feature",
+      "settings": {
+        "tag": "Cafe",
+        "heading": "Gelato",
+        "text": "Enhance your café menu with Sulalat’s artisan gelato and dessert creations. Crafted with premium ingredients and scalable solutions, designed to deliver a memorable café experience.",
+        "button_label": "Learn More",
+        "button_link": "",
+        "image": "shopify://shop_images/d51a639cb5f555ac781efe0820f1917bca9c19be.png",
+        "media_position": "left",
+        "background_color": "#eaf8f1",
+        "card_background": "#eaf8f1",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 12
+      }
+    },
+    "bakery_feature": {
+      "type": "solution-feature",
+      "settings": {
+        "tag": "Cafe",
+        "heading": "Bakery",
+        "text": "Complement your beverage program with our growing bakery offerings. From artisan pastries to custom recipes, Sulalat supports partners with product development and scalable production designed to elevate the café experience.",
+        "button_label": "Learn More",
+        "button_link": "",
+        "image": "shopify://shop_images/3106ed784771d5294d1af226f2798c57910ff085.png",
+        "media_position": "right",
+        "background_color": "#eaf8f1",
+        "card_background": "#eaf8f1",
+        "padding_top": 20,
+        "padding_bottom": 40,
+        "padding_top_mobile": 12,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "solution_inquiry": {
+      "type": "solution-inquiry",
+      "settings": {
+        "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
+        "heading": "Let’s Build Something Together",
+        "text": "Submit your project details or upload documents directly through our B2B inquiry form. Our team will connect with you to design a tailored solution for your business needs.",
+        "product_placeholder": "Select the product",
+        "product_options": "Coffee\nChocolate\nGelato\nBakery\nEquipment",
+        "browse_label": "Browse",
+        "submit_label": "Submit",
+        "success_message": "Thanks — your inquiry has been submitted.",
+        "background_color": "#ffffff",
+        "card_background": "#eaf8f1",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "coffee_showcase",
+    "equipment_showcase",
+    "chocolate_feature",
+    "gelato_feature",
+    "bakery_feature",
+    "solution_inquiry"
+  ]
+}

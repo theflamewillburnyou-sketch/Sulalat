@@ -113,49 +113,59 @@
     }
 
     store-header.header.header--overlay .header__grid,
-    store-header.header.header--overlay .main-menu,
-    store-header.header.header--overlay .main-menu__content {
+    store-header.header.header--overlay .main-menu {
       background: transparent !important;
       background-color: transparent !important;
     }
 
-  store-header.header.header--overlay .main-menu {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 40px;
-  }
+    @media (min-width: 769px) {
+      store-header.header.header--overlay .main-menu__content {
+        background: transparent !important;
+        background-color: transparent !important;
+      }
+
+      store-header.header.header--overlay .main-menu {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        padding-top: 40px;
+      }
+
+      store-header.header.header--overlay .main-nav__item--primary,
+      store-header.header.header--overlay .main-nav__toggle-btn {
+        color: #ffffff !important;
+      }
+
+      header #main-menu-content .main-nav {
+        gap: 50px;
+        margin: 0;
+      }
+
+      header #main-menu-content .main-nav .main-nav__row {
+        margin: 0;
+      }
+
+      store-header.header.header--overlay .main-nav__item--primary {
+        text-transform: none;
+        font-size: 17px;
+        font-weight: 300;
+        letter-spacing: 0.03em;
+        padding: 0;
+      }
+    }
 
     store-header.header.header--overlay .logo__text,
     store-header.header.header--overlay .logo__link,
     store-header.header.header--overlay .header__icon,
     store-header.header.header--overlay .header__icon .icon,
-    store-header.header.header--overlay .main-nav__item--primary,
-    store-header.header.header--overlay .main-nav__toggle-btn,
     store-header.header.header--overlay .custom-select__btn,
     store-header.header.header--overlay .custom-select__btn > .icon,
     store-header.header.header--overlay .search .icon,
-    store-header.header.header--overlay .search__submit {
+    store-header.header.header--overlay .search__submit,
+    store-header.header.header--overlay .main-menu__toggle {
       color: #ffffff !important;
     }
 
     form.search.relative.search--product-types {
       max-width: 450px;
-    }
-
-    header #main-menu-content .main-nav {
-      gap: 50px;
-      margin: 0;
-    }
-
-    header #main-menu-content .main-nav .main-nav__row {
-      margin: 0;
-    }
-
-    store-header.header.header--overlay .main-nav__item--primary {
-      text-transform: none;
-      font-size: 17px;
-      font-weight: 300;
-      letter-spacing: 3%;
-      padding: 0;
     }
 
     store-header.header.header--overlay .search__input {
@@ -210,6 +220,7 @@
     header .header__icons {
       gap: 30px;
       align-items: center;
+      margin:0;
     }
     header .header__icons a.header__icon {
       margin: 0;

@@ -1,0 +1,90 @@
+{%- comment -%}
+  Sulalat collection product card
+  Params: product, collection (optional), color_index (optional), section_id
+{%- endcomment -%}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  if collection and settings.card_url_within_coll and product.collections contains collection
+    assign product_url = product.url | within: collection
+  else
+    assign product_url = product.url
+  endif
+
+  assign card_colors = 'teal,magenta,beige' | split: ','
+  assign color_key = color_index | default: 0 | modulo: 3
+  assign card_tone = card_colors[color_key]
+
+  assign title_ar = product.metafields.custom.title_ar | default: product.metafields.custom.arabic_title
+  assign short_desc = product.metafields.descriptors.subtitle | default: product.metafields.custom.short_description
+  if short_desc == blank and product.description != blank
+    assign short_desc = product.description | strip_html | truncate: 80
+  endif
+  if short_desc == blank
+    assign short_desc = 'Short description here.'
+  endif
+
+  assign form_id = 'SulalatCard-' | append: section_id | append: '-' | append: product.id
+  assign image_alt = product.featured_media.alt | default: product.title
+-%}
+
+<article class="sulalat-product-card sulalat-product-card--{{ card_tone }}" data-product-id="{{ product.id }}">
+  <a class="sulalat-product-card__media" href="{{ product_url }}">
+    {% if product.featured_media != blank %}
+      {{
+        product.featured_media
+        | image_url: width: 900
+        | image_tag:
+          loading: 'lazy',
+          widths: '320, 480, 640, 800, 900',
+          sizes: '(min-width: 992px) 30vw, 100vw',
+          class: 'sulalat-product-card__image',
+          alt: image_alt
+      }}
+    {% else %}
+      <span class="sulalat-product-card__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" focusable="false">
+          <path d="M18 40c0 8.284 6.716 15 15 15s15-6.716 15-15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M22 28h22l-2 12H24l-2-12z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M26 28V22a7 7 0 0 1 14 0v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M30 18c1.5-3 5-3 6.5 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+    {% endif %}
+    <span class="sulalat-product-card__band">
+      {% if title_ar != blank %}
+        <span class="sulalat-product-card__band-ar" dir="rtl">{{ title_ar | escape }}</span>
+      {% endif %}
+      <span class="sulalat-product-card__band-en">{{ product.title | escape }}</span>
+    </span>
+  </a>
+
+  <div class="sulalat-product-card__body">
+    <h3 class="sulalat-product-card__title">
+      <a href="{{ product_url }}">{{ product.title | escape }}</a>
+    </h3>
+    <p class="sulalat-product-card__desc">{{ short_desc | escape }}</p>
+    <p class="sulalat-product-card__price">
+      {% if current_variant.compare_at_price > current_variant.price %}
+        <s>{{ current_variant.compare_at_price | money }}</s>
+      {% endif %}
+      <span>{{ current_variant.price | money }}</span>
+    </p>
+
+    <div class="sulalat-product-card__actions">
+      <a class="sulalat-btn sulalat-btn--primary" href="{{ product_url }}">View Details</a>
+
+      {% if product.has_only_default_variant and current_variant.available %}
+        {% form 'product', product, id: form_id, class: 'sulalat-product-card__form' %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+          <button type="submit" name="add" class="sulalat-btn sulalat-btn--outline">
+            Add to Cart
+          </button>
+        {% endform %}
+      {% elsif current_variant.available %}
+        <a class="sulalat-btn sulalat-btn--outline" href="{{ product_url }}">Add to Cart</a>
+      {% else %}
+        <span class="sulalat-btn sulalat-btn--outline is-disabled" aria-disabled="true">Sold out</span>
+      {% endif %}
+    </div>
+  </div>
+</article>

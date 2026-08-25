@@ -1,6 +1,303 @@
 /* google fonts  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+
+body .container {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* header start  */
+
+header .main-nav__child.mega-nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    border-radius: 20px !important;
+}
+
+body store-header.header {
+    padding-top: 16px;
+}
+
+/* Mobile header: logo | language + circular menu */
+@media (max-width: 768.98px) {
+  body store-header.header {
+    padding-top: 12px;
+    padding-bottom: 8px;
+  }
+
+  .header__grid {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header__logo {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .header__logo .logo__link img,
+  .header__logo .logo__link .img-fit {
+    max-height: 40px;
+    width: auto;
+  }
+
+  .header__search {
+    display: none !important;
+  }
+
+  .header__icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-inline-end: 0;
+    order: 1;
+  }
+
+  .header__icons > .header__icon,
+  .header__icons shopify-account {
+    display: none !important;
+  }
+
+  .header__localization {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .header__localization .custom-select__btn {
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: 0;
+    padding: 0;
+    min-height: 0;
+  }
+
+  .header__localization .custom-select__btn > .icon {
+    display: none;
+  }
+
+  /* Language only in the mobile bar (hide country if both are enabled) */
+  .header__localization .localization__selector:first-child:not(:only-child) {
+    display: none;
+  }
+
+  .main-menu {
+    order: 2;
+    width: auto;
+    flex: 0 0 auto;
+    background: transparent;
+  }
+
+  /* Circular hamburger */
+  .main-menu__toggle {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    color: rgb(var(--icon-color));
+    z-index: 110;
+  }
+
+  .main-menu__toggle::before,
+  .main-menu__toggle::after,
+  .main-menu__toggle-icon::before,
+  .main-menu__toggle-icon::after {
+    left: 50%;
+    width: 14px;
+    height: 1.5px;
+    margin-left: -7px;
+  }
+
+  .main-menu__toggle-icon::before {
+    top: 13px;
+  }
+
+  .main-menu__toggle::before,
+  .main-menu__toggle::after {
+    top: 19px;
+  }
+
+  .main-menu__toggle-icon::after {
+    top: 25px;
+  }
+
+  .main-menu__toggle[aria-expanded="true"] .main-menu__toggle-icon::before,
+  .main-menu__toggle[aria-expanded="true"] .main-menu__toggle-icon::after {
+    top: 19px;
+    left: 50%;
+    width: 0;
+    margin-left: 0;
+  }
+
+  /* Dark X when sheet is open (white panel) */
+  .main-menu__toggle[aria-expanded="true"] {
+    color: #1a1a1a !important;
+    border-color: #1a1a1a;
+  }
+
+  store-header.header.header--overlay .main-menu__toggle[aria-expanded="true"] {
+    color: #1a1a1a !important;
+    border-color: #1a1a1a !important;
+  }
+
+  /* Bottom-sheet mobile menu */
+  .main-menu__content {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: auto !important;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    max-width: none;
+    min-width: 0;
+    height: auto !important;
+    max-height: calc(var(--viewport-height, 100vh) - 10px);
+    min-height: min(72vh, calc(var(--viewport-height, 100vh) - 10px));
+    margin: 0;
+    padding: 48px 24px calc(32px + env(safe-area-inset-bottom, 0px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 28px 28px 0 0;
+    background-color: #ffffff !important;
+    color: #1a1a1a !important;
+    box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 100%, 0);
+    --nav-child-bg-color: 255 255 255;
+    --nav-child-text-color: 26 26 26;
+    --nav-line-color: transparent;
+  }
+
+  .main-menu__content.is-open {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-menu__content.has-motion {
+    transition:
+      opacity 0.35s ease,
+      visibility 0.35s ease,
+      transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+
+  .main-menu__content.is-open.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .main-menu__content > nav {
+    width: 100%;
+  }
+
+  .main-menu__content .main-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .main-menu__content .main-nav > li,
+  .main-menu__content .child-nav > li,
+  .main-menu__content .grandchild-nav > li {
+    border-bottom: 0;
+    width: 100%;
+  }
+
+  .main-menu__content .main-nav__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    box-shadow: none !important;
+  }
+
+  .main-menu__content .main-nav__item--dropdown > .main-nav__row > .main-nav__item--primary {
+    margin-inline-end: 0;
+  }
+
+  .main-menu__content .main-nav__item--primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 18px 8px;
+    color: #1a1a1a !important;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+    text-align: center;
+    text-transform: none;
+  }
+
+  .main-menu__content .main-nav__toggle-btn {
+    position: relative;
+    width: 28px;
+    height: 28px;
+    color: #1a1a1a !important;
+  }
+
+  .main-menu__content .main-nav__item--dropdown > .main-nav__row > .main-nav__toggle-btn .icon {
+    width: 16px;
+    height: 16px;
+    transform: none !important;
+  }
+
+  [dir="rtl"] .main-menu__content .main-nav__item--dropdown > .main-nav__row > .main-nav__toggle-btn .icon {
+    transform: none !important;
+  }
+
+  .main-menu__content .secondary-nav-container,
+  .main-menu__content .localization,
+  .main-menu__content .mob__localization {
+    display: none !important;
+  }
+
+  /* Child panels stay full-bleed within the sheet */
+  .main-menu__content .main-nav__child {
+    top: 0 !important;
+    height: 100% !important;
+    border-radius: 28px 28px 0 0;
+    background-color: #ffffff;
+    color: #1a1a1a;
+  }
+
+  .overlay.overlay--nav.is-visible {
+    z-index: 90;
+  }
+
+  /* Keep header + close (X) above the bottom sheet */
+  body.mobile-nav-open .shopify-section.cc-header {
+    z-index: 110;
+  }
+
+  body.mobile-nav-open store-header.header {
+    z-index: 110;
+  }
+
+  body.mobile-nav-open .header__logo,
+  body.mobile-nav-open .header__localization {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 /* footer start  */
 
 footer.footer {

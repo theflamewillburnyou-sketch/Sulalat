@@ -146,37 +146,285 @@
         "social_farm_1": {
           "type": "social_farm",
           "settings": {
+            "image": "shopify://shop_images/image_394.png",
             "heading": "Kenya, Karogoto",
             "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
             "button_label": "Buy from Karogoto",
+            "button_link": "",
             "image_position": "auto"
           }
         },
         "social_farm_2": {
           "type": "social_farm",
           "settings": {
+            "image": "shopify://shop_images/image_395.png",
             "heading": "Farm 2",
             "text": "By investing in long-term relationships and environmentally friendly methods, we help farmers thrive while ensuring consistent, high-quality beans for our customers.",
             "button_label": "Buy from Farm 2",
+            "button_link": "",
             "image_position": "auto"
           }
         },
         "social_farm_3": {
           "type": "social_farm",
           "settings": {
+            "image": "shopify://shop_images/image_394_1.png",
             "heading": "Farm 3",
             "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
             "button_label": "Buy from Farm 3",
+            "button_link": "",
             "image_position": "auto"
           }
         },
         "social_farm_4": {
           "type": "social_farm",
           "settings": {
+            "image": "shopify://shop_images/image_395_1.png",
             "heading": "Farm 4",
             "text": "Sustainability isn't an add-on—it's woven into everything we do, from how we source to how we roast and ship.",
             "button_label": "Buy from Farm 4",
+            "button_link": "",
             "image_position": "auto"
+          }
+        },
+        "exec_1": {
+          "type": "executive_member",
+          "settings": {
+            "image": "shopify://shop_images/e9863e90979261afdace87db9b8abd9a8547fd5f.jpg",
+            "name": "Rashid Al-Jarwa",
+            "role": "Chairman",
+            "linkedin_url": "",
+            "button_label": "Explore More",
+            "button_link": ""
+          }
+        },
+        "exec_2": {
+          "type": "executive_member",
+          "settings": {
+            "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
+            "name": "Executive Member",
+            "role": "CEO",
+            "linkedin_url": "",
+            "button_label": "Explore More",
+            "button_link": ""
+          }
+        },
+        "exec_3": {
+          "type": "executive_member",
+          "settings": {
+            "image": "shopify://shop_images/089360ebbf3e5b3e260dbf80e7524361cb4b7e67.jpg",
+            "name": "Executive Member",
+            "role": "Managing Director",
+            "linkedin_url": "",
+            "button_label": "Explore More",
+            "button_link": ""
+          }
+        },
+        "team_1": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        "team_2": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        "team_3": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
+            "name": "Hamza Jared",
+            "role": "Company Advisor"
+          }
+        },
+        "team_4": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
+            "name": "Team Member",
+            "role": "Advisor"
+          }
+        },
+        "partner_bialetti_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-1.png",
+            "title": "Bialetti",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_acaia_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-2.png",
+            "title": "acaia",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_flair_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-3.png",
+            "title": "Flair",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_baratza_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-4.png",
+            "title": "Baratza",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_cafec_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-5.png",
+            "title": "CAFEC",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_huskee_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-6.png",
+            "title": "Huskee",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_bialetti_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-1.png",
+            "title": "Bialetti",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_acaia_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-2.png",
+            "title": "acaia",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_flair_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-3.png",
+            "title": "Flair",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_baratza_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-4.png",
+            "title": "Baratza",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_cafec_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-5.png",
+            "title": "CAFEC",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_huskee_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-6.png",
+            "title": "Huskee",
+            "category": "distributor",
+            "link": ""
+          }
+        },
+        "partner_supplier_1": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-2.png",
+            "title": "Supplier Partner",
+            "category": "supplier",
+            "link": ""
+          }
+        },
+        "partner_supplier_2": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-1.png",
+            "title": "Supplier Partner",
+            "category": "supplier",
+            "link": ""
+          }
+        },
+        "partner_logo_7a7JQX": {
+          "type": "partner_logo",
+          "settings": {
+            "image": "shopify://shop_images/trust-partner-4.png",
+            "title": "Partner",
+            "category": "supplier",
+            "link": ""
+          }
+        },
+        "career_1": {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+          }
+        },
+        "career_2": {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+          }
+        },
+        "career_3": {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+          }
+        },
+        "career_4": {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+          }
+        },
+        "career_5": {
+          "type": "career_position",
+          "settings": {
+            "location": "Saudi Arabia",
+            "title": "Store Manager",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
           }
         }
       },
@@ -200,7 +448,34 @@
         "social_farm_1",
         "social_farm_2",
         "social_farm_3",
-        "social_farm_4"
+        "social_farm_4",
+        "exec_1",
+        "exec_2",
+        "exec_3",
+        "team_1",
+        "team_2",
+        "team_3",
+        "team_4",
+        "partner_bialetti_1",
+        "partner_acaia_1",
+        "partner_flair_1",
+        "partner_baratza_1",
+        "partner_cafec_1",
+        "partner_huskee_1",
+        "partner_bialetti_2",
+        "partner_acaia_2",
+        "partner_flair_2",
+        "partner_baratza_2",
+        "partner_cafec_2",
+        "partner_huskee_2",
+        "partner_supplier_1",
+        "partner_supplier_2",
+        "partner_logo_7a7JQX",
+        "career_1",
+        "career_2",
+        "career_3",
+        "career_4",
+        "career_5"
       ],
       "settings": {
         "tabs_aria_label": "About page sections",
@@ -208,7 +483,7 @@
         "tab_vision_label": "Vision & Mission",
         "tab_certifications_label": "Certifications",
         "tab_social_label": "Social Responsibility",
-        "tab_leadership_label": "Leadership & Team",
+        "tab_leadership_label": "Our Leadership & Team",
         "tab_partners_label": "Partners",
         "tab_careers_label": "Careers",
         "placeholder_text": "Coming soon",
@@ -231,9 +506,19 @@
         "culture_image": "shopify://shop_images/culture.png",
         "certificates_heading": "Awards & Certifications",
         "certificates_subheading": "<p>Our state-of-the-art facility is ISO-certified, ensuring every product meets rigorous international standards for quality and food safety.</p>",
-        "leadership_content": "",
-        "partners_content": "",
-        "careers_content": ""
+        "executive_heading": "Executive Team",
+        "executive_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "people_heading": "Meet the People Behind Sulalat",
+        "people_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "partners_heading": "Our Partners",
+        "partners_subheading": "Our partners choose Sulalat for more than products",
+        "partners_distributor_label": "Distributor",
+        "partners_supplier_label": "Supplier",
+        "careers_why_heading": "Why Join Sulalat",
+        "careers_why_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "careers_image": "shopify://shop_images/c27f2c2946c2a29be23158a7350ae8c6544e7c08.png",
+        "careers_positions_heading": "Open Positions",
+        "careers_positions_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
       }
     }
   },

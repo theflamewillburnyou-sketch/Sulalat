@@ -1,0 +1,125 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner_pKkj4b": {
+      "type": "page-banner",
+      "name": "Page Banner",
+      "settings": {
+        "background_image": "shopify://shop_images/1466e00e1b242677f589925ad57566e3bdd8b799.png",
+        "overlay_color": "rgba(0,0,0,0.45)",
+        "subtitle": "About Us",
+        "heading": "<p>Our Journey,<br/>Our Passion.</p>",
+        "text": "<p>We're on a mission to bring world-class quality to every cup.</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "solution_nav": {
+      "type": "solution-page-nav",
+      "settings": {
+        "crumb_1_label": "Solutions",
+        "crumb_1_link": "",
+        "crumb_2_label": "Main Stream",
+        "crumb_2_link": "",
+        "crumb_3_label": "Services",
+        "background_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 8
+      }
+    },
+    "maintenance_services": {
+      "type": "solution-services",
+      "blocks": {
+        "routine_maintenance": {
+          "type": "service_card",
+          "settings": {
+            "image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef.png",
+            "title": "Routine Maintenance",
+            "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
+            "link": ""
+          }
+        },
+        "corrective_maintenance": {
+          "type": "service_card",
+          "settings": {
+            "image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504.png",
+            "title": "Corrective Maintenance",
+            "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "routine_maintenance",
+        "corrective_maintenance"
+      ],
+      "settings": {
+        "heading": "Maintenance & Installations",
+        "subheading": "Professional setup and calibration for all major brands, ensuring optimal performance.",
+        "columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 56,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 36
+      }
+    },
+    "training_services": {
+      "type": "solution-services",
+      "blocks": {
+        "cupping": {
+          "type": "service_card",
+          "settings": {
+            "image": "shopify://shop_images/b4767a81b251dc8b99cc353f0086c6132131fb49.png",
+            "title": "Cupping",
+            "text": "Sensory evaluation and quality control.",
+            "link": ""
+          }
+        },
+        "barista": {
+          "type": "service_card",
+          "settings": {
+            "image": "shopify://shop_images/b74a5b3894f04c1dc5279102f1246adc071b8694.png",
+            "title": "Barista",
+            "text": "Practical brewing, espresso, and latte art mastery.",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "cupping",
+        "barista"
+      ],
+      "settings": {
+        "heading": "Training & Certifications",
+        "subheading": "Knowledge is as important as equipment. We offer barista training programs, specialty courses, and certifications including Q-Grader training—helping your team grow in skill and confidence.",
+        "columns": 2,
+        "background_color": "#ffffff",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "page_banner_pKkj4b",
+    "solution_nav",
+    "maintenance_services",
+    "training_services"
+  ]
+}

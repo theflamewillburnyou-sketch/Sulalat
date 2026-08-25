@@ -16,9 +16,13 @@
 {%- endstyle -%}
 
 {%- assign newsletter_block = blank -%}
+{%- assign footer_logo_block = blank -%}
 {%- for block in section.blocks -%}
   {%- if block.type == 'newsletter' -%}
     {%- assign newsletter_block = block -%}
+  {%- endif -%}
+  {%- if footer_logo_block == blank and block.type == 'text' and block.settings.image != blank -%}
+    {%- assign footer_logo_block = block -%}
   {%- endif -%}
 {%- endfor -%}
 
@@ -29,6 +33,31 @@
 {%- if newsletter_block != blank -%}
   <div class="footer-newsletter-bar" {{ newsletter_block.shopify_attributes }}>
     <div class="container footer-newsletter-bar__inner">
+      {% if footer_logo_block != blank %}
+        <div class="footer-newsletter-bar__logo">
+          <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
+            {% render 'image',
+              class: 'footer-newsletter-bar__logo-image',
+              image: footer_logo_block.settings.image,
+              src_width: footer_logo_block.settings.image_width,
+              srcset_2x: true,
+              alt_text: shop.name
+            %}
+          </a>
+        </div>
+      {% elsif settings.logo != blank %}
+        <div class="footer-newsletter-bar__logo">
+          <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
+            {% render 'image',
+              class: 'footer-newsletter-bar__logo-image',
+              image: settings.logo,
+              src_width: 180,
+              srcset_2x: true,
+              alt_text: shop.name
+            %}
+          </a>
+        </div>
+      {% endif %}
       <div class="footer-newsletter-bar__copy">
         {% if newsletter_block.settings.heading != blank %}
           <h2>{{ newsletter_block.settings.heading | escape }}</h2>
@@ -48,7 +77,6 @@
   <div class="container">
     {%- if section.blocks.size > 0 -%}
       <div class="footer__main md:flex md:flex-wrap mb-10 md:mb-6">
-        {%- assign is_first_disclosure = true -%}
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {% when '@app' %}
@@ -59,10 +87,16 @@
               </div>
 
             {%- when 'text' -%}
-              <div class="footer-col footer-col--text footer-col--not-collapsed{% if section.blocks.size == 1 %} footer-col--text-full-width{% endif %}" {{ block.shopify_attributes }}{% if settings.animations_enabled != "disabled" %} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.07 }}s"{% endif %}>
+              {%- liquid
+                assign is_logo_only = false
+                if block.settings.image != blank and block.settings.heading == blank and block.settings.text == blank and block.settings.button_label == blank and block.settings.show_social == false
+                  assign is_logo_only = true
+                endif
+              -%}
+              <div class="footer-col footer-col--text footer-col--not-collapsed{% if is_logo_only %} footer-col--logo{% endif %}{% if section.blocks.size == 1 %} footer-col--text-full-width{% endif %}" {{ block.shopify_attributes }}{% if settings.animations_enabled != "disabled" %} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.07 }}s"{% endif %}>
                 <div class="footer-block {{ block.settings.text_align }}">
                   {%- if block.settings.image != blank -%}
-                    <div class="media relative" style="max-width: {{ block.settings.image_width }}px;">
+                    <div class="media relative footer-block__logo" style="max-width: {{ block.settings.image_width }}px;">
                       {% render 'image', class: "footer-block__image", image: block.settings.image, src_width: block.settings.image_width, srcset_2x: true %}
                     </div>
                   {%- endif -%}
@@ -110,36 +144,20 @@
 
             {%- when 'link_list' -%}
               {%- if block.settings.menu != blank and block.settings.heading != blank -%}
-                <div class="footer-col footer-col--links footer-col--collapsed" {{ block.shopify_attributes }}{% if settings.animations_enabled != "disabled" %} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.07 }}s"{% endif %}>
-                  <footer-menu>
-                    <details class="footer-menu disclosure{% if is_first_disclosure %} footer-menu--first{% endif %}" open>
-                      <summary tabindex="-1">
-                        <div class="flex justify-between items-center">
-                          <h2 class="disclosure__title font-body font-bold text-h6 regular-text">
-                            {{- block.settings.heading | escape -}}
-                          </h2>
-                          <span class="disclosure__toggle">
-                            {%- if settings.disclosure_toggle == 'plus' -%}
-                              {% render 'icon-plus' %}
-                            {%- else -%}
-                              {% render 'icon-chevron-down' %}
-                            {%- endif -%}
-                          </span>
-                        </div>
-                      </summary>
-                      <div class="disclosure__panel has-motion">
-                        <ul class="footer-menu__links disclosure__content" role="list">
-                          {%- for link in block.settings.menu.links -%}
-                            <li>
-                              <a href="{{ link.url }}">{{ link.title }}</a>
-                            </li>
-                          {%- endfor -%}
-                        </ul>
-                      </div>
-                    </details>
-                  </footer-menu>
+                <div class="footer-col footer-col--links" {{ block.shopify_attributes }}{% if settings.animations_enabled != "disabled" %} data-cc-animate data-cc-animate-delay="{{ forloop.index | times: 0.07 }}s"{% endif %}>
+                  <div class="footer-menu">
+                    <h2 class="footer-menu__title font-body font-bold text-h6 regular-text">
+                      {{- block.settings.heading | escape -}}
+                    </h2>
+                    <ul class="footer-menu__links" role="list">
+                      {%- for link in block.settings.menu.links -%}
+                        <li>
+                          <a href="{{ link.url }}">{{ link.title }}</a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  </div>
                 </div>
-                {%- assign is_first_disclosure = false -%}
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
@@ -191,34 +209,6 @@
     </div>
   </div>
 </footer>
-
-{% javascript %}
-  customElements.whenDefined('details-disclosure').then(() => {
-    class FooterMenu extends DetailsDisclosure {
-      constructor() {
-        super();
-        this.reset(false);
-        window.addEventListener('on:breakpoint-change', this.reset.bind(this));
-      }
-
-      reset() {
-        const isLargeScreen = window.matchMedia(theme.mediaQueries.md).matches;
-        const isConfirmNewsletter = !isLargeScreen &&
-          (window.location.hash === "#footer-signup_form" && this.querySelector('#footer-signup_form') !== null);
-
-        this.disclosure.open = isLargeScreen || isConfirmNewsletter;
-
-        if (isLargeScreen) {
-          this.toggle.setAttribute('tabindex', '-1');
-        } else {
-          this.toggle.removeAttribute('tabindex');
-        }
-      }
-    }
-
-    customElements.define('footer-menu', FooterMenu);
-  });
-{% endjavascript %}
 
 {% schema %}
 {

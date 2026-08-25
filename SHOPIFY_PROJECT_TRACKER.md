@@ -221,7 +221,39 @@
 | Banner | `sections/page-banner.liquid` | Full-bleed hero + overlay + subtitle/heading/text |
 | Tabs + content | `sections/about-tabs.liquid` | Who We Are, Vision & Mission, Certifications + placeholder tabs; timeline uses Swiper |
 
-`2026-08-25` — Built About Us from `about-us.html` + style.css (1063–1586). Social Responsibility tab uses `social_farm` blocks (image, heading, text, CTA, image position).
+`2026-08-25` — About Us tabs complete. Careers job cards open an in-tab Job Detail view (roles/qualifications/skills + Apply Online contact form).
+
+## Solutions page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/page.solutions.json` | Assign in Admin → Page → Theme template → **solutions** |
+| Banner | `sections/page-banner.liquid` | Shared page hero |
+| Showcase | `sections/solution-showcase.liquid` | Coffee + Equipments carousels |
+| Feature | `sections/solution-feature.liquid` | Chocolate / Gelato / Bakery alternating splits |
+| Inquiry | `sections/solution-inquiry.liquid` | B2B contact form panel |
+
+`2026-08-25` — Added Solutions page template with Coffee, Equipments, Chocolate, Gelato, Bakery, and inquiry form sections.
+
+## Solutions Services page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/page.solution-services.json` | Assign in Admin → Page → Theme template → **solution-services** |
+| Nav | `sections/solution-page-nav.liquid` | Breadcrumbs (Home → Solutions → Main Stream → Services) |
+| Services grid | `sections/solution-services.liquid` | Maintenance & Training card sections |
+
+`2026-08-25` — Added Solution Services page from design screenshot.
+
+## Collection (Sulalat) page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/collection.sulalat.json` | Assign in Admin → Collection → Theme template → **sulalat** |
+| Section | `sections/main-collection-sulalat.liquid` | Category pills, search, sort, 3-col grid, Load More |
+| Card | `snippets/sulalat-product-card.liquid` | Custom card with View Details + Add to Cart |
+
+`2026-08-25` — Added Sulalat collection template from design screenshot.
 
 ## Testing Checklist
 
