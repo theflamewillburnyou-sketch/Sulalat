@@ -54,6 +54,7 @@
 
     .certifications[data-section-id="{{ section.id }}"] .logo-slider {
       overflow: hidden;
+      width: 100%;
     }
 
     .certifications[data-section-id="{{ section.id }}"] .logo-track {
@@ -134,64 +135,62 @@
 
   <div class="logo-slider">
     <div class="logo-track{% if section.settings.pause_on_hover %} pause-on-hover{% endif %}">
+      {% comment %}
+        Repeat logos enough times so each half of the track is wider than the viewport.
+        Animation moves -50%, so both halves must be identical and fill the screen.
+      {% endcomment %}
       {% if section.blocks.size > 0 %}
-        {% for block in section.blocks %}
-          <div class="logo-item" {{ block.shopify_attributes }}>
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}">
-            {% endif %}
-              {% if block.settings.image != blank %}
-                <img
-                  src="{{ block.settings.image | image_url: width: 400 }}"
-                  alt="{{ block.settings.image.alt | escape }}"
-                  loading="lazy"
-                >
-              {% else %}
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% for copy in (1..4) %}
+          {% for block in section.blocks %}
+            <div class="logo-item"{% if copy == 1 %} {{ block.shopify_attributes }}{% endif %}>
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}">
               {% endif %}
-            {% if block.settings.link != blank %}
-              </a>
-            {% endif %}
-          </div>
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 400 }}"
+                    alt="{% if copy == 1 %}{{ block.settings.image.alt | escape }}{% endif %}"
+                    loading="lazy"
+                  >
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
         {% endfor %}
 
-        {% comment %}Duplicate set for seamless loop{% endcomment %}
-        {% for block in section.blocks %}
-          <div class="logo-item" aria-hidden="true">
-            {% if block.settings.link != blank %}
-              <a href="{{ block.settings.link }}" tabindex="-1">
-            {% endif %}
-              {% if block.settings.image != blank %}
-                <img
-                  src="{{ block.settings.image | image_url: width: 400 }}"
-                  alt=""
-                  loading="lazy"
-                >
-              {% else %}
-                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% for copy in (1..4) %}
+          {% for block in section.blocks %}
+            <div class="logo-item" aria-hidden="true">
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" tabindex="-1">
               {% endif %}
-            {% if block.settings.link != blank %}
-              </a>
-            {% endif %}
-          </div>
+                {% if block.settings.image != blank %}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 400 }}"
+                    alt=""
+                    loading="lazy"
+                  >
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              {% if block.settings.link != blank %}
+                </a>
+              {% endif %}
+            </div>
+          {% endfor %}
         {% endfor %}
       {% else %}
-        {% comment %}Placeholder fallback if no blocks{% endcomment %}
-        {% for i in (1..6) %}
-          <div class="logo-item">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
+        {% for copy in (1..8) %}
+          {% for i in (1..6) %}
+            <div class="logo-item"{% if copy > 1 %} aria-hidden="true"{% endif %}>
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {% endfor %}
         {% endfor %}
-        {% for i in (1..6) %}
-          <div class="logo-item" aria-hidden="true">
-            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        {% endfor %}
-        {% for i in (1..6) %}
-        <div class="logo-item" aria-hidden="true">
-          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-        </div>
-      {% endfor %}
       {% endif %}
     </div>
   </div>

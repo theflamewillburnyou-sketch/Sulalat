@@ -297,7 +297,7 @@
         "body_size": 16,
         "logo_width": 156,
         "logo_gap": 50,
-        "animation_duration": 30,
+        "animation_duration": 45,
         "pause_on_hover": false
       }
     },
@@ -472,7 +472,7 @@
         "heading": "Explore the World of Coffee",
         "subheading": "From our roastery to your cup, learn about the stories, science, and passion behind every batch.",
         "blog": "news",
-        "button_text": "See More",
+        "button_text": "View All News",
         "button_link": "",
         "section_bg_color": "#ffffff",
         "heading_color": "#000000",

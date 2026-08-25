@@ -213,6 +213,16 @@
   3) adjust spacing/typography in the most screenshot-critical blocks (hero + partner + CTAs + blog overlay)
 - Logo marquee animation speed and exact visual sizing may require iterative tuning.
 
+## About Us page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/page.about.json` | Assign in Admin → Page → Theme template → **about** |
+| Banner | `sections/page-banner.liquid` | Full-bleed hero + overlay + subtitle/heading/text |
+| Tabs + content | `sections/about-tabs.liquid` | Who We Are, Vision & Mission, Certifications + placeholder tabs; timeline uses Swiper |
+
+`2026-08-25` — Built About Us from `about-us.html` + style.css (1063–1586). Social Responsibility tab uses `social_farm` blocks (image, heading, text, CTA, image position).
+
 ## Testing Checklist
 
 - Desktop rendering of homepage section order and spacing.

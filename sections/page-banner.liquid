@@ -1,0 +1,292 @@
+<section
+  class="page-banner"
+  data-section-id="{{ section.id }}"
+  style="
+    --page-banner-overlay: {{ section.settings.overlay_color }};
+    --page-banner-min-height: {{ section.settings.min_height }}px;
+    --page-banner-min-height-mobile: {{ section.settings.min_height_mobile }}px;
+    --page-banner-padding-top: {{ section.settings.padding_top }}px;
+    --page-banner-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --page-banner-heading-size: {{ section.settings.heading_size }}px;
+    --page-banner-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --page-banner-heading-line-height: {{ section.settings.heading_line_height }}px;
+    --page-banner-heading-line-height-mobile: {{ section.settings.heading_line_height_mobile }}px;
+  "
+>
+  <style>
+    .page-banner[data-section-id="{{ section.id }}"] {
+      position: relative;
+      overflow: hidden;
+      min-height: var(--page-banner-min-height, 650px);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--page-banner-padding-top, 120px) 0 var(--page-banner-padding-bottom, 90px);
+      font-family: var(--body-font-family);
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-image {
+      position: absolute;
+      inset: 0;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-image img,
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--page-banner-overlay, rgba(0, 0, 0, 0.45));
+      pointer-events: none;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content {
+      max-width: 560px;
+      color: #fff;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-subtitle {
+      display: inline-block;
+      margin-bottom: 20px;
+      font-weight: 400;
+      color: #fff;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading {
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-align: left;
+      font-size: var(--page-banner-heading-size, 65px);
+      line-height: var(--page-banner-heading-line-height, 70px);
+      font-weight: 400;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1 p,
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading p {
+      margin: 0;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content p,
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-text {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      color: #fff;
+      margin: 0;
+    }
+
+    @media (max-width: 767px) {
+      .page-banner[data-section-id="{{ section.id }}"] {
+        min-height: var(--page-banner-min-height-mobile, 480px);
+        padding-top: 80px;
+        padding-bottom: 60px;
+      }
+
+      .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
+      .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading {
+        font-size: var(--page-banner-heading-size-mobile, 40px);
+        line-height: var(--page-banner-heading-line-height-mobile, 44px);
+      }
+    }
+  </style>
+
+  <div class="page-banner-image">
+    {% if section.settings.background_image != blank %}
+      <img
+        src="{{ section.settings.background_image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.background_image | image_url: width: 800 }} 800w,
+                {{ section.settings.background_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.background_image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.background_image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt="{{ section.settings.background_image.alt | default: section.settings.subtitle | escape }}"
+        width="{{ section.settings.background_image.width }}"
+        height="{{ section.settings.background_image.height }}"
+        loading="eager"
+      >
+    {% else %}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+  </div>
+
+  <div class="page-banner-overlay"></div>
+
+  <div class="container">
+    <div class="page-banner-content">
+      {% if section.settings.subtitle != blank %}
+        <span class="page-subtitle">{{ section.settings.subtitle | escape }}</span>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h1 class="page-banner-heading">{{ section.settings.heading }}</h1>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="page-banner-text">{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Banner",
+  "tag": "section",
+  "class": "page-banner-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "rgba(0,0,0,0.45)"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "About Us"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Our Journey,<br>Our Passion.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>We're on a mission to bring world-class quality to every cup.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 400,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 650
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum height (mobile)",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 40,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 40,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 32,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 65
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 36,
+      "max": 90,
+      "step": 1,
+      "unit": "px",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading font size (mobile)",
+      "min": 24,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Heading line height (mobile)",
+      "min": 28,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page Banner",
+      "settings": {
+        "subtitle": "About Us",
+        "heading": "<p>Our Journey,<br>Our Passion.</p>",
+        "text": "<p>We're on a mission to bring world-class quality to every cup.</p>"
+      }
+    }
+  ]
+}
+{% endschema %}

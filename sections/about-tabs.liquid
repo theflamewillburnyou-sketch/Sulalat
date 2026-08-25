@@ -1,0 +1,1724 @@
+{%- liquid
+  assign timeline_blocks = section.blocks | where: 'type', 'timeline_item'
+  assign culture_blocks = section.blocks | where: 'type', 'culture_value'
+  assign certificate_blocks = section.blocks | where: 'type', 'certificate'
+  assign social_blocks = section.blocks | where: 'type', 'social_farm'
+-%}
+
+<section class="about-tabs" data-section-id="{{ section.id }}">
+  <style>
+    .about-tabs[data-section-id="{{ section.id }}"] {
+      font-family: var(--body-font-family);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tabs-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #eefaf5;
+      padding: 20px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tabs-nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      width: 100%;
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 17px;
+      line-height: 18px;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+      opacity: 0.8;
+      color: #000000;
+      font-family: var(--body-font-family);
+      border-radius: 12px;
+      padding: 25px 35px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-btn.active {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      opacity: 1;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-panel {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-panel.active {
+      display: block;
+      animation: about-tab-fade-{{ section.id }} 0.4s ease;
+    }
+
+    @keyframes about-tab-fade-{{ section.id }} {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-placeholder {
+      padding: 100px 0;
+      text-align: center;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .tab-placeholder h2 {
+      font-size: clamp(28px, 3vw, 45px);
+      font-weight: 400;
+      color: #000;
+      margin-bottom: 20px;
+    }
+
+    /* Who We Are */
+    .about-tabs[data-section-id="{{ section.id }}"] .who-we-are {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      align-items: center;
+      gap: 80px;
+      max-width: 1311px;
+      margin: 0 auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .who-image svg.placeholder-svg {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .section-tag {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: var(--brand-primary, #53c295);
+      text-transform: capitalize;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-content h2 {
+      color: #000;
+      font-size: clamp(32px, 3vw, 45px);
+      font-weight: 400;
+      margin-bottom: 30px;
+      line-height: 1.15;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-content p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      color: var(--brand-body-text, #535353);
+      margin-bottom: 24px;
+      max-width: 557px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Timeline */
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-section {
+      padding: 0 0 100px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+      max-width: 950px;
+      margin-inline: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .section-title h2 {
+      color: #000;
+      font-size: clamp(32px, 3vw, 45px);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .section-title p {
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
+      display: flex;
+      gap: 30px;
+      margin-top: 60px;
+      margin-bottom: 25px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider {
+      width: 60%;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider {
+      width: 40%;
+      background: #edf8f3;
+      border-radius: 12px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      height: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-year {
+      color: var(--brand-primary, #53c295);
+      font-size: 60px;
+      line-height: 0.8;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      border-bottom: 1px solid hsl(0deg 0% 0% / 14%);
+      display: block;
+      margin-bottom: 30px;
+      padding-bottom: 30px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-card h3 {
+      color: #000000;
+      font-size: 35px;
+      font-weight: 400;
+      margin-bottom: 20px;
+      line-height: 1.15;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-card p {
+      color: #535353;
+      text-align: left;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
+      width: 100%;
+      height: 495px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-progress {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      max-width: 700px;
+      min-width: 200px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-progress::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 2px;
+      background: #d7d7d7;
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .progress-bar {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      height: 2px;
+      width: 0;
+      background: var(--brand-primary, #53c295);
+      transform: translateY(-50%);
+      transition: 0.5s;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .year-btn {
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 0 8px;
+      font-size: 24px;
+      color: var(--brand-muted-text, #535353);
+      transition: 0.3s;
+      font-family: var(--body-font-family);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .year-btn.active {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .year-btn:has(~ .year-btn.active) {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button {
+      border-radius: 50%;
+      width: 59px;
+      height: 59px;
+      border: 1px solid var(--brand-primary, #53c295);
+      background: transparent;
+      color: var(--brand-primary, #53c295);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: 0.3s;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button svg {
+      display: block;
+    }
+
+    /* Vision & Mission */
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-mission {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-grid {
+      display: flex;
+      flex-wrap: wrap;
+      --gap: 20px;
+      gap: var(--gap);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-image {
+      width: calc(60% - (var(--gap) / 2));
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
+      width: calc(40% - (var(--gap) / 2));
+      background: #edf8f4;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      padding: 60px 40px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-content {
+      max-width: 420px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-content h2 {
+      line-height: 1.15;
+      margin-bottom: 18px;
+      color: #000000;
+      font-size: clamp(36px, 4vw, 55px);
+      font-weight: 400;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-content p {
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      color: var(--brand-body-text, #535353);
+      margin: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-image svg.placeholder-svg {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      display: block;
+      transition: 0.6s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-image:hover img {
+      transform: scale(1.08);
+    }
+
+    /* Culture & Values */
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-values {
+      padding: 0 0 100px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content,
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-image {
+      width: 50%;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content {
+      background: #edf8f4;
+      padding: 70px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content h2 {
+      line-height: 1.15;
+      margin-bottom: 35px;
+      color: #000000;
+      font-size: clamp(36px, 4vw, 55px);
+      font-weight: 400;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content p {
+      line-height: 1.7;
+      margin-bottom: 20px;
+      color: var(--brand-muted-text, #535353);
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-image {
+      overflow: hidden;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      min-height: 620px;
+      object-fit: cover;
+      display: block;
+      transition: 0.6s;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-image:hover img {
+      transform: scale(1.08);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-list {
+      margin: 15px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 400;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      color: var(--brand-muted-text, #535353);
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-list li::before {
+      content: "✓";
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Certificates */
+    .about-tabs[data-section-id="{{ section.id }}"] .certificates {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-card {
+      width: 100%;
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      padding: 45px 25px;
+      text-align: center;
+      background: #fff;
+      transition: 0.35s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-card img,
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-card svg.placeholder-svg {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 120px;
+      aspect-ratio: 1;
+      object-fit: contain;
+      margin: 0 auto 20px;
+      display: block;
+      transition: 0.35s;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-card h4 {
+      text-align: center;
+      font-size: 25px;
+      font-weight: 400;
+      color: var(--brand-muted-text, #535353);
+      margin: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .certificate-card:hover {
+      border-color: var(--brand-primary, #53c295);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Social Responsibility */
+    .about-tabs[data-section-id="{{ section.id }}"] .social-responsibility {
+      padding: 100px 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      max-width: 1311px;
+      margin: 0 auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-image {
+      order: 2;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+      order: 1;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content {
+      max-width: 480px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+      margin-left: auto;
+      margin-right: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content h3 {
+      margin: 0 0 20px;
+      color: #000;
+      font-size: clamp(28px, 2.8vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content p {
+      margin: 0 0 28px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      font-weight: 400;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content .primary-btn {
+      display: inline-flex;
+    }
+
+    @media (max-width: 991px) {
+      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
+        flex-direction: column;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider,
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider {
+        width: 100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
+        height: 360px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
+        width: 100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content,
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image {
+        width: 100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
+        min-height: 400px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-image,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+        order: unset;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+        max-width: none;
+        margin: 0;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
+        height: 360px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-list {
+        gap: 60px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
+        padding: 18px 24px;
+        font-size: 15px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .year-btn {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .about-tabs[data-section-id="{{ section.id }}"] .who-we-are,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-mission,
+      .about-tabs[data-section-id="{{ section.id }}"] .certificates,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-responsibility {
+        padding: 60px 0;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-list {
+        gap: 48px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
+        height: 280px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-section,
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-values {
+        padding-bottom: 60px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-year {
+        font-size: 42px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-card h3 {
+        font-size: 28px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content {
+        padding: 40px 24px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
+        padding: 40px 24px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-footer {
+        flex-direction: column;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-progress {
+        width: 100%;
+        max-width: none;
+      }
+    }
+  </style>
+
+  <div class="tabs-wrapper">
+    <div class="tabs-nav" role="tablist" aria-label="{{ section.settings.tabs_aria_label | escape }}">
+      <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="who" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_who_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="vision" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_vision_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="certifications" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_certifications_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="social" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_social_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="leadership" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_leadership_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="partners" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_partners_label | escape }}
+      </button>
+      <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="careers" data-section-id="{{ section.id }}">
+        {{ section.settings.tab_careers_label | escape }}
+      </button>
+    </div>
+  </div>
+
+  <div class="about-tab-content">
+    <!-- Who We Are -->
+    <div class="tab-panel active" id="who-{{ section.id }}" role="tabpanel">
+      <section class="who-we-are">
+        <div class="container">
+          <div class="who-grid">
+            <div class="who-image">
+              {% if section.settings.who_image != blank %}
+                <img
+                  src="{{ section.settings.who_image | image_url: width: 900 }}"
+                  alt="{{ section.settings.who_image.alt | default: section.settings.who_tag | escape }}"
+                  loading="lazy"
+                  width="{{ section.settings.who_image.width }}"
+                  height="{{ section.settings.who_image.height }}"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            <div class="who-content">
+              {% if section.settings.who_tag != blank %}
+                <span class="section-tag">{{ section.settings.who_tag | escape }}</span>
+              {% endif %}
+              {% if section.settings.who_heading != blank %}
+                <h2>{{ section.settings.who_heading }}</h2>
+              {% endif %}
+              {% if section.settings.who_paragraph_1 != blank %}
+                <p>{{ section.settings.who_paragraph_1 | escape }}</p>
+              {% endif %}
+              {% if section.settings.who_paragraph_2 != blank %}
+                <p>{{ section.settings.who_paragraph_2 | escape }}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% if timeline_blocks.size > 0 %}
+        <section class="timeline-section">
+          <div class="container">
+            <div class="section-title">
+              {% if section.settings.timeline_heading != blank %}
+                <h2>{{ section.settings.timeline_heading | escape }}</h2>
+              {% endif %}
+              {% if section.settings.timeline_subheading != blank %}
+                <p>{{ section.settings.timeline_subheading | escape }}</p>
+              {% endif %}
+            </div>
+
+            <div class="timeline-wrapper">
+              <div class="timeline-image-slider swiper" data-timeline-image-slider>
+                <div class="swiper-wrapper">
+                  {% for block in timeline_blocks %}
+                    <div class="swiper-slide" {{ block.shopify_attributes }}>
+                      {% if block.settings.image != blank %}
+                        <img
+                          src="{{ block.settings.image | image_url: width: 1000 }}"
+                          alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                          loading="lazy"
+                        >
+                      {% else %}
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="timeline-content-slider swiper" data-timeline-content-slider>
+                <div class="swiper-wrapper">
+                  {% for block in timeline_blocks %}
+                    <div class="swiper-slide" {{ block.shopify_attributes }}>
+                      <div class="timeline-card">
+                        {% if block.settings.year != blank %}
+                          <span class="timeline-year">{{ block.settings.year | escape }}</span>
+                        {% endif %}
+                        {% if block.settings.heading != blank %}
+                          <h3>{{ block.settings.heading | escape }}</h3>
+                        {% endif %}
+                        {% if block.settings.text != blank %}
+                          <p>{{ block.settings.text | escape }}</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <div class="timeline-footer">
+              <div class="timeline-progress" data-timeline-progress>
+                {% for block in timeline_blocks %}
+                  <button
+                    type="button"
+                    class="year-btn{% if forloop.first %} active{% endif %}"
+                    data-timeline-index="{{ forloop.index0 }}"
+                  >
+                    {{ block.settings.year | escape }}
+                  </button>
+                {% endfor %}
+                <span class="progress-bar" data-timeline-progress-bar></span>
+              </div>
+              <div class="timeline-buttons">
+                <button type="button" class="timeline-prev" aria-label="Previous timeline slide">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button type="button" class="timeline-next" aria-label="Next timeline slide">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+    </div>
+
+    <!-- Vision & Mission -->
+    <div class="tab-panel" id="vision-{{ section.id }}" role="tabpanel">
+      <section class="vision-mission">
+        <div class="container">
+          <div class="vision-grid">
+            <div class="vision-card">
+              <div class="vision-content">
+                {% if section.settings.vision_heading != blank %}
+                  <h2>{{ section.settings.vision_heading | escape }}</h2>
+                {% endif %}
+                {% if section.settings.vision_text != blank %}
+                  <p>{{ section.settings.vision_text | escape }}</p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="vision-image">
+              {% if section.settings.vision_image != blank %}
+                <img
+                  src="{{ section.settings.vision_image | image_url: width: 1000 }}"
+                  alt="{{ section.settings.vision_image.alt | default: section.settings.vision_heading | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            <div class="vision-image">
+              {% if section.settings.mission_image != blank %}
+                <img
+                  src="{{ section.settings.mission_image | image_url: width: 1000 }}"
+                  alt="{{ section.settings.mission_image.alt | default: section.settings.mission_heading | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+            <div class="vision-card">
+              <div class="vision-content">
+                {% if section.settings.mission_heading != blank %}
+                  <h2>{{ section.settings.mission_heading | escape }}</h2>
+                {% endif %}
+                {% if section.settings.mission_text != blank %}
+                  <p>{{ section.settings.mission_text | escape }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="culture-values">
+        <div class="container">
+          <div class="culture-wrapper">
+            <div class="culture-content">
+              {% if section.settings.culture_heading != blank %}
+                <h2>{{ section.settings.culture_heading | escape }}</h2>
+              {% endif %}
+              {% if section.settings.culture_paragraph_1 != blank %}
+                <p>{{ section.settings.culture_paragraph_1 | escape }}</p>
+              {% endif %}
+              {% if section.settings.culture_paragraph_2 != blank %}
+                <p>{{ section.settings.culture_paragraph_2 | escape }}</p>
+              {% endif %}
+              {% if culture_blocks.size > 0 %}
+                <ul class="culture-list">
+                  {% for block in culture_blocks %}
+                    <li {{ block.shopify_attributes }}>{{ block.settings.value | escape }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+            <div class="culture-image">
+              {% if section.settings.culture_image != blank %}
+                <img
+                  src="{{ section.settings.culture_image | image_url: width: 1200 }}"
+                  alt="{{ section.settings.culture_image.alt | default: section.settings.culture_heading | escape }}"
+                  loading="lazy"
+                >
+              {% else %}
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Certifications -->
+    <div class="tab-panel" id="certifications-{{ section.id }}" role="tabpanel">
+      <section class="certificates">
+        <div class="container">
+          <div class="section-title">
+            {% if section.settings.certificates_heading != blank %}
+              <h2>{{ section.settings.certificates_heading | escape }}</h2>
+            {% endif %}
+            {% if section.settings.certificates_subheading != blank %}
+              {{ section.settings.certificates_subheading }}
+            {% endif %}
+          </div>
+
+          {% if certificate_blocks.size > 0 %}
+            <div class="certificate-grid">
+              {% for block in certificate_blocks %}
+                <div class="certificate-card" {{ block.shopify_attributes }}>
+                  {% if block.settings.image != blank %}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 300 }}"
+                      alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {% endif %}
+                  {% if block.settings.title != blank %}
+                    <h4>{{ block.settings.title | escape }}</h4>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+
+    <!-- Social Responsibility -->
+    <div class="tab-panel" id="social-{{ section.id }}" role="tabpanel">
+      <section class="social-responsibility">
+        <div class="container">
+          {% if social_blocks.size > 0 %}
+            <div class="social-farm-list">
+              {% for block in social_blocks %}
+                {%- liquid
+                  assign image_position = block.settings.image_position | default: 'left'
+                  if image_position == 'auto'
+                    assign row_mod = forloop.index0 | modulo: 2
+                    if row_mod == 0
+                      assign image_position = 'left'
+                    else
+                      assign image_position = 'right'
+                    endif
+                  endif
+                -%}
+                <article
+                  class="social-farm-row{% if image_position == 'right' %} social-farm-row--image-right{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  <div class="social-farm-image">
+                    {% if block.settings.image != blank %}
+                      {{
+                        block.settings.image
+                        | image_url: width: 1200
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '400, 600, 800, 1000, 1200',
+                          sizes: '(min-width: 992px) 50vw, 100vw',
+                          alt: block.settings.heading
+                      }}
+                    {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  <div class="social-farm-content">
+                    {% if block.settings.heading != blank %}
+                      <h3>{{ block.settings.heading | escape }}</h3>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <p>{{ block.settings.text | escape | newline_to_br }}</p>
+                    {% endif %}
+                    {% if block.settings.button_label != blank %}
+                      <a
+                        class="primary-btn"
+                        href="{{ block.settings.button_link | default: '#' }}"
+                        {% if block.settings.button_link == blank %}
+                          aria-disabled="true"
+                        {% endif %}
+                      >
+                        {{ block.settings.button_label | escape }}
+                      </a>
+                    {% endif %}
+                  </div>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="tab-placeholder">
+              <h2>{{ section.settings.tab_social_label | escape }}</h2>
+              <p>{{ section.settings.placeholder_text | escape }}</p>
+            </div>
+          {% endif %}
+        </div>
+      </section>
+    </div>
+
+    <!-- Leadership & Team -->
+    <div class="tab-panel" id="leadership-{{ section.id }}" role="tabpanel">
+      <div class="container">
+        <div class="tab-placeholder">
+          {% if section.settings.leadership_content != blank %}
+            {{ section.settings.leadership_content }}
+          {% else %}
+            <h2>{{ section.settings.tab_leadership_label | escape }}</h2>
+            <p>{{ section.settings.placeholder_text | escape }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Partners -->
+    <div class="tab-panel" id="partners-{{ section.id }}" role="tabpanel">
+      <div class="container">
+        <div class="tab-placeholder">
+          {% if section.settings.partners_content != blank %}
+            {{ section.settings.partners_content }}
+          {% else %}
+            <h2>{{ section.settings.tab_partners_label | escape }}</h2>
+            <p>{{ section.settings.placeholder_text | escape }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Careers -->
+    <div class="tab-panel" id="careers-{{ section.id }}" role="tabpanel">
+      <div class="container">
+        <div class="tab-placeholder">
+          {% if section.settings.careers_content != blank %}
+            {{ section.settings.careers_content }}
+          {% else %}
+            <h2>{{ section.settings.tab_careers_label | escape }}</h2>
+            <p>{{ section.settings.placeholder_text | escape }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var sectionId = '{{ section.id }}';
+      var section = document.querySelector('.about-tabs[data-section-id="' + sectionId + '"]');
+      if (!section) return;
+
+      var imageSliderEl = section.querySelector('[data-timeline-image-slider]');
+      var contentSliderEl = section.querySelector('[data-timeline-content-slider]');
+      var progressBar = section.querySelector('[data-timeline-progress-bar]');
+      var yearBtns = section.querySelectorAll('.year-btn');
+      var prevBtn = section.querySelector('.timeline-prev');
+      var nextBtn = section.querySelector('.timeline-next');
+      var timelineImage = null;
+      var timelineContent = null;
+
+      function initTabs() {
+        if (section.dataset.tabsBound === 'true') return;
+        section.dataset.tabsBound = 'true';
+
+        section.addEventListener('click', function (event) {
+          var btn = event.target.closest('.tab-btn[data-section-id="' + sectionId + '"]');
+          if (!btn || !section.contains(btn)) return;
+
+          var tab = btn.getAttribute('data-tab');
+          section.querySelectorAll('.tab-btn[data-section-id="' + sectionId + '"]').forEach(function (b) {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+
+          section.querySelectorAll('.tab-panel').forEach(function (panel) {
+            panel.classList.remove('active');
+          });
+
+          var target = section.querySelector('#' + tab + '-' + sectionId);
+          if (target) target.classList.add('active');
+        });
+      }
+
+      function updateTimeline(index) {
+        if (!yearBtns.length) return;
+
+        yearBtns.forEach(function (btn) {
+          btn.classList.remove('active');
+        });
+
+        if (yearBtns[index]) {
+          yearBtns[index].classList.add('active');
+        }
+
+        if (progressBar) {
+          var total = yearBtns.length - 1;
+          var percentage = total > 0 ? (index / total) * 100 : 0;
+          progressBar.style.width = percentage + '%';
+        }
+      }
+
+      function loadSwiper(callback) {
+        if (window.Swiper) {
+          callback();
+          return;
+        }
+
+        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+          document.head.appendChild(link);
+        }
+
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        script.onload = callback;
+        script.onerror = function () {
+          console.warn('Swiper failed to load. Timeline slider may not function.');
+        };
+        document.head.appendChild(script);
+      }
+
+      function initTimeline() {
+        if (!imageSliderEl || !contentSliderEl || !window.Swiper) return;
+
+        if (imageSliderEl.swiper) {
+          imageSliderEl.swiper.destroy(true, true);
+        }
+        if (contentSliderEl.swiper) {
+          contentSliderEl.swiper.destroy(true, true);
+        }
+
+        timelineImage = new window.Swiper(imageSliderEl, {
+          slidesPerView: 1,
+          speed: 800,
+          allowTouchMove: false
+        });
+
+        timelineContent = new window.Swiper(contentSliderEl, {
+          slidesPerView: 1,
+          speed: 800,
+          allowTouchMove: false
+        });
+
+        timelineImage.controller.control = timelineContent;
+        timelineContent.controller.control = timelineImage;
+
+        timelineImage.on('slideChange', function () {
+          updateTimeline(this.activeIndex);
+        });
+
+        updateTimeline(0);
+
+        if (prevBtn) {
+          prevBtn.onclick = function () {
+            timelineImage.slidePrev();
+          };
+        }
+
+        if (nextBtn) {
+          nextBtn.onclick = function () {
+            timelineImage.slideNext();
+          };
+        }
+
+        yearBtns.forEach(function (btn, index) {
+          btn.onclick = function () {
+            timelineImage.slideTo(index);
+          };
+        });
+      }
+
+      initTabs();
+      loadSwiper(initTimeline);
+
+      document.addEventListener('shopify:section:load', function (e) {
+        if (e.target && e.target.querySelector('.about-tabs[data-section-id="' + sectionId + '"]')) {
+          section = document.querySelector('.about-tabs[data-section-id="' + sectionId + '"]');
+          imageSliderEl = section.querySelector('[data-timeline-image-slider]');
+          contentSliderEl = section.querySelector('[data-timeline-content-slider]');
+          progressBar = section.querySelector('[data-timeline-progress-bar]');
+          yearBtns = section.querySelectorAll('.year-btn');
+          prevBtn = section.querySelector('.timeline-prev');
+          nextBtn = section.querySelector('.timeline-next');
+          initTabs();
+          loadSwiper(initTimeline);
+        }
+      });
+
+      document.addEventListener('shopify:section:unload', function (e) {
+        if (e.target && e.target.querySelector('.about-tabs[data-section-id="' + sectionId + '"]')) {
+          if (imageSliderEl && imageSliderEl.swiper) {
+            imageSliderEl.swiper.destroy(true, true);
+          }
+          if (contentSliderEl && contentSliderEl.swiper) {
+            contentSliderEl.swiper.destroy(true, true);
+          }
+        }
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "About Tabs",
+  "tag": "section",
+  "class": "about-tabs-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tab labels"
+    },
+    {
+      "type": "text",
+      "id": "tabs_aria_label",
+      "label": "Tabs navigation label",
+      "default": "About page sections"
+    },
+    {
+      "type": "text",
+      "id": "tab_who_label",
+      "label": "Who We Are tab",
+      "default": "Who We Are"
+    },
+    {
+      "type": "text",
+      "id": "tab_vision_label",
+      "label": "Vision & Mission tab",
+      "default": "Vision & Mission"
+    },
+    {
+      "type": "text",
+      "id": "tab_certifications_label",
+      "label": "Certifications tab",
+      "default": "Certifications"
+    },
+    {
+      "type": "text",
+      "id": "tab_social_label",
+      "label": "Social Responsibility tab",
+      "default": "Social Responsibility"
+    },
+    {
+      "type": "text",
+      "id": "tab_leadership_label",
+      "label": "Leadership & Team tab",
+      "default": "Leadership & Team"
+    },
+    {
+      "type": "text",
+      "id": "tab_partners_label",
+      "label": "Partners tab",
+      "default": "Partners"
+    },
+    {
+      "type": "text",
+      "id": "tab_careers_label",
+      "label": "Careers tab",
+      "default": "Careers"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_text",
+      "label": "Placeholder text (empty tabs)",
+      "default": "Coming soon"
+    },
+    {
+      "type": "header",
+      "content": "Who We Are"
+    },
+    {
+      "type": "image_picker",
+      "id": "who_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "who_tag",
+      "label": "Tag",
+      "default": "Who We Are"
+    },
+    {
+      "type": "html",
+      "id": "who_heading",
+      "label": "Heading",
+      "default": "Our Journey, Rooted<br>in Passion"
+    },
+    {
+      "type": "textarea",
+      "id": "who_paragraph_1",
+      "label": "First paragraph",
+      "default": "We call ourselves Sulalat in Arabic, for the variety of Specialty coffee types we enjoy and roast. We consider ourselves home roasters and coffee aficionados, sharing our coffee with our friends and loved ones, We are based in Riyadh Saudi Arabia, and while geographically close to the best sources of Specialty coffee in the world, none of the coffees available locally is Specialty grade. We are changing that!"
+    },
+    {
+      "type": "textarea",
+      "id": "who_paragraph_2",
+      "label": "Second paragraph",
+      "default": "Specialty Coffee, in the Arab World."
+    },
+    {
+      "type": "header",
+      "content": "Timeline"
+    },
+    {
+      "type": "text",
+      "id": "timeline_heading",
+      "label": "Heading",
+      "default": "Timeline Stages"
+    },
+    {
+      "type": "textarea",
+      "id": "timeline_subheading",
+      "label": "Subheading",
+      "default": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike."
+    },
+    {
+      "type": "header",
+      "content": "Vision & Mission"
+    },
+    {
+      "type": "text",
+      "id": "vision_heading",
+      "label": "Vision heading",
+      "default": "Our Vision"
+    },
+    {
+      "type": "textarea",
+      "id": "vision_text",
+      "label": "Vision text",
+      "default": "To set the standard for specialty coffee and café solutions in Saudi Arabia and beyond."
+    },
+    {
+      "type": "image_picker",
+      "id": "vision_image",
+      "label": "Vision image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image",
+      "label": "Mission image"
+    },
+    {
+      "type": "text",
+      "id": "mission_heading",
+      "label": "Mission heading",
+      "default": "Our Mission"
+    },
+    {
+      "type": "textarea",
+      "id": "mission_text",
+      "label": "Mission text",
+      "default": "To deliver quality-first products and services that empower professionals and delight coffee lovers."
+    },
+    {
+      "type": "header",
+      "content": "Culture & Values"
+    },
+    {
+      "type": "text",
+      "id": "culture_heading",
+      "label": "Heading",
+      "default": "Culture & Values"
+    },
+    {
+      "type": "textarea",
+      "id": "culture_paragraph_1",
+      "label": "First paragraph",
+      "default": "Since our founding, Sulalat has grown from a local roastery into a trusted Saudi brand delivering coffee, chocolate, gelato, and café solutions nationwide."
+    },
+    {
+      "type": "textarea",
+      "id": "culture_paragraph_2",
+      "label": "Second paragraph",
+      "default": "Our values define who we are and drive our commitment to quality, integrity, and innovation."
+    },
+    {
+      "type": "image_picker",
+      "id": "culture_image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Certifications"
+    },
+    {
+      "type": "text",
+      "id": "certificates_heading",
+      "label": "Heading",
+      "default": "Awards & Certifications"
+    },
+    {
+      "type": "richtext",
+      "id": "certificates_subheading",
+      "label": "Subheading",
+      "default": "<p>Our state-of-the-art facility is ISO-certified, ensuring every product meets rigorous international standards for quality and food safety.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Placeholder tabs"
+    },
+    {
+      "type": "richtext",
+      "id": "leadership_content",
+      "label": "Leadership & Team content"
+    },
+    {
+      "type": "richtext",
+      "id": "partners_content",
+      "label": "Partners content"
+    },
+    {
+      "type": "richtext",
+      "id": "careers_content",
+      "label": "Careers content"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_item",
+      "name": "Timeline item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2013"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Sulalat Coffee was founded"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "culture_value",
+      "name": "Culture value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Quality First"
+        }
+      ]
+    },
+    {
+      "type": "certificate",
+      "name": "Certificate",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "ISO Certificate"
+        }
+      ]
+    },
+    {
+      "type": "social_farm",
+      "name": "Social farm",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Kenya, Karogoto"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming."
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Buy from Karogoto"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            { "value": "auto", "label": "Auto (alternate)" },
+            { "value": "left", "label": "Image left" },
+            { "value": "right", "label": "Image right" }
+          ],
+          "default": "auto"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Tabs",
+      "blocks": [
+        {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2013",
+            "heading": "Sulalat Coffee was founded",
+            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+          }
+        },
+        {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2017-18",
+            "heading": "Sulalat Coffee was founded",
+            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+          }
+        },
+        {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2025",
+            "heading": "Current Operations",
+            "text": "Sulalat now offers comprehensive services—from roasting to brewing equipment—for both consumer and wholesale markets."
+          }
+        },
+        {
+          "type": "culture_value",
+          "settings": { "value": "Quality First" }
+        },
+        {
+          "type": "culture_value",
+          "settings": { "value": "Sustainable Practices" }
+        },
+        {
+          "type": "culture_value",
+          "settings": { "value": "Innovation" }
+        },
+        {
+          "type": "culture_value",
+          "settings": { "value": "Heritage" }
+        },
+        {
+          "type": "culture_value",
+          "settings": { "value": "Excellence" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "VAT Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "SCA Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "Q-Grader" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "ISO Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "ISO Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "ISO Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "ISO Certificate" }
+        },
+        {
+          "type": "certificate",
+          "settings": { "title": "ISO Certificate" }
+        },
+        {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Kenya, Karogoto",
+            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
+            "button_label": "Buy from Karogoto",
+            "image_position": "auto"
+          }
+        },
+        {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 2",
+            "text": "By investing in long-term relationships and environmentally friendly methods, we help farmers thrive while ensuring consistent, high-quality beans for our customers.",
+            "button_label": "Buy from Farm 2",
+            "image_position": "auto"
+          }
+        },
+        {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 3",
+            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
+            "button_label": "Buy from Farm 3",
+            "image_position": "auto"
+          }
+        },
+        {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 4",
+            "text": "Sustainability isn't an add-on—it's woven into everything we do, from how we source to how we roast and ship.",
+            "button_label": "Buy from Farm 4",
+            "image_position": "auto"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

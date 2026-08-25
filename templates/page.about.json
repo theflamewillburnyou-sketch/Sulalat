@@ -1,0 +1,244 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/about-banner.png",
+        "overlay_color": "#00000073",
+        "subtitle": "About Us",
+        "heading": "<p>Our Journey,<br/>Our Passion.</p>",
+        "text": "<p>We're on a mission to bring world-class quality to every cup.</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "about_tabs": {
+      "type": "about-tabs",
+      "blocks": {
+        "timeline_2013": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2013",
+            "heading": "Sulalat Coffee was founded",
+            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.",
+            "image": "shopify://shop_images/timeline-slide-1.png"
+          }
+        },
+        "timeline_2017": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2017-18",
+            "heading": "Sulalat Coffee was founded",
+            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.",
+            "image": "shopify://shop_images/timeline-slide-2.png"
+          }
+        },
+        "timeline_2025": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2025",
+            "heading": "Current Operations",
+            "text": "Sulalat now offers comprehensive services—from roasting to brewing equipment—for both consumer and wholesale markets.",
+            "image": "shopify://shop_images/timeline-slide-3.png"
+          }
+        },
+        "culture_quality": {
+          "type": "culture_value",
+          "settings": {
+            "value": "Quality First"
+          }
+        },
+        "culture_sustainable": {
+          "type": "culture_value",
+          "settings": {
+            "value": "Sustainable Practices"
+          }
+        },
+        "culture_innovation": {
+          "type": "culture_value",
+          "settings": {
+            "value": "Innovation"
+          }
+        },
+        "culture_heritage": {
+          "type": "culture_value",
+          "settings": {
+            "value": "Heritage"
+          }
+        },
+        "culture_excellence": {
+          "type": "culture_value",
+          "settings": {
+            "value": "Excellence"
+          }
+        },
+        "cert_vat": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "VAT Certificate"
+          }
+        },
+        "cert_sca": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "SCA Certificate"
+          }
+        },
+        "cert_qgrader": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "Q-Grader"
+          }
+        },
+        "cert_iso_1": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "ISO Certificate"
+          }
+        },
+        "cert_iso_2": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "ISO Certificate"
+          }
+        },
+        "cert_iso_3": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "ISO Certificate"
+          }
+        },
+        "cert_iso_4": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "ISO Certificate"
+          }
+        },
+        "cert_iso_5": {
+          "type": "certificate",
+          "settings": {
+            "image": "shopify://shop_images/trust-logo.png",
+            "title": "ISO Certificate"
+          }
+        },
+        "social_farm_1": {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Kenya, Karogoto",
+            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
+            "button_label": "Buy from Karogoto",
+            "image_position": "auto"
+          }
+        },
+        "social_farm_2": {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 2",
+            "text": "By investing in long-term relationships and environmentally friendly methods, we help farmers thrive while ensuring consistent, high-quality beans for our customers.",
+            "button_label": "Buy from Farm 2",
+            "image_position": "auto"
+          }
+        },
+        "social_farm_3": {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 3",
+            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
+            "button_label": "Buy from Farm 3",
+            "image_position": "auto"
+          }
+        },
+        "social_farm_4": {
+          "type": "social_farm",
+          "settings": {
+            "heading": "Farm 4",
+            "text": "Sustainability isn't an add-on—it's woven into everything we do, from how we source to how we roast and ship.",
+            "button_label": "Buy from Farm 4",
+            "image_position": "auto"
+          }
+        }
+      },
+      "block_order": [
+        "timeline_2013",
+        "timeline_2017",
+        "timeline_2025",
+        "culture_quality",
+        "culture_sustainable",
+        "culture_innovation",
+        "culture_heritage",
+        "culture_excellence",
+        "cert_vat",
+        "cert_sca",
+        "cert_qgrader",
+        "cert_iso_1",
+        "cert_iso_2",
+        "cert_iso_3",
+        "cert_iso_4",
+        "cert_iso_5",
+        "social_farm_1",
+        "social_farm_2",
+        "social_farm_3",
+        "social_farm_4"
+      ],
+      "settings": {
+        "tabs_aria_label": "About page sections",
+        "tab_who_label": "Who We Are",
+        "tab_vision_label": "Vision & Mission",
+        "tab_certifications_label": "Certifications",
+        "tab_social_label": "Social Responsibility",
+        "tab_leadership_label": "Leadership & Team",
+        "tab_partners_label": "Partners",
+        "tab_careers_label": "Careers",
+        "placeholder_text": "Coming soon",
+        "who_image": "shopify://shop_images/who-we-are.png",
+        "who_tag": "Who We Are",
+        "who_heading": "Our Journey, Rooted<br>in Passion",
+        "who_paragraph_1": "We call ourselves Sulalat in Arabic, for the variety of Specialty coffee types we enjoy and roast. We consider ourselves home roasters and coffee aficionados, sharing our coffee with our friends and loved ones, We are based in Riyadh Saudi Arabia, and while geographically close to the best sources of Specialty coffee in the world, none of the coffees available locally is Specialty grade. We are changing that!",
+        "who_paragraph_2": "Specialty Coffee, in the Arab World.",
+        "timeline_heading": "Timeline Stages",
+        "timeline_subheading": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike.",
+        "vision_heading": "Our Vision",
+        "vision_text": "To set the standard for specialty coffee and café solutions in Saudi Arabia and beyond.",
+        "vision_image": "shopify://shop_images/vision-card-1.png",
+        "mission_image": "shopify://shop_images/vision-card-2.png",
+        "mission_heading": "Our Mission",
+        "mission_text": "To deliver quality-first products and services that empower professionals and delight coffee lovers.",
+        "culture_heading": "Culture & Values",
+        "culture_paragraph_1": "Since our founding, Sulalat has grown from a local roastery into a trusted Saudi brand delivering coffee, chocolate, gelato, and café solutions nationwide.",
+        "culture_paragraph_2": "Our values define who we are and drive our commitment to quality, integrity, and innovation.",
+        "culture_image": "shopify://shop_images/culture.png",
+        "certificates_heading": "Awards & Certifications",
+        "certificates_subheading": "<p>Our state-of-the-art facility is ISO-certified, ensuring every product meets rigorous international standards for quality and food safety.</p>",
+        "leadership_content": "",
+        "partners_content": "",
+        "careers_content": ""
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "about_tabs"
+  ]
+}
