@@ -32,42 +32,44 @@
 
 {%- if newsletter_block != blank -%}
   <div class="footer-newsletter-bar" {{ newsletter_block.shopify_attributes }}>
-    <div class="container footer-newsletter-bar__inner">
-      {% if footer_logo_block != blank %}
-        <div class="footer-newsletter-bar__logo">
-          <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
-            {% render 'image',
-              class: 'footer-newsletter-bar__logo-image',
-              image: footer_logo_block.settings.image,
-              src_width: footer_logo_block.settings.image_width,
-              srcset_2x: true,
-              alt_text: shop.name
-            %}
-          </a>
-        </div>
-      {% elsif settings.logo != blank %}
-        <div class="footer-newsletter-bar__logo">
-          <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
-            {% render 'image',
-              class: 'footer-newsletter-bar__logo-image',
-              image: settings.logo,
-              src_width: 180,
-              srcset_2x: true,
-              alt_text: shop.name
-            %}
-          </a>
-        </div>
-      {% endif %}
-      <div class="footer-newsletter-bar__copy">
-        {% if newsletter_block.settings.heading != blank %}
-          <h2>{{ newsletter_block.settings.heading | escape }}</h2>
+    <div class="container">
+      <div class="footer-newsletter-bar__inner">
+        {% if footer_logo_block != blank %}
+          <div class="footer-newsletter-bar__logo">
+            <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
+              {% render 'image',
+                class: 'footer-newsletter-bar__logo-image',
+                image: footer_logo_block.settings.image,
+                src_width: footer_logo_block.settings.image_width,
+                srcset_2x: true,
+                alt_text: shop.name
+              %}
+            </a>
+          </div>
+        {% elsif settings.logo != blank %}
+          <div class="footer-newsletter-bar__logo">
+            <a href="{{ routes.root_url }}" class="footer-newsletter-bar__logo-link">
+              {% render 'image',
+                class: 'footer-newsletter-bar__logo-image',
+                image: settings.logo,
+                src_width: 180,
+                srcset_2x: true,
+                alt_text: shop.name
+              %}
+            </a>
+          </div>
         {% endif %}
-        {% if newsletter_block.settings.text != blank %}
-          <div class="rte">{{ newsletter_block.settings.text }}</div>
-        {% endif %}
-      </div>
-      <div class="footer-newsletter-bar__form">
-        {% render 'newsletter-signup', id: 'footer-signup', arrow_button: false, tags: 'newsletter' %}
+        <div class="footer-newsletter-bar__copy">
+          {% if newsletter_block.settings.heading != blank %}
+            <h2>{{ newsletter_block.settings.heading | escape }}</h2>
+          {% endif %}
+          {% if newsletter_block.settings.text != blank %}
+            <div class="rte">{{ newsletter_block.settings.text }}</div>
+          {% endif %}
+        </div>
+        <div class="footer-newsletter-bar__form">
+          {% render 'newsletter-signup', id: 'footer-signup', arrow_button: false, tags: 'newsletter' %}
+        </div>
       </div>
     </div>
   </div>

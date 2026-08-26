@@ -118,6 +118,12 @@
         width: calc(var(--certifications-logo-width) * 0.7);
       }
     }
+
+    @media (max-width: 575px){
+      .certifications[data-section-id="{{ section.id }}"] .logo-item {
+        width: 160px;
+      }
+    }
   </style>
 
   <div class="container">

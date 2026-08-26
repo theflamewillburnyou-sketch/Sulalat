@@ -15,26 +15,26 @@
         "card_m99dfC": {
           "type": "card",
           "settings": {
-            "heading": "For Coffee Enthusiasts",
-            "text": "<p>As a Saudi pioneer, Sulalat sources, roasts, and delivers world-class coffee, chocolate, and café solutions with uncompromising quality and safety.</p>",
+            "heading": "For Home Brewers",
+            "text": "<p>Shop specialty coffee, craft chocolate, and the tools to prepare them right.</p>",
             "text_color": "#ffffff",
             "image": "shopify://shop_images/banner-card-1.png",
             "image_alt": "Banner card image",
-            "link": "",
-            "button_text": "Shop Now",
+            "link": "#",
+            "button_text": "Discover Our Products",
             "button_color": "#ffffff"
           }
         },
         "card_pKQ3E4": {
           "type": "card",
           "settings": {
-            "heading": "For Business Partners",
-            "text": "<p>Running a café, hotel, or distribution business? Partner with Sulalat for scalable wholesale solutions and trusted supply.</p>",
+            "heading": "For Client Cafés",
+            "text": "<p>Build your menu with a leading supplier of specialty coffee and artisan gelato in Saudi Arabia.</p>",
             "text_color": "#ffffff",
             "image": "shopify://shop_images/banner-card-2.png",
             "image_alt": "Banner card image",
-            "link": "",
-            "button_text": "Shop Now",
+            "link": "#",
+            "button_text": "Discover Our Products",
             "button_color": "#ffffff"
           }
         }
@@ -50,7 +50,7 @@
         "banner_height": 900,
         "banner_height_mobile": 500,
         "overlay_color": "#00000080",
-        "heading": "<p>The Art of<br/>Saudi Specialty Coffee</p>",
+        "heading": "<p>Sharing Quality of Life</p>",
         "heading_color": "#ffffff",
         "heading_max_size": 60,
         "content_alignment": "flex-start",
@@ -116,13 +116,13 @@
       ],
       "name": "Coffee experience",
       "settings": {
-        "heading_part_1": "Shaping Exceptional Coffee Experiences Through",
-        "heading_part_2": "Passion and Precision",
+        "heading_part_1": "An Ecosystem of Taste & Trust Passion and Precision",
+        "heading_part_2": "",
         "subheading": "",
-        "about_heading_part_1": "Driven by Excellence",
-        "about_heading_part_2": "Crafted for You",
-        "text_left": "Sulalat is a Saudi pioneer in specialty coffee, artisanal chocolate, gelato, and innovative cafe solutions.",
-        "text_right": "With ISO-certified roasting, private-label services, and premium equipment distribution, we empower professionals and enthusiasts alike to create world-class experiences.",
+        "about_heading_part_1": "Made with Ihsan, from Intention to Creation Crafted for You",
+        "about_heading_part_2": "",
+        "text_left": "Sulalat is a specialized ecosystem offering specialty coffee, craft chocolate, and artisanal gelato",
+        "text_right": "Since 2014, we have brought together globally sourced ingredients, certified expertise, and in-house production to empower the hospitality sector in the Middle East, one product, one batch, one relationship at a time.",
         "heading_color": "#000000",
         "text_color": "#535353",
         "overlay_color": "#000000",
@@ -149,53 +149,44 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-1.png",
-            "title": "Specialty Coffee",
-            "text": "World-Class Specialty Coffee.",
-            "link": ""
+            "title": "Specialty Coffee Beans & Roasting",
+            "text": "Carefully sourced and roasted coffees",
+            "link": "#"
           }
         },
         "category_NJMhHD": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-2.png",
-            "title": "Craft Chocolate",
-            "text": "Artisanal Bean-to-Bar Chocolate.",
-            "link": ""
+            "title": "Equipment, Packaging & Café Consultancy",
+            "text": "Practical tools, packaging, and guidance",
+            "link": "#"
           }
         },
         "category_EqYkiY": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-3.png",
-            "title": "Artisan Gelato",
-            "text": "Authentic Italian Gelato.",
-            "link": ""
+            "title": "Craft Chocolate",
+            "text": "Thoughtfully crafted chocolate products",
+            "link": "#"
           }
         },
         "category_YQeAKf": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-4.png",
-            "title": "Equipment",
-            "text": "Premium Equipment & Tools.",
-            "link": ""
-          }
-        },
-        "category_LQ7URG": {
-          "type": "category",
-          "settings": {
-            "image": "shopify://shop_images/category-5.png",
-            "title": "Manufacturing",
-            "text": "Sulalat's production capabilities.",
-            "link": ""
+            "title": "Premium Artisan Gelato",
+            "text": "High-quality gelato solutions",
+            "link": "#"
           }
         },
         "view_all_kpdj98": {
           "type": "view_all",
           "settings": {
-            "heading": "Discover\nEverything We Offer",
-            "text": "View All Products",
-            "link": ""
+            "heading": "Explore All Offerings",
+            "text": "Explore Solutions",
+            "link": "#"
           }
         }
       },
@@ -204,13 +195,12 @@
         "category_NJMhHD",
         "category_EqYkiY",
         "category_YQeAKf",
-        "category_LQ7URG",
         "view_all_kpdj98"
       ],
       "name": "Category showcase",
       "settings": {
-        "heading": "Your All-in-One Partner in Excellence",
-        "subheading": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike.",
+        "heading": "Everything You Need, Under One Roof",
+        "subheading": "Explore everything we make, from specialty coffee to craft chocolate, artisan gelato, equipment, and manufacturing.",
         "heading_color": "#000000",
         "text_color": "#141211",
         "card_title_color": "#000000",
@@ -285,8 +275,8 @@
       ],
       "name": "Quality You Can Trust",
       "settings": {
-        "heading": "Quality You Can Trust",
-        "subheading": "Our ISO-certified processes and global accolades reflect our commitment to excellence at every stage.",
+        "heading": "Quality Held to a Higher Standard",
+        "subheading": "Our certifications reflect the discipline we hold ourselves to for consistency and care in every product.",
         "heading_color": "#000000",
         "text_color": "#141211",
         "section_bg_color": "#ffffff",
@@ -305,11 +295,11 @@
       "type": "partner-split",
       "name": "Partner split",
       "settings": {
-        "heading": "Partner with a Pioneer",
-        "paragraph_1": "Running a café, hotel, or distribution business? Partner with Sulalat for scalable wholesale solutions and trusted supply.",
-        "paragraph_2": "Unlock growth with Saudi Arabia's trusted B2B coffee solutions provider.",
-        "button_text": "Explore Business Solutions",
-        "button_link": "",
+        "heading": "Grow with a Name You Can Trust",
+        "paragraph_1": "Every product from our facility carries the same care that has guided us from the very beginning. Sulalat is Saudi Arabia's trusted B2B supplier for specialty coffee, craft chocolate, and artisan gelato.",
+        "paragraph_2": "With long-term relationships and shared standards, we help partners deliver experiences their customers return for.",
+        "button_text": "View All Business Solutions",
+        "button_link": "#",
         "image": "shopify://shop_images/partner-image.png",
         "section_bg_color": "#e7f5ef",
         "heading_color": "#000000",
@@ -362,13 +352,13 @@
       ],
       "name": "Coffee shop slider",
       "settings": {
-        "heading": "Visit Our Coffee Shop",
-        "paragraph_1": "Step into our coffee shop and enjoy freshly brewed coffee crafted from premium beans. Whether you're stopping by for your morning espresso, meeting friends, or looking for a cozy place to relax, our baristas are ready to serve the perfect cup.",
-        "paragraph_2": "Discover our signature drinks, freshly roasted beans, and a warm atmosphere made for every coffee enthusiast.",
-        "button_1_text": "Visit Our Coffee Shop",
-        "button_1_link": "",
-        "button_2_text": "Find Us on the Map",
-        "button_2_link": "",
+        "heading": "Witness Our Process Firsthand",
+        "paragraph_1": "Step inside one of the world's largest specialty coffee, craft chocolate, and artisanal gelato showrooms, a 4,000 sqm space created for tasting, learning, experimentation, and business development.",
+        "paragraph_2": "Meet our team, explore our production facilities, and speak directly with the specialists who have spent years perfecting every step. This is an invitation into how we work and why we care the way we do.",
+        "button_1_text": "Plan Your Visit",
+        "button_1_link": "#",
+        "button_2_text": "Locate on Map",
+        "button_2_link": "#",
         "slide_width": 58,
         "image_height": 600,
         "transition_speed": 1000,
@@ -449,8 +439,8 @@
       ],
       "name": "Trusted Partners Marquee",
       "settings": {
-        "heading": "Our Trusted Partners",
-        "subheading": "We are proud to supply premium products to leading hotels, cafes, and distributors across the Kingdom.",
+        "heading": "A Global Network of Trusted Partners",
+        "subheading": "We work alongside equipment makers, cafés, and distributors who share our standard for quality.",
         "heading_color": "#000000",
         "text_color": "#666666",
         "section_bg_color": "#ffffff",
@@ -469,10 +459,10 @@
       "type": "blog-showcase",
       "name": "Blog showcase",
       "settings": {
-        "heading": "Explore the World of Coffee",
-        "subheading": "From our roastery to your cup, learn about the stories, science, and passion behind every batch.",
+        "heading": "Stories, Experiences, & Expertise",
+        "subheading": "We learn something new with almost every roast. This is where we pass it on.",
         "blog": "news",
-        "button_text": "View All News",
+        "button_text": "View Insights",
         "button_link": "",
         "section_bg_color": "#ffffff",
         "heading_color": "#000000",
@@ -549,8 +539,8 @@
       ],
       "name": "Trusted Partners Marquee",
       "settings": {
-        "heading": "Where You'll Find Sulalat",
-        "subheading": "We are proud to supply premium products to leading hotels, cafes, and distributors across the Kingdom.",
+        "heading": "Find Us Wherever You Are",
+        "subheading": "Find Sulalat on the shelves of renowned supermarkets, or get our products delivered straight to your door.",
         "heading_color": "#000000",
         "text_color": "#666666",
         "section_bg_color": "#ffffff",

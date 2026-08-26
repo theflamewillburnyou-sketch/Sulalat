@@ -123,6 +123,23 @@
         padding: 30px 20px;
       }
     }
+
+    @media (max-width: 575px) {
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        order:2;
+        text-align: center;
+      }
+
+      .partner-section[data-section-id="{{ section.id }}"] .section-title {
+        margin-inline: auto;
+        text-align: center !important;
+        margin: 0;
+        width: 100%;
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .primary-btn {
+        margin-inline: auto;
+      }
+    }
   </style>
 
   <div class="container">

@@ -93,7 +93,7 @@
         "link-list-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Pages",
+            "heading": "Account",
             "menu": "footer"
           }
         },
@@ -101,7 +101,7 @@
           "type": "link_list",
           "settings": {
             "heading": "Support",
-            "menu": "support"
+            "menu": "policy"
           }
         },
         "link-list-3": {
@@ -116,7 +116,7 @@
           "settings": {
             "image_width": 150,
             "heading": "Contact Us",
-            "text": "<p>Phone: <a href=\"tel:051 123 4567 89\" title=\"tel:051 123 4567 89\">051 123 4567 89</a><br/><br/>Email: <a href=\"mailto:info@sulalat.com.sa\" title=\"mailto:info@sulalat.com.sa\">info@sulalat.com.sa</a><br/><br/>2329 Makkah Al Mukarramah Branch Road Store #2 Ground floor, Najm al Qurais Building, Riyadh 12821</p>",
+            "text": "<p>Phone: <a href=\"tel:+966 56 440 0407\" title=\"tel:+966 56 440 0407\">+966 56 440 0407</a><br/><br/>Email: <a href=\"mailto:info@sulalat.com\" title=\"mailto:info@sulalat.com\">info@sulalat.com</a><br/><br/>2356 Makkah Branch Rd, 1st Floor, Office 13, Rabwah, Riyadh</p>",
             "button_label": "",
             "button_link": "",
             "enable_follow_on_shop": false,
@@ -127,7 +127,7 @@
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "heading": "Sign up for our newsletter to receive updates and exclusive discounts",
+            "heading": "Join our community to follow our journey and receive the latest updates.",
             "text": "",
             "collapse_mobile": false
           }

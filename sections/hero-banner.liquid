@@ -67,6 +67,7 @@
                         {{ 'product-1' | placeholder_svg_tag: 'banner-card-placeholder-svg' }}
                       {% endif %}
                       <div class="navi" style="color: {{ block.settings.button_color | default: '#ffffff' }};">
+                        
                         <svg xmlns="http://www.w3.org/2000/svg" width="44" height="24" viewBox="0 0 44 24" fill="none" aria-hidden="true" focusable="false">
                           <rect x="0.5" y="0.5" width="43" height="23" rx="11.5" stroke="currentColor" />
                           <g clip-path="url(#clip0_2101_653_{{ block.id }})">
@@ -79,7 +80,7 @@
                             </clipPath>
                           </defs>
                         </svg>
-                        <span>{{ block.settings.button_text | default: 'Shop Now' }}</span>
+                       <span>{{ block.settings.button_text | default: 'Shop Now' }}</span>
                       </div>
                     </a>
                   </div>
@@ -168,12 +169,18 @@
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
     border-top: 2px solid;
-    margin-top: 40px;
+    margin-top: 30px;
     padding-top: 20px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 20px;
+  }
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
@@ -187,6 +194,7 @@
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img {
     position: relative;
     margin-top: 26px;
+    min-height:110px;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img img,
@@ -194,23 +202,30 @@
     width: 100%;
     display: block;
     border-radius: {{ section.settings.card_image_radius | default: 20 }}px;
+    height:100%;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img a {
     position: relative;
     display: block;
     text-decoration: none;
+    height:100%;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
     justify-content: center;
     position: absolute;
     inset: 0;
     color: #fff;
     font-size: 16px;
+  }
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi span {
+    max-width: 90px;
+    width: max-content;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
@@ -228,7 +243,7 @@
     letter-spacing: -0.01em;
     line-height: 24px;
     font-weight: 300;
-    margin: 0;
+    margin: 0 0 auto;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .scroll-btm a {
@@ -258,7 +273,7 @@
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
@@ -267,6 +282,27 @@
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 br {
       display: none;
+    }
+  }
+
+  @media screen and (max-width: 575px){
+    .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
+        font-size: 30px;
+        margin-bottom: 160px;
+        max-width: 230px;
+    }
+    .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 400;
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
+      font-size: 15px;
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
+      gap: 10px;
     }
   }
 </style>

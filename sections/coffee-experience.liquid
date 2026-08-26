@@ -214,9 +214,36 @@
         margin-top: 30px;
       }
       .about-section[data-section-id="{{ section.id }}"] .about-text {
-        margin-top: 30px;
+        margin-top: 0;
       }
     }
+
+    @media (max-width: 575px){
+      .about-section[data-section-id="{{ section.id }}"] .about-right{
+          display: flex;
+          flex-direction: column-reverse;
+          gap: 20px;
+      }
+
+      .about-section[data-section-id="{{ section.id }}"] .about-grid {
+        gap:0;
+      }
+
+      .about-section[data-section-id="{{ section.id }}"] .about-text {
+        gap:30px;
+      }
+
+      .about-section[data-section-id="{{ section.id }}"] .about-text p {
+        color:#141211;
+        line-height:30px;
+      }
+
+      .about-section[data-section-id="{{ section.id }}"] .about-pagination {
+       display:none;
+      }
+    
+    }
+
   </style>
 
   <div class="about-container">
