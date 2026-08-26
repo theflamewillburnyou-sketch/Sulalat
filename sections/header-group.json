@@ -51,7 +51,7 @@
         "a94eb2f1-b98e-4c70-9e55-999dfdaeb047": {
           "type": "columns",
           "settings": {
-            "title": "Shop",
+            "title": "Shop,محل",
             "collection_images": "none",
             "collection_use_product_image": false,
             "collection_circle_image": false,
@@ -105,7 +105,7 @@
         "minimise_search_desktop": false,
         "menu": "main-menu",
         "menu_center": true,
-        "link_toggle": "mobile",
+        "link_toggle": "mobile_desktop",
         "repeat_links": true,
         "menu_featured_link": "",
         "enable_customer_account_component": false,

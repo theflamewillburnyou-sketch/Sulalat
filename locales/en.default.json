@@ -52,7 +52,18 @@
       "queries": "Suggestions",
       "articles": "Articles",
       "view_all": "View all search results",
-      "all_product_types": "All"
+      "all_product_types": "All",
+      "product_types": {
+        "coffee": "Coffee",
+        "specialty-coffee": "Specialty Coffee",
+        "equipment": "Equipment",
+        "equipments": "Equipments",
+        "brewing-tools": "Brewing Tools",
+        "spare-parts": "Spare Parts",
+        "chocolate": "Chocolate",
+        "gelato": "Gelato",
+        "bakery": "Bakery"
+      }
     },
     "slider": {
       "next": "Next",
@@ -344,6 +355,7 @@
         "other": "{{ count }} comments"
       },
       "next_post": "Next",
+      "read_more": "Read More",
       "reading_time": "[x] minute read",
       "previous_post": "Previous"
     },

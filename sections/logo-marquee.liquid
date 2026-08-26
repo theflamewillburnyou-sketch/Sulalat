@@ -55,10 +55,13 @@
     .certifications[data-section-id="{{ section.id }}"] .logo-slider {
       overflow: hidden;
       width: 100%;
+      /* Keep marquee math LTR so Arabic/RTL does not reverse the track and break the loop */
+      direction: ltr;
     }
 
     .certifications[data-section-id="{{ section.id }}"] .logo-track {
       display: flex;
+      flex-direction: row;
       width: max-content;
       gap: var(--certifications-logo-gap);
       animation: marquee-{{ section.id }} var(--certifications-animation-duration) linear infinite;

@@ -116,6 +116,10 @@
     }
 
     @media (max-width: 767px) {
+      .partner-section[data-section-id="{{ section.id }}"]{
+        padding-top:70px;
+        padding-bottom:70px;
+      }
       .partner-section[data-section-id="{{ section.id }}"] .section-title h2 {
         font-size: var(--partner-heading-size-mobile);
       }
@@ -138,6 +142,7 @@
       }
       .partner-section[data-section-id="{{ section.id }}"] .primary-btn {
         margin-inline: auto;
+        padding-inline:30px;
       }
     }
   </style>

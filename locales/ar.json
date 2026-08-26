@@ -1,0 +1,72 @@
+{
+  "general": {
+    "search": {
+      "title": "بحث",
+      "input_label": "بحث",
+      "submit": "بحث",
+      "reset": "إعادة تعيين",
+      "no_results": "لم يتم العثور على نتائج لـ \"{{ terms }}\".",
+      "products": "المنتجات",
+      "collections": "المجموعات",
+      "pages": "الصفحات",
+      "queries": "اقتراحات",
+      "articles": "المقالات",
+      "view_all": "عرض كل نتائج البحث",
+      "all_product_types": "الكل",
+      "product_types": {
+        "coffee": "قهوة",
+        "specialty-coffee": "القهوة المختصة",
+        "equipment": "معدات",
+        "equipments": "المعدات",
+        "brewing-tools": "أدوات التحضير",
+        "spare-parts": "قطع غيار",
+        "chocolate": "شوكولاتة",
+        "gelato": "جيلاتو",
+        "bakery": "مخبوزات"
+      }
+    },
+    "icon_labels": {
+      "search": "بحث",
+      "menu": "القائمة",
+      "voice_search": "البحث بالصوت"
+    },
+    "labels": {
+      "please_select": "يرجى الاختيار"
+    },
+    "localization": {
+      "language_label": "اللغة",
+      "country_label": "البلد/المنطقة",
+      "update": "تحديث"
+    }
+  },
+  "onboarding": {
+    "product": {
+      "type": "نوع المنتج"
+    }
+  },
+  "blogs": {
+    "article": {
+      "read_more": "اقرأ المزيد"
+    }
+  },
+  "newsletter": {
+    "label": "البريد الإلكتروني",
+    "placeholder": "بريدك الإلكتروني",
+    "button_label": "اشترك",
+    "success": "شكرًا لاشتراكك."
+  },
+  "product_signup": {
+    "label": "البريد الإلكتروني",
+    "placeholder": "بريدك الإلكتروني",
+    "button_label": "اشترك",
+    "success": "شكرًا لاشتراكك."
+  },
+  "sections": {
+    "footer": {
+      "copyright_html": "&copy; {{ year }}. <a href=\"{{ shop_url }}\">{{ shop_name }}</a> | جميع الحقوق محفوظة"
+    }
+  },
+  "accessibility": {
+    "loading": "جارٍ التحميل"
+  }
+}

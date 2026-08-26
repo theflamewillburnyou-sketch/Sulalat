@@ -1226,7 +1226,7 @@ class MainMenu extends HTMLElement {
       if (this.overlayOpen) this.toggleOverlay(false);
     }
 
-    if (theme.device.hasHover) {
+    if (theme.device.hasHover && this.dataset.linkToggle !== 'mobile_desktop') {
       // Add event handler (so the bound event listener can be removed)
       this.mouseEnterMenuLinkHandler = this.mouseEnterMenuLinkHandler
         || this.handleMouseEnterMenuLink.bind(this);
@@ -1295,6 +1295,39 @@ class MainMenu extends HTMLElement {
           });
           this.mouseOverSidebarListening = false;
         }
+      }
+    } else if (this.mouseOverListening) {
+      // Click-to-open mode: strip any previously bound hover open listeners
+      this.firstLevelMenuLinks.forEach((menuLink) => {
+        const handler = menuLink.closest('.main-nav__item--dropdown')
+          ? this.mouseEnterNavDropdownHandler
+          : this.mouseEnterMenuLinkHandler;
+        if (handler) menuLink.removeEventListener('mouseenter', handler);
+        if (this.mouseLeaveMenuLinkHandler) {
+          menuLink.removeEventListener('mouseleave', this.mouseLeaveMenuLinkHandler);
+        }
+      });
+      this.firstLevelSingleLinks.forEach((singleLink) => {
+        if (this.mouseEnterSingleLinkHandler) {
+          singleLink.removeEventListener('mouseenter', this.mouseEnterSingleLinkHandler);
+        }
+        if (this.mouseLeaveSingleLinkHandler) {
+          singleLink.removeEventListener('mouseleave', this.mouseLeaveSingleLinkHandler);
+        }
+      });
+      this.elementsWhichCloseMenus.forEach((elem) => {
+        if (this.mouseEnterMenuCloserHandler) {
+          elem.removeEventListener('mouseenter', this.mouseEnterMenuCloserHandler);
+        }
+      });
+      this.mouseOverListening = false;
+
+      if (this.mouseOverSidebarListening && this.sidebarLinks) {
+        this.sidebarLinks.forEach((sidebarLink) => {
+          sidebarLink.removeEventListener('mouseenter', MainMenu.handleSidenavMenuToggle);
+          sidebarLink.removeEventListener('focusin', MainMenu.handleSidenavFocusIn);
+        });
+        this.mouseOverSidebarListening = false;
       }
     }
   }
@@ -1624,7 +1657,7 @@ class MainMenu extends HTMLElement {
       this.overlay.addEventListener('click', this.closeHandler);
       this.nav.addEventListener('keyup', this.closeHandler);
 
-      if (theme.mediaMatches.md) {
+      if (theme.mediaMatches.md && this.dataset.linkToggle !== 'mobile_desktop') {
         this.overlay.addEventListener('mouseenter', this.closeHandler);
       }
     } else {

@@ -130,6 +130,9 @@
     }
 
     @media (max-width: 767px) {
+      .coffee-shop[data-section-id="{{ section.id }}"]{
+        padding-bottom:70px;
+      }
       .coffee-shop[data-section-id="{{ section.id }}"] .section-title h2 {
         font-size: var(--coffee-heading-size-mobile);
       }
@@ -151,6 +154,7 @@
       .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
         padding: 11px 15px;
         width: calc(50% - 10px / 2);
+        text-align:center;
         
       }
       .coffee-shop[data-section-id="{{ section.id }}"] .section-title {

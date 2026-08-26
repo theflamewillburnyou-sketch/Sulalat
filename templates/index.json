@@ -47,6 +47,9 @@
       "settings": {
         "banner_image": "shopify://shop_images/site-banner.png",
         "banner_image_alt": "Banner background image",
+        "banner_image_mobile": "shopify://shop_images/efbaecd09a4da7d683f1a0cb4121ce58bbc44aef.png",
+        "banner_image_mobile_alt": "",
+        "mobile_image_breakpoint": 790,
         "banner_height": 900,
         "banner_height_mobile": 500,
         "overlay_color": "#00000080",

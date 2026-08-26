@@ -1,22 +1,68 @@
 <section
   class="site-banner"
   data-section-id="{{ section.id }}"
-  {% if section.settings.banner_height_mobile != blank %}style="--banner-h-mobile: {{ section.settings.banner_height_mobile }}px;"{% endif %}
+  style="
+    --banner-h: {{ section.settings.banner_height | default: 900 }}px;
+    {% if section.settings.banner_height_mobile != blank %}--banner-h-mobile: {{ section.settings.banner_height_mobile }}px;{% endif %}
+    --banner-mobile-bp: {{ section.settings.mobile_image_breakpoint | default: 749 }}px;
+  "
 >
-  <div class="banner-bg-img" style="--banner-h: {{ section.settings.banner_height | default: 900 }}px;">
-    {% if section.settings.banner_image != blank %}
-      <img
-        src="{{ section.settings.banner_image | image_url: width: 2000 }}"
-        srcset="{{ section.settings.banner_image | image_url: width: 800 }} 800w,
-                {{ section.settings.banner_image | image_url: width: 1200 }} 1200w,
-                {{ section.settings.banner_image | image_url: width: 1600 }} 1600w,
-                {{ section.settings.banner_image | image_url: width: 2000 }} 2000w"
-        sizes="100vw"
-        alt="{{ section.settings.banner_image.alt | default: section.settings.banner_image_alt | escape }}"
-        width="{{ section.settings.banner_image.width }}"
-        height="{{ section.settings.banner_image.height }}"
-        loading="eager"
-      >
+  {%- liquid
+    assign mobile_bp = section.settings.mobile_image_breakpoint | default: 749
+    assign desktop_image = section.settings.banner_image
+    assign mobile_image = section.settings.banner_image_mobile
+    assign desktop_alt = desktop_image.alt | default: section.settings.banner_image_alt
+    assign mobile_alt = mobile_image.alt | default: section.settings.banner_image_mobile_alt | default: desktop_alt
+  -%}
+  <div class="banner-bg-img">
+    {% if desktop_image != blank or mobile_image != blank %}
+      <picture>
+        {% if mobile_image != blank %}
+          <source
+            media="(max-width: {{ mobile_bp }}px)"
+            srcset="
+              {{ mobile_image | image_url: width: 600 }} 600w,
+              {{ mobile_image | image_url: width: 900 }} 900w,
+              {{ mobile_image | image_url: width: 1200 }} 1200w
+            "
+            sizes="100vw"
+          >
+        {% endif %}
+        {% if desktop_image != blank %}
+          <img
+            class="banner-bg-img__desktop"
+            src="{{ desktop_image | image_url: width: 2000 }}"
+            srcset="
+              {{ desktop_image | image_url: width: 800 }} 800w,
+              {{ desktop_image | image_url: width: 1200 }} 1200w,
+              {{ desktop_image | image_url: width: 1600 }} 1600w,
+              {{ desktop_image | image_url: width: 2000 }} 2000w
+            "
+            sizes="100vw"
+            alt="{{ desktop_alt | escape }}"
+            width="{{ desktop_image.width }}"
+            height="{{ desktop_image.height }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% else %}
+          <img
+            class="banner-bg-img__mobile-only"
+            src="{{ mobile_image | image_url: width: 1200 }}"
+            srcset="
+              {{ mobile_image | image_url: width: 600 }} 600w,
+              {{ mobile_image | image_url: width: 900 }} 900w,
+              {{ mobile_image | image_url: width: 1200 }} 1200w
+            "
+            sizes="100vw"
+            alt="{{ mobile_alt | escape }}"
+            width="{{ mobile_image.width }}"
+            height="{{ mobile_image.height }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% endif %}
+      </picture>
     {% else %}
       {{ 'lifestyle-1' | placeholder_svg_tag: 'banner-placeholder-svg' }}
     {% endif %}
@@ -56,7 +102,7 @@
                           src="{{ block.settings.image | image_url: width: 800 }}"
                           srcset="{{ block.settings.image | image_url: width: 400 }} 400w,
                                   {{ block.settings.image | image_url: width: 800 }} 800w"
-                          sizes="(max-width: 749px) 100vw, 40vw"
+                          sizes="(max-width: {{ mobile_bp }}px) 100vw, 40vw"
                           alt="{{ block.settings.image.alt | default: block.settings.image_alt | escape }}"
                           width="{{ block.settings.image.width }}"
                           height="{{ block.settings.image.height }}"
@@ -224,7 +270,7 @@
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi span {
-    max-width: 90px;
+    max-width: 100px;
     width: max-content;
   }
 
@@ -298,11 +344,15 @@
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
+      gap: 10px;
+      padding: 12px;
       font-size: 15px;
     }
+  }
 
-    .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
-      gap: 10px;
+  @media screen and (max-width: 480px){
+    .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
+        gap: 20px;
     }
   }
 </style>
@@ -320,13 +370,35 @@
     {
       "type": "image_picker",
       "id": "banner_image",
-      "label": "Background image"
+      "label": "Background image (desktop)"
     },
     {
       "type": "text",
       "id": "banner_image_alt",
-      "label": "Background image alt text (used if image has none)",
+      "label": "Desktop image alt text (used if image has none)",
       "default": "Banner background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Background image (mobile)",
+      "info": "Optional. Falls back to the desktop image if empty."
+    },
+    {
+      "type": "text",
+      "id": "banner_image_mobile_alt",
+      "label": "Mobile image alt text (used if image has none)"
+    },
+    {
+      "type": "range",
+      "id": "mobile_image_breakpoint",
+      "min": 480,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "label": "Mobile breakpoint",
+      "info": "Viewport width at and below which the mobile image and mobile banner height are used.",
+      "default": 750
     },
     {
       "type": "range",

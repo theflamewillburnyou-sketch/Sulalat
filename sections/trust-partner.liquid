@@ -54,10 +54,14 @@
 
     .trust-partner[data-section-id="{{ section.id }}"] .logo-slider {
       overflow: hidden;
+      width: 100%;
+      /* Keep marquee math LTR so Arabic/RTL does not reverse the track and break the loop */
+      direction: ltr;
     }
 
     .trust-partner[data-section-id="{{ section.id }}"] .logo-track {
       display: flex;
+      flex-direction: row;
       width: max-content;
       gap: var(--trust-logo-gap);
       animation: marquee-{{ section.id }} var(--trust-animation-duration) linear infinite;
@@ -108,6 +112,9 @@
     }
 
     @media (max-width: 767px) {
+      .trust-partner[data-section-id="{{ section.id }}"]{
+        padding-bottom:70px;
+      }
       .trust-partner[data-section-id="{{ section.id }}"] .section-title h2 {
         font-size: var(--trust-heading-size-mobile);
       }

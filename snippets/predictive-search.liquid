@@ -101,6 +101,23 @@
           if shop_types.first == blank
             assign shop_types = shop_types | slice: 1, shop_types.size
           endif
+
+          # Keep original type values for filtering; translate labels via locale keys
+          # general.search.product_types.<handle>
+          assign type_names = ''
+          for type in shop_types
+            assign type_handle = type | handle
+            assign type_key = 'general.search.product_types.' | append: type_handle
+            assign type_label = type_key | t
+            if type_label == type_key or type_label contains 'Translation missing'
+              assign type_label = type
+            endif
+            assign type_names = type_names | append: type_label
+            unless forloop.last
+              assign type_names = type_names | append: '|||'
+            endunless
+          endfor
+          assign type_names = type_names | split: '|||'
         -%}
         {% render 'custom-select',
           id: "product_types",
@@ -108,7 +125,8 @@
           label: a11yLabel,
           default_option: default_option,
           hide_label: true,
-          option_values: shop_types
+          option_values: shop_types,
+          option_names: type_names
         %}
         <input type="hidden" id="product_type_input" name="filter.p.product_type"/>
         {%- unless settings.enable_speech_search -%}

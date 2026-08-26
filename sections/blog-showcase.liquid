@@ -254,6 +254,10 @@
     }
 
     @media (max-width: 767px) {
+       .blog-section[data-section-id="{{ section.id }}"]{
+        padding-bottom:70px;
+      }
+
       .blog-section[data-section-id="{{ section.id }}"] .section-title h2 {
         font-size: var(--blog-heading-size-mobile);
       }
@@ -271,9 +275,7 @@
       .blog-section[data-section-id="{{ section.id }}"] .blog-overlay h3 {
         font-size: var(--blog-card-title-size-mobile);
       }
-      .blog-section[data-section-id="{{ section.id }}"]{
-        padding-bottom:80px;
-      }
+     
     }
     @media (max-width: 575px) {
       {% comment %} .blog-section[data-section-id="{{ section.id }}"] .primary-btn{
@@ -310,6 +312,12 @@
           text-align:left;
       }
     }
+
+    @media (max-width: 480px){
+      .blog-section[data-section-id="{{ section.id }}"] .blog-thumb {
+        max-width: 120px;
+      }
+    }
   </style>
 
   <div class="container">
@@ -343,7 +351,7 @@
             <div class="blog-overlay">
               <h3>{{ featured_article.title | escape }}</h3>
               <p>{{ featured_article.excerpt_or_content | strip_html | truncate: 100 }}</p>
-              <span class="blog-read-more">Read More</span>
+              <span class="blog-read-more">{{ 'blogs.article.read_more' | t }}</span>
             </div>
           </a>
         </article>
@@ -386,7 +394,7 @@
             <div class="blog-overlay">
               <h3>The Art of Specialty Coffee Roasting</h3>
               <p>Discover how Sulalat sources and roasts premium beans for world-class flavor.</p>
-              <span class="blog-read-more">Read More</span>
+              <span class="blog-read-more">{{ 'blogs.article.read_more' | t }}</span>
             </div>
           </a>
         </article>
@@ -395,7 +403,7 @@
             <div class="blog-content">
               <h3><a href="#">From Bean to Cup</a></h3>
               <p>Follow the journey of our specialty beans across the Kingdom.</p>
-              <span>Read More</span>
+              <span>{{ 'blogs.article.read_more' | t }}</span>
             </div>
             <a href="#" class="blog-thumb">
               {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -405,7 +413,7 @@
             <div class="blog-content">
               <h3><a href="#">Inside Our Training Academy</a></h3>
               <p>Learn barista skills and brewing techniques with Sulalat experts.</p>
-              <span>Read More</span>
+              <span>{{ 'blogs.article.read_more' | t }}</span>
             </div>
             <a href="#" class="blog-thumb">
               {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
