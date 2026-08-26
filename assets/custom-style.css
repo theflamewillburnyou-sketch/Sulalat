@@ -96,9 +96,9 @@ header .header__icons a.header__icon {
     width: 18px;
 }
 
-button#header-localization-language-button {
+.header-language-toggle__btn {
     font-weight: 300;
-    border:0;
+    border: 0;
 }
 
 store-header.header.header--overlay.is-scrolled .main-menu {
@@ -276,21 +276,12 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     align-items: center;
   }
 
-  .header__localization .custom-select__btn {
+  .header__localization .header-language-toggle__btn {
     font-size: 15px;
     font-weight: 400;
     letter-spacing: 0;
     padding: 0;
     min-height: 0;
-  }
-
-  .header__localization .custom-select__btn > .icon {
-    display: none;
-  }
-
-  /* Language only in the mobile bar (hide country if both are enabled) */
-  .header__localization .localization__selector:first-child:not(:only-child) {
-    display: none;
   }
 
   .main-menu {

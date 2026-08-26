@@ -23,7 +23,7 @@
   padding-right: var(--product-types-padding);
   padding-bottom: 0;
   border: 0;
-  border-right: 1px solid rgba(var(--bg-color));
+  border-right: 1px solid #fff;
   border-radius: var(--input-border-radius, 0) 0 0 var(--input-border-radius, 0);
   background-color: var(--search-bg-color, rgba(var(--text-color)/0.08));
   color: currentColor;
