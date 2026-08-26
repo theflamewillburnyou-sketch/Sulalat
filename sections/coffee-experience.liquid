@@ -74,10 +74,14 @@
       position: relative;
       overflow: hidden;
       border-radius: 12px;
+      /* Keep slide transform math LTR so Arabic/RTL does not reverse the track */
+      direction: ltr;
+      min-height: 200px;
     }
 
     .about-section[data-section-id="{{ section.id }}"] .about-slider-track {
       display: flex;
+      flex-direction: row;
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
       will-change: transform;
     }
@@ -87,7 +91,7 @@
       position: relative;
       overflow: hidden;
       border-radius: var(--brand-radius-sm);
-      height: 100%;
+      min-height: 200px;
     }
 
     .about-section[data-section-id="{{ section.id }}"] .about-slide::before {
@@ -114,11 +118,13 @@
       height: auto;
       display: block;
       border-radius: inherit;
+      vertical-align: middle;
     }
 
     .about-section[data-section-id="{{ section.id }}"] .about-slide svg.placeholder-svg {
       width: 100%;
       height: auto;
+      min-height: 240px;
       display: block;
     }
 
@@ -276,7 +282,14 @@
                       src="{{ block.settings.image | image_url: width: 1200 }}"
                       alt="{{ block.settings.image.alt | escape }}"
                       class="about-slide-image"
-                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      {% if forloop.first or request.design_mode %}
+                        loading="eager"
+                        {% if forloop.first %}fetchpriority="high"{% endif %}
+                      {% else %}
+                        loading="lazy"
+                      {% endif %}
                     >
                   {% else %}
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -310,7 +323,14 @@
                       src="{{ block.settings.image | image_url: width: 1200 }}"
                       alt="{{ block.settings.image.alt | escape }}"
                       class="about-slide-image"
-                      loading="lazy"
+                      width="{{ block.settings.image.width }}"
+                      height="{{ block.settings.image.height }}"
+                      {% if forloop.first or request.design_mode %}
+                        loading="eager"
+                        {% if forloop.first %}fetchpriority="high"{% endif %}
+                      {% else %}
+                        loading="lazy"
+                      {% endif %}
                     >
                   {% else %}
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -336,11 +356,21 @@
 
   <script>
     (function () {
-      var section = document.querySelector('[data-section-id="{{ section.id }}"]');
-      if (!section) return;
+      var SECTION_ID = {{ section.id | json }};
+
+      function getSectionRoot(fromEl) {
+        if (fromEl) {
+          if (fromEl.matches && fromEl.matches('[data-section-id="' + SECTION_ID + '"]')) {
+            return fromEl;
+          }
+          var nested = fromEl.querySelector && fromEl.querySelector('[data-section-id="' + SECTION_ID + '"]');
+          if (nested) return nested;
+        }
+        return document.querySelector('[data-section-id="' + SECTION_ID + '"]');
+      }
 
       function initSlider(slider) {
-        if (slider.dataset.initialized === 'true') return;
+        if (!slider || slider.dataset.initialized === 'true') return;
         slider.dataset.initialized = 'true';
 
         var track = slider.querySelector('.about-slider-track');
@@ -354,9 +384,10 @@
         var pauseOnHover = {{ section.settings.pause_on_hover | default: true | json }};
 
         if (slides.length === 0) {
-          slider.style.display = 'none';
           return;
         }
+
+        slider.style.display = '';
 
         if (slides.length === 1 && pagination) {
           pagination.style.display = 'none';
@@ -365,6 +396,7 @@
         function createDots() {
           if (!pagination) return;
           pagination.innerHTML = '';
+          dots = [];
           for (var i = 0; i < slides.length; i++) {
             (function (index) {
               var btn = document.createElement('button');
@@ -420,7 +452,6 @@
           slider.addEventListener('mouseleave', startAutoplay);
         }
 
-        // Basic touch/swipe support for mobile
         var startX = 0;
         var isDragging = false;
 
@@ -475,13 +506,51 @@
       }
 
       function initAll(root) {
+        if (!root) return;
         var sliders = root.querySelectorAll('[data-about-slider]');
         for (var i = 0; i < sliders.length; i++) {
           initSlider(sliders[i]);
         }
       }
 
-      initAll(section);
+      function boot(fromEl) {
+        initAll(getSectionRoot(fromEl));
+      }
+
+      boot();
+
+      // Theme editor: re-init when the section is re-rendered or a block is selected
+      document.addEventListener('shopify:section:load', function (event) {
+        if (String(event.detail.sectionId) !== String(SECTION_ID)) return;
+        boot(event.target);
+      });
+
+      document.addEventListener('shopify:block:select', function (event) {
+        if (String(event.detail.sectionId) !== String(SECTION_ID)) return;
+        var slide = event.target.closest ? event.target.closest('.about-slide') : null;
+        if (!slide && event.target.classList && event.target.classList.contains('about-slide')) {
+          slide = event.target;
+        }
+        if (!slide) return;
+
+        var slider = slide.closest('[data-about-slider]');
+        if (!slider) return;
+
+        initSlider(slider);
+
+        var slides = slider.querySelectorAll('.about-slide');
+        var track = slider.querySelector('.about-slider-track');
+        var dots = slider.querySelectorAll('.about-pagination button');
+        for (var i = 0; i < slides.length; i++) {
+          if (slides[i] === slide) {
+            if (track) track.style.transform = 'translateX(' + (-i * 100) + '%)';
+            for (var d = 0; d < dots.length; d++) {
+              dots[d].classList.toggle('active', d === i);
+            }
+            break;
+          }
+        }
+      });
     })();
   </script>
 </section>

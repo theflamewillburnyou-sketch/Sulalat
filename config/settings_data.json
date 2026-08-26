@@ -143,6 +143,7 @@
     "show_free_shipping_notice": true,
     "free_shipping_color_scheme": "1",
     "animations_enabled": "mobile_desktop",
+    "favicon": "shopify://shop_images/favicon.png",
     "image_quality": "1.25",
     "blur_message_delay": 4,
     "vibrate_on_atc": true,

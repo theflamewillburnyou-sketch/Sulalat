@@ -140,7 +140,7 @@
         "heading_size_mobile": 24,
         "about_heading_size": 30,
         "body_text_size": 16,
-        "autoplay_enabled": false,
+        "autoplay_enabled": true,
         "autoplay_delay": 5,
         "pause_on_hover": true
       }

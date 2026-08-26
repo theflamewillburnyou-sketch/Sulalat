@@ -77,6 +77,7 @@
     .trust-partner[data-section-id="{{ section.id }}"] .logo-item {
       flex: 0 0 auto;
       width: var(--trust-logo-width);
+      min-height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -92,6 +93,7 @@
       width: auto;
       max-width: 100%;
       max-height: 100%;
+      height: auto;
       display: block;
       object-fit: contain;
     }
@@ -99,6 +101,7 @@
     .trust-partner[data-section-id="{{ section.id }}"] .logo-item svg.placeholder-svg {
       width: 100%;
       height: auto;
+      min-height: 60px;
       display: block;
     }
 
@@ -152,7 +155,9 @@
                 <img
                   src="{{ block.settings.image | image_url: width: 600 }}"
                   alt="{{ block.settings.image.alt | escape }}"
-                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  {% if request.design_mode %}loading="eager"{% else %}loading="lazy"{% endif %}
                 >
               {% else %}
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -173,7 +178,9 @@
                 <img
                   src="{{ block.settings.image | image_url: width: 600 }}"
                   alt=""
-                  loading="lazy"
+                  width="{{ block.settings.image.width }}"
+                  height="{{ block.settings.image.height }}"
+                  {% if request.design_mode %}loading="eager"{% else %}loading="lazy"{% endif %}
                 >
               {% else %}
                 {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}

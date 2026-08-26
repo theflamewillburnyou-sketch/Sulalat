@@ -77,6 +77,7 @@
     .certifications[data-section-id="{{ section.id }}"] .logo-item {
       flex: 0 0 auto;
       width: var(--certifications-logo-width);
+      min-height: 60px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -98,6 +99,7 @@
     .certifications[data-section-id="{{ section.id }}"] .logo-item svg.placeholder-svg {
       width: 100%;
       height: auto;
+      min-height: 60px;
       display: block;
     }
 
@@ -159,7 +161,9 @@
                   <img
                     src="{{ block.settings.image | image_url: width: 400 }}"
                     alt="{% if copy == 1 %}{{ block.settings.image.alt | escape }}{% endif %}"
-                    loading="lazy"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    {% if copy == 1 or request.design_mode %}loading="eager"{% else %}loading="lazy"{% endif %}
                   >
                 {% else %}
                   {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -181,7 +185,9 @@
                   <img
                     src="{{ block.settings.image | image_url: width: 400 }}"
                     alt=""
-                    loading="lazy"
+                    width="{{ block.settings.image.width }}"
+                    height="{{ block.settings.image.height }}"
+                    {% if request.design_mode %}loading="eager"{% else %}loading="lazy"{% endif %}
                   >
                 {% else %}
                   {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
