@@ -128,6 +128,13 @@
         width: calc(var(--trust-logo-width) * 0.7);
       }
     }
+
+    @media (max-width: 575px){
+     .trust-partner[data-section-id="{{ section.id }}"] .logo-item {
+        width: calc(var(--trust-logo-width) * 0.7);
+        --trust-logo-width: 160px;
+      }
+    }
   </style>
 
   <div class="container">

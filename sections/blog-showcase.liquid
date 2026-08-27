@@ -278,6 +278,13 @@
      
     }
     @media (max-width: 575px) {
+      .blog-section[data-section-id="{{ section.id }}"] .section-title {
+          margin-bottom: 20px;
+      }
+      .blog-section[data-section-id="{{ section.id }}"] .featured-blog .blog-image {
+        width: 100%;
+        min-height:350px;
+      }
       {% comment %} .blog-section[data-section-id="{{ section.id }}"] .primary-btn{
           width:100%;
       } {% endcomment %}

@@ -14,9 +14,11 @@ body .container {
 
 .primary-btn, .secondary-btn{
     font-family: var(--secondary-font);
+    text-align:center;
 }
 .section-title h2 {
     margin-bottom: 20px !important;
+    font-size: clamp(24px, 3vw, 36px) !important;
 }
 /* header start  */
 .shopify-section.cc-header:has(.is-scrolled) {
@@ -207,7 +209,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
 
 @media screen and (max-width:991px){
     body header #main-menu-content .main-nav {
-        gap: 0px;
+        gap: 30px;
     }
 
     body store-header.header.header--overlay .main-nav__item--primary {
@@ -221,6 +223,9 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
 }
 
 @media screen and (max-width:768px){
+   body header #main-menu-content .main-nav {
+        gap: 5px;
+   }
 
     header .header__logo {
         margin-bottom: 0;
@@ -585,7 +590,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
         backdrop-filter: none!important;
         position: static;
         width: 100%;
-        padding: 20px 0;
+        padding:0;
         transform: translateZ(0);
         visibility:visible;
         display:none;
@@ -702,7 +707,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
    .section-title h2 {
         margin-bottom: 20px!important;
         font-size: 24px !important;
-        line-height:32px;
+        line-height:1.4;
     }
     .section-title h2 span, .about-content h3 span{
         display:inline !important;

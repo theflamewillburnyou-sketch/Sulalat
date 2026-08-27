@@ -104,18 +104,37 @@
     .partner-section[data-section-id="{{ section.id }}"] .primary-btn::before {
       background: #fff;
     }
+    @media (max-width: 1200px){
+      .partner-section[data-section-id="{{ section.id }}"] .primary-btn{
+          padding: 11px 40px;
+      }
 
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        padding: 75px 40px;
+      }
+    
+    }
     @media (max-width: 991px) {
       .partner-section[data-section-id="{{ section.id }}"] .partner-content {
-        width: 100%;
+        width:50%;
         padding: 40px 30px;
       }
       .partner-section[data-section-id="{{ section.id }}"] .partner-image {
-        width: 100%;
+        width:50%;
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .section-title {
+        margin-bottom:0;
       }
     }
 
     @media (max-width: 767px) {
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        width: 100%;
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .partner-image {
+        width: 100%;
+      }
+
       .partner-section[data-section-id="{{ section.id }}"]{
         padding-top:70px;
         padding-bottom:70px;

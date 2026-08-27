@@ -194,12 +194,14 @@
       margin: 0;
     }
 
-    @media (max-width: 991px) {
-      .about-section[data-section-id="{{ section.id }}"] .about-left,
-      .about-section[data-section-id="{{ section.id }}"] .about-right {
-        width: 100%;
+    @media (max-width: 1024px){
+      .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
+        font-size: clamp(28px, 3vw, 22px);
       }
+    
+    }
 
+    @media (max-width: 991px) {
       .about-section[data-section-id="{{ section.id }}"] .about-text {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -207,6 +209,11 @@
     }
 
     @media (max-width: 767px) {
+      .about-section[data-section-id="{{ section.id }}"] .about-left,
+      .about-section[data-section-id="{{ section.id }}"] .about-right {
+        width: 100%;
+      }
+
       .about-section[data-section-id="{{ section.id }}"]{
         padding-top:70px;
         padding-bottom:70px;
@@ -224,7 +231,7 @@
         margin-top: 30px;
       }
       .about-section[data-section-id="{{ section.id }}"] .about-text {
-        margin-top: 0;
+        margin-top: 40px;
       }
     }
 
@@ -241,6 +248,7 @@
 
       .about-section[data-section-id="{{ section.id }}"] .about-text {
         gap:30px;
+        margin-top:0;
       }
 
       .about-section[data-section-id="{{ section.id }}"] .about-text p {
