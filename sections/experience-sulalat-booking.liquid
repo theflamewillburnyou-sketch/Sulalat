@@ -1,0 +1,502 @@
+{%- liquid
+  assign experience_options = section.settings.experience_options | newline_to_br | split: '<br />'
+  assign guest_options = section.settings.guest_options | newline_to_br | split: '<br />'
+  assign form_id = 'ExperienceBooking-' | append: section.id
+-%}
+
+<section class="experience-sulalat-booking" data-section-id="{{ section.id }}">
+  <style>
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #fff;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media {
+      min-height: 680px;
+      background: #f3f3f3;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media img,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      min-height: inherit;
+      object-fit: cover;
+      display: block;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: {{ section.settings.form_background }};
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content h2 {
+      margin: 0 0 10px;
+      color: #000;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__intro {
+      margin: 0 0 28px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea {
+      width: 100%;
+      padding: 0 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      color: #000;
+      outline: none;
+      box-shadow: none;
+      appearance: none;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select {
+      height: 52px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea {
+      min-height: 110px;
+      padding-top: 14px;
+      padding-bottom: 14px;
+      resize: vertical;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23535353' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 20px center;
+      padding-right: 48px;
+      color: #9a9a9a;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select:valid {
+      color: #000;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input:focus,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select:focus,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea:focus {
+      border-color: var(--brand-primary, #53c295);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__schedule {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap {
+      position: relative;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input {
+      padding-right: 44px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9a9a9a;
+      pointer-events: none;
+      display: inline-flex;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__times {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__time-btn {
+      min-height: 52px;
+      padding: 8px 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 14px;
+      background: #fff;
+      color: #000;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__time-btn.is-active {
+      background: var(--brand-primary, #53c295);
+      border-color: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form .primary-btn {
+      align-self: flex-start;
+      margin-top: 8px;
+      min-width: 160px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status--success {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status--error {
+      color: #b42318;
+    }
+
+    @media (max-width: 991px) {
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__panel {
+        grid-template-columns: 1fr;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media {
+        min-height: 320px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {
+        padding: 36px 28px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__schedule {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__times {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="experience-sulalat-booking__panel">
+      <div class="experience-sulalat-booking__media">
+        {% if section.settings.image != blank %}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 600, 800, 1000, 1200, 1400',
+              sizes: '(min-width: 992px) 50vw, 100vw',
+              alt: section.settings.heading
+          }}
+        {% else %}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+
+      <div class="experience-sulalat-booking__content">
+        {% if section.settings.heading != blank %}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <p class="experience-sulalat-booking__intro">{{ section.settings.text | escape }}</p>
+        {% endif %}
+
+        {% form 'contact', id: form_id, class: 'experience-sulalat-booking__form' %}
+          {% if form.posted_successfully? %}
+            <p class="experience-sulalat-booking__status experience-sulalat-booking__status--success">
+              {{ section.settings.success_message | escape }}
+            </p>
+          {% elsif form.errors %}
+            <p class="experience-sulalat-booking__status experience-sulalat-booking__status--error">
+              {{ form.errors | default_errors }}
+            </p>
+          {% endif %}
+
+          <select name="contact[Experience]" required>
+            <option value="" disabled selected>{{ section.settings.experience_placeholder | escape }}</option>
+            {% for option in experience_options %}
+              {% assign clean_option = option | strip_html | strip %}
+              {% if clean_option != blank %}
+                <option value="{{ clean_option | escape }}">{{ clean_option | escape }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          <div class="experience-sulalat-booking__schedule">
+            <div class="experience-sulalat-booking__date-wrap">
+              <input
+                type="date"
+                name="contact[Preferred date]"
+                placeholder="{{ section.settings.date_placeholder | escape }}"
+                required
+                data-booking-date
+              >
+              <span class="experience-sulalat-booking__date-icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                  <path d="M8 3v4M16 3v4M3 10h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+              </span>
+            </div>
+
+            <div class="experience-sulalat-booking__times" data-booking-times>
+              {% assign time_slots = section.settings.time_slots | split: ',' %}
+              {% for slot in time_slots %}
+                {% assign clean_slot = slot | strip %}
+                {% if clean_slot != blank %}
+                  <button
+                    type="button"
+                    class="experience-sulalat-booking__time-btn{% if forloop.first %} is-active{% endif %}"
+                    data-time-slot="{{ clean_slot | escape }}"
+                  >
+                    {{ clean_slot | escape }}
+                  </button>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <input type="hidden" name="contact[Time slot]" value="{{ section.settings.time_slots | split: ',' | first | strip | escape }}" data-booking-time-input>
+
+          <select name="contact[Number of guests]" required>
+            <option value="" disabled selected>{{ section.settings.guests_placeholder | escape }}</option>
+            {% for option in guest_options %}
+              {% assign clean_guest = option | strip_html | strip %}
+              {% if clean_guest != blank %}
+                <option value="{{ clean_guest | escape }}">{{ clean_guest | escape }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          <input
+            type="text"
+            name="contact[Full name]"
+            placeholder="{{ section.settings.name_placeholder | escape }}"
+            required
+            autocomplete="name"
+          >
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.email_placeholder | escape }}"
+            required
+            autocomplete="email"
+          >
+          <input
+            type="tel"
+            name="contact[Contact number]"
+            placeholder="{{ section.settings.phone_placeholder | escape }}"
+            required
+            autocomplete="tel"
+          >
+          <textarea
+            name="contact[Special requests]"
+            placeholder="{{ section.settings.notes_placeholder | escape }}"
+            rows="4"
+          ></textarea>
+
+          <input type="hidden" name="contact[Form type]" value="Experience booking">
+
+          <button type="submit" class="primary-btn">
+            {{ section.settings.submit_label | escape }}
+          </button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var section = document.querySelector('.experience-sulalat-booking[data-section-id="{{ section.id }}"]');
+      if (!section) return;
+
+      var timeWrap = section.querySelector('[data-booking-times]');
+      var timeInput = section.querySelector('[data-booking-time-input]');
+      if (!timeWrap || !timeInput) return;
+
+      timeWrap.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-time-slot]');
+        if (!btn) return;
+
+        timeWrap.querySelectorAll('[data-time-slot]').forEach(function (item) {
+          item.classList.remove('is-active');
+        });
+        btn.classList.add('is-active');
+        timeInput.value = btn.getAttribute('data-time-slot') || '';
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Experience booking",
+  "tag": "section",
+  "class": "experience-sulalat-booking-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Book Your Coffee Experience"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Intro text",
+      "default": "Choose your experience, select your schedule, and reserve your spot."
+    },
+    {
+      "type": "text",
+      "id": "experience_placeholder",
+      "label": "Experience select placeholder",
+      "default": "Select Experience"
+    },
+    {
+      "type": "textarea",
+      "id": "experience_options",
+      "label": "Experience options (one per line)",
+      "default": "Live Coffee Roasting\nBarista Training & Demo\nOpen Equipment Lab\nTasting Sessions"
+    },
+    {
+      "type": "text",
+      "id": "date_placeholder",
+      "label": "Date placeholder",
+      "default": "MM / YY"
+    },
+    {
+      "type": "text",
+      "id": "time_slots",
+      "label": "Time slots (comma separated)",
+      "default": "Morning,Afternoon,Evening"
+    },
+    {
+      "type": "text",
+      "id": "guests_placeholder",
+      "label": "Guests select placeholder",
+      "default": "Number of Guests"
+    },
+    {
+      "type": "textarea",
+      "id": "guest_options",
+      "label": "Guest options (one per line)",
+      "default": "1 Guest\n2 Guests\n3 Guests\n4 Guests\n5+ Guests"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Full Name *"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Email Address *"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Contact Number *"
+    },
+    {
+      "type": "text",
+      "id": "notes_placeholder",
+      "label": "Notes placeholder",
+      "default": "Special Requests (Optional)"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — your booking request has been submitted."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "form_background",
+      "label": "Form panel background",
+      "default": "#eaf8f1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 100
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experience booking"
+    }
+  ]
+}
+{% endschema %}

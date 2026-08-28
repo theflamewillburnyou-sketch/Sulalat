@@ -90,10 +90,132 @@
         "slides_per_view_mobile": 1.2,
         "show_navigation": false
       }
+    },
+    "experience_gallery": {
+      "type": "experience-sulalat-gallery",
+      "blocks": {
+        "gallery_1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/2b229e9e02d2b28b080d2717c0f734a083ae4e00.png",
+            "link": ""
+          }
+        },
+        "gallery_2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/14a06b69afdfe2b8c23f44a6ee9ab2b140c1fd3a.png",
+            "link": ""
+          }
+        },
+        "gallery_3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/3303e808191ed720a43767c6646720801f5aa265.png",
+            "link": "#"
+          }
+        }
+      },
+      "block_order": [
+        "gallery_1",
+        "gallery_2",
+        "gallery_3"
+      ],
+      "settings": {
+        "heading": "Gallery",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 100,
+        "slide_gap": 24,
+        "slide_width": 78
+      }
+    },
+    "experience_sulalat_offering_XnEtNn": {
+      "type": "experience-sulalat-offering",
+      "blocks": {
+        "offering_pAmqfG": {
+          "type": "offering",
+          "settings": {
+            "image": "shopify://shop_images/917afd115aad6694cb3e45b977d1c6d899c5b3c8.png",
+            "title": "Coffee",
+            "button_label": "Download Menu",
+            "button_link": ""
+          }
+        },
+        "offering_6CqAiW": {
+          "type": "offering",
+          "settings": {
+            "image": "shopify://shop_images/1ba0946644a7aeb839e0c3e37e8abcdcff4014e4.png",
+            "title": "Bakery",
+            "button_label": "Download Menu",
+            "button_link": ""
+          }
+        },
+        "offering_q4tEVT": {
+          "type": "offering",
+          "settings": {
+            "image": "shopify://shop_images/db8f420a69b49afaaf0f77fdb4329a65f87d4fa8.png",
+            "title": "Gelato",
+            "button_label": "Download Menu",
+            "button_link": ""
+          }
+        },
+        "offering_PNg3kX": {
+          "type": "offering",
+          "settings": {
+            "image": "shopify://shop_images/image_397.png",
+            "title": "Chocolate",
+            "button_label": "Download Menu",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "offering_pAmqfG",
+        "offering_6CqAiW",
+        "offering_q4tEVT",
+        "offering_PNg3kX"
+      ],
+      "name": "Experience offerings",
+      "settings": {
+        "heading": "What We Are Offering",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 100,
+        "card_gap": 24
+      }
+    },
+    "experience_sulalat_booking_qeyRKN": {
+      "type": "experience-sulalat-booking",
+      "name": "Experience booking",
+      "settings": {
+        "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
+        "heading": "Book Your Coffee Experience",
+        "text": "Choose your experience, select your schedule, and reserve your spot.",
+        "experience_placeholder": "Select Experience",
+        "experience_options": "Live Coffee Roasting\nBarista Training & Demo\nOpen Equipment Lab\nTasting Sessions",
+        "date_placeholder": "MM / YY",
+        "time_slots": "Morning,Afternoon,Evening",
+        "guests_placeholder": "Number of Guests",
+        "guest_options": "1 Guest\n2 Guests\n3 Guests\n4 Guests\n5+ Guests",
+        "name_placeholder": "Full Name *",
+        "email_placeholder": "Email Address *",
+        "phone_placeholder": "Contact Number *",
+        "notes_placeholder": "Special Requests (Optional)",
+        "submit_label": "Submit",
+        "success_message": "Thanks — your booking request has been submitted.",
+        "background_color": "#ffffff",
+        "form_background": "#eaf8f1",
+        "padding_top": 40,
+        "padding_bottom": 100
+      }
     }
   },
   "order": [
     "experience_hero",
-    "experience_grid"
+    "experience_grid",
+    "experience_gallery",
+    "experience_sulalat_offering_XnEtNn",
+    "experience_sulalat_booking_qeyRKN"
   ]
 }
