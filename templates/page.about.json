@@ -15,7 +15,7 @@
         "background_image": "shopify://shop_images/about-banner.png",
         "overlay_color": "#00000073",
         "subtitle": "About Us",
-        "heading": "<p>Our Journey,<br/>Our Passion.</p>",
+        "heading": "<h1>Our Journey,<br/>Our Passion.</h1>",
         "text": "<p>We're on a mission to bring world-class quality to every cup.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
@@ -392,7 +392,14 @@
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         },
         "career_2": {
@@ -400,7 +407,14 @@
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         },
         "career_3": {
@@ -408,7 +422,14 @@
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         },
         "career_4": {
@@ -416,7 +437,14 @@
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         },
         "career_5": {
@@ -424,7 +452,14 @@
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's."
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's.",
+            "posted_label": "Posted 18 hours ago",
+            "roles_heading": "Job Roles & Responsibilities:",
+            "roles": "Archiving design drawings, contract documents, survey data and related reports.\nFluency in English is a must.",
+            "qualifications_heading": "Qualifications:",
+            "qualifications": "Education: Diploma / Bachelor of Civil Engineering.\nExperience: 3–10 years.\nSoftware Knowledge: Civil 3D, AutoCAD.",
+            "skills_heading": "Skill Sets Required:",
+            "skills": "Drafting Skills\nComputer Skills\nCollaboration\nAttention to Details\nCommunication Skills"
           }
         }
       },
@@ -518,7 +553,12 @@
         "careers_why_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
         "careers_image": "shopify://shop_images/c27f2c2946c2a29be23158a7350ae8c6544e7c08.png",
         "careers_positions_heading": "Open Positions",
-        "careers_positions_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+        "careers_positions_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "careers_detail_label": "Job Detail",
+        "careers_apply_heading": "Apply Online",
+        "careers_browse_label": "Browse",
+        "careers_submit_label": "Submit",
+        "careers_success_message": "Thanks — your application has been submitted."
       }
     }
   },

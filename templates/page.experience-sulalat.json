@@ -1,0 +1,99 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "experience_hero": {
+      "type": "experience-sulalat-hero",
+      "settings": {
+        "background_image": "shopify://shop_images/892358b02182d5ab1e23104556cb4d58132eda40.png",
+        "overlay_color": "#00000073",
+        "heading": "<p>Experience Sulalat</p>",
+        "text": "<p>From bean to blend, Sulalat curates exceptional coffees for every style and setting — combining heritage with innovation.</p>",
+        "primary_button_label": "Book an Experience",
+        "primary_button_link": "",
+        "secondary_button_label": "Explore the Space",
+        "secondary_button_link": "",
+        "min_height": 720,
+        "min_height_mobile": 520,
+        "padding_top": 140,
+        "padding_bottom": 100,
+        "heading_size": 72,
+        "heading_line_height": 78,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "experience_grid": {
+      "type": "experience-sulalat-grid",
+      "blocks": {
+        "exp_roasting": {
+          "type": "experience",
+          "settings": {
+            "image": "shopify://shop_images/218d77146260801e6902b88bb0c02c48efaf2f08.png",
+            "title": "Live Coffee Roasting",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "button_label": "Book Now",
+            "button_link": ""
+          }
+        },
+        "exp_barista": {
+          "type": "experience",
+          "settings": {
+            "image": "shopify://shop_images/ca764f2939a11a91bbffb499daff07aab9bea083.png",
+            "title": "Barista Training & Demo",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "button_label": "Book Now",
+            "button_link": ""
+          }
+        },
+        "exp_equipment": {
+          "type": "experience",
+          "settings": {
+            "image": "shopify://shop_images/5840f5dc35f398e0e2e31c09dcc9498d7e816fdc.png",
+            "title": "Open Equipment Lab",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "button_label": "Book Now",
+            "button_link": ""
+          }
+        },
+        "exp_tasting": {
+          "type": "experience",
+          "settings": {
+            "image": "shopify://shop_images/6fa0723f81e362e367a91b95c13b09f700d74597.png",
+            "title": "Tasting Sessions",
+            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "button_label": "Book Now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "exp_roasting",
+        "exp_barista",
+        "exp_equipment",
+        "exp_tasting"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 100,
+        "card_gap": 24,
+        "slides_per_view_desktop": 3.2,
+        "slides_per_view_tablet": 2.2,
+        "slides_per_view_mobile": 1.2,
+        "show_navigation": false
+      }
+    }
+  },
+  "order": [
+    "experience_hero",
+    "experience_grid"
+  ]
+}

@@ -76,157 +76,161 @@
     opacity: 0.8;
   }
 
-  {% if request.page_type == 'index' %}
-    /*
-      Homepage overlay header: sit on top of the hero, white UI, no dark bar.
-    */
-    .shopify-section.cc-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 99;
-      width: 100%;
-      background: transparent !important;
-    }
+  /*
+    Overlay header: transparent bar, white UI, sits over hero/page banners.
+  */
+  .shopify-section.cc-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    width: 100%;
+    background: transparent !important;
+  }
 
-    store-header.header.header--overlay,
-    store-header.header.header--overlay.bg-theme-bg {
-      --bg-color: 0 0 0;
-      --search-bg-color: 0 0 0;
-      --nav-bg-color: 0 0 0;
-      --text-color: 255 255 255;
-      --nav-text-color: 255 255 255;
-      --icon-color: 255 255 255;
+  store-header.header.header--overlay,
+  store-header.header.header--overlay.bg-theme-bg {
+    --bg-color: 0 0 0;
+    --search-bg-color: 0 0 0;
+    --nav-bg-color: 0 0 0;
+    --text-color: 255 255 255;
+    --nav-text-color: 255 255 255;
+    --icon-color: 255 255 255;
+    background: transparent !important;
+    background-color: transparent !important;
+    border-bottom: 0;
+    color: #ffffff;
+    box-shadow: none;
+    transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
+  }
+
+  store-header.header.header--overlay .header__grid,
+  store-header.header.header--overlay .main-menu {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  @media (min-width: 769px) {
+    store-header.header.header--overlay .main-menu__content {
       background: transparent !important;
       background-color: transparent !important;
-      border-bottom: 0;
-      color: #ffffff;
-      box-shadow: none;
-      transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
     }
 
-    store-header.header.header--overlay .header__grid,
     store-header.header.header--overlay .main-menu {
-      background: transparent !important;
-      background-color: transparent !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 40px;
     }
 
-    @media (min-width: 769px) {
-      store-header.header.header--overlay .main-menu__content {
-        background: transparent !important;
-        background-color: transparent !important;
-      }
-
-      store-header.header.header--overlay .main-menu {
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
-        padding-top: 40px;
-      }
-
-      store-header.header.header--overlay .main-nav__item--primary,
-      store-header.header.header--overlay .main-nav__toggle-btn {
-        color: #ffffff !important;
-      }
-
-      header #main-menu-content .main-nav {
-        gap: 50px;
-        margin: 0;
-      }
-
-      header #main-menu-content .main-nav .main-nav__row {
-        margin: 0;
-      }
-
-      store-header.header.header--overlay .main-nav__item--primary {
-        text-transform: none;
-        font-size: 17px;
-        font-weight: 300;
-        letter-spacing: 0.03em;
-        padding: 0;
-      }
-    }
-
-    store-header.header.header--overlay .logo__text,
-    store-header.header.header--overlay .logo__link,
-    store-header.header.header--overlay .header__icon,
-    store-header.header.header--overlay .header__icon .icon,
-    store-header.header.header--overlay .header-language-toggle__btn,
-    store-header.header.header--overlay .search .icon,
-    store-header.header.header--overlay .search__submit,
-    store-header.header.header--overlay .main-menu__toggle {
+    store-header.header.header--overlay .main-nav__item--primary,
+    store-header.header.header--overlay .main-nav__toggle-btn {
       color: #ffffff !important;
     }
 
-    form.search.relative.search--product-types {
-      max-width: 450px;
-    }
-
-    store-header.header.header--overlay .search__input {
-      background-color: transparent;
-      border: 0;
-      box-shadow: none;
-      color: #ffffff;
-    }
-
-    store-header.header.header--overlay .search__input::placeholder {
-      color: rgba(255, 255, 255, 0.72);
-    }
-
-    store-header.header.header--overlay .header-language-toggle__btn {
-      --input-text-color: 255 255 255;
-      background: transparent;
-      border: 0;
-      box-shadow: none;
-    }
-
-    store-header.header.header--overlay.is-scrolled {
-      /* background-color: rgba(26, 26, 26, 0.78) !important;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px); */
-    }
-
-    store-header.header.header--overlay.is-scrolled .main-menu {
-      border-bottom-color: transparent;
-    }
-
-    store-header.header.header--overlay .search__input::placeholder {
-      color: rgb(255 255 255 / 50%);
-      font-weight:300;
-    }
-
-    store-header.header.header--overlay {
-      --nav-child-bg-color: 0 0 0;
-      --nav-child-text-color: 255 255 255;
-      --nav-line-color: rgba(255, 255, 255, 0.2);
-    }
-
-    store-header.header.header--overlay .main-nav__child.mega-nav--columns {
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(12.5px);
-      -webkit-backdrop-filter: blur(12.5px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 0 0 20px 20px;
-      box-shadow: none;
-    }
-
-    header .header__icons {
-      gap: 30px;
-      align-items: center;
-      margin:0;
-    }
-    header .header__icons a.header__icon {
+    header #main-menu-content .main-nav {
+      gap: 50px;
       margin: 0;
-      padding: 0;
-      width: 18px;
     }
 
-    .header-language-toggle__btn {
-      font-weight: 300;
+    header #main-menu-content .main-nav .main-nav__row {
+      margin: 0;
     }
-  {% endif %}
+
+    store-header.header.header--overlay .main-nav__item--primary {
+      text-transform: none;
+      font-size: 17px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      padding: 0;
+    }
+  }
+
+  store-header.header.header--overlay .logo__text,
+  store-header.header.header--overlay .logo__link,
+  store-header.header.header--overlay .header__icon,
+  store-header.header.header--overlay .header__icon .icon,
+  store-header.header.header--overlay .header-language-toggle__btn,
+  store-header.header.header--overlay .search .icon,
+  store-header.header.header--overlay .search__submit,
+  store-header.header.header--overlay .main-menu__toggle {
+    color: #ffffff !important;
+  }
+
+  form.search.relative.search--product-types {
+    max-width: 450px;
+  }
+
+  store-header.header.header--overlay .search__input {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #ffffff;
+  }
+
+  store-header.header.header--overlay .search__product-types .custom-select__btn {
+    background-color: transparent;
+    color: #ffffff;
+  }
+
+  store-header.header.header--overlay .search__input::placeholder {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  store-header.header.header--overlay .header-language-toggle__btn {
+    --input-text-color: 255 255 255;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  store-header.header.header--overlay.is-scrolled {
+    /* background-color: rgba(26, 26, 26, 0.78) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px); */
+  }
+
+  store-header.header.header--overlay.is-scrolled .main-menu {
+    border-bottom-color: transparent;
+  }
+
+  store-header.header.header--overlay .search__input::placeholder {
+    color: rgb(255 255 255 / 50%);
+    font-weight: 300;
+  }
+
+  store-header.header.header--overlay {
+    --nav-child-bg-color: 0 0 0;
+    --nav-child-text-color: 255 255 255;
+    --nav-line-color: rgba(255, 255, 255, 0.2);
+  }
+
+  store-header.header.header--overlay .main-nav__child.mega-nav--columns {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12.5px);
+    -webkit-backdrop-filter: blur(12.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0 0 20px 20px;
+    box-shadow: none;
+  }
+
+  header .header__icons {
+    gap: 30px;
+    align-items: center;
+    margin: 0;
+  }
+
+  header .header__icons a.header__icon {
+    margin: 0;
+    padding: 0;
+    width: 18px;
+  }
+
+  .header-language-toggle__btn {
+    font-weight: 300;
+  }
 {%- endstyle -%}
 
-<store-header class="header bg-theme-bg text-theme-text{% if request.page_type == 'index' %} header--overlay{% endif %}{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
+<store-header class="header bg-theme-bg text-theme-text header--overlay{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
   {%- if section.settings.enable_sticky -%} data-is-sticky="true"{%- endif -%}
   {%- if search_is_minimised -%} data-is-search-minimised="true"{%- endif -%}
   style="--header-transition-speed: 300ms">
@@ -876,21 +880,19 @@
   </header>
 </store-header>
 
-{%- if request.page_type == 'index' -%}
-  <script>
-    (function () {
-      const header = document.querySelector('store-header.header--overlay');
-      if (!header) return;
+<script>
+  (function () {
+    const header = document.querySelector('store-header.header--overlay');
+    if (!header) return;
 
-      const syncScrolled = () => {
-        header.classList.toggle('is-scrolled', window.scrollY > 40);
-      };
+    const syncScrolled = () => {
+      header.classList.toggle('is-scrolled', window.scrollY > 40);
+    };
 
-      syncScrolled();
-      window.addEventListener('scroll', syncScrolled, { passive: true });
-    })();
-  </script>
-{%- endif -%}
+    syncScrolled();
+    window.addEventListener('scroll', syncScrolled, { passive: true });
+  })();
+</script>
 
 {%- if has_mega_nav_pills -%}
   <link rel="stylesheet" href="{{ 'navigation-mega-pills.css' | asset_url }}" media="print" onload="this.media='all'">

@@ -249,7 +249,7 @@
 
 | Piece | File | Notes |
 | ----- | ---- | ----- |
-| Template | `templates/collection.sulalat.json` | Assign in Admin → Collection → Theme template → **sulalat** |
+| Template | `templates/collection.product-category-collection.json` | Assign in Admin → Collection → Theme template → **product-category-collection** |
 | Section | `sections/main-collection-sulalat.liquid` | Category pills, search, sort, 3-col grid, Load More |
 | Card | `snippets/sulalat-product-card.liquid` | Custom card with View Details + Add to Cart |
 

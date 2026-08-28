@@ -1,0 +1,356 @@
+<section
+  class="experience-sulalat-hero"
+  data-section-id="{{ section.id }}"
+  style="
+    --exp-hero-overlay: {{ section.settings.overlay_color }};
+    --exp-hero-min-height: {{ section.settings.min_height }}px;
+    --exp-hero-min-height-mobile: {{ section.settings.min_height_mobile }}px;
+    --exp-hero-padding-top: {{ section.settings.padding_top }}px;
+    --exp-hero-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --exp-hero-heading-size: {{ section.settings.heading_size }}px;
+    --exp-hero-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --exp-hero-heading-line-height: {{ section.settings.heading_line_height }}px;
+    --exp-hero-heading-line-height-mobile: {{ section.settings.heading_line_height_mobile }}px;
+  "
+>
+  <style>
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] {
+      position: relative;
+      overflow: hidden;
+      min-height: var(--exp-hero-min-height, 720px);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--exp-hero-padding-top, 140px) 0 var(--exp-hero-padding-bottom, 100px);
+      font-family: var(--body-font-family);
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__image {
+      position: absolute;
+      inset: 0;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__image img,
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--exp-hero-overlay, rgba(0, 0, 0, 0.45));
+      pointer-events: none;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__content {
+      max-width: 640px;
+      color: #fff;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading {
+      margin: 0 0 20px;
+      color: #ffffff;
+      font-size: var(--exp-hero-heading-size, 72px);
+      line-height: var(--exp-hero-heading-line-height, 78px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading p {
+      margin: 0;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__text {
+      margin: 0 0 32px;
+      max-width: 520px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__text p {
+      margin: 0;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 32px;
+      border-radius: var(--brand-radius-pill, 80px);
+      font-size: 16px;
+      font-weight: 500;
+      font-family: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--primary {
+      background: var(--brand-primary, #53c295);
+      border-color: var(--brand-primary, #53c295);
+      color: #000;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--primary:hover {
+      background: var(--brand-primary-hover, #45ad82);
+      border-color: var(--brand-primary-hover, #45ad82);
+      color: #000;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--outline {
+      background: transparent;
+      border-color: #fff;
+      color: #fff;
+    }
+
+    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--outline:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    @media (max-width: 767px) {
+      .experience-sulalat-hero[data-section-id="{{ section.id }}"] {
+        min-height: var(--exp-hero-min-height-mobile, 520px);
+        padding-top: 100px;
+        padding-bottom: 64px;
+      }
+
+      .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading {
+        font-size: var(--exp-hero-heading-size-mobile, 40px);
+        line-height: var(--exp-hero-heading-line-height-mobile, 44px);
+      }
+
+      .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <div class="experience-sulalat-hero__image">
+    {% if section.settings.background_image != blank %}
+      <img
+        src="{{ section.settings.background_image | image_url: width: 2000 }}"
+        srcset="{{ section.settings.background_image | image_url: width: 800 }} 800w,
+                {{ section.settings.background_image | image_url: width: 1200 }} 1200w,
+                {{ section.settings.background_image | image_url: width: 1600 }} 1600w,
+                {{ section.settings.background_image | image_url: width: 2000 }} 2000w"
+        sizes="100vw"
+        alt="{{ section.settings.background_image.alt | default: section.settings.heading | strip_html | escape }}"
+        width="{{ section.settings.background_image.width }}"
+        height="{{ section.settings.background_image.height }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {% else %}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+  </div>
+
+  <div class="experience-sulalat-hero__overlay"></div>
+
+  <div class="container">
+    <div class="experience-sulalat-hero__content">
+      {% if section.settings.heading != blank %}
+        <h1 class="experience-sulalat-hero__heading">{{ section.settings.heading }}</h1>
+      {% endif %}
+
+      {% if section.settings.text != blank %}
+        <div class="experience-sulalat-hero__text">{{ section.settings.text }}</div>
+      {% endif %}
+
+      {% if section.settings.primary_button_label != blank or section.settings.secondary_button_label != blank %}
+        <div class="experience-sulalat-hero__actions">
+          {% if section.settings.primary_button_label != blank %}
+            <a
+              class="experience-sulalat-hero__btn experience-sulalat-hero__btn--primary"
+              href="{{ section.settings.primary_button_link | default: '#' }}"
+            >
+              {{ section.settings.primary_button_label | escape }}
+            </a>
+          {% endif %}
+          {% if section.settings.secondary_button_label != blank %}
+            <a
+              class="experience-sulalat-hero__btn experience-sulalat-hero__btn--outline"
+              href="{{ section.settings.secondary_button_link | default: '#' }}"
+            >
+              {{ section.settings.secondary_button_label | escape }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Experience Sulalat hero",
+  "tag": "section",
+  "class": "experience-sulalat-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "rgba(0,0,0,0.45)"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Experience Sulalat</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Description",
+      "default": "<p>From bean to blend, Sulalat curates exceptional coffees for every style and setting — combining heritage with innovation.</p>"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_label",
+      "label": "Primary button label",
+      "default": "Book an Experience"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_label",
+      "label": "Secondary button label",
+      "default": "Explore the Space"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "min": 400,
+      "max": 1000,
+      "step": 10,
+      "unit": "px",
+      "default": 720
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "label": "Minimum height (mobile)",
+      "min": 300,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 60,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "default": 140
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 40,
+      "max": 150,
+      "step": 10,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading font size",
+      "min": 32,
+      "max": 96,
+      "step": 1,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 36,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading font size (mobile)",
+      "min": 24,
+      "max": 56,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height_mobile",
+      "label": "Heading line height (mobile)",
+      "min": 28,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 44
+    }
+  ],
+  "presets": [
+    {
+      "name": "Experience Sulalat hero",
+      "settings": {
+        "heading": "<p>Experience Sulalat</p>",
+        "text": "<p>From bean to blend, Sulalat curates exceptional coffees for every style and setting — combining heritage with innovation.</p>",
+        "primary_button_label": "Book an Experience",
+        "secondary_button_label": "Explore the Space"
+      }
+    }
+  ]
+}
+{% endschema %}

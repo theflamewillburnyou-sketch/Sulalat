@@ -1,9 +1,25 @@
 {%- liquid
   assign products_per_page = section.settings.products_per_page | default: 9
   assign sort_by = collection.sort_by | default: collection.default_sort_by
+
+  assign is_search_mode = false
+  if request.page_type == 'search' and search.performed
+    assign is_search_mode = true
+    assign sort_by = search.sort_by | default: search.default_sort_by
+  endif
+
+  assign matched_category_tab = false
+  if collection
+    for block in section.blocks
+      if block.settings.collection != blank and block.settings.collection.handle == collection.handle
+        assign matched_category_tab = true
+        break
+      endif
+    endfor
+  endif
 -%}
 
-<section class="sulalat-collection" data-section-id="{{ section.id }}" data-sulalat-collection>
+<section class="sulalat-collection" data-section-id="{{ section.id }}" data-sulalat-collection data-search-url="{{ routes.search_url }}">
   <style>
     .sulalat-collection[data-section-id="{{ section.id }}"] {
       font-family: var(--body-font-family);
@@ -38,12 +54,16 @@
       align-items: center;
       justify-content: center;
       padding: 12px 22px;
+      border: 0;
       border-radius: 12px;
+      background: transparent;
       text-decoration: none;
       color: #000;
       font-size: 16px;
       line-height: 1.2;
       font-weight: 400;
+      font-family: inherit;
+      cursor: pointer;
       transition: 0.25s ease;
     }
 
@@ -320,6 +340,12 @@
       color: #535353;
     }
 
+    .sulalat-collection[data-section-id="{{ section.id }}"] [data-collection-content].is-loading,
+    .sulalat-collection[data-section-id="{{ section.id }}"] [data-collection-results].is-loading {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
     @media (max-width: 991px) {
       .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -357,21 +383,27 @@
                 endif
               endif
               assign is_active = false
-              if block.settings.collection != blank and block.settings.collection.handle == collection.handle
-                assign is_active = true
-              elsif block.settings.is_all and collection.handle == 'all'
+              if block.settings.is_all
+                if collection == blank or collection.handle == 'all' or matched_category_tab == false
+                  assign is_active = true
+                endif
+              elsif block.settings.collection != blank and collection and block.settings.collection.handle == collection.handle
                 assign is_active = true
               endif
             -%}
             {% if nav_label != blank and nav_url != blank %}
               <li {{ block.shopify_attributes }}>
-                <a
+                <button
+                  type="button"
                   class="sulalat-collection-nav__link{% if is_active %} is-active{% endif %}"
-                  href="{{ nav_url }}"
-                  {% if is_active %}aria-current="page"{% endif %}
+                  data-collection-filter
+                  data-collection-url="{{ nav_url }}"
+                  {% if block.settings.is_all %}data-collection-is-all="true"{% endif %}
+                  {% if block.settings.collection != blank %}data-collection-handle="{{ block.settings.collection.handle }}"{% endif %}
+                  {% if is_active %}aria-current="true"{% endif %}
                 >
                   {{ nav_label | escape }}
-                </a>
+                </button>
               </li>
             {% endif %}
           {% endfor %}
@@ -380,17 +412,18 @@
     </div>
   {% endif %}
 
-  <div class="container">
-    <form class="sulalat-collection-search" action="{{ routes.search_url }}" method="get" role="search">
-      <input type="hidden" name="type" value="product">
+  <div class="container" data-collection-content>
+    <form class="sulalat-collection-search" data-collection-search role="search">
       <input
         type="search"
         name="q"
+        data-collection-search-input
         placeholder="{{ section.settings.search_placeholder | escape }}"
-        value="{{ search.terms | escape }}"
+        value="{% if is_search_mode %}{{ search.terms | escape }}{% endif %}"
         aria-label="{{ section.settings.search_placeholder | escape }}"
+        autocomplete="off"
       >
-      <button type="submit" aria-label="Search">
+      <button type="button" data-collection-search-submit aria-label="Search">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
           <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
           <path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -398,111 +431,510 @@
       </button>
     </form>
 
-    {%- paginate collection.products by products_per_page -%}
-      <div class="sulalat-collection-toolbar">
-        <form class="sulalat-collection-sort" action="{{ collection.url }}" method="get">
-          <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
-          <select name="sort_by" id="SortBy-{{ section.id }}" onchange="this.form.submit()">
-            {% for option in collection.sort_options %}
-              <option
-                value="{{ option.value }}"
-                {% if option.value == sort_by %}selected{% endif %}
-              >
-                Sort by: {{ option.name }}
-              </option>
-            {% endfor %}
-          </select>
-        </form>
+    <div data-collection-results>
+      {%- if is_search_mode -%}
+        {%- paginate search.results by products_per_page -%}
+          <div class="sulalat-collection-toolbar">
+            <form class="sulalat-collection-sort" action="{{ routes.search_url }}" method="get">
+              <input type="hidden" name="q" value="{{ search.terms | escape }}">
+              <input type="hidden" name="type" value="product">
+              <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+              <select name="sort_by" id="SortBy-{{ section.id }}">
+                {% for option in search.sort_options %}
+                  <option
+                    value="{{ option.value }}"
+                    {% if option.value == sort_by %}selected{% endif %}
+                  >
+                    Sort by: {{ option.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
 
-        <p class="sulalat-collection-count">
-          {%- if collection.products_count == 0 -%}
-            Showing 0 of 0 Products
-          {%- else -%}
-            Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} Products
-          {%- endif -%}
-        </p>
-      </div>
-
-      {% if collection.products.size == 0 %}
-        <div class="sulalat-collection-empty">
-          <p>{{ 'sections.collection.empty' | t | default: 'No products found in this collection.' }}</p>
-        </div>
-      {% else %}
-        <ul class="sulalat-collection-grid" role="list" data-product-grid>
-          {% for product in collection.products %}
-            <li>
-              {% render 'sulalat-product-card',
-                product: product,
-                collection: collection,
-                color_index: forloop.index0,
-                section_id: section.id
-              %}
-            </li>
-          {% endfor %}
-        </ul>
-
-        {% if paginate.next %}
-          <div class="sulalat-collection-load-more">
-            <a
-              class="sulalat-btn sulalat-btn--primary"
-              href="{{ paginate.next.url }}"
-              data-load-more
-            >
-              {{ section.settings.load_more_label | escape }}
-            </a>
+            <p class="sulalat-collection-count">
+              {%- if search.results_count == 0 -%}
+                Showing 0 of 0 Products
+              {%- else -%}
+                Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: search.results.size }} of {{ search.results_count }} Products
+              {%- endif -%}
+            </p>
           </div>
-        {% endif %}
-      {% endif %}
-    {%- endpaginate -%}
+
+          {% if search.results_count == 0 %}
+            <div class="sulalat-collection-empty">
+              <p>{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+            </div>
+          {% else %}
+            <ul class="sulalat-collection-grid" role="list" data-product-grid>
+              {% for item in search.results %}
+                {% if item.object_type == 'product' %}
+                  <li data-product-title="{{ item.title | escape }}">
+                    {% render 'sulalat-product-card',
+                      product: item,
+                      collection: item.collections.first,
+                      color_index: forloop.index0,
+                      section_id: section.id
+                    %}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+
+            {% if paginate.next %}
+              <div class="sulalat-collection-load-more">
+                <button
+                  type="button"
+                  class="sulalat-btn sulalat-btn--primary"
+                  data-load-more
+                  data-load-more-url="{{ routes.search_url }}?q={{ search.terms | url_param_escape }}&type=product&page={{ paginate.current_page | plus: 1 }}{% if sort_by != blank %}&sort_by={{ sort_by | url_param_escape }}{% endif %}"
+                >
+                  {{ section.settings.load_more_label | escape }}
+                </button>
+              </div>
+            {% endif %}
+          {% endif %}
+        {%- endpaginate -%}
+      {%- else -%}
+        {%- paginate collection.products by products_per_page -%}
+          <div class="sulalat-collection-toolbar">
+            <form class="sulalat-collection-sort" action="{{ collection.url }}" method="get">
+              <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
+              <select name="sort_by" id="SortBy-{{ section.id }}">
+                {% for option in collection.sort_options %}
+                  <option
+                    value="{{ option.value }}"
+                    {% if option.value == sort_by %}selected{% endif %}
+                  >
+                    Sort by: {{ option.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </form>
+
+            <p class="sulalat-collection-count">
+              {%- if collection.products_count == 0 -%}
+                Showing 0 of 0 Products
+              {%- else -%}
+                Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: collection.products.size }} of {{ collection.products_count }} Products
+              {%- endif -%}
+            </p>
+          </div>
+
+          {% if collection.products.size == 0 %}
+            <div class="sulalat-collection-empty">
+              <p>{{ 'sections.collection.empty' | t | default: 'No products found in this collection.' }}</p>
+            </div>
+          {% else %}
+            <ul class="sulalat-collection-grid" role="list" data-product-grid>
+              {% for product in collection.products %}
+                <li data-product-title="{{ product.title | escape }}">
+                  {% render 'sulalat-product-card',
+                    product: product,
+                    collection: collection,
+                    color_index: forloop.index0,
+                    section_id: section.id
+                  %}
+                </li>
+              {% endfor %}
+            </ul>
+
+            {% if paginate.next %}
+              <div class="sulalat-collection-load-more">
+                <button
+                  type="button"
+                  class="sulalat-btn sulalat-btn--primary"
+                  data-load-more
+                  data-load-more-url="{{ paginate.next.url }}"
+                >
+                  {{ section.settings.load_more_label | escape }}
+                </button>
+              </div>
+            {% endif %}
+          {% endif %}
+        {%- endpaginate -%}
+      {%- endif -%}
+    </div>
   </div>
 
   <script>
     (function () {
-      var root = document.querySelector('.sulalat-collection[data-section-id="{{ section.id }}"]');
-      if (!root) return;
+      var sectionId = {{ section.id | json }};
+      var loadMoreLabel = {{ section.settings.load_more_label | json }};
+      var searchDebounceMs = 350;
 
-      var loadMore = root.querySelector('[data-load-more]');
-      var grid = root.querySelector('[data-product-grid]');
-      if (!loadMore || !grid) return;
+      function getRoot() {
+        return document.querySelector('.sulalat-collection[data-section-id="' + sectionId + '"]');
+      }
 
-      loadMore.addEventListener('click', function (event) {
-        event.preventDefault();
-        var url = loadMore.getAttribute('href');
-        if (!url || loadMore.dataset.loading === 'true') return;
+      function buildSectionFetchUrl(url, root) {
+        var fetchUrl = new URL(url, window.location.href);
+        var searchMode = root ? root.getAttribute('data-search-mode') : null;
+        var searchQuery = root ? root.getAttribute('data-active-search-query') : null;
 
-        loadMore.dataset.loading = 'true';
-        loadMore.textContent = 'Loading...';
+        if (searchMode === 'global' && searchQuery) {
+          var searchBase = root.getAttribute('data-search-url');
+          var searchUrl = new URL(searchBase, window.location.href);
 
-        fetch(url)
-          .then(function (response) { return response.text(); })
-          .then(function (html) {
-            var doc = new DOMParser().parseFromString(html, 'text/html');
-            var nextRoot = doc.querySelector('.sulalat-collection[data-section-id="{{ section.id }}"]');
-            if (!nextRoot) return;
+          if (fetchUrl.searchParams.has('page')) {
+            searchUrl.searchParams.set('page', fetchUrl.searchParams.get('page'));
+          }
+          if (fetchUrl.searchParams.has('sort_by')) {
+            searchUrl.searchParams.set('sort_by', fetchUrl.searchParams.get('sort_by'));
+          }
 
-            var nextItems = nextRoot.querySelectorAll('[data-product-grid] > li');
-            nextItems.forEach(function (item) {
-              grid.appendChild(item);
-            });
-
-            var nextButton = nextRoot.querySelector('[data-load-more]');
-            if (nextButton) {
-              loadMore.setAttribute('href', nextButton.getAttribute('href'));
-              loadMore.textContent = {{ section.settings.load_more_label | json }};
-              loadMore.dataset.loading = 'false';
-            } else {
-              loadMore.parentNode.remove();
+          searchUrl.searchParams.set('q', searchQuery);
+          searchUrl.searchParams.set('type', 'product');
+          fetchUrl = searchUrl;
+        } else if (searchMode === 'collection' && root) {
+          var collectionUrl = root.getAttribute('data-active-collection-url');
+          if (collectionUrl) {
+            var scopedUrl = new URL(collectionUrl, window.location.href);
+            if (fetchUrl.searchParams.has('page')) {
+              scopedUrl.searchParams.set('page', fetchUrl.searchParams.get('page'));
             }
-
-            var nextCount = nextRoot.querySelector('.sulalat-collection-count');
-            var currentCount = root.querySelector('.sulalat-collection-count');
-            if (nextCount && currentCount) {
-              currentCount.textContent = nextCount.textContent;
+            if (fetchUrl.searchParams.has('sort_by')) {
+              scopedUrl.searchParams.set('sort_by', fetchUrl.searchParams.get('sort_by'));
             }
+            fetchUrl = scopedUrl;
+          }
+        }
+
+        fetchUrl.searchParams.set('section_id', sectionId);
+        return fetchUrl.toString();
+      }
+
+      function clearSearchState(root) {
+        root.removeAttribute('data-active-search-query');
+        root.removeAttribute('data-search-mode');
+        root.removeAttribute('data-active-collection-url');
+      }
+
+      function setGlobalSearchState(root, query) {
+        root.setAttribute('data-search-mode', 'global');
+        root.setAttribute('data-active-search-query', query);
+        root.removeAttribute('data-active-collection-url');
+      }
+
+      function setCollectionSearchState(root, query, collectionUrl) {
+        root.setAttribute('data-search-mode', 'collection');
+        root.setAttribute('data-active-search-query', query);
+        root.setAttribute('data-active-collection-url', collectionUrl);
+      }
+
+      function applyCollectionFilter(root, query) {
+        var q = (query || '').trim().toLowerCase();
+        var grid = root.querySelector('[data-product-grid]');
+        if (!grid) return;
+
+        var items = grid.querySelectorAll('li[data-product-title]');
+        var visible = 0;
+
+        items.forEach(function (item) {
+          var title = (item.getAttribute('data-product-title') || '').toLowerCase();
+          var match = !q || title.indexOf(q) !== -1;
+          item.hidden = !match;
+          if (match) visible++;
+        });
+
+        var countEl = root.querySelector('.sulalat-collection-count');
+        if (countEl && q) {
+          countEl.textContent = visible === 1
+            ? 'Showing 1 matching product'
+            : 'Showing ' + visible + ' matching products';
+        }
+      }
+
+      function parseFetchedHtml(html) {
+        var tmpl = document.createElement('template');
+        tmpl.innerHTML = html;
+
+        var sectionRoot = tmpl.content.querySelector('.sulalat-collection[data-section-id="' + sectionId + '"]');
+        var scope = sectionRoot || tmpl.content;
+
+        var grid = scope.querySelector('[data-product-grid]');
+        var items = grid ? Array.prototype.slice.call(grid.children) : [];
+        var loadMore = scope.querySelector('[data-load-more]');
+        var count = scope.querySelector('.sulalat-collection-count');
+
+        return {
+          items: items,
+          loadMoreUrl: loadMore
+            ? (loadMore.getAttribute('data-load-more-url') || loadMore.getAttribute('href'))
+            : null,
+          countText: count ? count.textContent : null,
+          resultsHtml: (function () {
+            var results = scope.querySelector('[data-collection-results]');
+            return results ? results.innerHTML : null;
+          })()
+        };
+      }
+
+      function setActiveTab(root, activeButton) {
+        root.querySelectorAll('[data-collection-filter]').forEach(function (tab) {
+          var isActive = activeButton && tab === activeButton;
+          tab.classList.toggle('is-active', isActive);
+          if (isActive) {
+            tab.setAttribute('aria-current', 'true');
+          } else {
+            tab.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      function getActiveTab(root) {
+        return root.querySelector('[data-collection-filter].is-active');
+      }
+
+      function getDefaultTab(root) {
+        return root.querySelector('[data-collection-filter][data-collection-url]');
+      }
+
+      function replaceResults(root, html) {
+        var parsed = parseFetchedHtml(html);
+        var results = root.querySelector('[data-collection-results]');
+        if (!results || !parsed.resultsHtml) return false;
+
+        results.innerHTML = parsed.resultsHtml;
+        return true;
+      }
+
+      var contentFetchController = null;
+
+      function fetchAndReplaceResults(root, url, options) {
+        options = options || {};
+        var results = root.querySelector('[data-collection-results]');
+        if (!results) return Promise.resolve(false);
+
+        if (contentFetchController) {
+          contentFetchController.abort();
+        }
+        contentFetchController = new AbortController();
+
+        results.classList.add('is-loading');
+
+        return fetch(buildSectionFetchUrl(url, root), {
+          signal: contentFetchController.signal
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error('Failed to load products');
+            return response.text();
           })
-          .catch(function () {
+          .then(function (html) {
+            return replaceResults(root, html);
+          })
+          .catch(function (error) {
+            if (error && error.name === 'AbortError') return false;
+            if (!options.fallbackNavigate) return false;
             window.location.href = url;
+            return false;
+          })
+          .finally(function () {
+            results.classList.remove('is-loading');
+            contentFetchController = null;
           });
+      }
+
+      function bindLoadMore(root) {
+        if (root.dataset.loadMoreBound === 'true') return;
+        root.dataset.loadMoreBound = 'true';
+
+        root.addEventListener('click', function (event) {
+          var loadMore = event.target.closest('[data-load-more]');
+          if (!loadMore || !root.contains(loadMore)) return;
+
+          event.preventDefault();
+          var url = loadMore.getAttribute('data-load-more-url') || loadMore.getAttribute('href');
+          if (!url || loadMore.dataset.loading === 'true') return;
+
+          var grid = root.querySelector('[data-product-grid]');
+          if (!grid) return;
+
+          loadMore.dataset.loading = 'true';
+          loadMore.textContent = 'Loading...';
+
+          fetch(buildSectionFetchUrl(url, root))
+            .then(function (response) {
+              if (!response.ok) throw new Error('Failed to load more products');
+              return response.text();
+            })
+            .then(function (html) {
+              var parsed = parseFetchedHtml(html);
+              if (!parsed.items.length) throw new Error('No products found');
+
+              parsed.items.forEach(function (item) {
+                grid.appendChild(item);
+              });
+
+              if (parsed.loadMoreUrl) {
+                loadMore.setAttribute('data-load-more-url', parsed.loadMoreUrl);
+                loadMore.textContent = loadMoreLabel;
+                loadMore.dataset.loading = 'false';
+              } else {
+                loadMore.parentNode.remove();
+              }
+
+              if (root.getAttribute('data-search-mode') === 'collection') {
+                applyCollectionFilter(root, root.getAttribute('data-active-search-query') || '');
+              } else if (parsed.countText) {
+                var currentCount = root.querySelector('.sulalat-collection-count');
+                if (currentCount) currentCount.textContent = parsed.countText;
+              }
+            })
+            .catch(function () {
+              window.location.href = url;
+            })
+            .finally(function () {
+              if (loadMore.isConnected && loadMore.dataset.loading === 'true') {
+                loadMore.textContent = loadMoreLabel;
+                loadMore.dataset.loading = 'false';
+              }
+            });
+        });
+      }
+
+      function bindCategoryFilters(root) {
+        if (root.dataset.filtersBound === 'true') return;
+        root.dataset.filtersBound = 'true';
+
+        var tabs = root.querySelectorAll('[data-collection-filter]');
+        if (!tabs.length) return;
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            var collectionUrl = tab.getAttribute('data-collection-url');
+            if (!collectionUrl || tab.classList.contains('is-active')) return;
+
+            var searchInput = root.querySelector('[data-collection-search-input]');
+            if (searchInput) searchInput.value = '';
+
+            clearSearchState(root);
+            setActiveTab(root, tab);
+
+            fetchAndReplaceResults(root, collectionUrl, { fallbackNavigate: true });
+          });
+        });
+      }
+
+      function bindSortForms(root) {
+        if (root.dataset.sortBound === 'true') return;
+        root.dataset.sortBound = 'true';
+
+        root.addEventListener('change', function (event) {
+          var select = event.target.closest('.sulalat-collection-sort select');
+          if (!select || !root.contains(select)) return;
+
+          event.preventDefault();
+
+          var form = select.closest('form');
+          if (!form) return;
+
+          var formData = new FormData(form);
+          var params = new URLSearchParams(formData);
+          var action = form.getAttribute('action') || window.location.pathname;
+          var url = action + (params.toString() ? '?' + params.toString() : '');
+
+          fetchAndReplaceResults(root, url).then(function () {
+            if (root.getAttribute('data-search-mode') === 'collection') {
+              var searchInput = root.querySelector('[data-collection-search-input]');
+              applyCollectionFilter(root, searchInput ? searchInput.value : (root.getAttribute('data-active-search-query') || ''));
+            }
+          });
+        });
+      }
+
+      function bindSearch(root) {
+        if (root.dataset.searchBound === 'true') return;
+        root.dataset.searchBound = 'true';
+
+        var searchForm = root.querySelector('[data-collection-search]');
+        var searchInput = root.querySelector('[data-collection-search-input]');
+        var searchSubmit = root.querySelector('[data-collection-search-submit]');
+        var searchUrl = root.getAttribute('data-search-url');
+        var searchTimer = null;
+        var lastActiveTab = root.querySelector('[data-collection-filter].is-active');
+
+        if (!searchForm || !searchInput || !searchUrl) return;
+
+        function buildSearchUrl(query) {
+          var url = new URL(searchUrl, window.location.href);
+          url.searchParams.set('q', query);
+          url.searchParams.set('type', 'product');
+          return url.toString();
+        }
+
+        function runSearch() {
+          var query = searchInput.value.trim();
+          var scopeTab = getActiveTab(root) || lastActiveTab || getDefaultTab(root);
+          var isAllProducts = !scopeTab || scopeTab.getAttribute('data-collection-is-all') === 'true';
+
+          if (!query) {
+            clearSearchState(root);
+            var restoreTab = lastActiveTab || getDefaultTab(root);
+            if (restoreTab) {
+              setActiveTab(root, restoreTab);
+              fetchAndReplaceResults(root, restoreTab.getAttribute('data-collection-url'), { fallbackNavigate: true });
+            }
+            return;
+          }
+
+          lastActiveTab = getActiveTab(root) || lastActiveTab;
+
+          if (isAllProducts) {
+            setActiveTab(root, null);
+            setGlobalSearchState(root, query);
+            fetchAndReplaceResults(root, buildSearchUrl(query), { fallbackNavigate: true });
+            return;
+          }
+
+          var collectionUrl = scopeTab.getAttribute('data-collection-url');
+          setActiveTab(root, scopeTab);
+          setCollectionSearchState(root, query, collectionUrl);
+
+          fetchAndReplaceResults(root, collectionUrl, { fallbackNavigate: true }).then(function () {
+            applyCollectionFilter(root, query);
+          });
+        }
+
+        searchForm.addEventListener('submit', function (event) {
+          event.preventDefault();
+          runSearch();
+        });
+
+        if (searchSubmit) {
+          searchSubmit.addEventListener('click', function () {
+            runSearch();
+          });
+        }
+
+        searchInput.addEventListener('input', function () {
+          clearTimeout(searchTimer);
+          searchTimer = setTimeout(runSearch, searchDebounceMs);
+        });
+
+        searchInput.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            clearTimeout(searchTimer);
+            runSearch();
+          }
+        });
+      }
+
+      function init() {
+        var root = getRoot();
+        if (!root) return;
+        bindLoadMore(root);
+        bindCategoryFilters(root);
+        bindSortForms(root);
+        bindSearch(root);
+      }
+
+      init();
+
+      document.addEventListener('shopify:section:load', function (event) {
+        if (String(event.detail.sectionId) === String(sectionId)) {
+          init();
+        }
       });
     })();
   </script>
@@ -566,7 +998,8 @@
         {
           "type": "collection",
           "id": "collection",
-          "label": "Collection"
+          "label": "Collection",
+          "info": "Required for in-page category filtering"
         },
         {
           "type": "url",
