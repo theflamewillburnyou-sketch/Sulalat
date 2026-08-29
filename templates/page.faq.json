@@ -1,0 +1,175 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/28e1c5b43866f2dc3a2496fa0241d8ed53c743cf_afec30ed-273d-4a5d-94a7-e35783eb0fb5.png",
+        "overlay_color": "#00000073",
+        "subtitle": "Help Center",
+        "heading": "<h1>Frequently Asked<br/>Questions</h1>",
+        "text": "<p>Find quick answers about orders, shipping, products, and more.</p>",
+        "min_height": 520,
+        "min_height_mobile": 400,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "faq_tabs": {
+      "type": "faq-tabs",
+      "blocks": {
+        "cat_general": {
+          "type": "category",
+          "settings": {
+            "title": "General"
+          }
+        },
+        "q_track": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order after purchase?",
+            "answer": "<p>You can track your order from your account dashboard or using the tracking link sent in your confirmation email.</p>"
+          }
+        },
+        "q_deliver": {
+          "type": "question",
+          "settings": {
+            "question": "Do you deliver outside Saudi Arabia?",
+            "answer": "<p>Yes. We ship across the GCC and selected international destinations. Shipping options are shown at checkout.</p>"
+          }
+        },
+        "q_brew": {
+          "type": "question",
+          "settings": {
+            "question": "How do I choose the right coffee for my brewing method?",
+            "answer": "<p>Each product page lists recommended brew methods. You can also filter by espresso, filter, or cold brew on our collections.</p>"
+          }
+        },
+        "q_return": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return or exchange a product?",
+            "answer": "<p>Unused products in original packaging can be returned within 14 days of delivery. Contact support to start a return.</p>"
+          }
+        },
+        "q_capsules": {
+          "type": "question",
+          "settings": {
+            "question": "Are Sulalat capsules compatible with all machines?",
+            "answer": "<p>Our capsules are designed for Nespresso-compatible machines. Check the product details for exact compatibility.</p>"
+          }
+        },
+        "q_wholesale": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer wholesale or bulk purchasing options?",
+            "answer": "<p>Yes. Reach out through our wholesale inquiry form and our team will share pricing and packaging options.</p>"
+          }
+        },
+        "cat_billing": {
+          "type": "category",
+          "settings": {
+            "title": "Billing"
+          }
+        },
+        "q_payment": {
+          "type": "question",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept major credit and debit cards, Apple Pay, and selected local payment plans where available.</p>"
+          }
+        },
+        "q_charged": {
+          "type": "question",
+          "settings": {
+            "question": "When will I be charged for my order?",
+            "answer": "<p>Your payment is processed when the order is placed, unless you choose a split-payment option at checkout.</p>"
+          }
+        },
+        "cat_support": {
+          "type": "category",
+          "settings": {
+            "title": "Support"
+          }
+        },
+        "q_contact": {
+          "type": "question",
+          "settings": {
+            "question": "How can I contact customer support?",
+            "answer": "<p>Email us or use the contact form on our website. We typically respond within 1–2 business days.</p>"
+          }
+        },
+        "q_hours": {
+          "type": "question",
+          "settings": {
+            "question": "What are your support hours?",
+            "answer": "<p>Our support team is available Sunday through Thursday, 9 AM – 6 PM (AST).</p>"
+          }
+        },
+        "cat_product": {
+          "type": "category",
+          "settings": {
+            "title": "Product"
+          }
+        },
+        "q_store": {
+          "type": "question",
+          "settings": {
+            "question": "How should I store my coffee?",
+            "answer": "<p>Keep beans in an airtight container away from heat, light, and moisture. For best flavor, use within a few weeks of opening.</p>"
+          }
+        },
+        "q_decaf": {
+          "type": "question",
+          "settings": {
+            "question": "Do you sell decaf options?",
+            "answer": "<p>Yes. Browse our collections or contact us for current decaf availability.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_general",
+        "q_track",
+        "q_deliver",
+        "q_brew",
+        "q_return",
+        "q_capsules",
+        "q_wholesale",
+        "cat_billing",
+        "q_payment",
+        "q_charged",
+        "cat_support",
+        "q_contact",
+        "q_hours",
+        "cat_product",
+        "q_store",
+        "q_decaf"
+      ],
+      "settings": {
+        "heading": "Frequently Asked Questions",
+        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "active_tab_bg": "#eaf8f1",
+        "padding_top": 80,
+        "padding_bottom": 100
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "faq_tabs"
+  ]
+}

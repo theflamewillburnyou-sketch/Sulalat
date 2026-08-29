@@ -1,0 +1,177 @@
+<section
+  class="sulalat-contact-map"
+  data-section-id="{{ section.id }}"
+  style="
+    --sulalat-map-pad-top: {{ section.settings.padding_top }}px;
+    --sulalat-map-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sulalat-map-height: {{ section.settings.map_height }}px;
+    --sulalat-map-height-mobile: {{ section.settings.map_height_mobile }}px;
+    --sulalat-map-radius: {{ section.settings.border_radius }}px;
+    --sulalat-map-bg: {{ section.settings.background_color }};
+  "
+>
+  <style>
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] {
+      padding: var(--sulalat-map-pad-top, 0) 0 var(--sulalat-map-pad-bottom, 0);
+      background: var(--sulalat-map-bg, #ffffff);
+    }
+
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__frame {
+      overflow: hidden;
+      border-radius: var(--sulalat-map-radius, 28px) var(--sulalat-map-radius, 28px) 0 0;
+      background: #e9eef2;
+      height: var(--sulalat-map-height, 520px);
+    }
+
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__frame iframe,
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__frame img,
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__frame svg {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      object-fit: cover;
+    }
+
+    .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__empty {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6b6b6b;
+      font-size: 15px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-contact-map[data-section-id="{{ section.id }}"] .sulalat-contact-map__frame {
+        height: var(--sulalat-map-height-mobile, 360px);
+        border-radius: 20px 20px 0 0;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-contact-map__frame">
+      {% if section.settings.map_embed != blank %}
+        {{ section.settings.map_embed }}
+      {% elsif section.settings.map_image != blank %}
+        <img
+          src="{{ section.settings.map_image | image_url: width: 2000 }}"
+          srcset="
+            {{ section.settings.map_image | image_url: width: 800 }} 800w,
+            {{ section.settings.map_image | image_url: width: 1400 }} 1400w,
+            {{ section.settings.map_image | image_url: width: 2000 }} 2000w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.map_image.alt | default: 'Map' | escape }}"
+          loading="lazy"
+          width="{{ section.settings.map_image.width }}"
+          height="{{ section.settings.map_image.height }}"
+        >
+      {% else %}
+        <div class="sulalat-contact-map__empty">
+          Add a Google Maps embed code or map image in the section settings.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact map",
+  "tag": "section",
+  "class": "sulalat-contact-map-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Map"
+    },
+    {
+      "type": "textarea",
+      "id": "map_embed",
+      "label": "Google Maps embed code",
+      "info": "Paste the iframe embed from Google Maps → Share → Embed a map."
+    },
+    {
+      "type": "image_picker",
+      "id": "map_image",
+      "label": "Fallback map image",
+      "info": "Used if no embed code is provided."
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "label": "Map height",
+      "min": 280,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "map_height_mobile",
+      "label": "Map height (mobile)",
+      "min": 220,
+      "max": 600,
+      "step": 10,
+      "unit": "px",
+      "default": 360
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Top corner radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact map"
+    }
+  ]
+}
+{% endschema %}

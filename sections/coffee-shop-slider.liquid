@@ -118,7 +118,7 @@
 
     .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider img {
       width: 100%;
-      height: var(--coffee-image-height);
+      {% comment %} height: var(--coffee-image-height); {% endcomment %}
       object-fit: cover;
       display: block;
     }
@@ -271,9 +271,9 @@
           speed: parseInt('{{ section.settings.transition_speed }}', 10) || 1000,
           grabCursor: true,
           watchSlidesProgress: true,
-          autoplay: autoplayEnabled
+          {% comment %} autoplay: autoplayEnabled
             ? { delay: autoplayDelay, disableOnInteraction: false, pauseOnMouseEnter: true }
-            : false,
+            : false, {% endcomment %}
           breakpoints: {
             0: { spaceBetween: 15 },
             768: { spaceBetween: 25 },

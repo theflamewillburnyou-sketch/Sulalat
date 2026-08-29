@@ -30,16 +30,21 @@
 <article class="sulalat-product-card sulalat-product-card--{{ card_tone }}" data-product-id="{{ product.id }}">
   <a class="sulalat-product-card__media" href="{{ product_url }}">
     {% if product.featured_media != blank %}
-      {{
-        product.featured_media
-        | image_url: width: 900
-        | image_tag:
-          loading: 'lazy',
-          widths: '320, 480, 640, 800, 900',
-          sizes: '(min-width: 992px) 30vw, 100vw',
-          class: 'sulalat-product-card__image',
-          alt: image_alt
-      }}
+      <img
+        class="sulalat-product-card__image"
+        src="{{ product.featured_media | image_url: width: 900 }}"
+        srcset="
+          {{ product.featured_media | image_url: width: 320 }} 320w,
+          {{ product.featured_media | image_url: width: 480 }} 480w,
+          {{ product.featured_media | image_url: width: 640 }} 640w,
+          {{ product.featured_media | image_url: width: 900 }} 900w
+        "
+        sizes="(min-width: 992px) 30vw, 100vw"
+        alt="{{ image_alt | escape }}"
+        loading="lazy"
+        width="{{ product.featured_media.width }}"
+        height="{{ product.featured_media.height }}"
+      >
     {% else %}
       <span class="sulalat-product-card__icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" focusable="false">

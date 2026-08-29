@@ -1,0 +1,134 @@
+/*
+ * ------------------------------------------------------------
+ * Sulalat product template
+ * Assign in Admin → Product → Theme template → sulalat
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-sulalat",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "short_description": {
+          "type": "short_description",
+          "settings": {
+            "text": "Short description here."
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "truncate": 0
+          }
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {
+            "rating_fallback": 4,
+            "rating_count_fallback": 11,
+            "reviews_label": "reviews"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity": true,
+            "default_quantity": 1,
+            "show_total": true,
+            "total_label": "Total:",
+            "show_buy_now": true,
+            "buy_now_label": "Buy Now",
+            "add_to_cart_label": "Add to Cart"
+          }
+        },
+        "subscribe": {
+          "type": "subscribe",
+          "settings": {
+            "label": "Subscribe Now",
+            "link": ""
+          }
+        },
+        "bulk_box": {
+          "type": "bulk_box",
+          "settings": {
+            "heading": "Looking to buy as Bulk?",
+            "text": "Special deals for you! Reach us for more details.",
+            "link_label": "Buy as Bulk",
+            "link": ""
+          }
+        },
+        "promo_banner": {
+          "type": "promo_banner",
+          "settings": {
+            "show_icon": true,
+            "text": "Buy 4 or more 250g bags of coffee, get 15% discount on each.",
+            "background": "#eaf8f1",
+            "text_color": "#0f6b4c"
+          }
+        },
+        "payments": {
+          "type": "payments",
+          "settings": {
+            "tabby_text": "4 interest-free payments. No late fees. Shariah-compliant!",
+            "tabby_link": "",
+            "tamara_text": "Pay monthly or split in 4. No hidden fees. Shariah-compliant!",
+            "tamara_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "short_description",
+        "description",
+        "rating",
+        "variant_picker",
+        "buy_buttons",
+        "subscribe",
+        "bulk_box",
+        "promo_banner",
+        "payments"
+      ],
+      "settings": {
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "accent_hover_color": "#45ad82",
+        "media_radius": 20,
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "Related Products",
+        "heading_align": "text-start",
+        "products_to_show": 8,
+        "slides_desktop": 3,
+        "slides_tablet": 2,
+        "slides_mobile": 1.1,
+        "slide_gap": 28,
+        "transition_speed": 600,
+        "enable_loop": true,
+        "show_navigation": true,
+        "enable_autoplay": true,
+        "autoplay_delay": 4,
+        "pause_on_hover": true,
+        "background_color": "#fbf9f9",
+        "padding_top": 60,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations"
+  ]
+}

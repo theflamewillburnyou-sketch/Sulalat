@@ -242,6 +242,25 @@
       color: {{ section.settings.button_bg_color }};
     }
 
+    @media (max-width: 1440px){
+      .blog-section[data-section-id="{{ section.id }}"] .featured-blog .blog-image {
+         max-height: 420px;
+      }
+      .blog-section[data-section-id="{{ section.id }}"] .blog-thumb {
+         max-width: 150px;
+      }
+      .blog-section[data-section-id="{{ section.id }}"] .blog-content h3 a{
+         font-size:20px;
+      }
+      .blog-section[data-section-id="{{ section.id }}"] .blog-content p {
+        font-size: 16px;
+      }
+      .blog-section[data-section-id="{{ section.id }}"] .blog-grid {
+          gap: 40px;
+      } 
+    }
+
+
     @media (max-width: 991px) {
       .blog-section[data-section-id="{{ section.id }}"] .blog-grid {
         flex-direction: column;

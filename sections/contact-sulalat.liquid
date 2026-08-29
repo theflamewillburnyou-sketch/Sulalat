@@ -1,0 +1,636 @@
+{%- liquid
+  assign product_options = section.settings.product_options | newline_to_br | split: '<br />'
+  assign form_id = 'SulalatContact-' | append: section.id
+-%}
+
+<section
+  class="sulalat-contact"
+  data-section-id="{{ section.id }}"
+  style="
+    --sulalat-contact-bg: {{ section.settings.background_color }};
+    --sulalat-contact-accent: {{ section.settings.accent_color }};
+    --sulalat-contact-pad-top: {{ section.settings.padding_top }}px;
+    --sulalat-contact-pad-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <style>
+    .sulalat-contact[data-section-id="{{ section.id }}"] {
+      padding: var(--sulalat-contact-pad-top, 64px) 0 var(--sulalat-contact-pad-bottom, 40px);
+      background: var(--sulalat-contact-bg, #ffffff);
+      font-family: var(--body-font-family);
+      color: #111;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__heading {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3.2vw, 42px);
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__text {
+      margin: 0 0 32px;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #8a8a8a;
+      max-width: 520px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form .input,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form input,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form select {
+      width: 100%;
+      height: 54px;
+      padding: 0 22px;
+      border: 1px solid #e0e0e0;
+      border-radius: 999px;
+      background: #fff;
+      font: inherit;
+      font-size: 15px;
+      color: #111;
+      outline: none;
+      box-shadow: none;
+      appearance: none;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%239a9a9a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 22px center;
+      padding-right: 48px;
+      color: #9a9a9a;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form select:valid {
+      color: #111;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form .input:focus,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form input:focus,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form select:focus {
+      border-color: var(--sulalat-contact-accent, #53c295);
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__file {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__file .input {
+      padding-right: 118px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: var(--sulalat-contact-accent, #53c295);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      height: auto;
+      padding: 0;
+      border: 0;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit {
+      align-self: flex-start;
+      min-width: 140px;
+      min-height: 48px;
+      margin-top: 6px;
+      padding: 12px 32px;
+      border: 0;
+      border-radius: 14px;
+      background: var(--sulalat-contact-accent, #53c295);
+      color: #fff;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit:hover {
+      background: #45ad82;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__status {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__status--success {
+      color: var(--sulalat-contact-accent, #53c295);
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__status--error {
+      color: #b42318;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social {
+      margin-top: 36px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-label {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--sulalat-contact-accent, #53c295);
+      color: var(--sulalat-contact-accent, #53c295);
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-link:hover {
+      background: var(--sulalat-contact-accent, #53c295);
+      color: #fff;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-link svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      min-height: 520px;
+      color: #fff;
+      isolation: isolate;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-media img,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-media svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0.15) 100%);
+      pointer-events: none;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-body {
+      position: relative;
+      z-index: 2;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__info {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__info svg {
+      flex: 0 0 22px;
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 991px) {
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card {
+        min-height: 420px;
+        order: -1;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__row {
+        grid-template-columns: 1fr;
+      }
+
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-contact__grid">
+      <div class="sulalat-contact__main">
+        {% if section.settings.heading != blank %}
+          <h2 class="sulalat-contact__heading">{{ section.settings.heading | escape }}</h2>
+        {% endif %}
+        {% if section.settings.text != blank %}
+          <p class="sulalat-contact__text">{{ section.settings.text | escape }}</p>
+        {% endif %}
+
+        {% form 'contact', id: form_id, class: 'sulalat-contact__form' %}
+          {% if form.posted_successfully? %}
+            <p class="sulalat-contact__status sulalat-contact__status--success">
+              {{ section.settings.success_message | escape }}
+            </p>
+          {% elsif form.errors %}
+            <p class="sulalat-contact__status sulalat-contact__status--error">
+              {{ form.errors | default_errors }}
+            </p>
+          {% endif %}
+
+          <div class="sulalat-contact__row">
+            <input
+              class="input"
+              type="text"
+              name="contact[First name]"
+              placeholder="First Name*"
+              required
+              autocomplete="given-name"
+            >
+            <input
+              class="input"
+              type="email"
+              name="contact[email]"
+              placeholder="Email Address*"
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="sulalat-contact__row">
+            <input
+              class="input"
+              type="tel"
+              name="contact[Contact number]"
+              placeholder="Contact Number*"
+              required
+              autocomplete="tel"
+            >
+            <input
+              class="input"
+              type="text"
+              name="contact[City]"
+              placeholder="City*"
+              required
+              autocomplete="address-level2"
+            >
+          </div>
+
+          <div class="sulalat-contact__file">
+            <input
+              class="input"
+              type="text"
+              name="contact[Document filename]"
+              placeholder="Attach Document"
+              readonly
+              data-contact-filename
+              tabindex="-1"
+            >
+            <label class="sulalat-contact__browse">
+              {{ section.settings.browse_label | escape }}
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" data-contact-file aria-label="Attach document">
+            </label>
+          </div>
+
+          <select name="contact[Product]" required>
+            <option value="" disabled selected>{{ section.settings.product_placeholder | escape }}</option>
+            {% for option in product_options %}
+              {% assign clean_option = option | strip_html | strip %}
+              {% if clean_option != blank %}
+                <option value="{{ clean_option | escape }}">{{ clean_option | escape }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          <button type="submit" class="sulalat-contact__submit">
+            {{ section.settings.submit_label | escape }}
+          </button>
+        {% endform %}
+
+        {% if section.settings.show_social %}
+          <div class="sulalat-contact__social">
+            {% if section.settings.social_heading != blank %}
+              <p class="sulalat-contact__social-label">{{ section.settings.social_heading | escape }}</p>
+            {% endif %}
+            <ul class="sulalat-contact__social-list">
+              {% if settings.social_whatsapp_url != blank %}
+                <li>
+                  <a class="sulalat-contact__social-link" href="{{ settings.social_whatsapp_url }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+                    {% render 'icon-whatsapp' %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_twitter_url != blank %}
+                <li>
+                  <a class="sulalat-contact__social-link" href="{{ settings.social_twitter_url }}" target="_blank" rel="noopener" aria-label="X">
+                    {% render 'icon-twitter' %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_instagram_url != blank %}
+                <li>
+                  <a class="sulalat-contact__social-link" href="{{ settings.social_instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram">
+                    {% render 'icon-instagram' %}
+                  </a>
+                </li>
+              {% endif %}
+              {% if settings.social_facebook_url != blank %}
+                <li>
+                  <a class="sulalat-contact__social-link" href="{{ settings.social_facebook_url }}" target="_blank" rel="noopener" aria-label="Facebook">
+                    {% render 'icon-facebook' %}
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+
+      <aside class="sulalat-contact__card">
+        <div class="sulalat-contact__card-media">
+          {% if section.settings.card_image != blank %}
+            <img
+              src="{{ section.settings.card_image | image_url: width: 1000 }}"
+              srcset="
+                {{ section.settings.card_image | image_url: width: 600 }} 600w,
+                {{ section.settings.card_image | image_url: width: 800 }} 800w,
+                {{ section.settings.card_image | image_url: width: 1000 }} 1000w
+              "
+              sizes="(min-width: 992px) 40vw, 100vw"
+              alt="{{ section.settings.card_image.alt | default: section.settings.heading | escape }}"
+              loading="lazy"
+              width="{{ section.settings.card_image.width }}"
+              height="{{ section.settings.card_image.height }}"
+            >
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+        <div class="sulalat-contact__card-overlay"></div>
+        <div class="sulalat-contact__card-body">
+          {% if section.settings.email != blank %}
+            <a class="sulalat-contact__info" href="mailto:{{ section.settings.email | escape }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ section.settings.email | escape }}</span>
+            </a>
+          {% endif %}
+
+          {% if section.settings.phone != blank %}
+            <a class="sulalat-contact__info" href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8.5 4.5h3l1.2 4-2 1.2a12.5 12.5 0 005.6 5.6l1.2-2 4 1.2v3A2 2 0 0019.5 19.5 14.5 14.5 0 014.5 4.5a2 2 0 002-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+              <span>{{ section.settings.phone | escape }}</span>
+            </a>
+          {% endif %}
+
+          {% if section.settings.address != blank %}
+            <div class="sulalat-contact__info">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z" stroke="currentColor" stroke-width="1.6"/>
+                <circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6"/>
+              </svg>
+              <span>{{ section.settings.address | escape | newline_to_br }}</span>
+            </div>
+          {% endif %}
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.sulalat-contact[data-section-id="{{ section.id }}"]');
+      if (!root) return;
+      var fileInput = root.querySelector('[data-contact-file]');
+      var filenameInput = root.querySelector('[data-contact-filename]');
+      if (!fileInput || !filenameInput) return;
+
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files && fileInput.files[0];
+        filenameInput.value = file ? file.name : '';
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Contact Sulalat",
+  "tag": "section",
+  "class": "sulalat-contact-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Want to reach out directly?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Upload your proposal, menu, or request and let us tailor a solution for your business."
+    },
+    {
+      "type": "text",
+      "id": "product_placeholder",
+      "label": "Product select placeholder",
+      "default": "Select the product"
+    },
+    {
+      "type": "textarea",
+      "id": "product_options",
+      "label": "Product options (one per line)",
+      "default": "Coffee\nChocolate\nGelato\nBakery\nEquipment"
+    },
+    {
+      "type": "text",
+      "id": "browse_label",
+      "label": "Browse label",
+      "default": "Browse"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit label",
+      "default": "Submit"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks — your message has been sent."
+    },
+    {
+      "type": "header",
+      "content": "Social"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social links",
+      "default": true,
+      "info": "Uses links from Theme settings → Social media."
+    },
+    {
+      "type": "text",
+      "id": "social_heading",
+      "label": "Social heading",
+      "default": "Follow us on social media"
+    },
+    {
+      "type": "header",
+      "content": "Info card"
+    },
+    {
+      "type": "image_picker",
+      "id": "card_image",
+      "label": "Card background image"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "Info@Sulalat.Com.Sa"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "(051) 123 - 4567"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "2329 Makkah Al Mukarramah Branch Road Store #2 Ground Floor, Najm Al Qurais Building, Riyadh 12821"
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#53c295"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Sulalat"
+    }
+  ]
+}
+{% endschema %}

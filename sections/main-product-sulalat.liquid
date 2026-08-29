@@ -1,0 +1,1538 @@
+{{ 'product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'sulalat-product-form-' | append: section.id
+  assign media_list = product.media
+  assign metafield_short_desc = product.metafields.descriptors.subtitle.value | default: product.metafields.custom.short_description.value
+  assign metafield_rating = product.metafields.reviews.rating.value.rating
+  assign metafield_rating_count = product.metafields.reviews.rating_count.value
+  assign metafield_rating_scale = product.metafields.reviews.rating.value.scale_max | default: 5
+-%}
+
+<section
+  class="sulalat-pdp"
+  data-section-id="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  style="
+    --sulalat-pdp-bg: {{ section.settings.background_color }};
+    --sulalat-pdp-pad-top: {{ section.settings.padding_top }}px;
+    --sulalat-pdp-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sulalat-pdp-radius: {{ section.settings.media_radius }}px;
+    --sulalat-pdp-accent: {{ section.settings.accent_color }};
+    --sulalat-pdp-accent-hover: {{ section.settings.accent_hover_color }};
+  "
+>
+  <style>
+    .sulalat-pdp[data-section-id="{{ section.id }}"] {
+      padding: var(--sulalat-pdp-pad-top, 40px) 0 var(--sulalat-pdp-pad-bottom, 80px);
+      background: var(--sulalat-pdp-bg, #ffffff);
+      font-family: var(--body-font-family);
+      color: #111;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+    }
+
+    /* Gallery */
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumbs {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 640px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumb {
+      appearance: none;
+      border: 1.5px solid #e6e6e6;
+      background: #fff;
+      padding: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 1;
+      width: 100%;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumb.is-active {
+      border-color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      box-shadow: 0 0 0 1px var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main {
+      position: relative;
+      border-radius: var(--sulalat-pdp-radius, 20px);
+      overflow: hidden;
+      background: #f4f4f4;
+      aspect-ratio: 4 / 5;
+      width: 100%;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main.swiper {
+      overflow: hidden;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-wrapper {
+      height: 100%;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-slide {
+      height: 100%;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      color: #222;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav:hover {
+      background: #ffffff;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav--prev { left: 12px; }
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav--next { right: 12px; }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav:disabled,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    /* Info */
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__title {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__short {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__desc {
+      margin: 0 0 20px;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #555;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__desc p {
+      margin: 0 0 0.6em;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__desc p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__stars {
+      display: inline-flex;
+      gap: 2px;
+      color: #f5a623;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__stars .is-empty {
+      color: #d0d0d0;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__option {
+      margin-bottom: 28px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__option-label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pill {
+      appearance: none;
+      min-width: 88px;
+      min-height: 44px;
+      padding: 10px 22px;
+      border-radius: var(--brand-radius-pill, 80px);
+      border: 1.5px solid #d9d9d9;
+      background: #fff;
+      color: #666;
+      font: inherit;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pill.is-active {
+      border-color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      background: color-mix(in srgb, var(--sulalat-pdp-accent, #53c295) 10%, white);
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pill:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__purchase-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty {
+      display: inline-flex;
+      align-items: center;
+      border: 1.5px solid #d9d9d9;
+      border-radius: var(--brand-radius-pill, 80px);
+      overflow: hidden;
+      min-height: 48px;
+      background: #fff;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty-btn {
+      width: 44px;
+      height: 48px;
+      border: 0;
+      background: transparent;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty-input {
+      width: 48px;
+      border: 0;
+      text-align: center;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      appearance: textfield;
+      -moz-appearance: textfield;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty-input::-webkit-outer-spin-button,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__total {
+      font-size: clamp(22px, 2.4vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__total-label {
+      font-weight: 700;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions--single {
+      grid-template-columns: 1fr;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font: inherit;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.25s ease;
+      border: 1.5px solid transparent;
+      width: 100%;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn--primary {
+      background: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      border-color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      color: #fff;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn--primary:hover {
+      background: var(--sulalat-pdp-accent-hover, var(--brand-primary-hover, #45ad82));
+      border-color: var(--sulalat-pdp-accent-hover, var(--brand-primary-hover, #45ad82));
+      color: #fff;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn--outline {
+      background: #fff;
+      border-color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn--outline:hover {
+      background: color-mix(in srgb, var(--sulalat-pdp-accent, #53c295) 8%, white);
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe {
+      margin-bottom: 28px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 22px 24px;
+      background: #fafafa;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-title {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-text {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-link {
+      color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__error {
+      margin: 0 0 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #fdeaea;
+      color: #b42318;
+      font-size: 14px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__error[hidden] {
+      display: none;
+    }
+
+    /* Banners */
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__banners {
+      margin-top: clamp(40px, 6vw, 72px);
+      display: grid;
+      gap: 16px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__promo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-align: center;
+      padding: 16px 24px;
+      border-radius: 14px;
+      background: var(--sulalat-pdp-promo-bg, #eaf8f1);
+      color: var(--sulalat-pdp-promo-text, #0f6b4c);
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__promo-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      color: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__payments {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      background: #fff;
+      text-decoration: none;
+      color: inherit;
+      min-height: 88px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-logo {
+      flex-shrink: 0;
+      width: 72px;
+      height: 36px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-logo-fallback {
+      flex-shrink: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #111;
+      min-width: 72px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-text {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #555;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__info > * + * {
+      margin-top: 0;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__block {
+      margin-bottom: 20px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__block--sm {
+      margin-bottom: 12px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__divider {
+      border: 0;
+      border-top: 1px solid #e8e8e8;
+      margin: 8px 0 24px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__richtext {
+      font-size: 15px;
+      line-height: 1.55;
+      color: #555;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__richtext p {
+      margin: 0 0 0.6em;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__richtext p:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 989px) {
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__layout {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
+        grid-template-columns: 72px minmax(0, 1fr);
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main {
+        aspect-ratio: 1;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumbs {
+        flex-direction: row;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumb {
+        width: 64px;
+        flex: 0 0 64px;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions {
+        grid-template-columns: 1fr;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__payments {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-pdp__layout">
+      {%- comment -%} Gallery {%- endcomment -%}
+      <div class="sulalat-pdp__gallery" data-sulalat-gallery>
+        {% if media_list.size > 1 %}
+          <div class="sulalat-pdp__thumbs" role="tablist" aria-label="Product images">
+            {% for media in media_list %}
+              <button
+                type="button"
+                class="sulalat-pdp__thumb{% if forloop.first %} is-active{% endif %}"
+                data-gallery-index="{{ forloop.index0 }}"
+                aria-label="View image {{ forloop.index }}"
+                {% if forloop.first %}aria-current="true"{% endif %}
+              >
+                {% assign thumb_alt = media.alt | default: product.title %}
+                {{
+                  media.preview_image
+                  | image_url: width: 200
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '100, 160, 200',
+                    sizes: '88px',
+                    alt: thumb_alt
+                }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div
+          class="sulalat-pdp__main{% if media_list.size > 1 %} swiper{% endif %}"
+          {% if media_list.size > 1 %}data-sulalat-gallery-slider{% endif %}
+        >
+          {% if media_list.size > 0 %}
+            {% if media_list.size > 1 %}
+              <div class="swiper-wrapper">
+                {% for media in media_list %}
+                  {% assign slide_alt = media.alt | default: product.title %}
+                  <div class="swiper-slide" data-media-id="{{ media.id }}">
+                    {% if forloop.first %}
+                      {{
+                        media.preview_image
+                        | image_url: width: 1400
+                        | image_tag:
+                          loading: 'eager',
+                          widths: '480, 720, 960, 1200, 1400',
+                          sizes: '(min-width: 990px) 42vw, 90vw',
+                          class: 'sulalat-pdp__main-image',
+                          alt: slide_alt
+                      }}
+                    {% else %}
+                      {{
+                        media.preview_image
+                        | image_url: width: 1400
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '480, 720, 960, 1200, 1400',
+                          sizes: '(min-width: 990px) 42vw, 90vw',
+                          class: 'sulalat-pdp__main-image',
+                          alt: slide_alt
+                      }}
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+              <button type="button" class="sulalat-pdp__nav sulalat-pdp__nav--prev" data-gallery-prev aria-label="Previous image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <button type="button" class="sulalat-pdp__nav sulalat-pdp__nav--next" data-gallery-next aria-label="Next image">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            {% else %}
+              {% assign featured = current_variant.featured_media | default: product.featured_media %}
+              {% assign featured_alt = featured.alt | default: product.title %}
+              {{
+                featured
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'eager',
+                  widths: '480, 720, 960, 1200, 1400',
+                  sizes: '(min-width: 990px) 42vw, 90vw',
+                  class: 'sulalat-pdp__main-image',
+                  alt: featured_alt
+              }}
+            {% endif %}
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'sulalat-pdp__main-image' }}
+          {% endif %}
+        </div>
+      </div>
+
+      {%- comment -%} Product info blocks {%- endcomment -%}
+      <div class="sulalat-pdp__info">
+        <product-form>
+          {% form 'product', product, id: product_form_id, class: 'js-product-form js-product-form-main sulalat-pdp__form' %}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-id-input>
+            <div class="sulalat-pdp__error js-form-error" role="alert" hidden></div>
+
+            {% for block in section.blocks %}
+              {% case block.type %}
+                {% when '@app' %}
+                  <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                    {% render block %}
+                  </div>
+
+                {% when 'title' %}
+                  <div class="sulalat-pdp__block sulalat-pdp__block--sm" {{ block.shopify_attributes }}>
+                    <h1 class="sulalat-pdp__title">{{ product.title | escape }}</h1>
+                  </div>
+
+                {% when 'short_description' %}
+                  {% liquid
+                    assign short_desc = metafield_short_desc
+                    if short_desc == blank
+                      assign short_desc = block.settings.text
+                    endif
+                  %}
+                  {% if short_desc != blank %}
+                    <div class="sulalat-pdp__block sulalat-pdp__block--sm" {{ block.shopify_attributes }}>
+                      <p class="sulalat-pdp__short">{{ short_desc | escape }}</p>
+                    </div>
+                  {% endif %}
+
+                {% when 'description' %}
+                  {% if product.description != blank %}
+                    <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                      <div class="sulalat-pdp__desc rte">
+                        {% if block.settings.truncate > 0 %}
+                          {{ product.description | strip_html | truncate: block.settings.truncate }}
+                        {% else %}
+                          {{ product.description }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+
+                {% when 'rating' %}
+                  {% liquid
+                    assign rating_value = metafield_rating | default: block.settings.rating_fallback
+                    assign rating_count = metafield_rating_count | default: block.settings.rating_count_fallback
+                    assign rating_scale = metafield_rating_scale
+                    assign rating_rounded = rating_value | plus: 0 | round
+                  %}
+                  <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                    <div class="sulalat-pdp__rating">
+                      <span class="sulalat-pdp__stars" aria-hidden="true">
+                        {% for i in (1..rating_scale) %}
+                          <svg width="18" height="18" viewBox="0 0 24 24" class="{% if i > rating_rounded %}is-empty{% endif %}" fill="currentColor">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                          </svg>
+                        {% endfor %}
+                      </span>
+                      <span>({{ rating_count }} {{ block.settings.reviews_label | escape }})</span>
+                    </div>
+                  </div>
+
+                {% when 'variant_picker' %}
+                  {% unless product.has_only_default_variant %}
+                    <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                      {% for option in product.options_with_values %}
+                        <div class="sulalat-pdp__option" data-option-index="{{ forloop.index0 }}">
+                          <span class="sulalat-pdp__option-label">{{ option.name | escape }}</span>
+                          <div class="sulalat-pdp__pills" role="list">
+                            {% for value in option.values %}
+                              {% assign option_disabled = true %}
+                              {% if value.available %}
+                                {% assign option_disabled = false %}
+                              {% endif %}
+                              <button
+                                type="button"
+                                class="sulalat-pdp__pill{% if option.selected_value == value %} is-active{% endif %}"
+                                data-option-value="{{ value | escape }}"
+                                data-option-position="{{ option.position }}"
+                                {% if option_disabled %}disabled{% endif %}
+                                {% if option.selected_value == value %}aria-pressed="true"{% else %}aria-pressed="false"{% endif %}
+                              >
+                                {{ value | escape }}
+                              </button>
+                            {% endfor %}
+                          </div>
+                        </div>
+                      {% endfor %}
+                    </div>
+                  {% endunless %}
+
+                {% when 'buy_buttons' %}
+                  <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                    {% if block.settings.show_quantity or block.settings.show_total %}
+                      <div class="sulalat-pdp__purchase-row">
+                        {% if block.settings.show_quantity %}
+                          <div class="sulalat-pdp__qty">
+                            <button type="button" class="sulalat-pdp__qty-btn" data-qty-minus aria-label="Decrease quantity">−</button>
+                            <input
+                              class="sulalat-pdp__qty-input"
+                              type="number"
+                              name="quantity"
+                              value="{{ block.settings.default_quantity | default: 1 }}"
+                              min="1"
+                              data-qty-input
+                              aria-label="Quantity"
+                            >
+                            <button type="button" class="sulalat-pdp__qty-btn" data-qty-plus aria-label="Increase quantity">+</button>
+                          </div>
+                        {% else %}
+                          <input type="hidden" name="quantity" value="1" data-qty-input>
+                        {% endif %}
+
+                        {% if block.settings.show_total %}
+                          <div class="sulalat-pdp__total">
+                            <span class="sulalat-pdp__total-label">{{ block.settings.total_label | escape }}</span>
+                            <span data-total-price>{{ current_variant.price | money }}</span>
+                          </div>
+                        {% endif %}
+                      </div>
+                    {% else %}
+                      <input type="hidden" name="quantity" value="1" data-qty-input>
+                    {% endif %}
+
+                    <div class="sulalat-pdp__actions{% unless block.settings.show_buy_now %} sulalat-pdp__actions--single{% endunless %}">
+                      {% if block.settings.show_buy_now %}
+                        <button
+                          type="button"
+                          class="sulalat-pdp__btn sulalat-pdp__btn--primary"
+                          data-buy-now
+                          {% unless current_variant.available %}disabled{% endunless %}
+                        >
+                          {{ block.settings.buy_now_label | escape }}
+                        </button>
+                      {% endif %}
+                      <button
+                        type="submit"
+                        name="add"
+                        class="sulalat-pdp__btn sulalat-pdp__btn--outline"
+                        data-add-to-cart-text="{{ block.settings.add_to_cart_label | escape }}"
+                        {% unless current_variant.available %}disabled{% endunless %}
+                      >
+                        {% if current_variant.available %}
+                          {{ block.settings.add_to_cart_label | escape }}
+                        {% else %}
+                          Sold out
+                        {% endif %}
+                      </button>
+                    </div>
+                  </div>
+
+                {% when 'subscribe' %}
+                  {% if block.settings.label != blank %}
+                    <div class="sulalat-pdp__block sulalat-pdp__subscribe" {{ block.shopify_attributes }}>
+                      {% if block.settings.link != blank %}
+                        <a class="sulalat-pdp__btn sulalat-pdp__btn--primary" href="{{ block.settings.link }}">
+                          {{ block.settings.label | escape }}
+                        </a>
+                      {% else %}
+                        <button type="button" class="sulalat-pdp__btn sulalat-pdp__btn--primary" data-subscribe-btn>
+                          {{ block.settings.label | escape }}
+                        </button>
+                      {% endif %}
+                    </div>
+                  {% endif %}
+
+                {% when 'bulk_box' %}
+                  <div class="sulalat-pdp__block sulalat-pdp__bulk" {{ block.shopify_attributes }}>
+                    {% if block.settings.heading != blank %}
+                      <h2 class="sulalat-pdp__bulk-title">{{ block.settings.heading | escape }}</h2>
+                    {% endif %}
+                    {% if block.settings.text != blank %}
+                      <p class="sulalat-pdp__bulk-text">{{ block.settings.text | escape }}</p>
+                    {% endif %}
+                    {% if block.settings.link_label != blank %}
+                      <a class="sulalat-pdp__bulk-link" href="{{ block.settings.link | default: '#' }}">
+                        {{ block.settings.link_label | escape }}
+                      </a>
+                    {% endif %}
+                  </div>
+
+                {% when 'richtext' %}
+                  {% if block.settings.text != blank %}
+                    <div class="sulalat-pdp__block sulalat-pdp__richtext rte" {{ block.shopify_attributes }}>
+                      {{ block.settings.text }}
+                    </div>
+                  {% endif %}
+
+                {% when 'divider' %}
+                  <hr class="sulalat-pdp__divider" {{ block.shopify_attributes }}>
+
+                {% when 'custom_liquid' %}
+                  {% if block.settings.custom_liquid != blank %}
+                    <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
+                      {{ block.settings.custom_liquid }}
+                    </div>
+                  {% endif %}
+              {% endcase %}
+            {% endfor %}
+          {% endform %}
+        </product-form>
+      </div>
+    </div>
+
+    {%- comment -%} Banner blocks (full width below product) {%- endcomment -%}
+    {% assign has_banner_blocks = false %}
+    {% for block in section.blocks %}
+      {% if block.type == 'promo_banner' or block.type == 'payments' %}
+        {% assign has_banner_blocks = true %}
+      {% endif %}
+    {% endfor %}
+
+    {% if has_banner_blocks %}
+      <div class="sulalat-pdp__banners">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'promo_banner' %}
+              {% if block.settings.text != blank %}
+                <div
+                  class="sulalat-pdp__promo"
+                  style="
+                    --sulalat-pdp-promo-bg: {{ block.settings.background }};
+                    --sulalat-pdp-promo-text: {{ block.settings.text_color }};
+                  "
+                  {{ block.shopify_attributes }}
+                >
+                  {% if block.settings.show_icon %}
+                    <svg class="sulalat-pdp__promo-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M12 3c.8 2.8 2.4 4.6 5 5-2.6.4-4.2 2.2-5 5-.8-2.8-2.4-4.6-5-5 2.6-.4 4.2-2.2 5-5z" fill="currentColor"/>
+                      <path d="M18.5 14c.4 1.4 1.2 2.3 2.5 2.5-1.3.2-2.1 1.1-2.5 2.5-.4-1.4-1.2-2.3-2.5-2.5 1.3-.2 2.1-1.1 2.5-2.5z" fill="currentColor"/>
+                    </svg>
+                  {% endif %}
+                  <span>{{ block.settings.text | escape }}</span>
+                </div>
+              {% endif %}
+
+            {% when 'payments' %}
+              <div class="sulalat-pdp__payments" {{ block.shopify_attributes }}>
+                {% if block.settings.tabby_text != blank %}
+                  <{% if block.settings.tabby_link != blank %}a href="{{ block.settings.tabby_link }}"{% else %}div{% endif %} class="sulalat-pdp__pay-card">
+                    {% if block.settings.tabby_logo != blank %}
+                      {{
+                        block.settings.tabby_logo
+                        | image_url: width: 200
+                        | image_tag: class: 'sulalat-pdp__pay-logo', loading: 'lazy', alt: 'Tabby'
+                      }}
+                    {% else %}
+                      <span class="sulalat-pdp__pay-logo-fallback">tabby</span>
+                    {% endif %}
+                    <p class="sulalat-pdp__pay-text">{{ block.settings.tabby_text | escape }}</p>
+                  </{% if block.settings.tabby_link != blank %}a{% else %}div{% endif %}>
+                {% endif %}
+
+                {% if block.settings.tamara_text != blank %}
+                  <{% if block.settings.tamara_link != blank %}a href="{{ block.settings.tamara_link }}"{% else %}div{% endif %} class="sulalat-pdp__pay-card">
+                    {% if block.settings.tamara_logo != blank %}
+                      {{
+                        block.settings.tamara_logo
+                        | image_url: width: 200
+                        | image_tag: class: 'sulalat-pdp__pay-logo', loading: 'lazy', alt: 'Tamara'
+                      }}
+                    {% else %}
+                      <span class="sulalat-pdp__pay-logo-fallback">tamara</span>
+                    {% endif %}
+                    <p class="sulalat-pdp__pay-text">{{ block.settings.tamara_text | escape }}</p>
+                  </{% if block.settings.tamara_link != blank %}a{% else %}div{% endif %}>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <script type="application/json" data-sulalat-product-json>
+    {{ product | json }}
+  </script>
+  <script type="application/json" data-sulalat-money-format>
+    {{ shop.money_format | json }}
+  </script>
+  <script type="application/json" data-sulalat-media-json>
+    [
+      {%- for media in media_list -%}
+        {
+          "id": {{ media.id | json }},
+          "src": {{ media | image_url: width: 1400 | json }},
+          "alt": {{ media.alt | default: product.title | json }},
+          "widths": {
+            "480": {{ media | image_url: width: 480 | json }},
+            "720": {{ media | image_url: width: 720 | json }},
+            "960": {{ media | image_url: width: 960 | json }},
+            "1200": {{ media | image_url: width: 1200 | json }},
+            "1400": {{ media | image_url: width: 1400 | json }}
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+
+  <script>
+    (function () {
+      var sectionId = {{ section.id | json }};
+      var root = document.querySelector('.sulalat-pdp[data-section-id="' + sectionId + '"]');
+      if (!root) return;
+
+      var productJsonEl = root.querySelector('[data-sulalat-product-json]');
+      var mediaJsonEl = root.querySelector('[data-sulalat-media-json]');
+      var moneyFormatEl = root.querySelector('[data-sulalat-money-format]');
+      var product = productJsonEl ? JSON.parse(productJsonEl.textContent) : null;
+      var media = mediaJsonEl ? JSON.parse(mediaJsonEl.textContent) : [];
+      var moneyFormat = moneyFormatEl ? JSON.parse(moneyFormatEl.textContent) : '${{amount}}';
+
+      var variantInput = root.querySelector('[data-variant-id-input]');
+      var qtyInput = root.querySelector('[data-qty-input]');
+      var totalEl = root.querySelector('[data-total-price]');
+      var addBtn = root.querySelector('[name="add"]');
+      var buyNowBtn = root.querySelector('[data-buy-now]');
+      var gallerySliderEl = root.querySelector('[data-sulalat-gallery-slider]');
+      var gallerySwiper = null;
+      var galleryIndex = 0;
+
+      function formatMoney(cents) {
+        if (window.theme && typeof theme.formatMoney === 'function') {
+          return theme.formatMoney(cents, moneyFormat);
+        }
+        var amount = (Number(cents) / 100).toFixed(2);
+        return moneyFormat
+          .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amount.replace('.', ','))
+          .replace(/\{\{\s*amount_no_decimals\s*\}\}/g, String(Math.round(Number(cents) / 100)))
+          .replace(/\{\{\s*amount\s*\}\}/g, amount);
+      }
+
+      function getSelectedOptions() {
+        var selected = [];
+        root.querySelectorAll('.sulalat-pdp__option').forEach(function (group) {
+          var active = group.querySelector('.sulalat-pdp__pill.is-active');
+          selected.push(active ? active.getAttribute('data-option-value') : null);
+        });
+        return selected;
+      }
+
+      function findVariant(options) {
+        if (!product || !product.variants) return null;
+        return product.variants.find(function (variant) {
+          return variant.options.every(function (opt, i) {
+            return opt === options[i];
+          });
+        }) || null;
+      }
+
+      function updateAvailability(selectedOptions) {
+        if (!product || product.options.length === 0) return;
+        root.querySelectorAll('.sulalat-pdp__option').forEach(function (group, optionIndex) {
+          group.querySelectorAll('.sulalat-pdp__pill').forEach(function (pill) {
+            var value = pill.getAttribute('data-option-value');
+            var testOptions = selectedOptions.slice();
+            testOptions[optionIndex] = value;
+            var available = product.variants.some(function (variant) {
+              if (!variant.available) return false;
+              return variant.options.every(function (opt, i) {
+                return testOptions[i] == null || opt === testOptions[i];
+              });
+            });
+            pill.disabled = !available;
+          });
+        });
+      }
+
+      function syncThumbs(index) {
+        galleryIndex = index;
+        root.querySelectorAll('.sulalat-pdp__thumb').forEach(function (thumb, i) {
+          var active = i === index;
+          thumb.classList.toggle('is-active', active);
+          if (active) thumb.setAttribute('aria-current', 'true');
+          else thumb.removeAttribute('aria-current');
+        });
+      }
+
+      function setGallery(index) {
+        if (!media.length) return;
+        var nextIndex = (index + media.length) % media.length;
+        if (gallerySwiper) {
+          if (gallerySwiper.params.loop) {
+            gallerySwiper.slideToLoop(nextIndex);
+          } else {
+            gallerySwiper.slideTo(nextIndex);
+          }
+          return;
+        }
+        syncThumbs(nextIndex);
+      }
+
+      function showVariantMedia(variant) {
+        if (!variant || !variant.featured_media || !media.length) return;
+        var idx = media.findIndex(function (m) { return m.id === variant.featured_media.id; });
+        if (idx >= 0) setGallery(idx);
+      }
+
+      function updatePurchaseUI(variant) {
+        if (!variant) return;
+        if (variantInput) variantInput.value = variant.id;
+        var qty = Math.max(1, parseInt(qtyInput && qtyInput.value, 10) || 1);
+        if (totalEl) totalEl.textContent = formatMoney(variant.price * qty);
+        if (addBtn) {
+          addBtn.disabled = !variant.available;
+          addBtn.textContent = variant.available
+            ? (addBtn.getAttribute('data-add-to-cart-text') || 'Add to Cart')
+            : 'Sold out';
+        }
+        if (buyNowBtn) buyNowBtn.disabled = !variant.available;
+        showVariantMedia(variant);
+        if (window.history && window.history.replaceState) {
+          var url = new URL(window.location.href);
+          url.searchParams.set('variant', variant.id);
+          window.history.replaceState({}, '', url.toString());
+        }
+      }
+
+      function syncFromSelection() {
+        var options = getSelectedOptions();
+        updateAvailability(options);
+        var variant = findVariant(options);
+        if (variant) updatePurchaseUI(variant);
+      }
+
+      function loadSwiper(callback) {
+        if (window.Swiper) {
+          callback();
+          return;
+        }
+
+        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+          document.head.appendChild(link);
+        }
+
+        var existing = document.querySelector('script[data-sulalat-pdp-swiper]');
+        if (existing) {
+          existing.addEventListener('load', callback, { once: true });
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        script.dataset.sulalatPdpSwiper = 'true';
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      function initGallerySlider() {
+        if (!gallerySliderEl || !window.Swiper || media.length < 2) return;
+
+        if (gallerySliderEl.swiper) {
+          gallerySliderEl.swiper.destroy(true, true);
+        }
+
+        var startIndex = 0;
+        var featuredId = {{ current_variant.featured_media.id | default: product.featured_media.id | default: nil | json }};
+        if (featuredId) {
+          var found = media.findIndex(function (m) { return m.id === featuredId; });
+          if (found >= 0) startIndex = found;
+        }
+
+        gallerySwiper = new window.Swiper(gallerySliderEl, {
+          slidesPerView: 1,
+          spaceBetween: 0,
+          speed: 500,
+          loop: media.length > 2,
+          initialSlide: startIndex,
+          grabCursor: true,
+          watchOverflow: true,
+          navigation: {
+            nextEl: root.querySelector('[data-gallery-next]'),
+            prevEl: root.querySelector('[data-gallery-prev]')
+          },
+          on: {
+            init: function () {
+              syncThumbs(this.realIndex);
+            },
+            slideChange: function () {
+              syncThumbs(this.realIndex);
+            }
+          }
+        });
+
+        root.querySelectorAll('[data-gallery-index]').forEach(function (thumb) {
+          thumb.addEventListener('click', function () {
+            var index = parseInt(thumb.getAttribute('data-gallery-index'), 10) || 0;
+            if (gallerySwiper.params.loop) {
+              gallerySwiper.slideToLoop(index);
+            } else {
+              gallerySwiper.slideTo(index);
+            }
+          });
+        });
+      }
+
+      root.querySelectorAll('.sulalat-pdp__pill').forEach(function (pill) {
+        pill.addEventListener('click', function () {
+          if (pill.disabled) return;
+          var group = pill.closest('.sulalat-pdp__option');
+          group.querySelectorAll('.sulalat-pdp__pill').forEach(function (p) {
+            p.classList.remove('is-active');
+            p.setAttribute('aria-pressed', 'false');
+          });
+          pill.classList.add('is-active');
+          pill.setAttribute('aria-pressed', 'true');
+          syncFromSelection();
+        });
+      });
+
+      if (qtyInput) {
+        var minus = root.querySelector('[data-qty-minus]');
+        var plus = root.querySelector('[data-qty-plus]');
+        function bumpQty(delta) {
+          var next = Math.max(1, (parseInt(qtyInput.value, 10) || 1) + delta);
+          qtyInput.value = next;
+          syncFromSelection();
+        }
+        if (minus) minus.addEventListener('click', function () { bumpQty(-1); });
+        if (plus) plus.addEventListener('click', function () { bumpQty(1); });
+        qtyInput.addEventListener('change', syncFromSelection);
+        qtyInput.addEventListener('input', syncFromSelection);
+      }
+
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', async function () {
+          if (buyNowBtn.disabled) return;
+          var form = root.querySelector('.js-product-form');
+          if (!form) return;
+          buyNowBtn.disabled = true;
+          try {
+            var formData = new FormData(form);
+            var response = await fetch((window.theme && theme.routes && theme.routes.cartAdd) || '/cart/add.js', {
+              method: 'POST',
+              headers: { Accept: 'application/javascript', 'X-Requested-With': 'XMLHttpRequest' },
+              body: formData
+            });
+            if (!response.ok) throw new Error('Add failed');
+            window.location.href = '/checkout';
+          } catch (err) {
+            buyNowBtn.disabled = false;
+          }
+        });
+      }
+
+      var subscribeBtn = root.querySelector('[data-subscribe-btn]');
+      if (subscribeBtn) {
+        subscribeBtn.addEventListener('click', function () {
+          var target = root.querySelector('[name="add"]');
+          if (target && !target.disabled) target.click();
+        });
+      }
+
+      if (gallerySliderEl && media.length > 1) {
+        loadSwiper(initGallerySlider);
+      }
+
+      syncFromSelection();
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Sulalat product",
+  "tag": "section",
+  "class": "sulalat-pdp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#53c295"
+    },
+    {
+      "type": "color",
+      "id": "accent_hover_color",
+      "label": "Accent hover",
+      "default": "#45ad82"
+    },
+    {
+      "type": "range",
+      "id": "media_radius",
+      "label": "Image corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "short_description",
+      "name": "Short description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Fallback text",
+          "default": "Short description here.",
+          "info": "Used when the product has no subtitle metafield."
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "truncate",
+          "label": "Truncate characters",
+          "min": 0,
+          "max": 500,
+          "step": 10,
+          "default": 0,
+          "info": "0 shows the full description."
+        }
+      ]
+    },
+    {
+      "type": "rating",
+      "name": "Rating",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating_fallback",
+          "label": "Fallback rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 4
+        },
+        {
+          "type": "number",
+          "id": "rating_count_fallback",
+          "label": "Fallback review count",
+          "default": 11
+        },
+        {
+          "type": "text",
+          "id": "reviews_label",
+          "label": "Reviews label",
+          "default": "reviews"
+        }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_quantity",
+          "label": "Show quantity selector",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "default_quantity",
+          "label": "Default quantity",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "checkbox",
+          "id": "show_total",
+          "label": "Show total price",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "total_label",
+          "label": "Total label",
+          "default": "Total:"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_buy_now",
+          "label": "Show Buy Now button",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "buy_now_label",
+          "label": "Buy Now label",
+          "default": "Buy Now"
+        },
+        {
+          "type": "text",
+          "id": "add_to_cart_label",
+          "label": "Add to Cart label",
+          "default": "Add to Cart"
+        }
+      ]
+    },
+    {
+      "type": "subscribe",
+      "name": "Subscribe button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Subscribe Now"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Optional. If empty, Subscribe triggers Add to Cart."
+        }
+      ]
+    },
+    {
+      "type": "bulk_box",
+      "name": "Bulk purchase box",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Looking to buy as Bulk?"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Special deals for you! Reach us for more details."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "Buy as Bulk"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "promo_banner",
+      "name": "Promo banner",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show icon",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Buy 4 or more 250g bags of coffee, get 15% discount on each."
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#eaf8f1"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#0f6b4c"
+        }
+      ]
+    },
+    {
+      "type": "payments",
+      "name": "Payment banners",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "tabby_logo",
+          "label": "Tabby logo"
+        },
+        {
+          "type": "text",
+          "id": "tabby_text",
+          "label": "Tabby text",
+          "default": "4 interest-free payments. No late fees. Shariah-compliant!"
+        },
+        {
+          "type": "url",
+          "id": "tabby_link",
+          "label": "Tabby link"
+        },
+        {
+          "type": "image_picker",
+          "id": "tamara_logo",
+          "label": "Tamara logo"
+        },
+        {
+          "type": "text",
+          "id": "tamara_text",
+          "label": "Tamara text",
+          "default": "Pay monthly or split in 4. No hidden fees. Shariah-compliant!"
+        },
+        {
+          "type": "url",
+          "id": "tamara_link",
+          "label": "Tamara link"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "name": "Rich text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Add custom content here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider"
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom Liquid"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

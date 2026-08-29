@@ -194,10 +194,28 @@
       margin: 0;
     }
 
-    @media (max-width: 1024px){
-      .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
-        font-size: clamp(28px, 3vw, 22px);
+    @media (max-width: 1440px){
+      .about-section[data-section-id="{{ section.id }}"] .about-container {
+        max-width: 1240px;
       }
+      .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
+        font-size: clamp(26px, 2vw, 22px);
+      }
+    
+    }
+
+    @media (max-width: 1200px){
+      .about-section[data-section-id="{{ section.id }}"] .about-container {
+        max-width: 1150px;
+      }
+       .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
+        font-size: 22px;
+      }
+    
+    }
+
+
+    @media (max-width: 1024px){
     
     }
 

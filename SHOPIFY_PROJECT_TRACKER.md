@@ -245,6 +245,27 @@
 
 `2026-08-25` — Added Solution Services page from design screenshot.
 
+## FAQ page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/page.faq.json` | Assign in Admin → Page → Theme template → **faq** |
+| Banner | `sections/page-banner.liquid` | Shared page hero |
+| FAQ | `sections/faq-tabs.liquid` | Category tabs + accordion questions (General / Billing / Support / Product) |
+
+`2026-08-29` — Added FAQ page template matching design (page banner + tabbed accordion).
+
+## Contact page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/page.contact.json` | Assign in Admin → Page → Theme template → **contact** |
+| Banner | `sections/page-banner.liquid` | Shared page hero |
+| Form + info | `sections/contact-sulalat.liquid` | Form, social links, contact info card |
+| Map | `sections/contact-map.liquid` | Google Maps embed / fallback image |
+
+`2026-08-29` — Rebuilt Contact page to match design screenshot.
+
 ## Collection (Sulalat) page
 
 | Piece | File | Notes |
@@ -254,6 +275,15 @@
 | Card | `snippets/sulalat-product-card.liquid` | Custom card with View Details + Add to Cart |
 
 `2026-08-25` — Added Sulalat collection template from design screenshot.
+
+## Product (Sulalat) page
+
+| Piece | File | Notes |
+| ----- | ---- | ----- |
+| Template | `templates/product.sulalat.json` | Assign in Admin → Product → Theme template → **sulalat** |
+| Section | `sections/main-product-sulalat.liquid` | Gallery thumbs, pills, qty/total, Buy Now / ATC / Subscribe, bulk box, promo + Tabby/Tamara |
+
+`2026-08-29` — Added Sulalat product template from design screenshot.
 
 ## Testing Checklist
 

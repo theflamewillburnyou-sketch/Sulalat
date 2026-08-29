@@ -9,133 +9,62 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-contact",
-      "disabled": true,
+    "page_banner": {
+      "type": "page-banner",
       "settings": {
-        "show_contact_title": false
+        "background_image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3.png",
+        "overlay_color": "#00000073",
+        "subtitle": "Get in Touch",
+        "heading": "<h1>Contact Us</h1>",
+        "text": "<p>We’d love to hear from you. Reach out for support, wholesale, or partnerships.</p>",
+        "min_height": 520,
+        "min_height_mobile": 400,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
       }
     },
-    "image-banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Contact Us",
-            "heading_size": "h1",
-            "heading_h1": true
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Please visit our help pages for answers to some of the most commonly asked questions.</p>",
-            "enlarge_text": true
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text"
-      ],
+    "contact_sulalat": {
+      "type": "contact-sulalat",
       "settings": {
-        "height_mode": "fixed",
-        "fixed_height_desktop": 560,
-        "fixed_height_mobile": 440,
-        "overlay_position": "justify-start items-center",
-        "overlay_text_align": "text-start",
-        "mob_center_text": true,
-        "mobile_stacked": false,
-        "color_scheme": "white",
-        "full_width": true
+        "heading": "Want to reach out directly?",
+        "text": "Upload your proposal, menu, or request and let us tailor a solution for your business.",
+        "product_placeholder": "Select the product",
+        "product_options": "Coffee\nChocolate\nGelato\nBakery\nEquipment",
+        "browse_label": "Browse",
+        "submit_label": "Submit",
+        "success_message": "Thanks — your message has been sent.",
+        "show_social": true,
+        "social_heading": "Follow us on social media",
+        "card_image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504_da8d9e46-c662-44a8-bb5f-85830e1eb163.png",
+        "email": "Info@Sulalat.Com.Sa",
+        "phone": "(051) 123 - 4567",
+        "address": "2329 Makkah Al Mukarramah Branch Road Store #2 Ground Floor, Najm Al Qurais Building, Riyadh 12821",
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "padding_top": 64,
+        "padding_bottom": 40
       }
     },
-    "form": {
-      "type": "contact-form",
-      "blocks": {
-        "contact-name-2": {
-          "type": "name",
-          "settings": {
-            "required": true,
-            "half_width": true
-          }
-        },
-        "contact-email-3": {
-          "type": "email",
-          "settings": {
-            "required": true,
-            "half_width": true
-          }
-        },
-        "contact-dropdown-4": {
-          "type": "dropdown",
-          "settings": {
-            "title": "How can we help?",
-            "half_width": false
-          }
-        },
-        "contact-body-5": {
-          "type": "body",
-          "settings": {
-            "required": true,
-            "half_width": false
-          }
-        }
-      },
-      "block_order": [
-        "contact-name-2",
-        "contact-email-3",
-        "contact-dropdown-4",
-        "contact-body-5"
-      ],
+    "contact_map": {
+      "type": "contact-map",
       "settings": {
-        "heading": "Drop us an email",
-        "heading_align": "text-center",
-        "image_position": "top",
-        "color_scheme": "1",
-        "full_width": false,
-        "button_style": "btn btn--primary"
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "blocks": {
-        "newsletter-heading-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "Sign up to our Newsletter",
-            "heading_size": "h5"
-          }
-        },
-        "newsletter-text-1": {
-          "type": "text",
-          "settings": {
-            "enlarge_text": false
-          }
-        },
-        "newsletter-form-2": {
-          "type": "form",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "newsletter-heading-0",
-        "newsletter-text-1",
-        "newsletter-form-2"
-      ],
-      "settings": {
-        "overlay_position": "justify-center",
-        "text_align": "text-center",
-        "color_scheme": "default",
-        "full_width": true
+        "map_embed": "<iframe src=\"https://www.google.com/maps?q=2329+Makkah+Al+Mukarramah+Branch+Road,+Riyadh&output=embed\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+        "map_height": 520,
+        "map_height_mobile": 360,
+        "border_radius": 28,
+        "background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 40
       }
     }
   },
   "order": [
-    "main",
-    "image-banner",
-    "form",
-    "newsletter"
+    "page_banner",
+    "contact_sulalat",
+    "contact_map"
   ]
 }

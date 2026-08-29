@@ -312,6 +312,12 @@
     {%- endif -%}
   {%- endstyle -%}
   <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
+  {%- if request.page_type == 'index' -%}
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer="defer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer="defer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer="defer"></script>
+    <script src="{{ 'custom-new.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
 
   {%- unless settings.body_font.system? -%}
     <link rel="preload" href="{{ settings.body_font | font_url }}" as="font" type="font/woff2" crossorigin fetchpriority="high">
@@ -354,7 +360,20 @@
   {%- endif -%}
 </head>
 
-<body{% if settings.animations_enabled != "disabled" %} class="cc-animate-enabled"{% endif %}>
+  {%- liquid
+    assign body_classes = ''
+    if settings.animations_enabled != 'disabled'
+      assign body_classes = 'cc-animate-enabled'
+    endif
+    if request.page_type == 'index'
+      if body_classes != blank
+        assign body_classes = body_classes | append: ' template-index'
+      else
+        assign body_classes = 'template-index'
+      endif
+    endif
+  -%}
+<body{% if body_classes != blank %} class="{{ body_classes }}"{% endif %}>
   <a class="skip-link btn btn--primary visually-hidden" href="#main-content" data-ce-role="skip">
     {{- 'accessibility.skip_to_content' | t -}}
   </a>

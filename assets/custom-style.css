@@ -16,9 +16,57 @@ body .container {
     font-family: var(--secondary-font);
     text-align:center;
 }
+
+.section-title h2 {
+  overflow: hidden;
+}
+
+.template-index .section-title h2 .word {
+  display: inline-block;
+  transform: translateY(110%);
+}
+
+.template-index .section-title p {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.template-index .site-banner h1 {
+  overflow: hidden;
+}
+
+.template-index .site-banner h1 .word {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-index .section-title h2 .word,
+  .template-index .site-banner h1 .word {
+    transform: none !important;
+  }
+
+  .template-index .section-title p {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* .section-title {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s ease;
+}
+
+.section-title.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+} */
+
 .section-title h2 {
     margin-bottom: 20px !important;
-    font-size: clamp(24px, 3vw, 36px) !important;
+    font-size: clamp(24px, 2vw, 36px) !important;
 }
 /* header start  */
 .shopify-section.cc-header:has(.is-scrolled) {
@@ -103,13 +151,14 @@ header .header__icons a.header__icon {
     border: 0;
 }
 
-store-header.header.header--overlay.is-scrolled .main-menu {
+store-header.header.header--overlay.is-scrolled .main-menu,
+store-header.header.header--overlay.is-out .main-menu {
     border-bottom-color: transparent;
-    padding: 20px 0;
 }
 
-store-header.header.is-scrolled.is-out {
-    margin: 0;
+store-header.header.header--overlay.is-scrolled .main-menu,
+store-header.header.header--overlay.is-out .main-menu {
+    padding: 20px 0;
 }
 
 store-header.header.is-scrolled.is-out .main-menu.main-menu--left-mob {
@@ -206,7 +255,20 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
 }
 
 /* responsive start  */
+@media screen and (max-width:1440px){
+  body .container {
+      max-width: 1240px!important;
+  }
+  body .footer-newsletter-bar__copy h2{
+    font-size: 22px;
+  }
+}
 
+@media screen and (max-width:1200px){
+  body .container {
+      max-width: 1150px!important;
+  }
+}
 @media screen and (max-width:991px){
     body header #main-menu-content .main-nav {
         gap: 30px;

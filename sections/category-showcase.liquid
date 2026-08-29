@@ -149,6 +149,115 @@
       margin-left: 4px;
     }
 
+
+    .category-card {
+      position: relative;
+    }
+
+    .category-card > a {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .category-img {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+    }
+
+    .category-img::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.12);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .category-img img {
+      display: block;
+      width: 100%;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .category-card h4 {
+      transition:
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        color 0.4s ease;
+    }
+
+    .category-card p {
+      transition:
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.4s ease;
+    }
+
+
+    /* Hover */
+
+    .category-card:hover .category-img img {
+      transform: scale(1.06);
+    }
+
+    .category-card:hover .category-img::after {
+      opacity: 1;
+    }
+
+    .category-card:hover h4 {
+      transform: translateY(-3px);
+    }
+
+    .category-card:hover p {
+      transform: translateY(-3px);
+    }
+
+    .category-img::before {
+      content: "↗";
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      z-index: 2;
+      opacity: 0;
+      transform: translateY(15px) scale(0.8);
+      transition:
+        opacity 0.4s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .category-card:hover .category-img::before {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @media (max-width: 1440px){
+      .categories-sec[data-section-id="{{ section.id }}"] .category-card h4 {
+        font-size: 18px;
+      }
+      .categories-sec[data-section-id="{{ section.id }}"] .category-card p {
+        font-size: 15px;
+      }
+    
+    }
+
+    @media (max-width: 1200px){
+      .categories-sec[data-section-id="{{ section.id }}"] .view-all h4 {
+        font-size: 20px;
+      }
+    }
+
+
     @media (max-width: 767px) {
       .categories-sec[data-section-id="{{ section.id }}"]{
         padding-bottom:70px;

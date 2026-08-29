@@ -26,6 +26,11 @@
   if settings.show_search_types and shop.types
     assign show_search_types = true
   endif
+
+  assign is_product_header = false
+  if request.page_type == 'product' or request.page_type == 'cart'
+    assign is_product_header = true
+  endif
 -%}
 
 {%- style -%}
@@ -78,8 +83,9 @@
 
   /*
     Overlay header: transparent bar, white UI, sits over hero/page banners.
+    Product pages use a solid white header instead (see header--product).
   */
-  .shopify-section.cc-header {
+  .shopify-section.cc-header:has(.header--overlay) {
     position: absolute;
     top: 0;
     left: 0;
@@ -87,6 +93,35 @@
     z-index: 99;
     width: 100%;
     background: transparent !important;
+  }
+
+  /*
+    Sticky overlay headers must be fixed — absolute scrolls away and
+    overrides .cc-header--sticky { position: sticky } on FAQ/home/about/etc.
+  */
+  .shopify-section.cc-header.cc-header--sticky:has(.header--overlay) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    width: 100%;
+    background: transparent !important;
+    overflow: visible;
+  }
+
+  .shopify-section.cc-header:has(.header--product) {
+    z-index: 99;
+    width: 100%;
+    background: #ffffff !important;
+  }
+
+  .shopify-section.cc-header.cc-header--sticky:has(.header--product) {
+    position: sticky;
+    top: -1px;
+    z-index: 99;
+    background: #ffffff !important;
+    overflow: visible;
   }
 
   store-header.header.header--overlay,
@@ -102,7 +137,7 @@
     border-bottom: 0;
     color: #ffffff;
     box-shadow: none;
-    transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
+    transition: background-color 0.25s ease, backdrop-filter 0.25s ease, box-shadow 0.25s ease;
   }
 
   store-header.header.header--overlay .header__grid,
@@ -119,7 +154,7 @@
 
     store-header.header.header--overlay .main-menu {
       border-top: 1px solid rgba(255, 255, 255, 0.2);
-      padding-top: 40px;
+      padding-top: 20px;
     }
 
     store-header.header.header--overlay .main-nav__item--primary,
@@ -183,14 +218,45 @@
     box-shadow: none;
   }
 
-  store-header.header.header--overlay.is-scrolled {
-    /* background-color: rgba(26, 26, 26, 0.78) !important;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px); */
+  /*
+    Scrolled overlay: frosted glass + full 2-row header (same scroll up & down).
+  */
+  store-header.header.header--overlay.is-scrolled,
+  store-header.header.header--overlay.is-out {
+    background-color: rgba(20, 20, 20, 0.45) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  store-header.header.header--overlay.is-scrolled .main-menu {
+  store-header.header.header--overlay.is-scrolled .main-menu,
+  store-header.header.header--overlay.is-out .main-menu {
     border-bottom-color: transparent;
+  }
+
+  /* Never collapse nav on overlay pages — keep scroll-up look when scrolling down */
+  @media (min-width: 769px) {
+    .cc-header--sticky store-header.header.header--overlay.is-out {
+      margin-bottom: 0 !important;
+    }
+
+    .cc-header--sticky store-header.header.header--overlay.is-out .main-menu {
+      padding-top: 40px !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .cc-header--sticky store-header.header.header--overlay.is-out .main-menu__content {
+      max-height: none !important;
+      margin-top: 0 !important;
+      overflow: visible !important;
+      visibility: visible !important;
+    }
+
+    .cc-header--sticky store-header.header.header--overlay.is-scrolled .main-menu,
+    .cc-header--sticky store-header.header.header--overlay.is-out .main-menu {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
   }
 
   store-header.header.header--overlay .search__input::placeholder {
@@ -213,6 +279,134 @@
     box-shadow: none;
   }
 
+  /*
+    Product header: solid white bar, dark UI (non-overlay).
+    Mega menu keeps the shared glass dropdown styling.
+  */
+  store-header.header.header--product,
+  store-header.header.header--product.bg-theme-bg {
+    --bg-color: 255 255 255;
+    --search-bg-color: 255 255 255;
+    --nav-bg-color: 255 255 255;
+    --text-color: 34 34 34;
+    --nav-text-color: 34 34 34;
+    --icon-color: 34 34 34;
+    --nav-line-color: #e8e8e8;
+    --nav-child-bg-color: 0 0 0;
+    --nav-child-text-color: 255 255 255;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #222222;
+    border-bottom: 0;
+    box-shadow: none;
+  }
+
+  store-header.header.header--product .header__grid {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+
+  store-header.header.header--product .main-menu {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+
+  store-header.header.header--product .logo__text,
+  store-header.header.header--product .logo__link,
+  store-header.header.header--product .header__icon,
+  store-header.header.header--product .header__icon .icon,
+  store-header.header.header--product .header-language-toggle__btn,
+  store-header.header.header--product .search .icon,
+  store-header.header.header--product .search__submit,
+  store-header.header.header--product .main-menu__toggle {
+    color: #222222 !important;
+  }
+
+  store-header.header.header--product .search__input {
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #222222;
+  }
+
+  store-header.header.header--product .search__product-types .custom-select__btn {
+    background-color: transparent;
+    color: #222222;
+  }
+
+  store-header.header.header--product .search__input::placeholder {
+    color: rgba(34, 34, 34, 0.55);
+    font-weight: 300;
+  }
+
+  store-header.header.header--product .header-language-toggle__btn {
+    --input-text-color: 34 34 34;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #222222 !important;
+  }
+
+  @media (min-width: 769px) {
+    store-header.header.header--product .main-menu__content {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+    }
+
+    store-header.header.header--product .main-menu {
+      border-top: 1px solid #e8e8e8;
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
+
+    store-header.header.header--product .main-nav__item--primary,
+    store-header.header.header--product .main-nav__toggle-btn {
+      color: #222222 !important;
+      text-transform: none;
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      padding: 0;
+    }
+
+    store-header.header.header--product .main-nav {
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Keep full sticky header — do not collapse nav (avoids white gap) */
+    .cc-header--sticky .header.header--product.is-out {
+      margin-bottom: 0 !important;
+    }
+
+    .cc-header--sticky .header.header--product.is-out .main-menu__content {
+      max-height: none !important;
+      margin-top: 0 !important;
+      overflow: visible !important;
+    }
+  }
+
+  store-header.header.header--product .main-nav__child,
+  store-header.header.header--product .main-nav__child.mega-nav--columns {
+    background: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(12.5px);
+    -webkit-backdrop-filter: blur(12.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    box-shadow: none;
+    color: #ffffff;
+  }
+
+  store-header.header.header--product .main-nav__child a,
+  store-header.header.header--product .main-nav__child .child-nav__item,
+  store-header.header.header--product .main-nav__child .main-nav__item {
+    color: #ffffff !important;
+  }
+
+  .cc-header--sticky store-header.header.header--product.is-out {
+    background: #ffffff !important;
+  }
+
   header .header__icons {
     gap: 30px;
     align-items: center;
@@ -230,7 +424,7 @@
   }
 {%- endstyle -%}
 
-<store-header class="header bg-theme-bg text-theme-text header--overlay{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
+<store-header class="header bg-theme-bg text-theme-text {% if is_product_header %}header--product{% else %}header--overlay{% endif %}{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"
   {%- if section.settings.enable_sticky -%} data-is-sticky="true"{%- endif -%}
   {%- if search_is_minimised -%} data-is-search-minimised="true"{%- endif -%}
   style="--header-transition-speed: 300ms">
@@ -240,17 +434,27 @@
         <h1 class="logo__h1 m-0">
       {%- endif -%}
         <a class="logo__link inline-block" href="{{ routes.root_url }}">
-          {%- if section.settings.logo != blank -%}
-            {%- liquid
-              assign logo_width = section.settings.logo_width
-              if section.settings.logo.width < logo_width
-                assign logo_width = section.settings.logo.width
+          {%- liquid
+            assign header_logo = section.settings.logo
+            assign header_logo_width = section.settings.logo_width
+            if is_product_header and section.settings.logo_product != blank
+              assign header_logo = section.settings.logo_product
+              if section.settings.logo_product_width != blank
+                assign header_logo_width = section.settings.logo_product_width
               endif
-              assign alt_text = section.settings.logo.alt | default: shop.name
+            endif
+          -%}
+          {%- if header_logo != blank -%}
+            {%- liquid
+              assign logo_width = header_logo_width
+              if header_logo.width < logo_width
+                assign logo_width = header_logo.width
+              endif
+              assign alt_text = header_logo.alt | default: shop.name
             -%}
-            <span class="flex" style="max-width: {{ section.settings.logo_width | plus: 0 }}px;">
+            <span class="flex" style="max-width: {{ header_logo_width | plus: 0 }}px;">
               {% render 'image',
-                image: section.settings.logo,
+                image: header_logo,
                 src_width: logo_width,
                 srcset_2x: true,
                 lazy_load: false,
@@ -882,15 +1086,26 @@
 
 <script>
   (function () {
-    const header = document.querySelector('store-header.header--overlay');
+    var header = document.querySelector('store-header.header--overlay');
     if (!header) return;
 
-    const syncScrolled = () => {
+    var syncScrolled = function () {
       header.classList.toggle('is-scrolled', window.scrollY > 40);
+      /* Keep full glass header on scroll down (same as scroll up) */
+      if (header.classList.contains('is-out')) {
+        header.classList.remove('is-out');
+      }
     };
 
     syncScrolled();
     window.addEventListener('scroll', syncScrolled, { passive: true });
+
+    var observer = new MutationObserver(function () {
+      if (header.classList.contains('is-out')) {
+        header.classList.remove('is-out');
+      }
+    });
+    observer.observe(header, { attributes: true, attributeFilter: ['class'] });
   })();
 </script>
 
@@ -987,6 +1202,12 @@
       "label": "Logo image"
     },
     {
+      "type": "image_picker",
+      "id": "logo_product",
+      "label": "Product page logo",
+      "info": "Optional. Used only on product pages. Falls back to the main logo if empty."
+    },
+    {
       "type": "range",
       "id": "logo_width",
       "min": 50,
@@ -995,6 +1216,17 @@
       "unit": "px",
       "label": "Maximum logo width",
       "default": 150
+    },
+    {
+      "type": "range",
+      "id": "logo_product_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Product page logo width",
+      "default": 150,
+      "info": "Only applies when a product page logo is set."
     },
     {
       "type": "checkbox",

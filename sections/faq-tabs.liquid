@@ -1,0 +1,622 @@
+{%- liquid
+  assign category_blocks = section.blocks | where: 'type', 'category'
+  assign question_blocks = section.blocks | where: 'type', 'question'
+-%}
+
+<section
+  class="sulalat-faq"
+  data-section-id="{{ section.id }}"
+  style="
+    --sulalat-faq-bg: {{ section.settings.background_color }};
+    --sulalat-faq-pad-top: {{ section.settings.padding_top }}px;
+    --sulalat-faq-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sulalat-faq-accent: {{ section.settings.accent_color }};
+    --sulalat-faq-tab-bg: {{ section.settings.active_tab_bg }};
+  "
+>
+  <style>
+    .sulalat-faq[data-section-id="{{ section.id }}"] {
+      padding: var(--sulalat-faq-pad-top, 80px) 0 var(--sulalat-faq-pad-bottom, 100px);
+      background: var(--sulalat-faq-bg, #ffffff);
+      font-family: var(--body-font-family);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .container {
+      max-width: min(960px, var(--brand-container-max, 1440px));
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__header {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 48px;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__heading {
+      margin: 0 0 14px;
+      font-size: clamp(28px, 3.2vw, 42px);
+      line-height: 1.2;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: -0.02em;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__subtitle {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #8a8a8a;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tabs {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0;
+      border-bottom: 1px solid #e8e8e8;
+      margin-bottom: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab {
+      flex: 1 1 0;
+      min-width: max-content;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 16px 20px;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      color: #5a5a5a;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: transparent;
+      transition: background-color 0.2s ease;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab:hover {
+      color: #111;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab.is-active {
+      color: #0f6b4c;
+      background: var(--sulalat-faq-tab-bg, #eaf8f1);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab.is-active::after {
+      background: var(--sulalat-faq-accent, #53c295);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__panel {
+      display: none;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__panel.is-active {
+      display: block;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__item {
+      border-bottom: 1px solid #ececec;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 4px;
+      border: 0;
+      background: transparent;
+      font: inherit;
+      font-size: 16px;
+      line-height: 1.45;
+      font-weight: 400;
+      color: #1a1a1a;
+      text-align: start;
+      cursor: pointer;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__question:hover {
+      color: #0f6b4c;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__icon {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: #1a1a1a;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__icon::before,
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__icon::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__icon::before {
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1.5px;
+      transform: translateY(-50%);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__icon::after {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1.5px;
+      transform: translateX(-50%);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__item.is-open .sulalat-faq__icon::after {
+      opacity: 0;
+      transform: translateX(-50%) rotate(90deg);
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.3s ease;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__item.is-open .sulalat-faq__answer {
+      grid-template-rows: 1fr;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__answer-inner {
+      overflow: hidden;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__answer-content {
+      padding: 0 4px 22px;
+      font-size: 15px;
+      line-height: 1.65;
+      color: #6b6b6b;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__answer-content p {
+      margin: 0 0 0.75em;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__answer-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__empty {
+      padding: 32px 4px;
+      text-align: center;
+      color: #8a8a8a;
+      font-size: 15px;
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__header {
+        margin-bottom: 36px;
+      }
+
+      .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__tab {
+        flex: 0 0 auto;
+        padding: 14px 18px;
+        font-size: 14px;
+      }
+
+      .sulalat-faq[data-section-id="{{ section.id }}"] .sulalat-faq__question {
+        padding: 18px 0;
+        font-size: 15px;
+        gap: 16px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-faq__header">
+      {% if section.settings.heading != blank %}
+        <h2 class="sulalat-faq__heading">{{ section.settings.heading | escape }}</h2>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p class="sulalat-faq__subtitle">{{ section.settings.subtitle | escape }}</p>
+      {% endif %}
+    </div>
+
+    {% if category_blocks.size > 0 %}
+      <div class="sulalat-faq__tabs" role="tablist" aria-label="{{ section.settings.heading | default: 'FAQ categories' | escape }}">
+        {% for block in category_blocks %}
+          <button
+            type="button"
+            class="sulalat-faq__tab{% if forloop.first %} is-active{% endif %}"
+            role="tab"
+            id="sulalat-faq-tab-{{ section.id }}-{{ block.id }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-controls="sulalat-faq-panel-{{ section.id }}-{{ block.id }}"
+            data-faq-tab="{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            {{ block.settings.title | escape }}
+          </button>
+        {% endfor %}
+      </div>
+
+      {% for category in category_blocks %}
+        <div
+          class="sulalat-faq__panel{% if forloop.first %} is-active{% endif %}"
+          role="tabpanel"
+          id="sulalat-faq-panel-{{ section.id }}-{{ category.id }}"
+          aria-labelledby="sulalat-faq-tab-{{ section.id }}-{{ category.id }}"
+          data-faq-panel="{{ category.id }}"
+          {% unless forloop.first %}hidden{% endunless %}
+        >
+          {%- assign has_questions = false -%}
+          {%- assign collecting = false -%}
+
+          {% for block in section.blocks %}
+            {% if block.type == 'category' %}
+              {% if block.id == category.id %}
+                {%- assign collecting = true -%}
+              {% elsif collecting %}
+                {%- assign collecting = false -%}
+              {% endif %}
+            {% elsif block.type == 'question' and collecting and block.settings.question != blank %}
+              {%- assign has_questions = true -%}
+              <div class="sulalat-faq__item" data-faq-item {{ block.shopify_attributes }}>
+                <button
+                  type="button"
+                  class="sulalat-faq__question"
+                  aria-expanded="false"
+                  data-faq-trigger
+                >
+                  <span>{{ block.settings.question | escape }}</span>
+                  <span class="sulalat-faq__icon" aria-hidden="true"></span>
+                </button>
+                <div class="sulalat-faq__answer">
+                  <div class="sulalat-faq__answer-inner">
+                    <div class="sulalat-faq__answer-content rte">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+
+          {% unless has_questions %}
+            <p class="sulalat-faq__empty">No questions in this category yet.</p>
+          {% endunless %}
+        </div>
+      {% endfor %}
+    {% elsif question_blocks.size > 0 %}
+      <div class="sulalat-faq__panel is-active" role="region">
+        {% for block in question_blocks %}
+          {% if block.settings.question != blank %}
+            <div class="sulalat-faq__item" data-faq-item {{ block.shopify_attributes }}>
+              <button
+                type="button"
+                class="sulalat-faq__question"
+                aria-expanded="false"
+                data-faq-trigger
+              >
+                <span>{{ block.settings.question | escape }}</span>
+                <span class="sulalat-faq__icon" aria-hidden="true"></span>
+              </button>
+              <div class="sulalat-faq__answer">
+                <div class="sulalat-faq__answer-inner">
+                  <div class="sulalat-faq__answer-content rte">
+                    {{ block.settings.answer }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.sulalat-faq[data-section-id="{{ section.id }}"]');
+      if (!root || root.dataset.faqBound === 'true') return;
+      root.dataset.faqBound = 'true';
+
+      var tabs = root.querySelectorAll('[data-faq-tab]');
+      var panels = root.querySelectorAll('[data-faq-panel]');
+
+      function activateTab(tabId) {
+        tabs.forEach(function (tab) {
+          var isActive = tab.getAttribute('data-faq-tab') === tabId;
+          tab.classList.toggle('is-active', isActive);
+          tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+
+        panels.forEach(function (panel) {
+          var isActive = panel.getAttribute('data-faq-panel') === tabId;
+          panel.classList.toggle('is-active', isActive);
+          if (isActive) {
+            panel.removeAttribute('hidden');
+          } else {
+            panel.setAttribute('hidden', '');
+            panel.querySelectorAll('[data-faq-item].is-open').forEach(function (item) {
+              item.classList.remove('is-open');
+              var trigger = item.querySelector('[data-faq-trigger]');
+              if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            });
+          }
+        });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          activateTab(tab.getAttribute('data-faq-tab'));
+        });
+      });
+
+      root.addEventListener('click', function (event) {
+        var trigger = event.target.closest('[data-faq-trigger]');
+        if (!trigger || !root.contains(trigger)) return;
+
+        var item = trigger.closest('[data-faq-item]');
+        if (!item) return;
+
+        var willOpen = !item.classList.contains('is-open');
+        var panel = item.closest('[data-faq-panel], .sulalat-faq__panel');
+
+        if (panel) {
+          panel.querySelectorAll('[data-faq-item].is-open').forEach(function (openItem) {
+            if (openItem === item) return;
+            openItem.classList.remove('is-open');
+            var openTrigger = openItem.querySelector('[data-faq-trigger]');
+            if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+          });
+        }
+
+        item.classList.toggle('is-open', willOpen);
+        trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ Tabs",
+  "tag": "section",
+  "class": "sulalat-faq-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Active tab underline",
+      "default": "#53c295"
+    },
+    {
+      "type": "color",
+      "id": "active_tab_bg",
+      "label": "Active tab background",
+      "default": "#eaf8f1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab label",
+          "default": "General"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Place each question directly under the category tab it belongs to."
+        },
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How can I track my order after purchase?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>You can track your order from your account dashboard or using the tracking link sent in your confirmation email.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Tabs",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "General"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order after purchase?",
+            "answer": "<p>You can track your order from your account dashboard or using the tracking link sent in your confirmation email.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you deliver outside Saudi Arabia?",
+            "answer": "<p>Yes. We ship across the GCC and selected international destinations. Shipping options are shown at checkout.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How do I choose the right coffee for my brewing method?",
+            "answer": "<p>Each product page lists recommended brew methods. You can also filter by espresso, filter, or cold brew on our collections.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Can I return or exchange a product?",
+            "answer": "<p>Unused products in original packaging can be returned within 14 days of delivery. Contact support to start a return.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Are Sulalat capsules compatible with all machines?",
+            "answer": "<p>Our capsules are designed for Nespresso-compatible machines. Check the product details for exact compatibility.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer wholesale or bulk purchasing options?",
+            "answer": "<p>Yes. Reach out through our wholesale inquiry form and our team will share pricing and packaging options.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Billing"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>We accept major credit and debit cards, Apple Pay, and selected local payment plans where available.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "When will I be charged for my order?",
+            "answer": "<p>Your payment is processed when the order is placed, unless you choose a split-payment option at checkout.</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Support"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How can I contact customer support?",
+            "answer": "<p>Email us or use the contact form on our website. We typically respond within 1–2 business days.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "What are your support hours?",
+            "answer": "<p>Our support team is available Sunday through Thursday, 9 AM – 6 PM (AST).</p>"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "title": "Product"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How should I store my coffee?",
+            "answer": "<p>Keep beans in an airtight container away from heat, light, and moisture. For best flavor, use within a few weeks of opening.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you sell decaf options?",
+            "answer": "<p>Yes. Browse our collections or contact us for current decaf availability.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

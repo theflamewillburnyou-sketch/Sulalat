@@ -104,6 +104,22 @@
     .partner-section[data-section-id="{{ section.id }}"] .primary-btn::before {
       background: #fff;
     }
+
+    @media (max-width: 1440px){
+      .partner-section[data-section-id="{{ section.id }}"] .partner-content {
+        padding:45px;
+        width: 45%;
+      }
+
+      .partner-section[data-section-id="{{ section.id }}"] .partner-image {
+        width:55%;
+        max-height: 550px;
+      }
+      .partner-section[data-section-id="{{ section.id }}"] .section-title {
+        margin-bottom: 20px;
+      }  
+    }
+
     @media (max-width: 1200px){
       .partner-section[data-section-id="{{ section.id }}"] .primary-btn{
           padding: 11px 40px;
