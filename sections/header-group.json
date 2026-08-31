@@ -92,7 +92,7 @@
         "a94eb2f1-b98e-4c70-9e55-999dfdaeb047"
       ],
       "settings": {
-        "enable_sticky": true,
+        "enable_sticky": false,
         "mobile_menu_position": "burger-left",
         "logo_text": "",
         "logo_type_scale": "2",

@@ -138,7 +138,12 @@
 
         {% if section.settings.show_scroll_link %}
           <div class="scroll-btm">
-            <a href="{{ section.settings.scroll_link | default: '#' }}" style="color: {{ section.settings.scroll_icon_color }};">
+            <a
+              href="#"
+              data-hero-scroll-next
+              style="color: {{ section.settings.scroll_icon_color }};"
+              aria-label="{{ section.settings.scroll_text | default: 'Scroll' | escape }}"
+            >
               <span>{{ section.settings.scroll_text | default: 'Scroll' }}</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true" focusable="false">
                 <path d="M24.0352 18.1421L18.1426 24.0346L12.25 18.1421" stroke="currentColor" stroke-opacity="0.6" stroke-width="1.70708" stroke-linecap="round" stroke-linejoin="round" />
@@ -363,6 +368,42 @@
   }
 </style>
 
+<script>
+  (function () {
+    var banner = document.querySelector('.site-banner[data-section-id="{{ section.id }}"]');
+    if (!banner || banner.dataset.scrollNextBound === 'true') return;
+    banner.dataset.scrollNextBound = 'true';
+
+    var link = banner.querySelector('[data-hero-scroll-next]');
+    if (!link) return;
+
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      var sectionWrap = banner.closest('.shopify-section');
+      if (!sectionWrap) return;
+
+      var nextSection = sectionWrap.nextElementSibling;
+      while (nextSection && !nextSection.classList.contains('shopify-section')) {
+        nextSection = nextSection.nextElementSibling;
+      }
+
+      if (!nextSection) return;
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var headerOffset = parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--header-end-padded')
+      ) || 0;
+      var top = nextSection.getBoundingClientRect().top + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: Math.max(0, top),
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Site Banner",
@@ -539,15 +580,14 @@
       "default": true
     },
     {
+      "type": "paragraph",
+      "content": "Scrolls smoothly to the next section on the page."
+    },
+    {
       "type": "text",
       "id": "scroll_text",
       "label": "Scroll link text",
       "default": "Scroll"
-    },
-    {
-      "type": "url",
-      "id": "scroll_link",
-      "label": "Scroll link URL"
     },
     {
       "type": "color",

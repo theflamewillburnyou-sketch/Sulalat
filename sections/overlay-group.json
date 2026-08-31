@@ -95,6 +95,7 @@
         "compare-5",
         "compare-6"
       ],
+      "disabled": true,
       "settings": {}
     },
     "popup": {
@@ -151,6 +152,7 @@
         "countdown",
         "button"
       ],
+      "disabled": true,
       "settings": {
         "trigger": "delay",
         "delay": 5,
