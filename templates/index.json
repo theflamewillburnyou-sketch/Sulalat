@@ -34,7 +34,7 @@
             "image": "shopify://shop_images/banner-card-2.png",
             "image_alt": "Banner card image",
             "link": "#",
-            "button_text": "Discover Our Products",
+            "button_text": "Explore Business Solutions",
             "button_color": "#ffffff"
           }
         }
@@ -119,10 +119,10 @@
       ],
       "name": "Coffee experience",
       "settings": {
-        "heading_part_1": "An Ecosystem of Taste & Trust Passion and Precision",
+        "heading_part_1": "An Ecosystem of Taste & Trust",
         "heading_part_2": "",
         "subheading": "",
-        "about_heading_part_1": "Made with Ihsan, from Intention to Creation Crafted for You",
+        "about_heading_part_1": "Made with Ihsan, from Intention to Creation",
         "about_heading_part_2": "",
         "text_left": "Sulalat is a specialized ecosystem offering specialty coffee, craft chocolate, and artisanal gelato",
         "text_right": "Since 2014, we have brought together globally sourced ingredients, certified expertise, and in-house production to empower the hospitality sector in the Middle East, one product, one batch, one relationship at a time.",
