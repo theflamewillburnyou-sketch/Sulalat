@@ -47,7 +47,7 @@
   function animateSectionTitles() {
     document.querySelectorAll('.section-title').forEach(function (section) {
       var heading = section.querySelector('h2');
-      var subtitle = section.querySelector('p');
+      var subtitles = section.querySelectorAll('p');
 
       if (heading) {
         var split = splitHeading(heading);
@@ -70,12 +70,13 @@
         }
       }
 
-      if (subtitle) {
-        gsap.to(subtitle, {
+      if (subtitles.length) {
+        gsap.to(subtitles, {
           opacity: 1,
           y: 0,
           duration: 0.8,
           delay: 0.25,
+          stagger: 0.12,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: section,

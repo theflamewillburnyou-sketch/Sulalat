@@ -75,10 +75,6 @@
   color: var(--brand-primary, #53c295);
 }
 @media (max-width: 768.98px) {
-  .footer-newsletter-bar__inner {
-    flex-direction: column;
-    align-items: stretch;
-  }
   .footer-newsletter-bar__form {
     max-width: none;
   }

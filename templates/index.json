@@ -453,7 +453,7 @@
         "body_size": 16,
         "logo_width": 266,
         "logo_gap": 50,
-        "animation_duration": 30,
+        "animation_duration": 40,
         "pause_on_hover": false
       }
     },

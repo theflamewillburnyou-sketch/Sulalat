@@ -176,6 +176,7 @@
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img {
     height: var(--banner-h, 900px);
+    overflow:hidden;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img img,
@@ -207,7 +208,7 @@
   .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
     color: #fff;
     font-weight: 400;
-    font-size: clamp(32px, 3vw, {{ section.settings.heading_max_size | default: 60 }}px);
+    font-size: clamp(32px, 3.2vw, {{ section.settings.heading_max_size | default: 60 }}px);
     line-height: 1.33;
     margin: 0;
   }
@@ -219,7 +220,7 @@
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-btm {
-    border-top: 2px solid;
+    border-top: 1px solid;
     margin-top: 30px;
     padding-top: 20px;
     display: flex;
@@ -254,6 +255,7 @@
     display: block;
     border-radius: {{ section.settings.card_image_radius | default: 20 }}px;
     height:100%;
+    object-fit: cover;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img a {
@@ -275,7 +277,7 @@
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi span {
-    max-width: 100px;
+    max-width: 125px;
     width: max-content;
   }
 
@@ -314,14 +316,18 @@
   }
 
   @media screen and (max-width: 989px) {
-    .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
+    {% comment %} .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
       max-width: 100%;
-    }
+    } {% endcomment %}
   }
 
   @media screen and (max-width: 749px) {
     .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img {
       height: var(--banner-h-mobile, 500px);
+    }
+
+    .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
+      max-width: 100%;
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-warp {
@@ -365,6 +371,21 @@
     .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
         gap: 20px;
     }
+    .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi span {
+      font-size:13px;
+    } 
+
+    {% comment %} .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
+      grid-template-columns: 100%;
+    } {% endcomment %}
+
+    {% comment %} .site-banner[data-section-id="{{ section.id }}"] .banner-card-img {
+      min-height:0;
+      height: 120px;
+    }
+    .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
+        margin-bottom: 20px;
+    } {% endcomment %}
   }
 </style>
 
