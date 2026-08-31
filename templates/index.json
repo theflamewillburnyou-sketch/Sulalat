@@ -65,7 +65,6 @@
         "divider_color": "#c4f6e233",
         "show_scroll_link": true,
         "scroll_text": "Scroll",
-        "scroll_link": "",
         "scroll_icon_color": "#ffffff"
       }
     },
@@ -290,7 +289,7 @@
         "body_size": 16,
         "logo_width": 156,
         "logo_gap": 50,
-        "animation_duration": 45,
+        "animation_duration": 60,
         "pause_on_hover": false
       }
     },
