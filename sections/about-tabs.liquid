@@ -33,7 +33,7 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
       width: 100%;
       max-width: var(--brand-container-max, 1440px);
       margin: 0 auto;
@@ -107,7 +107,7 @@
       grid-template-columns: 1.1fr 1fr;
       align-items: center;
       gap: 80px;
-      max-width: 1311px;
+      {% comment %} max-width: 1311px; {% endcomment %}
       margin: 0 auto;
     }
 
@@ -131,7 +131,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .who-content h2 {
       color: #000;
-      font-size: clamp(32px, 3vw, 45px);
+      font-size: clamp(24px, 2.5vw, 45px);
       font-weight: 400;
       margin-bottom: 30px;
       line-height: 1.15;
@@ -164,19 +164,21 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .section-title h2 {
-      color: #000;
-      font-size: clamp(32px, 3vw, 45px);
+      color: #141211;
+      font-size: clamp(24px, 2.5vw, 45px) !important;
       font-weight: 400;
       line-height: 1.2;
       margin-bottom: 15px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .section-title p {
-      color: var(--brand-body-text, #535353);
+      color: #141211;
       font-size: 16px;
       line-height: 1.5;
       letter-spacing: -0.01em;
       margin: 0;
+      max-width: 570px;
+      margin-inline: auto;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
@@ -206,7 +208,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-year {
       color: var(--brand-primary, #53c295);
-      font-size: 60px;
+      font-size: clamp(28px, 3.5vw, 60px);
       line-height: 0.8;
       letter-spacing: -0.01em;
       font-weight: 400;
@@ -360,7 +362,7 @@
       border-radius: 20px;
       display: flex;
       align-items: center;
-      padding: 60px 40px;
+      padding:40px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .vision-content {
@@ -371,7 +373,7 @@
       line-height: 1.15;
       margin-bottom: 18px;
       color: #000000;
-      font-size: clamp(36px, 4vw, 55px);
+      font-size: clamp(28px, 3vw, 55px);
       font-weight: 400;
     }
 
@@ -426,7 +428,7 @@
       line-height: 1.15;
       margin-bottom: 35px;
       color: #000000;
-      font-size: clamp(36px, 4vw, 55px);
+      font-size: clamp(28px, 3vw, 55px);
       font-weight: 400;
     }
 
@@ -506,7 +508,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .certificate-card {
       width: 100%;
-      border: 1px solid #e6e6e6;
+      border: 1px solid #D2D2D2;
       border-radius: 12px;
       padding: 45px 25px;
       text-align: center;
@@ -531,7 +533,7 @@
       text-align: center;
       font-size: 25px;
       font-weight: 400;
-      color: var(--brand-muted-text, #535353);
+      color: #141211;
       margin: 0;
     }
 
@@ -577,7 +579,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
       width: 100%;
-      height: 480px;
+      height: auto;
       object-fit: cover;
       display: block;
       border-radius: 20px;
@@ -595,9 +597,9 @@
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content h3 {
       margin: 0 0 20px;
       color: #000;
-      font-size: clamp(28px, 2.8vw, 40px);
+      font-size: clamp(24px, 2.8vw, 40px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content p {
@@ -606,7 +608,7 @@
       line-height: 24px;
       letter-spacing: -0.01em;
       font-weight: 400;
-      color: var(--brand-body-text, #535353);
+      color: #535353;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content .primary-btn {
@@ -616,6 +618,7 @@
     /* Leadership & Team */
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-team {
       padding: 100px 0 80px;
+      overflow:hidden;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
@@ -630,10 +633,10 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro h2 {
       margin: 0 0 16px;
-      color: #000;
-      font-size: clamp(32px, 3.2vw, 48px);
+      color: #141211;
+      font-size: clamp(24px, 2.5vw, 45px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro p {
@@ -641,7 +644,7 @@
       font-size: 16px;
       line-height: 24px;
       letter-spacing: -0.01em;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider {
@@ -656,7 +659,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide {
       height: auto;
       transition: transform 0.45s ease, opacity 0.45s ease;
-      opacity: 0.55;
+      {% comment %} opacity: 0.55; {% endcomment %}
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide-active {
@@ -665,11 +668,11 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-slider .swiper-slide {
-      width: min(520px, 72vw);
+      width: min(600px, 72vw);
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-slider .swiper-slide {
-      width: min(220px, 42vw);
+      width: min(350px, 42vw);
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image {
@@ -680,7 +683,7 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-slider .leadership-card-image {
-      aspect-ratio: 4 / 5;
+      {% comment %} aspect-ratio: 4 / 5; {% endcomment %}
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-slider .leadership-card-image {
@@ -730,7 +733,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      max-width: 520px;
+      max-width: 600px;
       margin: 28px auto 0;
       min-height: 72px;
     }
@@ -740,19 +743,19 @@
       color: #000;
       font-size: 28px;
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-meta-text p {
       margin: 0;
-      color: var(--brand-body-text, #535353);
+      color: #000;
       font-size: 16px;
       line-height: 1.4;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn {
       flex-shrink: 0;
-      padding: 12px 28px;
+      padding: 12px 60px;
       white-space: nowrap;
     }
 
@@ -772,7 +775,7 @@
       color: #000;
       font-size: 22px;
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta p {
@@ -785,7 +788,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta-line {
       width: 48px;
       height: 2px;
-      background: #d7d7d7;
+      background: #53C295;
       margin: 16px auto 0;
     }
 
@@ -795,7 +798,7 @@
       justify-content: center;
       gap: 28px;
       margin-top: 36px;
-      max-width: 640px;
+      max-width: 800px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -803,11 +806,11 @@
     .about-tabs[data-section-id="{{ section.id }}"] .team-progress {
       position: relative;
       flex: 1;
-      height: 3px;
+      height: 2px;
       background: #e5e5e5;
       border-radius: 999px;
       overflow: hidden;
-      max-width: 420px;
+      {% comment %} max-width: 420px; {% endcomment %}
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .team-progress-bar {
@@ -864,10 +867,10 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .partners-intro h2 {
       margin: 0 0 14px;
-      color: #000;
-      font-size: clamp(32px, 3.2vw, 48px);
+      color: #141211;
+      font-size: clamp(24px, 3.2vw, 48px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .partners-intro p {
@@ -875,15 +878,15 @@
       font-size: 16px;
       line-height: 24px;
       letter-spacing: -0.01em;
-      color: var(--brand-body-text, #535353);
+      color:#141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .partners-filter {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 36px;
-      margin-bottom: 48px;
+      gap: 0;
+      margin-bottom:60px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn {
@@ -891,19 +894,39 @@
       background: none;
       border: none;
       border-bottom: 2px solid transparent;
-      padding: 8px 4px;
+      padding: 30px 15px;
       margin: 0;
       cursor: pointer;
       font-family: var(--body-font-family);
-      font-size: 16px;
-      line-height: 1.2;
-      font-weight: 500;
-      color: #9a9a9a;
+      font-size: 17px;
+      line-height: 1;
+      font-weight: 400;
+      color: #000;
       transition: color 0.25s ease, border-color 0.25s ease;
+      position:relative;
+      width: 100%;
+      max-width: 266px;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn::before{
+        content: "";
+        position: absolute;
+        background: linear-gradient(
+        180deg,
+        rgba(238, 249, 244, 0) 0%,
+        rgba(238, 249, 244, 1) 100%
+      );
+        inset: 0;
+        z-index: -1;
+        transition:all 0.2s linear;
+        opacity:0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn.active::before{
+      opacity:1;
+    }
     .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn.active {
-      color: #000;
+      color: #53C295;
       border-bottom-color: var(--brand-primary, #53c295);
     }
 
@@ -919,11 +942,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 160px;
+      min-height: 180px;
       padding: 28px 24px;
       background: #fff;
-      border: 1px solid #e6e6e6;
-      border-radius: 16px;
+      border: 1px solid #D2D2D2;
+      border-radius: 12px;
       text-decoration: none;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
@@ -966,16 +989,19 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-why {
       text-align: center;
-      max-width: 980px;
+      max-width: 1153px;
       margin: 0 auto 90px;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-why .carrers-why-content{
+      padding:0 20px;
+    }
     .about-tabs[data-section-id="{{ section.id }}"] .careers-why h2 {
-      margin: 0 0 18px;
-      color: #000;
-      font-size: clamp(32px, 3.2vw, 48px);
+      margin: 0 0 14px;
+      color: #141211;
+      font-size: clamp(24px, 3.2vw, 48px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-why p {
@@ -984,15 +1010,14 @@
       font-size: 16px;
       line-height: 26px;
       letter-spacing: -0.01em;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image {
       width: 100%;
-      max-width: 900px;
+      max-width: 100%;
       margin: 0 auto;
-      aspect-ratio: 2.35 / 1;
-      border-radius: 50%;
+      border-radius: 300px;
       overflow: hidden;
       background: #f3f3f3;
     }
@@ -1006,8 +1031,9 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-positions {
-      max-width: 1100px;
+      max-width: 1240px;
       margin: 0 auto;
+      padding: 0 20px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro {
@@ -1018,30 +1044,30 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro h2 {
       margin: 0 0 14px;
-      color: #000;
-      font-size: clamp(32px, 3.2vw, 48px);
+      color: #141211;
+      font-size: clamp(24px, 3.2vw, 48px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro p {
       margin: 0;
       font-size: 16px;
       line-height: 24px;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-list {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 30px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card {
       display: grid;
       grid-template-columns: auto minmax(160px, 220px) 1fr auto;
       align-items: center;
-      gap: 24px;
+      gap: 40px;
       padding: 22px 28px;
       background: #fff;
       border: 1px solid #e6e6e6;
@@ -1057,8 +1083,8 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon {
-      width: 56px;
-      height: 56px;
+      width: 116px;
+      height: 116px;
       border-radius: 50%;
       background: var(--brand-primary, #53c295);
       color: #fff;
@@ -1069,8 +1095,8 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon svg {
-      width: 24px;
-      height: 24px;
+      width: 38px;
+      height: 38px;
       display: block;
     }
 
@@ -1081,9 +1107,10 @@
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-location {
       display: block;
       margin-bottom: 4px;
-      font-size: 14px;
+      font-size: 17px;
       line-height: 1.3;
-      color: #9a9a9a;
+      color: rgb(0 0 0 / 80%);
+      letter-spacing: 3%;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-title {
@@ -1098,7 +1125,8 @@
       margin: 0;
       font-size: 15px;
       line-height: 22px;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
+      max-width:416px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow {
@@ -1220,18 +1248,18 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-detail-panel h2 {
-      margin: 0 0 10px;
-      color: #000;
-      font-size: clamp(32px, 3vw, 44px);
-      line-height: 1.15;
-      font-weight: 600;
+        margin: 0 0 14px;
+        color: #141211;
+        font-size: clamp(24px, 3.2vw, 48px);
+        line-height: 1.2;
+        font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-detail-posted {
       margin: 0 0 36px;
       font-size: 14px;
       line-height: 1.4;
-      color: #9a9a9a;
+      color: #141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-detail-block {
@@ -1247,7 +1275,7 @@
       color: #000;
       font-size: 20px;
       line-height: 1.3;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-check-list {
@@ -1279,17 +1307,17 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-apply h2 {
-      margin: 0 0 28px;
-      color: #000;
-      font-size: clamp(32px, 3vw, 44px);
-      line-height: 1.15;
-      font-weight: 600;
+      margin: 0 0 14px;
+      color: #141211;
+      font-size: clamp(24px, 3.2vw, 48px);
+      line-height: 1.2;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 20px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .input,
@@ -1327,14 +1355,14 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-browse {
       position: absolute;
-      right: 8px;
+      right: 0;
       top: 50%;
       transform: translateY(-50%);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 96px;
-      height: 36px;
+      min-width: 140px;
+      height: 100%;
       padding: 0 18px;
       border-radius: 999px;
       background: #dff5eb;
@@ -1342,6 +1370,7 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
+      border: 1px solid rgb(83 194 149 / 20%);
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-browse input {
@@ -1355,7 +1384,6 @@
       align-self: flex-start;
       margin-top: 8px;
       min-width: 160px;
-      border: none;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status {
@@ -1372,14 +1400,62 @@
       color: #b42318;
     }
 
-    @media (max-width: 991px) {
-      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
+    @media (max-width: 1440px){
+       .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
+        padding: 20px 22px;
+        font-size: 16px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-card h3 {
+        font-size: 28px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image svg.placeholder-svg {
+        height: auto;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
+         gap: 24px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .certificate-card h4 {
+        font-size: 22px;
       }
 
-      .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
-        flex-direction: column;
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon {
+        width: 76px;
+        height: 76px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon svg{
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 1200px){
+    .about-tabs[data-section-id="{{ section.id }}"] .tabs-nav {
+      display: block;
+      text-align: center;
+      white-space: nowrap;
+      overflow-x: auto;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+        gap: 50px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content{
+        padding:50px 40px;
+      }
+     
+    }
+
+    @media (max-width: 991px) {
+      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+        gap: 40px;
+      }
+      
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card{
+          width: calc(45% - (var(--gap) / 2));
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image{
+          width: calc(55% - (var(--gap) / 2));
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider,
@@ -1392,46 +1468,23 @@
         height: 360px;
       }
 
-      .about-tabs[data-section-id="{{ section.id }}"] .vision-image,
-      .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
-        width: 100%;
-      }
-
-      .about-tabs[data-section-id="{{ section.id }}"] .culture-content,
-      .about-tabs[data-section-id="{{ section.id }}"] .culture-image {
-        width: 100%;
-      }
-
       .about-tabs[data-section-id="{{ section.id }}"] .culture-image img,
       .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
-        min-height: 400px;
+        min-height:0;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 24px;
       }
 
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row,
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-image,
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
-        order: unset;
-      }
-
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content,
-      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
-        max-width: none;
-        margin: 0;
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row{
+        gap:30px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
-        height: 360px;
+        height: auto;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-list {
@@ -1456,7 +1509,7 @@
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .partners-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 16px;
       }
 
@@ -1500,9 +1553,39 @@
       .about-tabs[data-section-id="{{ section.id }}"] .year-btn {
         font-size: 18px;
       }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon {
+        width: 56px;
+        height: 56px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon svg {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     @media (max-width: 767px) {
+      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
+        flex-direction: column;
+        margin-top: 40px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .who-content p {
+        max-width:100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .section-title {
+        margin-bottom: 40px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button {
+        width: 45px;
+        height: 45px;
+      }
       .about-tabs[data-section-id="{{ section.id }}"] .who-we-are,
       .about-tabs[data-section-id="{{ section.id }}"] .vision-mission,
       .about-tabs[data-section-id="{{ section.id }}"] .certificates,
@@ -1510,7 +1593,57 @@
       .about-tabs[data-section-id="{{ section.id }}"] .leadership-team,
       .about-tabs[data-section-id="{{ section.id }}"] .partners-section,
       .about-tabs[data-section-id="{{ section.id }}"] .careers-section {
-        padding: 60px 0;
+        padding: 70px 0;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
+        width: 100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card:nth-child(1) {
+        order: 2;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image:nth-child(2) {
+        order: 1;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image:nth-child(3) {
+        order: 3;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-card:nth-child(4) {
+        order: 4;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content,
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image {
+        width: 100%;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content{
+        padding:40px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-content h2 {
+        margin-bottom: 15px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-image,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+        order: unset;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
+        max-width: none;
+        margin: 0;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
@@ -1558,28 +1691,25 @@
 
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
       .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
-        height: 280px;
+        height:auto;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-section,
       .about-tabs[data-section-id="{{ section.id }}"] .culture-values {
-        padding-bottom: 60px;
+        padding-bottom: 70px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .about-tabs[data-section-id="{{ section.id }}"] .timeline-year {
-        font-size: 42px;
+        grid-template-columns: 1fr 1fr;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-card h3 {
-        font-size: 28px;
+        font-size: 24px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .culture-content {
         padding: 40px 24px;
+        order:2;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
@@ -1595,6 +1725,16 @@
         max-width: none;
       }
     }
+
+    @media (max-width: 575px){
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider .swiper-slide {
+        padding: 25px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
+        grid-template-columns:100%;
+      }
+    }
+
   </style>
 
   <div class="tabs-wrapper">
@@ -2193,89 +2333,91 @@
     <!-- Careers -->
     <div class="tab-panel" id="careers-{{ section.id }}" role="tabpanel">
       <section class="careers-section" data-careers>
-        <div class="container">
-          <div class="careers-overview" data-careers-overview>
-            <div class="careers-why">
+        <div class="careers-overview" data-careers-overview>
+          <div class="careers-why">
+            <div class="carrers-why-content">
               {% if section.settings.careers_why_heading != blank %}
                 <h2>{{ section.settings.careers_why_heading | escape }}</h2>
               {% endif %}
               {% if section.settings.careers_why_text != blank %}
                 <p>{{ section.settings.careers_why_text | escape | newline_to_br }}</p>
               {% endif %}
-              {% if section.settings.careers_image != blank or section.settings.careers_why_heading != blank %}
-                <div class="careers-hero-image">
-                  {% if section.settings.careers_image != blank %}
-                    {{
-                      section.settings.careers_image
-                      | image_url: width: 1600
-                      | image_tag:
-                        loading: 'lazy',
-                        widths: '600, 900, 1200, 1600',
-                        sizes: '(min-width: 992px) 900px, 92vw',
-                        alt: section.settings.careers_why_heading
-                    }}
-                  {% else %}
-                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {% endif %}
-                </div>
-              {% endif %}
             </div>
-
-            <div class="careers-positions">
-              <div class="careers-positions-intro">
-                {% if section.settings.careers_positions_heading != blank %}
-                  <h2>{{ section.settings.careers_positions_heading | escape }}</h2>
-                {% endif %}
-                {% if section.settings.careers_positions_subheading != blank %}
-                  <p>{{ section.settings.careers_positions_subheading | escape }}</p>
+            {% if section.settings.careers_image != blank or section.settings.careers_why_heading != blank %}
+              <div class="careers-hero-image">
+                {% if section.settings.careers_image != blank %}
+                  {{
+                    section.settings.careers_image
+                    | image_url: width: 1600
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '600, 900, 1200, 1600',
+                      sizes: '(min-width: 992px) 900px, 92vw',
+                      alt: section.settings.careers_why_heading
+                  }}
+                {% else %}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
                 {% endif %}
               </div>
+            {% endif %}
+          </div>
 
-              {% if career_blocks.size > 0 %}
-                <div class="careers-list">
-                  {% for block in career_blocks %}
-                    <button
-                      type="button"
-                      class="career-card"
-                      data-open-career="{{ block.id }}"
-                      {{ block.shopify_attributes }}
-                    >
-                      <span class="career-card-icon" aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                          <path d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                          <rect x="3.5" y="6.5" width="17" height="13" rx="2.5" stroke="currentColor" stroke-width="1.8"/>
-                          <path d="M3.5 11.5h17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                        </svg>
-                      </span>
-                      <div class="career-card-meta">
-                        {% if block.settings.location != blank %}
-                          <span class="career-card-location">{{ block.settings.location | escape }}</span>
-                        {% endif %}
-                        {% if block.settings.title != blank %}
-                          <span class="career-card-title">{{ block.settings.title | escape }}</span>
-                        {% endif %}
-                      </div>
-                      {% if block.settings.description != blank %}
-                        <span class="career-card-text">{{ block.settings.description | escape }}</span>
-                      {% else %}
-                        <span class="career-card-text"></span>
-                      {% endif %}
-                      <span class="career-card-arrow" aria-hidden="true">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
-                          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                      </span>
-                    </button>
-                  {% endfor %}
-                </div>
-              {% elsif section.settings.careers_why_heading == blank and section.settings.careers_positions_heading == blank %}
-                <div class="tab-placeholder">
-                  <h2>{{ section.settings.tab_careers_label | escape }}</h2>
-                  <p>{{ section.settings.placeholder_text | escape }}</p>
-                </div>
+          <div class="careers-positions">
+            <div class="careers-positions-intro">
+              {% if section.settings.careers_positions_heading != blank %}
+                <h2>{{ section.settings.careers_positions_heading | escape }}</h2>
+              {% endif %}
+              {% if section.settings.careers_positions_subheading != blank %}
+                <p>{{ section.settings.careers_positions_subheading | escape }}</p>
               {% endif %}
             </div>
+
+            {% if career_blocks.size > 0 %}
+              <div class="careers-list">
+                {% for block in career_blocks %}
+                  <button
+                    type="button"
+                    class="career-card"
+                    data-open-career="{{ block.id }}"
+                    {{ block.shopify_attributes }}
+                  >
+                    <span class="career-card-icon" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="38" height="35" viewBox="0 0 38 35" fill="none">
+                        <path d="M9.5 35H28.5V7.77778H26.6V4.86111C26.6 3.57186 26.0996 2.33542 25.2088 1.42379C24.318 0.512151 23.1098 0 21.85 0H16.15C14.8902 0 13.682 0.512151 12.7912 1.42379C11.9004 2.33542 11.4 3.57186 11.4 4.86111V7.77778H9.5V35ZM15.2 4.86111C15.2 4.60326 15.3001 4.35597 15.4782 4.17365C15.6564 3.99132 15.898 3.88889 16.15 3.88889H21.85C22.102 3.88889 22.3436 3.99132 22.5217 4.17365C22.6999 4.35597 22.8 4.60326 22.8 4.86111V7.77778H15.2V4.86111Z" fill="white"/>
+                        <path d="M32.3 7.77778V35C33.8117 35 35.2615 34.3854 36.3305 33.2915C37.3995 32.1975 38 30.7138 38 29.1667V13.6111C38 12.064 37.3995 10.5803 36.3305 9.48632C35.2615 8.39236 33.8117 7.77778 32.3 7.77778Z" fill="white"/>
+                        <path d="M5.7 7.77778C4.18827 7.77778 2.73845 8.39236 1.66949 9.48632C0.600534 10.5803 0 12.064 0 13.6111V29.1667C0 30.7138 0.600534 32.1975 1.66949 33.2915C2.73845 34.3854 4.18827 35 5.7 35V7.77778Z" fill="white"/>
+                      </svg>
+                    </span>
+                    <div class="career-card-meta">
+                      {% if block.settings.location != blank %}
+                        <span class="career-card-location">{{ block.settings.location | escape }}</span>
+                      {% endif %}
+                      {% if block.settings.title != blank %}
+                        <span class="career-card-title">{{ block.settings.title | escape }}</span>
+                      {% endif %}
+                    </div>
+                    {% if block.settings.description != blank %}
+                      <span class="career-card-text">{{ block.settings.description | escape }}</span>
+                    {% else %}
+                      <span class="career-card-text"></span>
+                    {% endif %}
+                    <span class="career-card-arrow" aria-hidden="true">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" focusable="false">
+                        <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                {% endfor %}
+              </div>
+            {% elsif section.settings.careers_why_heading == blank and section.settings.careers_positions_heading == blank %}
+              <div class="tab-placeholder">
+                <h2>{{ section.settings.tab_careers_label | escape }}</h2>
+                <p>{{ section.settings.placeholder_text | escape }}</p>
+              </div>
+            {% endif %}
           </div>
+        </div>
+        <div class="container">
 
           {% if career_blocks.size > 0 %}
             <div class="careers-detail" data-careers-detail>

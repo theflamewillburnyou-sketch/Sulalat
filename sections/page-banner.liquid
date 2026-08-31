@@ -54,7 +54,7 @@
     }
 
     .page-banner[data-section-id="{{ section.id }}"] .page-banner-content {
-      max-width: 560px;
+      max-width: 650px;
       color: #fff;
     }
 
@@ -73,9 +73,14 @@
       margin-bottom: 20px;
       color: #ffffff;
       text-align: left;
-      font-size: var(--page-banner-heading-size, 65px);
-      line-height: var(--page-banner-heading-line-height, 70px);
+      font-size: clamp(32px, 3vw, 65px);
+      line-height: 1.2;
       font-weight: 400;
+    }
+
+    .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading p{
+      font:inherit;
+      color:inherit;
     }
 
     .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1 p,
@@ -100,11 +105,11 @@
         padding-bottom: 60px;
       }
 
-      .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
+      {% comment %} .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
       .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading {
         font-size: var(--page-banner-heading-size-mobile, 40px);
         line-height: var(--page-banner-heading-line-height-mobile, 44px);
-      }
+      } {% endcomment %}
     }
   </style>
 

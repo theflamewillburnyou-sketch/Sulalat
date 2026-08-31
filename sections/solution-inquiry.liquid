@@ -51,7 +51,7 @@
       color: #000;
       font-size: clamp(32px, 3.2vw, 48px);
       line-height: 1.15;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content > p {
@@ -75,7 +75,7 @@
       height: 52px;
       padding: 0 22px;
       border: 1px solid #e0e0e0;
-      border-radius: 14px;
+      border-radius: 999px;
       background: #fff;
       font-family: var(--body-font-family);
       font-size: 15px;
@@ -91,6 +91,7 @@
       background-position: right 20px center;
       padding-right: 48px;
       color: #9a9a9a;
+      font-weight: 400;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select:valid {
@@ -115,14 +116,14 @@
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse {
       position: absolute;
-      right: 8px;
+      right: 0;
       top: 50%;
       transform: translateY(-50%);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 96px;
-      height: 36px;
+      min-width: 140px;
+      height: 100%;
       padding: 0 18px;
       border-radius: 999px;
       background: #dff5eb;
@@ -130,6 +131,7 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
+      border: 1px solid rgb(83 194 149 / 20%);
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse input {

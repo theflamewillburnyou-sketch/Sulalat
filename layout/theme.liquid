@@ -312,12 +312,12 @@
     {%- endif -%}
   {%- endstyle -%}
   <script src="{{ 'main.js' | asset_url }}" defer="defer"></script>
-  {%- if request.page_type == 'index' -%}
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer="defer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer="defer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer="defer"></script>
-    <script src="{{ 'custom-new.js' | asset_url }}" defer="defer"></script>
-  {%- endif -%}
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer="defer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer="defer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/split-type@0.3.4/umd/index.min.js" defer="defer"></script>
+  <script src="{{ 'custom-new.js' | asset_url }}" defer="defer"></script>
+  {% comment %} {%- if request.page_type == 'index' -%}
+  {%- endif -%} {% endcomment %}
 
   {%- unless settings.body_font.system? -%}
     <link rel="preload" href="{{ settings.body_font | font_url }}" as="font" type="font/woff2" crossorigin fetchpriority="high">

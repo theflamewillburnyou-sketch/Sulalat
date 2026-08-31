@@ -2,18 +2,27 @@
   assign slide_blocks = section.blocks | where: 'type', 'slide'
   assign media_position = section.settings.media_position | default: 'right'
   assign layout_style = section.settings.layout_style | default: 'split'
+  assign first_slide = slide_blocks.first
 -%}
 
 <section
   class="solution-showcase solution-showcase--{{ layout_style }} solution-showcase--media-{{ media_position }}"
   data-section-id="{{ section.id }}"
   data-solution-showcase
+  data-media-position="{{ media_position }}"
 >
   <style>
     .solution-showcase[data-section-id="{{ section.id }}"] {
       padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
       font-family: var(--body-font-family);
       background: {{ section.settings.background_color }};
+      --slide-gap: 24px;
+      --slide-radius: 24px;
+    }
+
+    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined {
+      --slide-gap: 0px;
+      --slide-radius: 0px;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .container {
@@ -30,63 +39,82 @@
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-intro h2 {
       margin: 0 0 16px;
-      color: #000;
-      font-size: clamp(36px, 4vw, 56px);
+      color: #141211;
+      font-size: clamp(24px, 4vw, 55px);
       line-height: 1.15;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-intro p {
-      margin: 0;
+      margin: 0 auto;
       font-size: 16px;
       line-height: 26px;
       letter-spacing: -0.01em;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
+      max-width: 510px;
     }
 
+    /* ==================================================================
+       SLIDER SHELL
+       Fixed-height, overflow hidden — clips the vertical exit/enter
+       motion of the content actor so it never spills outside the card.
+       ================================================================== */
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slider {
+      position: relative;
       overflow: hidden;
+      min-height: 420px;
     }
 
-    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-grid {
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-media {
-      order: 1;
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-content {
-      order: 2;
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-grid {
-      gap: 0;
-      overflow: hidden;
-      border-radius: 24px;
-      grid-template-columns: 1fr 1fr;
+    /* ==================================================================
+       THE TWO ACTORS
+       One content actor (40%) and one image actor (60%). These are the
+       ONLY elements GSAP ever animates `left` on, and the widths below
+       are the ONLY place width is declared — always a plain percentage
+       (0% / 40% / 60%), exactly like the working HTML demo. NEVER put
+       calc()/CSS-variable expressions on the animated `left`/width of
+       these two elements: GSAP's tween engine can't reliably parse a
+       calc() target and will stutter/snap mid-animation.
+       The visual gap + rounded corners live on a separate, always-
+       static inner wrapper (below) so nothing animated ever touches
+       calc().
+       ================================================================== */
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-actor {
+      position: absolute;
+      top: 0;
+      height: 100%;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content {
+      width: 40%;
+      min-height: 420px;
+    }
+
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media {
+      width: 60%;
+    }
+
+    /* Static inner wrapper — never animated, holds the visual card
+       (background, radius, padding). Inset symmetrically by half the
+       gap on both sides so whichever side the actor swaps to, the gap
+       toward its neighbour is always correct. */
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content-inner,
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media-inner {
+      position: absolute;
+      inset: 0 calc(var(--slide-gap) / 2);
+      border-radius: var(--slide-radius);
+      overflow: hidden;
+    }
+
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content-inner {
       background: {{ section.settings.card_background }};
-      border-radius: 24px;
       padding: 48px 44px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 420px;
     }
 
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-content {
-      border-radius: 0;
-      min-height: 460px;
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media-inner {
+      background: #f3f3f3;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-tag {
@@ -109,9 +137,9 @@
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content h3 {
       margin: 0 0 18px;
       color: #000;
-      font-size: clamp(28px, 2.8vw, 42px);
+      font-size: clamp(22px, 2.5vw, 35px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content p {
@@ -119,7 +147,7 @@
       font-size: 16px;
       line-height: 26px;
       letter-spacing: -0.01em;
-      color: var(--brand-body-text, #535353);
+      color: #535353;
       max-width: 520px;
     }
 
@@ -127,25 +155,29 @@
       align-self: flex-start;
     }
 
-    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media {
-      border-radius: 24px;
-      overflow: hidden;
-      background: #f3f3f3;
-      min-height: 420px;
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-media {
-      border-radius: 0;
-      min-height: 460px;
-    }
-
-    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media img,
-    .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media svg.placeholder-svg {
+    /* two stacked image layers used for the crossfade — see JS comment 5.
+       Positioned relative to .solution-slide-media-inner (also static),
+       not the animated actor, so these never interact with the swap
+       tween either. */
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-media-layer {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      min-height: inherit;
+    }
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-media-layer img,
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-media-layer svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
+    }
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-media-layer[data-layer="a"] { z-index: 1; }
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-media-layer[data-layer="b"] { z-index: 2; opacity: 0; }
+
+    /* hidden server-rendered data store JS reads slide data from */
+    .solution-showcase[data-section-id="{{ section.id }}"] [data-solution-slides] {
+      display: none;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-footer {
@@ -160,7 +192,7 @@
       position: relative;
       flex: 1;
       max-width: 520px;
-      height: 3px;
+      height: 2px;
       background: #e5e5e5;
       border-radius: 999px;
       overflow: hidden;
@@ -203,6 +235,11 @@
       color: #fff;
     }
 
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button svg {
       display: block;
     }
@@ -212,36 +249,55 @@
       display: none;
     }
 
+    /* ==================================================================
+       MOBILE FALLBACK
+       Below 992px the two actors stack instead of swapping sides, so
+       we drop absolute positioning in favor of a simple flex column.
+       The JS still runs the same content-exit / image-crossfade /
+       content-enter timeline — it just skips the horizontal `left`
+       tween (see isDesktop() check in the script).
+       ================================================================== */
     @media (max-width: 991px) {
-      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-grid,
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-grid,
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slider {
+        min-height: 0;
       }
 
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-media,
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-stack {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: var(--slide-gap);
+      }
+
+      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-media {
+        order: 1;
+      }
       .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--media-left .solution-slide-content {
-        order: unset;
+        order: 2;
       }
 
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-grid {
-        border-radius: 20px;
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-actor {
+        position: relative;
+        width: 100% !important;
+        height: auto;
       }
 
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-content,
-      .solution-showcase[data-section-id="{{ section.id }}"].solution-showcase--joined .solution-slide-media {
-        border-radius: 0;
-        min-height: 320px;
+      /* inner wrapper reverts to normal flow on mobile — no gap-inset
+         trick needed since the cards are already stacked, not swapped */
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content-inner,
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media-inner {
+        position: relative;
+        inset: auto;
       }
 
-      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content {
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content-inner {
         padding: 32px 28px;
         min-height: 0;
       }
 
-      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media {
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media-inner {
         min-height: 280px;
+        height: 280px;
       }
     }
 
@@ -285,51 +341,91 @@
     {% endif %}
 
     {% if slide_blocks.size > 0 %}
-      <div class="swiper solution-slider" data-solution-slider>
-        <div class="swiper-wrapper">
+      <div class="solution-slider" data-solution-slider>
+
+        <!-- visible stack: JS turns these two nodes into the swap actors -->
+        <div class="solution-slide-stack" data-solution-stack>
+
+          <!-- CONTENT ACTOR — outer box width fixed at a plain 40% in CSS,
+               this is the only element GSAP moves via `left`. The visual
+               card (background/padding/radius) lives on the static inner
+               wrapper so nothing animated ever touches calc(). -->
+          <div class="solution-actor solution-slide-content" data-solution-content {{ first_slide.shopify_attributes }}>
+            <div class="solution-slide-content-inner">
+              {% if first_slide.settings.tag != blank %}
+                <span class="solution-slide-tag" data-field="tag">{{ first_slide.settings.tag | escape }}</span>
+                <hr class="solution-slide-rule">
+              {% else %}
+                <span class="solution-slide-tag" data-field="tag" style="display:none;"></span>
+              {% endif %}
+              <h3 data-field="heading">{{ first_slide.settings.heading | escape }}</h3>
+              <p data-field="text">{{ first_slide.settings.text | escape | newline_to_br }}</p>
+              <a
+                class="primary-btn"
+                data-field="button"
+                href="{{ first_slide.settings.button_link | default: '#' }}"
+                {% if first_slide.settings.button_link == blank %}aria-disabled="true"{% endif %}
+                {% if first_slide.settings.button_label == blank %}style="display:none;"{% endif %}
+              >{{ first_slide.settings.button_label | escape }}</a>
+            </div>
+          </div>
+
+          <!-- IMAGE ACTOR — outer box width fixed at a plain 60% in CSS,
+               same reasoning as above. -->
+          <div class="solution-actor solution-slide-media" data-solution-media>
+            <div class="solution-slide-media-inner">
+              <div class="solution-media-layer" data-layer="a">
+                {% if first_slide.settings.image != blank %}
+                  {{
+                    first_slide.settings.image
+                    | image_url: width: 1400
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800, 1000, 1200, 1400',
+                      sizes: '(min-width: 992px) 50vw, 100vw',
+                      alt: first_slide.settings.heading
+                  }}
+                {% else %}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              <div class="solution-media-layer" data-layer="b"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- hidden data store: every slide's full markup, read once by JS -->
+        <div data-solution-slides>
           {% for block in slide_blocks %}
-            <div class="swiper-slide" {{ block.shopify_attributes }}>
-              <div class="solution-slide-grid">
-                <div class="solution-slide-content">
-                  {% if block.settings.tag != blank %}
-                    <span class="solution-slide-tag">{{ block.settings.tag | escape }}</span>
-                    <hr class="solution-slide-rule">
-                  {% endif %}
-                  {% if block.settings.heading != blank %}
-                    <h3>{{ block.settings.heading | escape }}</h3>
-                  {% endif %}
-                  {% if block.settings.text != blank %}
-                    <p>{{ block.settings.text | escape | newline_to_br }}</p>
-                  {% endif %}
-                  {% if block.settings.button_label != blank %}
-                    <a
-                      class="primary-btn"
-                      href="{{ block.settings.button_link | default: '#' }}"
-                      {% if block.settings.button_link == blank %}aria-disabled="true"{% endif %}
-                    >
-                      {{ block.settings.button_label | escape }}
-                    </a>
-                  {% endif %}
-                </div>
-                <div class="solution-slide-media">
-                  {% if block.settings.image != blank %}
-                    {{
-                      block.settings.image
-                      | image_url: width: 1400
-                      | image_tag:
-                        loading: 'lazy',
-                        widths: '400, 600, 800, 1000, 1200, 1400',
-                        sizes: '(min-width: 992px) 50vw, 100vw',
-                        alt: block.settings.heading
-                    }}
-                  {% else %}
-                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {% endif %}
-                </div>
+            <div
+              class="solution-slide-data"
+              data-tag="{{ block.settings.tag | escape }}"
+              data-heading="{{ block.settings.heading | escape }}"
+              data-button-label="{{ block.settings.button_label | escape }}"
+              data-button-link="{{ block.settings.button_link | default: '#' }}"
+              {{ block.shopify_attributes }}
+            >
+              <div data-slot="text">{{ block.settings.text | escape | newline_to_br }}</div>
+              <div data-slot="media">
+                {% if block.settings.image != blank %}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1400
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800, 1000, 1200, 1400',
+                      sizes: '(min-width: 992px) 50vw, 100vw',
+                      alt: block.settings.heading
+                  }}
+                {% else %}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
               </div>
             </div>
           {% endfor %}
         </div>
+
       </div>
 
       <div class="solution-footer">
@@ -354,92 +450,273 @@
 
   <script>
     (function () {
-      var section = document.querySelector('.solution-showcase[data-section-id="{{ section.id }}"]');
-      if (!section) return;
+      var sectionId = {{ section.id | json }};
 
-      var sliderEl = section.querySelector('[data-solution-slider]');
-      var progressBar = section.querySelector('[data-solution-progress]');
-      var prevBtn = section.querySelector('.solution-prev');
-      var nextBtn = section.querySelector('.solution-next');
-      var slider = null;
+      /* ================================================================
+         COMMENT 1 — HOW THE 40% / 60% WIDTHS ARE KEPT FIXED
+         ----------------------------------------------------------------
+         .solution-slide-content and .solution-slide-media (the two
+         "actors" GSAP moves) get a plain `width:40%` / `width:60%` in
+         CSS, declared once, with no calc()/CSS-variable involved. No
+         GSAP tween in this file ever lists `width` either, so the
+         split is physically incapable of drifting. The visual gap
+         between cards lives entirely on a separate, always-static
+         inner wrapper (.solution-slide-content-inner /
+         .solution-slide-media-inner) that GSAP never touches — keeping
+         calc() away from anything animated is what makes the swap
+         smooth instead of jumpy.
+         ================================================================ */
 
-      function setProgress(index, total) {
-        if (!progressBar || !total) return;
-        progressBar.style.width = (((index + 1) / total) * 100) + '%';
+      function initSolutionShowcase(root) {
+        if (!root || root.dataset.solutionInitialized === 'true') return;
+        root.dataset.solutionInitialized = 'true';
+
+        var sliderEl   = root.querySelector('[data-solution-slider]');
+        var stackEl    = root.querySelector('[data-solution-stack]');
+        var contentEl  = root.querySelector('[data-solution-content]');
+        var mediaEl    = root.querySelector('[data-solution-media]');
+        var dataStore  = root.querySelector('[data-solution-slides]');
+        var progressBar = root.querySelector('[data-solution-progress]');
+        var prevBtn    = root.querySelector('.solution-prev');
+        var nextBtn    = root.querySelector('.solution-next');
+
+        if (!sliderEl || !contentEl || !mediaEl || !dataStore) return;
+
+        var fldTag    = contentEl.querySelector('[data-field="tag"]');
+        var fldRule   = contentEl.querySelector('.solution-slide-rule');
+        var fldHeading = contentEl.querySelector('[data-field="heading"]');
+        var fldText   = contentEl.querySelector('[data-field="text"]');
+        var fldButton = contentEl.querySelector('[data-field="button"]');
+        var layerA    = mediaEl.querySelector('[data-layer="a"]');
+        var layerB    = mediaEl.querySelector('[data-layer="b"]');
+
+        /* ---- parse every slide out of the hidden Liquid-rendered store ---- */
+        var slides = Array.prototype.map.call(
+          dataStore.querySelectorAll('.solution-slide-data'),
+          function (el) {
+            return {
+              tag: el.getAttribute('data-tag') || '',
+              heading: el.getAttribute('data-heading') || '',
+              buttonLabel: el.getAttribute('data-button-label') || '',
+              buttonLink: el.getAttribute('data-button-link') || '#',
+              text: (el.querySelector('[data-slot="text"]') || {}).innerHTML || '',
+              mediaHTML: (el.querySelector('[data-slot="media"]') || {}).innerHTML || ''
+            };
+          }
+        );
+
+        if (!slides.length) return;
+
+        var index = 0;
+        var animating = false;
+        var gsapReady = false;
+
+        /* ---- media_position setting -> initial layout state ----
+           media_position "right" (default) means the image starts on
+           the right, i.e. the content actor starts in the left slot. */
+        var mediaPosition = root.getAttribute('data-media-position') || 'right';
+        var contentOnLeft = mediaPosition !== 'left';
+
+        function isDesktop() {
+          return window.matchMedia('(min-width: 992px)').matches;
+        }
+
+        /* ================================================================
+           COMMENT 2 — HOW THE TWO ELEMENTS SWAP POSITIONS
+           ----------------------------------------------------------------
+           Both actors are position:absolute inside .solution-slide-stack
+           on desktop. Slot A is `left:0%`; slot B is `left:60%` for the
+           content actor or `left:40%` for the image actor — always a
+           plain percentage, exactly matching the working HTML demo, so
+           GSAP's tween engine never has to parse a calc() expression.
+           Only the IMAGE actor's `left` is ever tweened — that's the
+           one physical horizontal slide. The content actor never slides
+           sideways: it exits upward/fades, gets teleported (0-duration)
+           to its new slot while invisible, then rises in from below.
+           ================================================================ */
+        function slotLeft(actor, onLeft) {
+          // plain percentages only — same as the working HTML demo.
+          // The gap is handled entirely by the static inner wrapper's
+          // CSS inset, so it never needs to appear here.
+          if (actor === 'content') return onLeft ? '0%' : '60%';
+          return onLeft ? '0%' : '40%';
+        }
+
+        function layoutActors(instant) {
+          if (!isDesktop()) {
+            gsap.set([contentEl, mediaEl], { clearProps: 'left,transform,opacity' });
+            return;
+          }
+          var contentLeft = slotLeft('content', contentOnLeft);
+          var mediaLeft = slotLeft('image', !contentOnLeft);
+          if (instant) {
+            gsap.set(contentEl, { left: contentLeft, y: 0, opacity: 1 });
+            gsap.set(mediaEl, { left: mediaLeft });
+          }
+        }
+
+        function fillFields(data) {
+          if (fldTag) {
+            fldTag.textContent = data.tag;
+            var hasTag = data.tag !== '';
+            fldTag.style.display = hasTag ? '' : 'none';
+            if (fldRule) fldRule.style.display = hasTag ? '' : 'none';
+          }
+          if (fldHeading) fldHeading.textContent = data.heading;
+          if (fldText) fldText.innerHTML = data.text;
+          if (fldButton) {
+            fldButton.textContent = data.buttonLabel;
+            fldButton.href = data.buttonLink;
+            fldButton.style.display = data.buttonLabel ? '' : 'none';
+          }
+        }
+
+        function updateProgress() {
+          if (!progressBar) return;
+          progressBar.style.width = (((index + 1) / slides.length) * 100) + '%';
+        }
+
+        /* ================================================================
+           COMMENT 5 — HOW THE IMAGE CROSSFADE WORKS
+           ----------------------------------------------------------------
+           .solution-slide-media holds two stacked layer divs, layer "a"
+           (z-index 1, opacity 1) and layer "b" (z-index 2, opacity 0),
+           each rendering the Shopify-generated responsive <img> markup
+           (full srcset/sizes preserved) for one slide. To change the
+           picture: drop the next slide's markup into layer b, tween its
+           opacity 0 -> 1, then once finished copy that markup into
+           layer a and reset layer b's opacity to 0 — a true crossfade
+           between old and new art, not a hard swap.
+           ================================================================ */
+        function crossfadeImage(nextData, tl, atTime) {
+          layerB.innerHTML = nextData.mediaHTML;
+          gsap.set(layerB, { opacity: 0 });
+          tl.to(layerB, { opacity: 1, duration: 0.5, ease: 'power2.out' }, atTime);
+          tl.call(function () {
+            layerA.innerHTML = layerB.innerHTML;
+            gsap.set(layerB, { opacity: 0 });
+          }, [], atTime + 0.5);
+        }
+
+        /* ================================================================
+           COMMENT 3 & 4 — HOW NEXT ALTERNATES / HOW PREVIOUS REVERSES
+           ----------------------------------------------------------------
+           Only two layouts exist, so every click — NEXT or PREVIOUS —
+           flips `contentOnLeft`. That single flip is what makes NEXT
+           clicks alternate content|image -> image|content -> ... and
+           it's also exactly what makes PREVIOUS "reverse" the layout,
+           since toggling is its own inverse. NEXT and PREVIOUS only
+           differ in which slide index they move to (+1 vs -1).
+           ================================================================ */
+        function goTo(direction) {
+          if (animating || slides.length < 2) return;
+          animating = true;
+          if (prevBtn) prevBtn.disabled = true;
+          if (nextBtn) nextBtn.disabled = true;
+
+          var nextIndex = (index + direction + slides.length) % slides.length;
+          var wasContentOnLeft = contentOnLeft;
+          contentOnLeft = !contentOnLeft;
+          var desktop = isDesktop();
+
+          var tl = gsap.timeline({
+            onComplete: function () {
+              index = nextIndex;
+              updateProgress();
+              animating = false;
+              if (prevBtn) prevBtn.disabled = false;
+              if (nextBtn) nextBtn.disabled = false;
+            }
+          });
+
+          // 1) content div: move up + fade out (the whole container)
+          tl.to(contentEl, { y: -100, opacity: 0, duration: 0.55, ease: 'power3.in' }, 0);
+
+          // 2) + 3) image div physically slides across; width is locked
+          //    by CSS the entire time (see COMMENT 1)
+          if (desktop) {
+            var mediaOldLeft = slotLeft('image', !wasContentOnLeft);
+            var mediaNewLeft = slotLeft('image', !contentOnLeft);
+            tl.fromTo(mediaEl,
+              { left: mediaOldLeft },
+              { left: mediaNewLeft, duration: 0.9, ease: 'power3.inOut' },
+              0
+            );
+          }
+
+          // 5) crossfade the picture while the panel is mid-slide
+          crossfadeImage(slides[nextIndex], tl, 0.2);
+
+          // 6) content has exited -> relocate it (invisible) to its new
+          //    slot, slightly below rest position, and swap in new copy
+          var newContentLeft = desktop ? slotLeft('content', contentOnLeft) : null;
+          tl.add(function () {
+            if (desktop) gsap.set(contentEl, { left: newContentLeft });
+            gsap.set(contentEl, { y: 100, opacity: 0 });
+            fillFields(slides[nextIndex]);
+          }, 0.55);
+
+          // 7) new content rises into place while fading in
+          tl.to(contentEl, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 0.55);
+        }
+
+        function bindNav() {
+          if (nextBtn) nextBtn.addEventListener('click', function () { goTo(1); });
+          if (prevBtn) prevBtn.addEventListener('click', function () { goTo(-1); });
+          window.addEventListener('resize', function () {
+            if (!animating) layoutActors(true);
+          });
+        }
+
+        function boot() {
+          gsapReady = true;
+          layoutActors(true);
+          updateProgress();
+          bindNav();
+        }
+
+        loadGsap(boot);
       }
 
-      function loadSwiper(callback) {
-        if (window.Swiper) {
+      /* dynamically loads GSAP core once per page, shared safely across
+         multiple instances of this section on the same page. Uses a
+         global callback queue instead of a single script 'load'
+         listener, so a second (or third) section can never miss the
+         load event if the first section's script already finished
+         loading by the time it registers. */
+      function loadGsap(callback) {
+        if (window.gsap) {
           callback();
           return;
         }
+        window.__solutionGsapQueue = window.__solutionGsapQueue || [];
+        window.__solutionGsapQueue.push(callback);
 
-        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
-          var link = document.createElement('link');
-          link.rel = 'stylesheet';
-          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
-          document.head.appendChild(link);
-        }
+        if (window.__solutionGsapLoading) return;
+        window.__solutionGsapLoading = true;
 
         var script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
-        script.onload = callback;
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+        script.onload = function () {
+          var queue = window.__solutionGsapQueue || [];
+          window.__solutionGsapQueue = [];
+          queue.forEach(function (cb) { cb(); });
+        };
         document.head.appendChild(script);
       }
 
-      function initSlider() {
-        if (!sliderEl || !window.Swiper) return;
-
-        if (sliderEl.swiper) {
-          sliderEl.swiper.destroy(true, true);
-        }
-
-        slider = new window.Swiper(sliderEl, {
-          slidesPerView: 1,
-          spaceBetween: 0,
-          speed: 700,
-          grabCursor: true,
-          on: {
-            init: function () {
-              setProgress(this.activeIndex, this.slides.length);
-            },
-            slideChange: function () {
-              setProgress(this.activeIndex, this.slides.length);
-            }
-          }
-        });
-
-        if (prevBtn) {
-          prevBtn.onclick = function () {
-            slider.slidePrev();
-          };
-        }
-        if (nextBtn) {
-          nextBtn.onclick = function () {
-            slider.slideNext();
-          };
-        }
+      function boot(scope) {
+        var root = (scope || document).querySelector(
+          '.solution-showcase[data-section-id="' + sectionId + '"]'
+        );
+        if (root) initSolutionShowcase(root);
       }
 
-      loadSwiper(initSlider);
+      boot(document);
 
       document.addEventListener('shopify:section:load', function (e) {
-        if (e.target && e.target.querySelector('.solution-showcase[data-section-id="{{ section.id }}"]')) {
-          section = document.querySelector('.solution-showcase[data-section-id="{{ section.id }}"]');
-          sliderEl = section.querySelector('[data-solution-slider]');
-          progressBar = section.querySelector('[data-solution-progress]');
-          prevBtn = section.querySelector('.solution-prev');
-          nextBtn = section.querySelector('.solution-next');
-          loadSwiper(initSlider);
-        }
-      });
-
-      document.addEventListener('shopify:section:unload', function (e) {
-        if (e.target && e.target.querySelector('.solution-showcase[data-section-id="{{ section.id }}"]')) {
-          if (slider) {
-            slider.destroy(true, true);
-            slider = null;
-          }
+        if (e.target && e.target.querySelector('.solution-showcase[data-section-id="' + sectionId + '"]')) {
+          boot(e.target);
         }
       });
     })();

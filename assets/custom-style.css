@@ -5,6 +5,9 @@
     --theme-clr: #53C295;
 }
 /* global  */
+body{
+  background-color:#fff;
+}
 body .container {
     width: 100%;
     max-width: 1440px;
@@ -241,7 +244,6 @@ footer .footer__main .footer-col ul.footer-menu__links {
 footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     margin: 0;
 }
-
 .footer .social li a.social__link {
     padding: 0;
     color: #000;
