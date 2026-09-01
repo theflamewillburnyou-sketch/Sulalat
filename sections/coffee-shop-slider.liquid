@@ -297,9 +297,13 @@
           grabCursor: true,
           watchSlidesProgress: true,
           initialSlide: useInfinite ? realSlideCount : 0,
-          {% comment %} autoplay: autoplayEnabled
-            ? { delay: autoplayDelay, disableOnInteraction: false, pauseOnMouseEnter: true }
-            : false, {% endcomment %}
+          autoplay: autoplayEnabled && useInfinite
+            ? {
+                delay: autoplayDelay,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true
+              }
+            : false,
           breakpoints: {
             0: { spaceBetween: 15 },
             768: { spaceBetween: 25 },
@@ -308,11 +312,20 @@
           on: {
             transitionEnd: function () {
               if (!useInfinite) return;
-              var index = this.activeIndex;
+              var swiper = this;
+              var index = swiper.activeIndex;
+              var jumped = false;
+
               if (index >= realSlideCount * 2) {
-                this.slideTo(index - realSlideCount, 0, false);
+                swiper.slideTo(index - realSlideCount, 0, false);
+                jumped = true;
               } else if (index < realSlideCount) {
-                this.slideTo(index + realSlideCount, 0, false);
+                swiper.slideTo(index + realSlideCount, 0, false);
+                jumped = true;
+              }
+
+              if (jumped && autoplayEnabled && swiper.autoplay && !swiper.autoplay.running) {
+                swiper.autoplay.start();
               }
             }
           }

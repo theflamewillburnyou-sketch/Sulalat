@@ -226,10 +226,20 @@
   */
   store-header.header.header--overlay.is-scrolled,
   store-header.header.header--overlay.is-out {
-    /* background-color: rgba(20, 20, 20, 0.45) !important;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08); */
+    background-color: rgba(22, 18, 16, 0.55) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  store-header.header.header--overlay.is-scrolled .header__grid,
+  store-header.header.header--overlay.is-scrolled .main-menu,
+  store-header.header.header--overlay.is-scrolled .main-menu__content,
+  store-header.header.header--overlay.is-out .header__grid,
+  store-header.header.header--overlay.is-out .main-menu,
+  store-header.header.header--overlay.is-out .main-menu__content {
+    background: transparent !important;
+    background-color: transparent !important;
   }
 
   store-header.header.header--overlay.is-scrolled .main-menu,

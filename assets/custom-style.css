@@ -72,10 +72,14 @@ body .container {
     font-size: clamp(24px, 2vw, 36px) !important;
 }
 /* header start  */
-.shopify-section.cc-header:has(.is-scrolled) {
+.shopify-section.cc-header:has(.header--overlay.is-scrolled) {
     position: fixed;
-    background: #0000003f !important;
-    /* backdrop-filter:blur(20px); */
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 99;
+    background: transparent !important;
 }
 
 header .header__logo {
@@ -170,10 +174,15 @@ store-header.header.header--overlay.is-out .main-menu {
 store-header.header.is-scrolled.is-out .main-menu.main-menu--left-mob {
     padding: 0;
 }
-
+#search-bar tabbed-content.grow {
+  background-color: rgb(21 21 21 / 70%);
+}
+.predictive-search__scroller--suggestions .predictive-search__suggestions{
+  background-color: rgb(21 21 21 / 70%) !important;
+}
 .header .predictive-search {
-    background: #ffffff0f;
-    backdrop-filter: blur(12px);
+    background: #00000000;
+    /* backdrop-filter: blur(12px); */
 }
 
 body .header predictive-search[open] .search__input {
