@@ -511,7 +511,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     min-width: 0;
     height:auto!important;
     max-height: calc(var(--viewport-height, 100vh) - 10px);
-    min-height: min(80vh, calc(var(--viewport-height, 100vh) - 10px));
+    min-height: min(72vh, calc(var(--viewport-height, 100vh) - 10px));
     margin: 0;
     padding: 48px 24px calc(32px + env(safe-area-inset-bottom, 0px));
     overflow-x: hidden;
@@ -548,7 +548,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
   }
 
   .is-scrolled .main-menu__content {
-    top: 150px !important;
+    top: 250px !important;
   }
 
   .main-menu__content > nav {
@@ -780,6 +780,7 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     header .main-nav li.main-nav__item--dropdown ul.child-nav li a{
       font-size: 20px;
       text-align: center;
+      margin-left: -10px;
     }
     header .main-nav__child li.child-nav__item--toggle ul.main-nav__grandchild li a {
         font-size: 20px;
