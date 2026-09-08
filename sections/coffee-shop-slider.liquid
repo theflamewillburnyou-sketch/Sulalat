@@ -150,6 +150,11 @@
     }
 
     @media (max-width: 575px){
+      .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider img,
+      .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider svg.placeholder-svg {
+        height: 100%;
+        max-height:200px;
+      }
       .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn,
       .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
         padding: 11px 15px;

@@ -10,12 +10,20 @@ Please exercise caution as any changes made to this file may be overwritten.
 {% assign customer_json = customer.metafields.essential_loyalty.landing_page.value | json %}
 
 <style>
+  {%- comment -%}
+    ⚠️ A blank setting must emit NOTHING, not an empty declaration (#1216).
+    `--x: ;` is a VALID custom property with an empty value, so `var(--x, fallback)` substitutes the
+    EMPTY value rather than the fallback — the using declaration then dies at computed-value time.
+    That is why `border: 2px solid var(--essential-button-border-color)` produced no border at all
+    on every shop: the property was present, just empty. Only these four settings ship without a
+    schema default, so only these can be blank; the rest always carry a value.
+  {%- endcomment -%}
   :root {
-    --essential-heading-font-family: {{ s.heading_font_family }};
-    --essential-text-font-family: {{ s.text_font_family }};
+    {%- if s.heading_font_family != blank %}--essential-heading-font-family: {{ s.heading_font_family }};{% endif -%}
+    {%- if s.text_font_family != blank %}--essential-text-font-family: {{ s.text_font_family }};{% endif -%}
     --essential-heading-color: {{ s.heading_color }};
     --essential-text-color: {{ s.text_color }};
-    --essential-page-background-color: {{ s.page_background_color }};
+    {%- if s.page_background_color != blank %}--essential-page-background-color: {{ s.page_background_color }};{% endif -%}
     --essential-page-max-width: {{ s.page_max_width }}px;
     --essential-border-radius: {{ s.border_radius }}px;
     --essential-heading-font-size: {{ s.heading_font_size }}px;
@@ -27,7 +35,7 @@ Please exercise caution as any changes made to this file may be overwritten.
     --essential-button-text-color: {{ s.button_text_color }};
     --essential-button-hover-background-color: {{ s.button_hover_background_color }};
     --essential-button-hover-text-color: {{ s.button_hover_text_color }};
-    --essential-button-border-color: {{ s.button_border_color }};
+    {%- if s.button_border_color != blank %}--essential-button-border-color: {{ s.button_border_color }};{% endif -%}
     --essential-button-font-size: {{ s.button_font_size }}px;
     --essential-button-padding-x: {{ s.button_padding_x }}px;
     --essential-button-padding-y: {{ s.button_padding_y }}px;

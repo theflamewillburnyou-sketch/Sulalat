@@ -130,11 +130,18 @@
       .certifications[data-section-id="{{ section.id }}"] .logo-item {
         width: calc(var(--certifications-logo-width) * 0.7);
       }
+      
     }
 
     @media (max-width: 575px){
       .certifications[data-section-id="{{ section.id }}"] .logo-item {
         width: 110px;
+      }
+      .certifications[data-section-id="{{ section.id }}"] .logo-track {
+        gap:80px;
+      }
+      .certifications[data-section-id="{{ section.id }}"] .logo-track {
+        animation: marquee-{{ section.id }} var(--certifications-animation-duration) linear infinite;
       }
     }
   </style>

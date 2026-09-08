@@ -232,7 +232,7 @@
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  store-header.header.header--overlay.is-scrolled .header__grid,
+  /* store-header.header.header--overlay.is-scrolled .header__grid,
   store-header.header.header--overlay.is-scrolled .main-menu,
   store-header.header.header--overlay.is-scrolled .main-menu__content,
   store-header.header.header--overlay.is-out .header__grid,
@@ -240,7 +240,7 @@
   store-header.header.header--overlay.is-out .main-menu__content {
     background: transparent !important;
     background-color: transparent !important;
-  }
+  } */
 
   store-header.header.header--overlay.is-scrolled .main-menu,
   store-header.header.header--overlay.is-out .main-menu {
@@ -437,6 +437,7 @@
   .header-language-toggle__btn {
     font-weight: 300;
   }
+
 {%- endstyle -%}
 
 <store-header class="header bg-theme-bg text-theme-text {% if is_product_header %}header--product{% else %}header--overlay{% endif %}{% if section.settings.enable_sticky or search_is_minimised %} has-motion{% endif %}{% if search_is_minimised %} search-is-collapsed{% endif %}"

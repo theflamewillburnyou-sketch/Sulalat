@@ -242,6 +242,7 @@
       }
       .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
         font-size: 24px;
+        line-height: 32px;
       }
       .about-section[data-section-id="{{ section.id }}"] .section-title {
         margin-bottom: 40px;
@@ -255,10 +256,15 @@
     }
 
     @media (max-width: 575px){
+      .about-section[data-section-id="{{ section.id }}"] .about-slide-image {
+        object-fit: cover;
+        max-height:200px;
+        height:100%;
+      }
       .about-section[data-section-id="{{ section.id }}"] .about-right{
-          display: flex;
-          flex-direction: column-reverse;
-          gap: 20px;
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 20px;
       }
 
       .about-section[data-section-id="{{ section.id }}"] .about-grid {

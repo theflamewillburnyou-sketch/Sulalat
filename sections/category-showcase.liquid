@@ -276,6 +276,9 @@
     }
 
     @media (max-width: 575px) {
+      .categories-sec[data-section-id="{{ section.id }}"] .section-title p {
+        line-height: 30px;
+      }
       .categories-sec[data-section-id="{{ section.id }}"] .category-card h4 {
         font-size: 18px;
         margin-bottom:10px;
@@ -294,7 +297,7 @@
 
     @media (max-width: 480px){
       .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
-        width: 185px;
+        width: 215px;
       }
     }
   </style>

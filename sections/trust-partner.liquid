@@ -45,7 +45,7 @@
     }
 
     .trust-partner[data-section-id="{{ section.id }}"] .section-title p {
-      color: var(--trust-text-color);
+      color: #141211;
       font-size: var(--trust-body-size);
       line-height: 1.5;
       letter-spacing: -0.01em;
@@ -139,6 +139,14 @@
      .trust-partner[data-section-id="{{ section.id }}"] .logo-item {
         width: calc(var(--trust-logo-width) * 0.7);
         --trust-logo-width: 160px;
+      }
+      .trust-partner[data-section-id="{{ section.id }}"] .section-title p {
+        line-height: 30px;
+      }
+
+      .trust-partner[data-section-id="{{ section.id }}"] .logo-track {
+        animation: marquee-{{ section.id }} var(--trust-animation-duration) linear infinite;
+       --trust-animation-duration:20s;
       }
     }
   </style>

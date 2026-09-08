@@ -254,6 +254,9 @@
       }
       .blog-section[data-section-id="{{ section.id }}"] .blog-content p {
         font-size: 16px;
+        letter-spacing: -1%;
+        line-height: 28px;
+        color: #000;
       }
       .blog-section[data-section-id="{{ section.id }}"] .blog-grid {
           gap: 40px;
@@ -300,18 +303,22 @@
       .blog-section[data-section-id="{{ section.id }}"] .section-title {
           margin-bottom: 20px;
       }
+      .blog-section[data-section-id="{{ section.id }}"] .section-title p {
+        line-height:30px;
+      }
       .blog-section[data-section-id="{{ section.id }}"] .featured-blog .blog-image {
         width: 100%;
-        min-height:350px;
+        min-height:0;
+        max-height: 200px;
       }
-      {% comment %} .blog-section[data-section-id="{{ section.id }}"] .primary-btn{
+      .blog-section[data-section-id="{{ section.id }}"] .primary-btn{
           width:100%;
-      } {% endcomment %}
+      } 
       .blog-section[data-section-id="{{ section.id }}"] .blog-content h3{
          margin-bottom: 12px;
       }
       .blog-section[data-section-id="{{ section.id }}"] .blog-content h3 a{
-        font-size:20px;
+        font-size:18px;
       }
      
       .blog-section[data-section-id="{{ section.id }}"] .blog-grid {
@@ -320,10 +327,12 @@
       }
       .blog-section[data-section-id="{{ section.id }}"] .blog-overlay{
         padding: 20px 35px;
+        display:none;
       }
 
       .blog-section[data-section-id="{{ section.id }}"] .blog-thumb {
         max-width: 160px;
+        display:none;
       }
 
       .blog-section[data-section-id="{{ section.id }}"] .blog-card {

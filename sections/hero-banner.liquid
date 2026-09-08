@@ -294,7 +294,7 @@
     color: #fff;
     font-size: 16px;
     letter-spacing: -0.01em;
-    line-height: 24px;
+    line-height: 28px;
     font-weight: 300;
     margin: 0 0 auto;
   }
@@ -331,7 +331,7 @@
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-warp {
-      align-items: end;
+      align-items:end;
       padding-bottom: 30px;
     }
 
@@ -351,19 +351,24 @@
   @media screen and (max-width: 575px){
     .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
         font-size: 30px;
-        margin-bottom: 160px;
-        max-width: 230px;
+        {% comment %} margin-bottom: 160px; {% endcomment %}
+        margin-bottom: 40px;
+        max-width: 100%;
     }
     .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
       color: #fff;
       font-size: 18px;
       font-weight: 400;
+      letter-spacing: -3%;
     }
 
     .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi {
       gap: 10px;
       padding: 12px;
       font-size: 15px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -372,7 +377,8 @@
         gap: 20px;
     }
     .site-banner[data-section-id="{{ section.id }}"] .banner-card-img .navi span {
-      font-size:13px;
+      font-size:15px;
+      text-align:center;
     } 
 
     {% comment %} .site-banner[data-section-id="{{ section.id }}"] .banner-cards {
