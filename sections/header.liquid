@@ -247,15 +247,19 @@
     border-bottom-color: transparent;
   }
 
-  /* Never collapse nav on overlay pages — keep scroll-up look when scrolling down */
+  /* Hide full sticky header on scroll down; reveal on scroll up */
   @media (min-width: 769px) {
-    .cc-header--sticky store-header.header.header--overlay.is-out {
-      margin-bottom: 0 !important;
+    .shopify-section.cc-header.cc-header--sticky {
+      transition: transform 0.3s ease;
     }
 
-    .cc-header--sticky store-header.header.header--overlay.is-out .main-menu {
-      padding-top: 40px !important;
-      border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    .shopify-section.cc-header.cc-header--sticky:has(store-header.is-out) {
+      transform: translateY(-100%);
+      pointer-events: none;
+    }
+
+    .cc-header--sticky store-header.header.header--overlay.is-out {
+      margin-bottom: 0 !important;
     }
 
     .cc-header--sticky store-header.header.header--overlay.is-out .main-menu__content {
@@ -265,8 +269,7 @@
       visibility: visible !important;
     }
 
-    .cc-header--sticky store-header.header.header--overlay.is-scrolled .main-menu,
-    .cc-header--sticky store-header.header.header--overlay.is-out .main-menu {
+    .cc-header--sticky store-header.header.header--overlay.is-scrolled .main-menu {
       padding-top: 20px;
       padding-bottom: 20px;
     }
@@ -389,7 +392,7 @@
       width: 100%;
     }
 
-    /* Keep full sticky header — do not collapse nav (avoids white gap) */
+    /* Keep full header height while hidden so scroll-up reveals both rows */
     .cc-header--sticky .header.header--product.is-out {
       margin-bottom: 0 !important;
     }
@@ -1107,21 +1110,10 @@
 
     var syncScrolled = function () {
       header.classList.toggle('is-scrolled', window.scrollY > 40);
-      /* Keep full glass header on scroll down (same as scroll up) */
-      if (header.classList.contains('is-out')) {
-        header.classList.remove('is-out');
-      }
     };
 
     syncScrolled();
     window.addEventListener('scroll', syncScrolled, { passive: true });
-
-    var observer = new MutationObserver(function () {
-      if (header.classList.contains('is-out')) {
-        header.classList.remove('is-out');
-      }
-    });
-    observer.observe(header, { attributes: true, attributeFilter: ['class'] });
   })();
 </script>
 

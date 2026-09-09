@@ -124,7 +124,59 @@ Please exercise caution as any changes made to this file may be overwritten.
     Alpine.store('shop', {{ metafield | json }})
 
     Alpine.store('customer', {
+      /* Two different questions, and conflating them WAS the #1282 bug: this flag answers "is
+         someone logged into Shopify", `payload` answers "do we have a loyalty record for them".
+         Every other storefront surface (floating widget, legacy proxy, customer accounts) creates
+         that record on first contact; this page only ever read a cached copy from the customer
+         metafield, so a logged-in non-member rendered `referral_code=undefined` and a tier bar with
+         the same tier at both ends, on every reload, forever. */
+      hasShopifyCustomer: {% if customer %}true{% else %}false{% endif %},
+      shopifyCustomerId: {% if customer %}{{ customer.id }}{% else %}null{% endif %},
       payload: {% if customer %}{{ customer_json }}{% else %}null{% endif %},
+      /* True only while the first bootstrap request is in flight. Blocks use it to render NEITHER
+         the member nor the non-member state for that moment, rather than flashing "join" at someone
+         who is one request away from being a member. */
+      bootstrapping: false,
+      init() {
+        /* Alpine calls this when the store is registered. Nothing else could break the cycle:
+           refresh() is otherwise only called by the earn/redeem blocks after a successful action,
+           and those already require a customer record to exist. */
+        if (!this.hasShopifyCustomer || this.payload !== null) return;
+        /* ⚠️ This CHECKS a stamp; it does not write one. The first cut stamped "bootstrapped"
+           before the request and skipped on any later load, which broke the exact flow this whole
+           change exists for: a merchant created a second account in the same browser, the stamp
+           from the first one was still there, no request was made, and the page showed the join CTA
+           to a logged-in customer. Measured on 1820ab-83: TWO new accounts, ONE proxy call.
+           It broke a plain reload too — the metafield write is async, so the second load of a
+           brand-new customer still has no payload and needed the request just as much.
+           Only a bootstrap that RETURNED NOTHING stamps (see refresh), and the stamp is per
+           customer, so one unsyncable customer cannot mute the next one. */
+        try {
+          if (sessionStorage.getItem(this.stampKey())) {
+            /* ⚠️ `bootstrapping` MUST stay true on this path. Blocks read
+               `!authenticated() && !bootstrapping` as "show the join CTA", so returning with it
+               false tells a logged-in customer to create an account — byte for byte the symptom
+               this change exists to remove, reached from a stamped failure instead of a missing
+               request. Unknown state renders neither branch, which is the honest answer. */
+            this.bootstrapping = true;
+
+            return;
+          }
+        } catch (e) { /* storage blocked (private mode) — just do the request */ }
+        this.refresh();
+      },
+      /* Per CUSTOMER, not per session: the session is shared by everyone who logs in on this
+         browser, which is precisely how the first version failed. */
+      stampKey() {
+        return 'essential_loyalty_bootstrap_failed:' + this.shopifyCustomerId;
+      },
+      stamp(failed) {
+        try {
+          failed
+            ? sessionStorage.setItem(this.stampKey(), '1')
+            : sessionStorage.removeItem(this.stampKey());
+        } catch (e) { /* storage blocked — nothing to remember, every load simply retries */ }
+      },
       authenticated() {
         return this.payload !== null;
       },
@@ -141,11 +193,49 @@ Please exercise caution as any changes made to this file may be overwritten.
         return this.payload.points;
       },
       refresh() {
-        if (!this.payload) return;
+        /* Gated on the SHOPIFY customer, not on `payload`. The old `if (!this.payload) return`
+           made this unreachable in exactly the case that needed it: no metafield meant no payload,
+           which meant the one call that would have created the record was never made. A genuinely
+           logged-out visitor still issues no request. */
+        if (!this.hasShopifyCustomer) return;
+        this.bootstrapping = true;
         return fetch(HoneyProxyPrefix + '/proxy/api/customer.json')
           .then(response => response.json())
-          .then(({ data }) => {
-            this.payload = { ...data };
+          .then(json => {
+            /* ⚠️ An `{"errors": …}` body has NO `data` key at all — ProxyAPIController answers a
+               bad proxy signature or an unknown shop that way. Destructuring it yields `undefined`,
+               which becomes `null`, which would be recorded as "this customer cannot be resolved":
+               a statement about the REQUEST dressed up as one about the customer. Treated like a
+               rejected fetch instead — state stays unknown, nothing is stamped, the next load
+               tries again. */
+            if (!json || !('data' in json)) return;
+
+            /* `json.data || null`, NEVER a spread: the endpoint answers {"data": null} when the
+               request carries no logged_in_customer_id, and spreading null yields {} — which is not
+               null, so authenticated() would start returning true for a logged-out visitor and
+               points() would return undefined. */
+            this.payload = json.data || null;
+            /* THE only "stop asking" signal, and a definitive one: the endpoint resolved the
+               request and had no customer to give (deleted in Shopify, a sync that keeps failing).
+               A payload CLEARS any earlier stamp, so nothing transient becomes permanent. */
+            this.stamp(this.payload === null);
+            this.bootstrapping = false;
+          })
+          .catch(() => {
+            /* ⚠️ Deliberately leaves `bootstrapping` TRUE, and deliberately swallows. A rejected
+               fetch (offline, 5xx, or an HTML error page that response.json() chokes on) tells us
+               NOTHING about whether this customer is a member — and blocks read
+               `!authenticated() && !bootstrapping` as "show the join CTA", so clearing the flag
+               here would invite a logged-in customer to create an account. Showing neither state is
+               the honest outcome. Without the catch this was also an unhandled rejection on the
+               merchant's storefront: init() calls refresh() fire-and-forget, unlike every earn/redeem
+               caller, which awaits it inside a try/catch.
+
+               ⚠️ And it does NOT stamp. The paragraph above says a rejection tells us nothing about
+               this customer; recording it as "unresolvable for the rest of the session" would
+               contradict exactly that, and one 502 during a deploy would then mute the bootstrap
+               and show the join CTA to a real member. The case the stamp exists for — a customer
+               who can never be resolved — arrives as a 200 with `"data": null`, handled above. */
           });
       },
       actionCompleted(id) {

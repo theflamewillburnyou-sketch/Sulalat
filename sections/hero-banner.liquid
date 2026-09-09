@@ -175,7 +175,8 @@
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img {
-    height: var(--banner-h, 900px);
+    {% comment %} height: var(--banner-h, 900px); {% endcomment %}
+    height: 100vh;
     overflow:hidden;
   }
 
