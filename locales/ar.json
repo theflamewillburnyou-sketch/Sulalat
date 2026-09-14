@@ -51,7 +51,7 @@
   },
   "newsletter": {
     "label": "البريد الإلكتروني",
-    "placeholder": "بريدك الإلكتروني",
+    "placeholder": "عنوان البريد الإلكتروني",
     "button_label": "اشترك",
     "success": "شكرًا لاشتراكك."
   },

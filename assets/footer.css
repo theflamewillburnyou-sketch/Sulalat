@@ -64,6 +64,10 @@
   transform-origin: left center;
   transform: scale(0.875);
 }
+
+[dir="rtl"] .footer-newsletter-bar .input-with-button .input {
+  transform-origin: right center;
+}
 .footer-newsletter-bar .input-with-button .btn--primary {
   margin: 0;
   border-radius: 80px;
@@ -111,6 +115,14 @@
   display: inline-flex;
   margin:0;
   gap:20px;
+}
+
+/* Keep phone numbers readable in Arabic/RTL (prevents +966 becoming 966+) */
+.footer a[href^="tel:"],
+.footer-block__text a[href^="tel:"] {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
 }
 
 .footer__main > .footer-col:first-child .disclosure {

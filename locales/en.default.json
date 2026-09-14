@@ -327,7 +327,7 @@
   },
   "newsletter": {
     "label": "Email",
-    "placeholder": "Your email",
+    "placeholder": "Email Address",
     "button_label": "Subscribe",
     "success": "Thank you for subscribing."
   },

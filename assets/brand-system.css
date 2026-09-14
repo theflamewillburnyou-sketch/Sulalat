@@ -26,8 +26,8 @@
   --brand-radius-lg: 20px;
   --brand-radius-pill: 80px;
   --brand-section-title-gap: 60px;
-  --brand-container-max: 1440px;
-  --brand-container-padding-x: 20px;
+  --brand-container-max: 1600px;
+  --brand-container-padding-x: 100px;
   --brand-section-padding: 100px;
   --brand-gap: 25px;
 }
@@ -163,4 +163,17 @@
   .brand-cta--secondary::before {
     transition: none;
   }
+}
+
+@media (max-width: 1200px){
+  :root{
+    --brand-container-padding-x: 30px;
+  }
+
+}
+@media (max-width: 1024px){
+  :root{
+    --brand-container-padding-x: 20px;
+  }
+
 }

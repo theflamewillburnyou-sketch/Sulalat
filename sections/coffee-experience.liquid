@@ -196,19 +196,36 @@
     }
 
     @media (max-width: 1440px){
-      .about-section[data-section-id="{{ section.id }}"] .about-container {
-        max-width: 1240px;
+      .about-section[data-section-id="{{ section.id }}"]{
+        padding:80px 0;
       }
+      {% comment %} .about-section[data-section-id="{{ section.id }}"] .about-container {
+        max-width: 1240px;
+      } {% endcomment %}
       .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
         font-size: clamp(26px, 2vw, 22px);
       }
     
     }
 
-    @media (max-width: 1200px){
-      .about-section[data-section-id="{{ section.id }}"] .about-container {
+    @media (max-width: 1366px){
+      {% comment %} .about-section[data-section-id="{{ section.id }}"] .about-container {
+        max-width: 1200px;
+      } {% endcomment %}
+    
+    }
+
+    @media (max-width: 1280px){
+      {% comment %} .about-section[data-section-id="{{ section.id }}"] .about-container {
         max-width: 1150px;
-      }
+      } {% endcomment %}
+    
+    }
+
+    @media (max-width: 1200px){
+      {% comment %} .about-section[data-section-id="{{ section.id }}"] .about-container {
+        max-width: 1050px;
+      } {% endcomment %}
        .about-section[data-section-id="{{ section.id }}"] .about-content h3 {
         font-size: 22px;
       }

@@ -242,6 +242,9 @@
     }
 
     @media (max-width: 1440px){
+      .categories-sec[data-section-id="{{ section.id }}"]{
+        padding-bottom:80px;
+      }
       .categories-sec[data-section-id="{{ section.id }}"] .category-card h4 {
         font-size: 18px;
       }
@@ -251,10 +254,17 @@
     
     }
 
+    @media (max-width: 1280px){
+      .categories-sec[data-section-id="{{ section.id }}"] .swiper.categorySlider .swiper-slide {
+          width: 200px;
+      }
+    }
+
     @media (max-width: 1200px){
       .categories-sec[data-section-id="{{ section.id }}"] .view-all h4 {
         font-size: 20px;
       }
+
     }
 
 
