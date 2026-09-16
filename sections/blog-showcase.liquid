@@ -414,7 +414,36 @@
                   </a>
                 </h3>
                 <p>{{ article.excerpt_or_content | strip_html | truncate: 80 }}</p>
-                <span class="blog-date" dir="ltr">{{ article.published_at | date: "%d %B %Y" }}</span>
+                {% comment %} <span class="blog-date" dir="ltr">{{ article.published_at | date: "%d %B %Y" }}</span> {% endcomment %}
+
+                    {% if request.locale.iso_code == 'ar' %}
+                      {% assign day = article.published_at | date: "%d" %}
+                      {% assign month = article.published_at | date: "%m" %}
+                      {% assign year = article.published_at | date: "%Y" %}
+
+                      {% case month %}
+                        {% when '01' %}{% assign month_name = 'يناير' %}
+                        {% when '02' %}{% assign month_name = 'فبراير' %}
+                        {% when '03' %}{% assign month_name = 'مارس' %}
+                        {% when '04' %}{% assign month_name = 'أبريل' %}
+                        {% when '05' %}{% assign month_name = 'مايو' %}
+                        {% when '06' %}{% assign month_name = 'يونيو' %}
+                        {% when '07' %}{% assign month_name = 'يوليو' %}
+                        {% when '08' %}{% assign month_name = 'أغسطس' %}
+                        {% when '09' %}{% assign month_name = 'سبتمبر' %}
+                        {% when '10' %}{% assign month_name = 'أكتوبر' %}
+                        {% when '11' %}{% assign month_name = 'نوفمبر' %}
+                        {% when '12' %}{% assign month_name = 'ديسمبر' %}
+                      {% endcase %}
+
+                      <span class="blog-date" dir="rtl">
+                        {{ day }} {{ month_name }} {{ year }}
+                      </span>
+                    {% else %}
+                      <span class="blog-date" dir="ltr">
+                        {{ article.published_at | date: "%d %B %Y" }}
+                      </span>
+                    {% endif %}
               </div>
               <a href="{{ article.url }}" class="blog-thumb">
                 {% if article.image %}

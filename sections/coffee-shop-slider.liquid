@@ -169,6 +169,8 @@
       .coffee-shop[data-section-id="{{ section.id }}"] .coffeeShopSlider svg.placeholder-svg {
         height: 100%;
         max-height:200px;
+        aspect-ratio: 2 / 1;
+        object-fit: cover;
       }
       .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn,
       .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
@@ -187,6 +189,16 @@
        .coffee-shop[data-section-id="{{ section.id }}"] .section-title p:last-child {
         margin-top:30px;
       }
+    }
+
+    @media (max-width: 325px){
+      .coffee-shop[data-section-id="{{ section.id }}"] .shop-btns {
+        flex-wrap:wrap;
+      }
+      .coffee-shop[data-section-id="{{ section.id }}"] .primary-btn,
+       .coffee-shop[data-section-id="{{ section.id }}"] .secondary-btn {
+         width: 100%;
+       }
     }
 
   </style>

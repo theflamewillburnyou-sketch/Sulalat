@@ -60,7 +60,20 @@
     z-index: 31;
     overflow: visible;
   }
+  .header__icon .visually-hidden {
+    display: inline;
+  }
 
+  .search__submit .visually-hidden {
+    display: inline;
+  }
+
+.header__grid--centered-logo .search--product-types .search__input:not(.search__input--dirty) {
+    padding-inline-end: calc(
+        var(--product-types-width) + var(--product-types-padding)
+    );
+}
+  
   .header__localization .header-language-toggle {
     margin: 0;
   }
@@ -145,6 +158,50 @@
     background: transparent !important;
     background-color: transparent !important;
   }
+
+
+  /* right direction css  */
+  /* ========================================
+   Arabic / RTL - Header Search Fix
+======================================== */
+
+[dir="rtl"] .search--product-types .search__product-types {
+    left: auto;
+    right: 0;
+}
+
+/* Category button */
+[dir="rtl"] .search__product-types .custom-select__btn {
+    padding-right: 0;
+    padding-left: var(--product-types-padding);
+
+    /* Divider: EN right → AR left */
+    border-right: 0;
+    border-left: 1px solid #ffffff40;
+
+    /* Border radius: selector is now on right */
+    border-radius:
+        0
+        var(--input-border-radius, 0)
+        var(--input-border-radius, 0)
+        0;
+}
+
+/* Search icon: move to opposite side */
+[dir="rtl"] .search--product-types .search__submit {
+    right: auto;
+    left: 0;
+}
+
+/* Search input spacing */
+[dir="rtl"] .search--product-types .search__input {
+    padding-right: calc(
+        var(--product-types-width) + var(--product-types-padding)
+    );
+
+    /* Space for search icon */
+    padding-left: 54px;
+}
 
   @media (min-width: 769px) {
     store-header.header.header--overlay .main-menu__content {
@@ -248,16 +305,16 @@
   }
 
   /* Hide full sticky header on scroll down; reveal on scroll up */
+  .shopify-section.cc-header.cc-header--sticky {
+    transition: transform 0.3s ease;
+  }
+
+  .shopify-section.cc-header.cc-header--sticky:has(store-header.is-out) {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
   @media (min-width: 769px) {
-    .shopify-section.cc-header.cc-header--sticky {
-      transition: transform 0.3s ease;
-    }
-
-    .shopify-section.cc-header.cc-header--sticky:has(store-header.is-out) {
-      transform: translateY(-100%);
-      pointer-events: none;
-    }
-
     .cc-header--sticky store-header.header.header--overlay.is-out {
       margin-bottom: 0 !important;
     }
@@ -556,7 +613,7 @@
         {%- endunless -%}
       {%- endif -%}
 
-      <a class="header__icon{% if settings.cart_shaking and cart != empty %} header__icon--cart-shake has-motion{% endif %} relative" id="cart-icon" href="{{ routes.cart_url }}"{% if settings.cart_shaking and cart != empty %} data-shake-frequency="{{ settings.cart_shaking_frequency }}"{% endif %}{% if settings.preload_links %} data-no-instant{% endif %}>
+      <a class="header__icon{% if settings.cart_shaking and cart != empty %} header__icon--cart-shake has-motion{% endif %} relative" aria-label="Shopping cart" id="cart-icon" href="{{ routes.cart_url }}"{% if settings.cart_shaking and cart != empty %} data-shake-frequency="{{ settings.cart_shaking_frequency }}"{% endif %}{% if settings.preload_links %} data-no-instant{% endif %}>
         {%- if settings.cart_icon == 'bag' -%}
           {%- render 'icon-bag' -%}
           <span class="visually-hidden">{{ 'sections.header.bag' | t }}</span>
@@ -1105,15 +1162,52 @@
 
 <script>
   (function () {
-    var header = document.querySelector('store-header.header--overlay');
+    var header = document.querySelector('store-header');
     if (!header) return;
 
+    var mobileMq = window.matchMedia('(max-width: 768px)');
+    var lastScrollPos = 0;
+    var stickyEnabled = header.getAttribute('data-is-sticky') === 'true';
+
     var syncScrolled = function () {
-      header.classList.toggle('is-scrolled', window.scrollY > 40);
+      if (header.classList.contains('header--overlay')) {
+        header.classList.toggle('is-scrolled', window.scrollY > 40);
+      }
+    };
+
+    /* Desktop already handles hide/show via theme StoreHeader; enable same on mobile */
+    var handleMobileScroll = function () {
+      if (!stickyEnabled || !mobileMq.matches) return;
+      if (
+        document.body.classList.contains('fixed') ||
+        document.body.classList.contains('mobile-nav-open') ||
+        document.body.classList.contains('overflow-hidden')
+      ) {
+        return;
+      }
+
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+      if (scrollTop < 80) {
+        header.classList.remove('is-out');
+      } else if (lastScrollPos < scrollTop) {
+        header.classList.add('is-out');
+      } else if (lastScrollPos - 5 > scrollTop) {
+        header.classList.remove('is-out');
+      }
+
+      lastScrollPos = scrollTop;
     };
 
     syncScrolled();
-    window.addEventListener('scroll', syncScrolled, { passive: true });
+    window.addEventListener(
+      'scroll',
+      function () {
+        syncScrolled();
+        handleMobileScroll();
+      },
+      { passive: true }
+    );
   })();
 </script>
 

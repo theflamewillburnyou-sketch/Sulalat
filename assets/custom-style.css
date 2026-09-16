@@ -214,7 +214,7 @@ body .predictive-search .tablist::after {
 }
 
 .banner-btm .scroll-btm {
-    margin-left: auto;
+  margin-inline-start: auto;
 }
 
 /* footer start  */
@@ -259,6 +259,7 @@ footer.footer .footer-col--links a,
 footer.footer .footer-col--text p {
     font-size: 14px;
     color: rgb(0 0 0 / 80%);
+    margin:0;
 }
 
 footer.footer .footer-col--text p br + br {
@@ -353,7 +354,7 @@ body .container {
     }
 
     footer .footer__main {
-        grid-template-columns: 1.5fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         gap: 40px 20px;
     }
     .footer-newsletter-bar__logo {
@@ -400,7 +401,7 @@ body .container {
     
     header .header__logo .logo__link img {
         max-height: 100% !important;
-        max-width: 140px;
+        max-width: 100px;
         width: 100%;
     }
 
@@ -706,8 +707,8 @@ body .container {
     }
 
     body header .header__icons {
-        margin-right: 30px;
-        margin-top: 15px;
+        margin-inline-end: 25px;
+        margin-block-start: 15px;
     }
     header .header__icons a.header__icon {
         display: none;
@@ -816,11 +817,10 @@ body .container {
     }
     
     footer .footer__main {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 2fr;
     }
 
     footer .footer__main .footer-col:first-child, footer .footer__main .footer-col:last-child {
-        grid-column: 1/-1;
         margin:0;
     }
 
@@ -868,7 +868,7 @@ body .container {
 
 @media screen and (max-width:575px){
     .section-title {
-        text-align: left !important;
+        text-align: start !important;
     }
    .section-title h2 {
         margin-bottom: 20px!important;
@@ -877,6 +877,14 @@ body .container {
     }
     .section-title h2 span, .about-content h3 span{
         display:inline !important;
+    }
+
+    footer .footer__main {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    footer .footer__main .footer-col:first-child, footer .footer__main .footer-col:last-child {
+        grid-column: 1/-1;
     }
     /* footer .footer__main {
       grid-template-columns: 100%;
