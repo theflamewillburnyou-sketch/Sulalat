@@ -207,9 +207,16 @@
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .blog-date {
-      direction: ltr;
       unicode-bidi: isolate;
       display: inline-block;
+    }
+
+    .blog-section[data-section-id="{{ section.id }}"] .blog-date[dir="ltr"] {
+      direction: ltr;
+    }
+
+    .blog-section[data-section-id="{{ section.id }}"] .blog-date[dir="rtl"] {
+      direction: rtl;
     }
 
     .blog-section[data-section-id="{{ section.id }}"] .blog-thumb {
@@ -414,10 +421,8 @@
                   </a>
                 </h3>
                 <p>{{ article.excerpt_or_content | strip_html | truncate: 80 }}</p>
-                {% comment %} <span class="blog-date" dir="ltr">{{ article.published_at | date: "%d %B %Y" }}</span> {% endcomment %}
-
                     {% if request.locale.iso_code == 'ar' %}
-                      {% assign day = article.published_at | date: "%d" %}
+                      {% assign day = article.published_at | date: "%d" | plus: 0 %}
                       {% assign month = article.published_at | date: "%m" %}
                       {% assign year = article.published_at | date: "%Y" %}
 
@@ -436,13 +441,9 @@
                         {% when '12' %}{% assign month_name = 'ديسمبر' %}
                       {% endcase %}
 
-                      <span class="blog-date" dir="rtl">
-                        {{ day }} {{ month_name }} {{ year }}
-                      </span>
+                      <span class="blog-date" dir="rtl">{{ day }} {{ month_name }} {{ year }}</span>
                     {% else %}
-                      <span class="blog-date" dir="ltr">
-                        {{ article.published_at | date: "%d %B %Y" }}
-                      </span>
+                      <span class="blog-date" dir="ltr">{{ article.published_at | date: "%d %B %Y" }}</span>
                     {% endif %}
               </div>
               <a href="{{ article.url }}" class="blog-thumb">
