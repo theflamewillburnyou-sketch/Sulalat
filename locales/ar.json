@@ -61,6 +61,18 @@
     "button_label": "اشترك",
     "success": "شكرًا لاشتراكك."
   },
+  "careers": {
+    "form": {
+      "first_name": "الاسم الأول *",
+      "last_name": "اسم العائلة *",
+      "email": "البريد الإلكتروني *",
+      "phone": "رقم التواصل *",
+      "city": "المدينة *",
+      "linkedin": "رابط LinkedIn",
+      "resume": "إرفاق السيرة الذاتية *",
+      "resume_aria": "إرفاق السيرة الذاتية"
+    }
+  },
   "sections": {
     "footer": {
       "copyright_html": "&copy; {{ year }}. <a href=\"{{ shop_url }}\">{{ shop_name }}</a> | جميع الحقوق محفوظة"

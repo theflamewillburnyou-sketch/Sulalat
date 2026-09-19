@@ -14,9 +14,9 @@
       "settings": {
         "background_image": "shopify://shop_images/about-banner.png",
         "overlay_color": "#00000073",
-        "subtitle": "About Us",
-        "heading": "<h1>Our Journey,<br/>Our Passion.</h1>",
-        "text": "<p>We're on a mission to bring world-class quality to every cup.</p>",
+        "subtitle": "About",
+        "heading": "<h1>Honoring Every Hand, Every Harvest, Every Story</h1>",
+        "text": "<p>Our story began with a clear belief: quality should be consistent, dependable, and accessible in the Kingdom.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -33,58 +33,103 @@
         "timeline_2013": {
           "type": "timeline_item",
           "settings": {
-            "year": "2013",
-            "heading": "Sulalat Coffee was founded",
-            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.",
+            "year": "2014",
+            "heading": "Sulalat’s Journey Begins ",
+            "text": "<p>Founded in Saudi Arabia, marking the start of our journey as a leading specialty coffee supplier in Saudi Arabia</p>",
             "image": "shopify://shop_images/timeline-slide-1.png"
-          }
-        },
-        "timeline_2017": {
-          "type": "timeline_item",
-          "settings": {
-            "year": "2017-18",
-            "heading": "Sulalat Coffee was founded",
-            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.",
-            "image": "shopify://shop_images/timeline-slide-2.png"
           }
         },
         "timeline_2025": {
           "type": "timeline_item",
           "settings": {
-            "year": "2025",
-            "heading": "Current Operations",
-            "text": "Sulalat now offers comprehensive services—from roasting to brewing equipment—for both consumer and wholesale markets.",
+            "year": "2015",
+            "heading": "A Historic First",
+            "text": "<ul><li>Became the first Arab company to win the La Esmeralda Auction</li><li>Joined the Cup of Excellence</li><li>Partnered with La Marzocco, Compak, and Profitec to support emerging specialty cafés</li><li>Introduced semi-professional espresso machines through Profitec, bringing specialty-grade quality to home baristas</li></ul>",
             "image": "shopify://shop_images/timeline-slide-3.png"
+          }
+        },
+        "timeline_item_khc7y6": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2016",
+            "heading": "Setting the Foundations",
+            "text": "<ul><li>Established our first direct trade relationship with the Lamastus family farms in Panama</li><li>Organized Saudi Arabia's first AeroPress Championship</li><li>Expanded into new roasting, warehousing, and logistics facilities</li><li>Introduced the first Loring roaster in the Middle East</li></ul>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
+          }
+        },
+        "timeline_item_LbYmyt": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2018",
+            "heading": "Investing in the People ",
+            "text": "<ul><li>Hosted Saudi Arabia's first WCEP program to empower local baristas and sensory professionals</li><li>Contracted a state-of-the-art automated roasting facility near Riyadh</li><li>Organized the first Saudi Barista Championship</li></ul>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
+          }
+        },
+        "timeline_item_j3Dnwq": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2020",
+            "heading": "A Shift Toward Home",
+            "text": "<ul><li>Experienced a rise in retail demand from home baristas, as more people began asking how to bring specialty-grade quality into their own kitchens</li><li>Inaugurated our first-ever showroom and a coffee bar serving specialty coffee </li></ul>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
+          }
+        },
+        "timeline_item_3r7EXp": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2021",
+            "heading": "A Network Worth Noting",
+            "text": "<p>Surpassed 500 client cafés, a milestone reflecting industry recovery and renewed growth</p>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
+          }
+        },
+        "timeline_item_Ajtcjn": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2023",
+            "heading": "Beyond the Bean",
+            "text": "<p>Expanded into new categories with the acquisition of Senmar and Salve, growing our ecosystem to include craft chocolate and artisan gelato</p>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
+          }
+        },
+        "timeline_item_ftChRf": {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2025",
+            "heading": "Making Quality More Accessible",
+            "text": "<ul><li>Strengthened our retail presence through distribution agreements with Lulu Hypermarket, Spinneys, and Al Hatab Bakery</li><li>Made our products available for delivery through Ninja, Keeta, and Hunger Station</li><li>Began sponsoring podcast programs, including Mics</li><li>Expanded the showroom to include a craft chocolate factory and artisan gelato production lab, complementing the existing coffee bar and roastery under one roof</li></ul>",
+            "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
         "culture_quality": {
           "type": "culture_value",
           "settings": {
-            "value": "Quality First"
+            "value": "Quality of life"
           }
         },
         "culture_sustainable": {
           "type": "culture_value",
           "settings": {
-            "value": "Sustainable Practices"
+            "value": "Respect for people and skill"
           }
         },
         "culture_innovation": {
           "type": "culture_value",
           "settings": {
-            "value": "Innovation"
+            "value": "Passion for delivering"
           }
         },
         "culture_heritage": {
           "type": "culture_value",
           "settings": {
-            "value": "Heritage"
+            "value": "Growing by lifting others"
           }
         },
         "culture_excellence": {
           "type": "culture_value",
           "settings": {
-            "value": "Excellence"
+            "value": "Always learning and improving"
           }
         },
         "cert_vat": {
@@ -147,9 +192,9 @@
           "type": "social_farm",
           "settings": {
             "image": "shopify://shop_images/image_394.png",
-            "heading": "Kenya, Karogoto",
-            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
-            "button_label": "Buy from Karogoto",
+            "heading": "From the World's Finest Harvests",
+            "text": "Each year, we source exceptional crops distinguished by their origin, character, and taste.\n\nSamples arrive from each harvest for tasting, and we participate in auctions to select the most distinctive produce for our facilities.",
+            "button_label": "",
             "button_link": "",
             "image_position": "auto"
           }
@@ -158,9 +203,9 @@
           "type": "social_farm",
           "settings": {
             "image": "shopify://shop_images/image_395.png",
-            "heading": "Farm 2",
-            "text": "By investing in long-term relationships and environmentally friendly methods, we help farmers thrive while ensuring consistent, high-quality beans for our customers.",
-            "button_label": "Buy from Farm 2",
+            "heading": "Empowering Local Cafés",
+            "text": "Our partners rely on us for more than sourcing. We provide the knowledge, support, and technical expertise needed to strengthen operations, improve consistency, and create memorable customer experiences.",
+            "button_label": "",
             "button_link": "",
             "image_position": "auto"
           }
@@ -169,9 +214,9 @@
           "type": "social_farm",
           "settings": {
             "image": "shopify://shop_images/image_394_1.png",
-            "heading": "Farm 3",
-            "text": "We partner with farms and cooperatives that share our commitment to sustainability and ethical sourcing—protecting both the flavor in your cup and the future of coffee farming.",
-            "button_label": "Buy from Farm 3",
+            "heading": "Sourcing with Intention",
+            "text": "Through direct trade relationships and fair auction practices, we support farmers and cooperatives who share our commitment to quality and transparency.\n\nEvery decision, from sourcing to production, is guided by long-term thinking and a responsibility to create lasting value across the supply chain.",
+            "button_label": "",
             "button_link": "",
             "image_position": "auto"
           }
@@ -180,9 +225,9 @@
           "type": "social_farm",
           "settings": {
             "image": "shopify://shop_images/image_395_1.png",
-            "heading": "Farm 4",
-            "text": "Sustainability isn't an add-on—it's woven into everything we do, from how we source to how we roast and ship.",
-            "button_label": "Buy from Farm 4",
+            "heading": "Building the Future of Specialty, Together",
+            "text": "We actively support the growth of specialty coffee through education, competition, and skill development to create a stronger ecosystem for future professionals and businesses alike.",
+            "button_label": "",
             "button_link": "",
             "image_position": "auto"
           }
@@ -191,10 +236,10 @@
           "type": "executive_member",
           "settings": {
             "image": "shopify://shop_images/e9863e90979261afdace87db9b8abd9a8547fd5f.jpg",
-            "name": "Rashid Al-Jarwa",
-            "role": "Chairman",
+            "name": "Wayel Al-Wohaibi",
+            "role": "Roasting Lead, Co-Founder & Chair of the Board ",
             "linkedin_url": "",
-            "button_label": "Explore More",
+            "button_label": "Read Story →",
             "button_link": ""
           }
         },
@@ -202,21 +247,10 @@
           "type": "executive_member",
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
-            "name": "Executive Member",
-            "role": "CEO",
+            "name": "Sara Al-Mutawa",
+            "role": "Marketing Lead, Co-Founder & Board Member",
             "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
-          }
-        },
-        "exec_3": {
-          "type": "executive_member",
-          "settings": {
-            "image": "shopify://shop_images/089360ebbf3e5b3e260dbf80e7524361cb4b7e67.jpg",
-            "name": "Executive Member",
-            "role": "Managing Director",
-            "linkedin_url": "",
-            "button_label": "Explore More",
+            "button_label": "Read Story →",
             "button_link": ""
           }
         },
@@ -224,32 +258,50 @@
           "type": "team_member",
           "settings": {
             "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
-            "name": "Team Member",
-            "role": "Advisor"
+            "name": "Naser Al-Wohaibi",
+            "role": "Chief Executive Officer",
+            "button_label": "Learn More →",
+            "button_link": ""
           }
         },
         "team_2": {
           "type": "team_member",
           "settings": {
             "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
-            "name": "Team Member",
-            "role": "Advisor"
+            "name": "Abdallah Al-Manea",
+            "role": "Founder of Salve & Senmar ",
+            "button_label": "Learn More →",
+            "button_link": ""
           }
         },
         "team_3": {
           "type": "team_member",
           "settings": {
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
-            "name": "Hamza Jared",
-            "role": "Company Advisor"
+            "name": "Ammar Al-Naser",
+            "role": "F&B Products Lead",
+            "button_label": "Learn More →",
+            "button_link": ""
           }
         },
         "team_4": {
           "type": "team_member",
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
-            "name": "Team Member",
-            "role": "Advisor"
+            "name": "Abdulaziz Al-Manea",
+            "role": "Coffee Quality and Training Lead",
+            "button_label": "Learn More →",
+            "button_link": ""
+          }
+        },
+        "team_member_nqQMXe": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
+            "name": "Omar Al-Yousef",
+            "role": "Chief Operating Officer",
+            "button_label": "Learn More →",
+            "button_link": ""
           }
         },
         "partner_bialetti_1": {
@@ -404,6 +456,7 @@
         },
         "career_2": {
           "type": "career_position",
+          "disabled": true,
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
@@ -419,6 +472,7 @@
         },
         "career_3": {
           "type": "career_position",
+          "disabled": true,
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
@@ -434,6 +488,7 @@
         },
         "career_4": {
           "type": "career_position",
+          "disabled": true,
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
@@ -449,6 +504,7 @@
         },
         "career_5": {
           "type": "career_position",
+          "disabled": true,
           "settings": {
             "location": "Saudi Arabia",
             "title": "Store Manager",
@@ -465,8 +521,13 @@
       },
       "block_order": [
         "timeline_2013",
-        "timeline_2017",
         "timeline_2025",
+        "timeline_item_khc7y6",
+        "timeline_item_LbYmyt",
+        "timeline_item_j3Dnwq",
+        "timeline_item_3r7EXp",
+        "timeline_item_Ajtcjn",
+        "timeline_item_ftChRf",
         "culture_quality",
         "culture_sustainable",
         "culture_innovation",
@@ -486,11 +547,11 @@
         "social_farm_4",
         "exec_1",
         "exec_2",
-        "exec_3",
         "team_1",
         "team_2",
         "team_3",
         "team_4",
+        "team_member_nqQMXe",
         "partner_bialetti_1",
         "partner_acaia_1",
         "partner_flair_1",
@@ -523,40 +584,45 @@
         "tab_careers_label": "Careers",
         "placeholder_text": "Coming soon",
         "who_image": "shopify://shop_images/who-we-are.png",
-        "who_tag": "Who We Are",
-        "who_heading": "Our Journey, Rooted<br>in Passion",
-        "who_paragraph_1": "We call ourselves Sulalat in Arabic, for the variety of Specialty coffee types we enjoy and roast. We consider ourselves home roasters and coffee aficionados, sharing our coffee with our friends and loved ones, We are based in Riyadh Saudi Arabia, and while geographically close to the best sources of Specialty coffee in the world, none of the coffees available locally is Specialty grade. We are changing that!",
-        "who_paragraph_2": "Specialty Coffee, in the Arab World.",
-        "timeline_heading": "Timeline Stages",
-        "timeline_subheading": "Sulalat delivers end-to-end solutions for cafes, coffee chains, and enthusiasts alike.",
+        "who_tag": "Our Story",
+        "who_heading": "Enriching Life's Shared Joys",
+        "who_paragraph_1": "Sulalat is a specialized ecosystem offering artisanal products, rooted in the careful selection of the finest harvests from the worlds of coffee, chocolate, and gelato. Since 2014, we've brought together globally sourced ingredients, certified expertise, and in-house production to serve the hospitality sector across the Middle East, with a partner network spanning more than 15 countries.",
+        "who_paragraph_2": "While traveling in Europe, our founders saw how specialty coffee could bring people closer together. When they came home and couldn't find that same care anywhere nearby, they decided to build it themselves. Wayel Al-Wohaibi built the systems. Sara Al-Mutawa built the trust. Together, they've grown Sulalat from small-scale roasting into a specialty house shaped by experimentation, technical rigor, and patience.",
+        "timeline_heading": "13+ Years of Serving with Sincerity & Heart ",
+        "timeline_subheading": "Here are some highlights from moments that mark our growth.",
         "vision_heading": "Our Vision",
-        "vision_text": "To set the standard for specialty coffee and café solutions in Saudi Arabia and beyond.",
+        "vision_text": "To become a trusted name for quality, consistency, and taste across the world.",
         "vision_image": "shopify://shop_images/vision-card-1.png",
         "mission_image": "shopify://shop_images/vision-card-2.png",
         "mission_heading": "Our Mission",
-        "mission_text": "To deliver quality-first products and services that empower professionals and delight coffee lovers.",
-        "culture_heading": "Culture & Values",
-        "culture_paragraph_1": "Since our founding, Sulalat has grown from a local roastery into a trusted Saudi brand delivering coffee, chocolate, gelato, and café solutions nationwide.",
-        "culture_paragraph_2": "Our values define who we are and drive our commitment to quality, integrity, and innovation.",
+        "mission_text": "To source, produce, and deliver specialty food and beverage products with care and operational integrity.",
+        "culture_heading": "The Foundation of Our Beliefs",
+        "culture_paragraph_1": "We started as a team of just two. Now, we have evolved into a complete family, united in our purpose to set the highest standards and strive for the best.",
+        "culture_paragraph_2": "We believe lasting growth comes from the values we practice every day, in our relationships, our work, and the standards we set for ourselves.",
         "culture_image": "shopify://shop_images/culture.png",
-        "certificates_heading": "Awards & Certifications",
-        "certificates_subheading": "<p>Our state-of-the-art facility is ISO-certified, ensuring every product meets rigorous international standards for quality and food safety.</p>",
-        "executive_heading": "Executive Team",
-        "executive_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "people_heading": "Meet the People Behind Sulalat",
-        "people_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-        "partners_heading": "Our Partners",
-        "partners_subheading": "Our partners choose Sulalat for more than products",
+        "certificates_heading": "Our Certifications",
+        "certificates_subheading": "<p>Our facilities, processes, and operations are supported by international certifications. Explore our commitment to consistency, safety, and responsible production.</p>",
+        "executive_heading": "The Leaders Behind Our Vision /A Shared Purpose ",
+        "executive_subheading": "Guided by their belief in excellence as an act of service, our executive team leads with humility, purpose, and an unwavering dedication to sharing quality of life.",
+        "people_heading": "The People Behind Every Sulalat Experience ",
+        "people_subheading": "Sulalat is home to a team of certified Q-graders, international judges, roasters, chocolatiers, gelato specialists, educators, and operational professionals.",
+        "partners_heading": "Available Near You",
+        "partners_subheading": "Find our products across the Kingdom's leading retailers and platforms.",
+        "partners_supplier_heading": "Backed by Trusted Equipment Makers",
+        "partners_supplier_subheading": "We work with leading global equipment makers to bring precision and consistency to every step of the process.",
         "partners_distributor_label": "Distributor",
         "partners_supplier_label": "Supplier",
-        "careers_why_heading": "Why Join Sulalat",
-        "careers_why_text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+        "careers_why_heading": "Join the People Behind the Craft ",
+        "careers_why_text": "Sulalat’s products are known for the thoughtful detail our team brings to everything we do. With an ever-growing portfolio, we’re always looking for more people who care about quality, skill, and flavor.",
         "careers_image": "shopify://shop_images/c27f2c2946c2a29be23158a7350ae8c6544e7c08.png",
-        "careers_positions_heading": "Open Positions",
-        "careers_positions_subheading": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        "careers_positions_heading": "View Open Roles ",
+        "careers_positions_subheading": "Explore current openings at Sulalat. Feel at home with a team that values curiosity, collaboration, and continuous growth.",
         "careers_detail_label": "Job Detail",
         "careers_apply_heading": "Apply Online",
         "careers_browse_label": "Browse",
+        "cloudinary_cloud_name": "fifebgtq",
+        "cloudinary_upload_preset": "ml_default",
+        "cloudinary_folder": "careers/resumes",
         "careers_submit_label": "Submit",
         "careers_success_message": "Thanks — your application has been submitted."
       }

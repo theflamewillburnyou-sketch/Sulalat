@@ -785,6 +785,15 @@
       line-height: 1.4;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn {
+      margin-top: 16px;
+      display: inline-flex;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn.is-hidden {
+      display: none;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta-line {
       width: 48px;
       height: 2px;
@@ -1380,6 +1389,26 @@
       cursor: pointer;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status {
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #535353;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status.is-error {
+      color: #b42318;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status.is-success {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form.is-uploading .primary-btn {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .primary-btn {
       align-self: flex-start;
       margin-top: 8px;
@@ -1843,7 +1872,7 @@
                           <h3>{{ block.settings.heading | escape }}</h3>
                         {% endif %}
                         {% if block.settings.text != blank %}
-                          <p>{{ block.settings.text | escape }}</p>
+                          <div class="rte">{{ block.settings.text }}</div>
                         {% endif %}
                       </div>
                     </div>
@@ -1977,7 +2006,7 @@
         <div class="container">
           <div class="section-title">
             {% if section.settings.certificates_heading != blank %}
-              <h2>{{ section.settings.certificates_heading | escape }}</h2>
+              <h2>{{ section.settings.certificates_heading | replace: ' ', ' ' | escape }}</h2>
             {% endif %}
             {% if section.settings.certificates_subheading != blank %}
               {{ section.settings.certificates_subheading }}
@@ -2182,6 +2211,8 @@
                       class="swiper-slide"
                       data-name="{{ block.settings.name | escape }}"
                       data-role="{{ block.settings.role | escape }}"
+                      data-button-label="{{ block.settings.button_label | escape }}"
+                      data-button-link="{{ block.settings.button_link | escape }}"
                       {{ block.shopify_attributes }}
                     >
                       <div class="leadership-card-image">
@@ -2207,6 +2238,7 @@
               <div class="people-meta" data-people-meta>
                 <h3 data-people-name></h3>
                 <p data-people-role></p>
+                <a class="primary-btn is-hidden" data-people-button href="#">Explore More</a>
                 <div class="people-meta-line" aria-hidden="true"></div>
               </div>
 
@@ -2245,13 +2277,20 @@
       <section class="partners-section" data-partners>
         <div class="container">
           {% if partner_blocks.size > 0 %}
-            <div class="partners-intro">
-              {% if section.settings.partners_heading != blank %}
-                <h2>{{ section.settings.partners_heading | escape }}</h2>
-              {% endif %}
-              {% if section.settings.partners_subheading != blank %}
-                <p>{{ section.settings.partners_subheading | escape }}</p>
-              {% endif %}
+            <div
+              class="partners-intro"
+              data-partners-intro
+              data-distributor-heading="{{ section.settings.partners_heading | escape }}"
+              data-distributor-subheading="{{ section.settings.partners_subheading | escape }}"
+              data-supplier-heading="{{ section.settings.partners_supplier_heading | escape }}"
+              data-supplier-subheading="{{ section.settings.partners_supplier_subheading | escape }}"
+            >
+              <h2 data-partners-heading{% if section.settings.partners_heading == blank %} hidden{% endif %}>
+                {{ section.settings.partners_heading | escape }}
+              </h2>
+              <p data-partners-subheading{% if section.settings.partners_subheading == blank %} hidden{% endif %}>
+                {{ section.settings.partners_subheading | escape }}
+              </p>
             </div>
 
             <div class="partners-filter" role="tablist" aria-label="Partner categories">
@@ -2534,7 +2573,7 @@
                       class="input"
                       type="text"
                       name="contact[First name]"
-                      placeholder="First Name *"
+                      placeholder="{{ 'careers.form.first_name' | t }}"
                       required
                       autocomplete="given-name"
                     >
@@ -2542,7 +2581,7 @@
                       class="input"
                       type="text"
                       name="contact[Last name]"
-                      placeholder="Last Name *"
+                      placeholder="{{ 'careers.form.last_name' | t }}"
                       required
                       autocomplete="family-name"
                     >
@@ -2550,7 +2589,7 @@
                       class="input"
                       type="email"
                       name="contact[email]"
-                      placeholder="Email Address *"
+                      placeholder="{{ 'careers.form.email' | t }}"
                       required
                       autocomplete="email"
                     >
@@ -2558,7 +2597,7 @@
                       class="input"
                       type="tel"
                       name="contact[Contact number]"
-                      placeholder="Contact Number *"
+                      placeholder="{{ 'careers.form.phone' | t }}"
                       required
                       autocomplete="tel"
                     >
@@ -2566,7 +2605,7 @@
                       class="input"
                       type="text"
                       name="contact[City]"
-                      placeholder="City *"
+                      placeholder="{{ 'careers.form.city' | t }}"
                       required
                       autocomplete="address-level2"
                     >
@@ -2574,7 +2613,7 @@
                       class="input"
                       type="url"
                       name="contact[LinkedIn URL]"
-                      placeholder="LinkedIn URL"
+                      placeholder="{{ 'careers.form.linkedin' | t }}"
                       autocomplete="url"
                     >
                     <div class="careers-file-field">
@@ -2582,18 +2621,25 @@
                         class="input"
                         type="text"
                         name="contact[Resume filename]"
-                        placeholder="Attach Resume *"
+                        placeholder="{{ 'careers.form.resume' | t }}"
                         readonly
                         required
                         data-resume-filename
                         tabindex="-1"
                       >
+                      <input type="hidden" name="contact[Resume URL]" value="" data-resume-url>
                       <label class="careers-browse">
                         {{ section.settings.careers_browse_label | default: 'Browse' | escape }}
-                        <input type="file" accept=".pdf,.doc,.docx" data-resume-input aria-label="Attach resume">
+                        <input
+                          type="file"
+                          accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                          data-resume-input
+                          aria-label="{{ 'careers.form.resume_aria' | t }}"
+                        >
                       </label>
                     </div>
-                    <button type="submit" class="primary-btn">
+                    <p class="careers-upload-status" data-resume-status hidden></p>
+                    <button type="submit" class="primary-btn" data-careers-submit>
                       {{ section.settings.careers_submit_label | default: 'Submit' | escape }}
                     </button>
                   {% endform %}
@@ -2624,8 +2670,14 @@
       var peopleSwiper = null;
 
       function refreshLeadershipSliders() {
-        if (executiveSwiper) executiveSwiper.update();
-        if (peopleSwiper) peopleSwiper.update();
+        if (executiveSwiper) {
+          executiveSwiper.update();
+          syncExecutiveMeta(executiveSwiper.slides[executiveSwiper.activeIndex]);
+        }
+        if (peopleSwiper) {
+          peopleSwiper.update();
+          syncPeopleMeta(peopleSwiper.slides[peopleSwiper.activeIndex]);
+        }
       }
 
       function initTabs() {
@@ -2676,9 +2728,11 @@
           jobField.value = activePanel.getAttribute('data-career-title') || '';
         }
 
-        var tabsWrapper = section.querySelector('.tabs-wrapper');
-        if (tabsWrapper) {
-          tabsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        var applyForm = careersRoot.querySelector('.careers-apply');
+        if (applyForm) {
+          window.requestAnimationFrame(function () {
+            applyForm.scrollIntoView({ behavior: 'smooth', block: 'end' });
+          });
         }
       }
 
@@ -2710,10 +2764,93 @@
 
         var resumeInput = careersRoot.querySelector('[data-resume-input]');
         var resumeFilename = careersRoot.querySelector('[data-resume-filename]');
+        var resumeUrl = careersRoot.querySelector('[data-resume-url]');
+        var resumeStatus = careersRoot.querySelector('[data-resume-status]');
+        var careersForm = careersRoot.querySelector('.careers-apply-form');
+        var cloudName = {{ section.settings.cloudinary_cloud_name | default: 'fifebgtq' | json }};
+        var uploadPreset = {{ section.settings.cloudinary_upload_preset | default: 'ml_default' | json }};
+        var uploadFolder = {{ section.settings.cloudinary_folder | default: 'careers/resumes' | json }};
+        var uploading = false;
+
+        function setResumeStatus(message, type) {
+          if (!resumeStatus) return;
+          if (!message) {
+            resumeStatus.hidden = true;
+            resumeStatus.textContent = '';
+            resumeStatus.classList.remove('is-error', 'is-success');
+            return;
+          }
+          resumeStatus.hidden = false;
+          resumeStatus.textContent = message;
+          resumeStatus.classList.toggle('is-error', type === 'error');
+          resumeStatus.classList.toggle('is-success', type === 'success');
+        }
+
+        function uploadResumeToCloudinary(file) {
+          if (!cloudName || !uploadPreset) {
+            return Promise.reject(new Error('Cloudinary is not configured yet.'));
+          }
+
+          var body = new FormData();
+          body.append('file', file);
+          body.append('upload_preset', uploadPreset);
+          if (uploadFolder) body.append('folder', uploadFolder);
+
+          return fetch('https://api.cloudinary.com/v1_1/' + encodeURIComponent(cloudName) + '/auto/upload', {
+            method: 'POST',
+            body: body
+          }).then(function (response) {
+            return response.json().then(function (data) {
+              if (!response.ok || !data.secure_url) {
+                throw new Error((data && data.error && data.error.message) || 'Upload failed.');
+              }
+              return data.secure_url;
+            });
+          });
+        }
+
         if (resumeInput && resumeFilename) {
           resumeInput.addEventListener('change', function () {
             var file = resumeInput.files && resumeInput.files[0];
+            if (resumeUrl) resumeUrl.value = '';
             resumeFilename.value = file ? file.name : '';
+            setResumeStatus('', '');
+
+            if (!file) return;
+
+            uploading = true;
+            if (careersForm) careersForm.classList.add('is-uploading');
+            setResumeStatus('Uploading resume…', '');
+
+            uploadResumeToCloudinary(file)
+              .then(function (url) {
+                if (resumeUrl) resumeUrl.value = url;
+                setResumeStatus('Resume uploaded successfully.', 'success');
+              })
+              .catch(function (error) {
+                resumeFilename.value = '';
+                resumeInput.value = '';
+                if (resumeUrl) resumeUrl.value = '';
+                setResumeStatus(error.message || 'Could not upload resume. Please try again.', 'error');
+              })
+              .finally(function () {
+                uploading = false;
+                if (careersForm) careersForm.classList.remove('is-uploading');
+              });
+          });
+        }
+
+        if (careersForm) {
+          careersForm.addEventListener('submit', function (event) {
+            if (uploading) {
+              event.preventDefault();
+              setResumeStatus('Please wait for the resume upload to finish.', 'error');
+              return;
+            }
+            if (resumeFilename && resumeFilename.value && resumeUrl && !resumeUrl.value) {
+              event.preventDefault();
+              setResumeStatus('Resume upload is required before submitting.', 'error');
+            }
           });
         }
 
@@ -2739,6 +2876,22 @@
         var emptyEl = partnersRoot.querySelector('[data-partners-empty]');
         if (emptyEl) {
           emptyEl.classList.toggle('is-visible', visibleCount === 0);
+        }
+
+        var intro = partnersRoot.querySelector('[data-partners-intro]');
+        if (intro) {
+          var headingEl = intro.querySelector('[data-partners-heading]');
+          var subEl = intro.querySelector('[data-partners-subheading]');
+          var heading = intro.getAttribute('data-' + category + '-heading') || '';
+          var subheading = intro.getAttribute('data-' + category + '-subheading') || '';
+          if (headingEl) {
+            headingEl.textContent = heading;
+            headingEl.hidden = !heading;
+          }
+          if (subEl) {
+            subEl.textContent = subheading;
+            subEl.hidden = !subheading;
+          }
         }
       }
 
@@ -2833,8 +2986,20 @@
         if (!slide) return;
         var nameEl = section.querySelector('[data-people-name]');
         var roleEl = section.querySelector('[data-people-role]');
+        var buttonEl = section.querySelector('[data-people-button]');
         if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
         if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
+        if (buttonEl) {
+          var label = slide.getAttribute('data-button-label') || '';
+          var link = slide.getAttribute('data-button-link') || '';
+          if (label) {
+            buttonEl.textContent = label;
+            buttonEl.href = link || '#';
+            buttonEl.classList.remove('is-hidden');
+          } else {
+            buttonEl.classList.add('is-hidden');
+          }
+        }
       }
 
       function initTimeline() {
@@ -2925,6 +3090,9 @@
             }
           });
 
+          syncExecutiveMeta(executiveSwiper.slides[executiveSwiper.activeIndex]);
+          setProgress(executiveProgress, executiveSwiper.activeIndex, executiveSwiper.slides.length);
+
           if (executivePrev) {
             executivePrev.onclick = function () {
               executiveSwiper.slidePrev();
@@ -2962,6 +3130,9 @@
               }
             }
           });
+
+          syncPeopleMeta(peopleSwiper.slides[peopleSwiper.activeIndex]);
+          setProgress(peopleProgress, peopleSwiper.activeIndex, peopleSwiper.slides.length);
 
           if (peoplePrev) {
             peoplePrev.onclick = function () {
@@ -3262,14 +3433,26 @@
     {
       "type": "text",
       "id": "partners_heading",
-      "label": "Heading",
+      "label": "Distributor heading",
       "default": "Our Partners"
     },
     {
       "type": "textarea",
       "id": "partners_subheading",
-      "label": "Subheading",
+      "label": "Distributor subheading",
       "default": "Our partners choose Sulalat for more than products"
+    },
+    {
+      "type": "text",
+      "id": "partners_supplier_heading",
+      "label": "Supplier heading",
+      "default": "Our Suppliers"
+    },
+    {
+      "type": "textarea",
+      "id": "partners_supplier_subheading",
+      "label": "Supplier subheading",
+      "default": "We work with trusted suppliers who share our standards for quality and care"
     },
     {
       "type": "text",
@@ -3339,6 +3522,32 @@
       "default": "Browse"
     },
     {
+      "type": "header",
+      "content": "Careers — Cloudinary resume upload"
+    },
+    {
+      "type": "paragraph",
+      "content": "Resumes upload to Cloudinary, then the file URL is sent with the Shopify contact form."
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_cloud_name",
+      "label": "Cloudinary cloud name",
+      "default": "fifebgtq"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_upload_preset",
+      "label": "Cloudinary unsigned upload preset",
+      "default": "ml_default"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_folder",
+      "label": "Cloudinary folder",
+      "default": "careers/resumes"
+    },
+    {
       "type": "text",
       "id": "careers_submit_label",
       "label": "Submit button label",
@@ -3369,10 +3578,10 @@
           "default": "Sulalat Coffee was founded"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "text",
           "label": "Text",
-          "default": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+          "default": "<p>Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.</p>"
         },
         {
           "type": "image_picker",
@@ -3514,6 +3723,17 @@
           "id": "role",
           "label": "Role",
           "default": "Company Advisor"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Explore More"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
         }
       ]
     },
@@ -3625,7 +3845,7 @@
           "settings": {
             "year": "2013",
             "heading": "Sulalat Coffee was founded",
-            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+            "text": "<p>Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.</p>"
           }
         },
         {
@@ -3633,7 +3853,7 @@
           "settings": {
             "year": "2017-18",
             "heading": "Sulalat Coffee was founded",
-            "text": "Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh."
+            "text": "<p>Sulalat began as a passion project—home-roasting specialty coffee for friends and family in Riyadh.</p>"
           }
         },
         {
@@ -3641,7 +3861,7 @@
           "settings": {
             "year": "2025",
             "heading": "Current Operations",
-            "text": "Sulalat now offers comprehensive services—from roasting to brewing equipment—for both consumer and wholesale markets."
+            "text": "<p>Sulalat now offers comprehensive services—from roasting to brewing equipment—for both consumer and wholesale markets.</p>"
           }
         },
         {

@@ -45,7 +45,7 @@
       ],
       "name": "Hero banner",
       "settings": {
-        "banner_image": "shopify://shop_images/site-banner.png",
+        "banner_image": "shopify://shop_images/banner-new.png",
         "banner_image_alt": "Banner background image",
         "banner_image_mobile": "shopify://shop_images/efbaecd09a4da7d683f1a0cb4121ce58bbc44aef.png",
         "banner_image_mobile_alt": "",
@@ -71,13 +71,13 @@
     "coffee_experience_zP7fdV": {
       "type": "coffee-experience",
       "blocks": {
-        "left_slide_x6qGce": {
+        "left_slide_KDMWiL": {
           "type": "left_slide",
           "settings": {
-            "image": "shopify://shop_images/aboiut-img-1.png"
+            "image": "shopify://shop_images/image_394_1_6dbbda3e-75f9-4e51-b673-cfe009159597.png"
           }
         },
-        "left_slide_KDMWiL": {
+        "left_slide_x6qGce": {
           "type": "left_slide",
           "settings": {
             "image": "shopify://shop_images/aboiut-img-1.png"
@@ -86,13 +86,13 @@
         "left_slide_PeAPmD": {
           "type": "left_slide",
           "settings": {
-            "image": "shopify://shop_images/aboiut-img-1.png"
+            "image": "shopify://shop_images/image_394_1_6dbbda3e-75f9-4e51-b673-cfe009159597.png"
           }
         },
         "right_slide_pgkmTR": {
           "type": "right_slide",
           "settings": {
-            "image": "shopify://shop_images/aboiut-img-2.png"
+            "image": "shopify://shop_images/image_395_22193155-fd9e-4db9-9940-586cc060c8c5.png"
           }
         },
         "right_slide_4LcnTe": {
@@ -104,13 +104,13 @@
         "right_slide_QtRNLQ": {
           "type": "right_slide",
           "settings": {
-            "image": "shopify://shop_images/aboiut-img-2.png"
+            "image": "shopify://shop_images/image_395_22193155-fd9e-4db9-9940-586cc060c8c5.png"
           }
         }
       },
       "block_order": [
-        "left_slide_x6qGce",
         "left_slide_KDMWiL",
+        "left_slide_x6qGce",
         "left_slide_PeAPmD",
         "right_slide_pgkmTR",
         "right_slide_4LcnTe",
@@ -183,6 +183,15 @@
             "link": "#"
           }
         },
+        "category_LdghmC": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/image_398.png",
+            "title": "Manufacturing",
+            "text": "Sulalat’s production capabilities",
+            "link": ""
+          }
+        },
         "view_all_kpdj98": {
           "type": "view_all",
           "settings": {
@@ -197,6 +206,7 @@
         "category_NJMhHD",
         "category_EqYkiY",
         "category_YQeAKf",
+        "category_LdghmC",
         "view_all_kpdj98"
       ],
       "name": "Category showcase",
@@ -302,7 +312,7 @@
         "paragraph_2": "With long-term relationships and shared standards, we help partners deliver experiences their customers return for.",
         "button_text": "View All Business Solutions",
         "button_link": "#",
-        "image": "shopify://shop_images/partner-image.png",
+        "image": "shopify://shop_images/Frame_1948756672.png",
         "section_bg_color": "#e7f5ef",
         "heading_color": "#000000",
         "text_color": "#141211",

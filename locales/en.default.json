@@ -348,6 +348,18 @@
       "error_heading": "Please adjust the following:"
     }
   },
+  "careers": {
+    "form": {
+      "first_name": "First Name *",
+      "last_name": "Last Name *",
+      "email": "Email Address *",
+      "phone": "Contact Number *",
+      "city": "City *",
+      "linkedin": "LinkedIn URL",
+      "resume": "Attach Resume *",
+      "resume_aria": "Attach resume"
+    }
+  },
   "blogs": {
     "article": {
       "comments": {

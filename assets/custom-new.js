@@ -46,6 +46,9 @@
 
   function animateSectionTitles() {
     document.querySelectorAll('.section-title').forEach(function (section) {
+      // SplitType drops NBSP/spaces between inline-block .word spans on about tabs
+      if (section.closest('.about-tabs')) return;
+
       var heading = section.querySelector('h2');
       var subtitles = section.querySelectorAll('p');
 

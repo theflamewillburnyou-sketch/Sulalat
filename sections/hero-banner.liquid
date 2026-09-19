@@ -213,7 +213,7 @@
     font-weight: 400;
     font-size: clamp(32px, 3.2vw, {{ section.settings.heading_max_size | default: 60 }}px);
     line-height: 1.33;
-    margin: 160px 0 auto;
+    margin:0;
   }
 
   .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 p {
@@ -355,11 +355,28 @@
     }
   }
 
+  /* Landscape: don't force hero into one viewport */
+@media screen and (orientation: landscape) and (max-height: 600px) {
+
+  .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img{
+    min-height:650px;
+  }
+
+}
+
+
+@media screen and (orientation: portrait) and (min-height: 900px) {
+   .site-banner[data-section-id="{{ section.id }}"] .banner-bg-img{
+        height: min(880px, 91vh);
+        overflow: hidden;
+  }
+}
+
   @media screen and (max-width: 575px){
     .site-banner[data-section-id="{{ section.id }}"] .banner-warp h1 {
         font-size: 30px;
-        {% comment %} margin-bottom: 160px; {% endcomment %}
         max-width: 100%;
+        margin-bottom: min(80px, 7vh);
     }
     .site-banner[data-section-id="{{ section.id }}"] .banner-card h4 {
       color: #fff;
