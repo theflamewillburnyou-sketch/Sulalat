@@ -171,6 +171,26 @@
       color: #b42318;
     }
 
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__upload-status {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: #8a8a8a;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__upload-status.is-error {
+      color: #b42318;
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__upload-status.is-success {
+      color: var(--sulalat-contact-accent, #53c295);
+    }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form.is-uploading .sulalat-contact__submit {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social {
       margin-top: 36px;
     }
@@ -320,7 +340,7 @@
               class="input"
               type="text"
               name="contact[First name]"
-              placeholder="First Name*"
+              placeholder="{{ 'contact_sulalat.form.first_name' | t }}"
               required
               autocomplete="given-name"
             >
@@ -328,7 +348,7 @@
               class="input"
               type="email"
               name="contact[email]"
-              placeholder="Email Address*"
+              placeholder="{{ 'contact_sulalat.form.email' | t }}"
               required
               autocomplete="email"
             >
@@ -339,7 +359,7 @@
               class="input"
               type="tel"
               name="contact[Contact number]"
-              placeholder="Contact Number*"
+              placeholder="{{ 'contact_sulalat.form.contact' | t }}"
               required
               autocomplete="tel"
             >
@@ -347,7 +367,7 @@
               class="input"
               type="text"
               name="contact[City]"
-              placeholder="City*"
+              placeholder="{{ 'contact_sulalat.form.city' | t }}"
               required
               autocomplete="address-level2"
             >
@@ -358,19 +378,26 @@
               class="input"
               type="text"
               name="contact[Document filename]"
-              placeholder="Attach Document"
+              placeholder="{{ 'contact_sulalat.form.add_file' | t }}"
               readonly
               data-contact-filename
               tabindex="-1"
             >
+            <input type="hidden" name="contact[Document URL]" value="" data-contact-url>
             <label class="sulalat-contact__browse">
-              {{ section.settings.browse_label | escape }}
-              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" data-contact-file aria-label="Attach document">
+              {{ section.settings.browse_label | default: 'Browse' | escape }}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                data-contact-file
+                aria-label="{{ 'contact_sulalat.form.add_file_aria' | t }}"
+              >
             </label>
           </div>
+          <p class="sulalat-contact__upload-status" data-contact-status hidden></p>
 
           <select name="contact[Product]" required>
-            <option value="" disabled selected>{{ section.settings.product_placeholder | escape }}</option>
+            <option value="" disabled selected>{{ 'contact_sulalat.form.products' | t }}</option>
             {% for option in product_options %}
               {% assign clean_option = option | strip_html | strip %}
               {% if clean_option != blank %}
@@ -379,8 +406,8 @@
             {% endfor %}
           </select>
 
-          <button type="submit" class="sulalat-contact__submit">
-            {{ section.settings.submit_label | escape }}
+          <button type="submit" class="sulalat-contact__submit" data-contact-submit>
+            {{ 'contact_sulalat.form.submit' | t }}
           </button>
         {% endform %}
 
@@ -482,14 +509,105 @@
     (function () {
       var root = document.querySelector('.sulalat-contact[data-section-id="{{ section.id }}"]');
       if (!root) return;
+
+      var form = root.querySelector('.sulalat-contact__form');
       var fileInput = root.querySelector('[data-contact-file]');
       var filenameInput = root.querySelector('[data-contact-filename]');
+      var urlInput = root.querySelector('[data-contact-url]');
+      var statusEl = root.querySelector('[data-contact-status]');
       if (!fileInput || !filenameInput) return;
+
+      var cloudName = {{ section.settings.cloudinary_cloud_name | default: 'fifebgtq' | json }};
+      var uploadPreset = {{ section.settings.cloudinary_upload_preset | default: 'ml_default' | json }};
+      var uploadFolder = {{ section.settings.cloudinary_folder | default: 'contact/documents' | json }};
+      var uploading = false;
+      var messages = {
+        uploading: {{ 'contact_sulalat.form.uploading' | t | json }},
+        success: {{ 'contact_sulalat.form.upload_success' | t | json }},
+        error: {{ 'contact_sulalat.form.upload_error' | t | json }},
+        wait: {{ 'contact_sulalat.form.upload_wait' | t | json }},
+        required: {{ 'contact_sulalat.form.upload_required' | t | json }}
+      };
+
+      function setStatus(message, type) {
+        if (!statusEl) return;
+        if (!message) {
+          statusEl.hidden = true;
+          statusEl.textContent = '';
+          statusEl.classList.remove('is-error', 'is-success');
+          return;
+        }
+        statusEl.hidden = false;
+        statusEl.textContent = message;
+        statusEl.classList.toggle('is-error', type === 'error');
+        statusEl.classList.toggle('is-success', type === 'success');
+      }
+
+      function uploadToCloudinary(file) {
+        if (!cloudName || !uploadPreset) {
+          return Promise.reject(new Error('Cloudinary is not configured yet.'));
+        }
+
+        var body = new FormData();
+        body.append('file', file);
+        body.append('upload_preset', uploadPreset);
+        if (uploadFolder) body.append('folder', uploadFolder);
+
+        return fetch('https://api.cloudinary.com/v1_1/' + encodeURIComponent(cloudName) + '/auto/upload', {
+          method: 'POST',
+          body: body
+        }).then(function (response) {
+          return response.json().then(function (data) {
+            if (!response.ok || !data.secure_url) {
+              throw new Error((data && data.error && data.error.message) || messages.error);
+            }
+            return data.secure_url;
+          });
+        });
+      }
 
       fileInput.addEventListener('change', function () {
         var file = fileInput.files && fileInput.files[0];
+        if (urlInput) urlInput.value = '';
         filenameInput.value = file ? file.name : '';
+        setStatus('', '');
+
+        if (!file) return;
+
+        uploading = true;
+        if (form) form.classList.add('is-uploading');
+        setStatus(messages.uploading, '');
+
+        uploadToCloudinary(file)
+          .then(function (url) {
+            if (urlInput) urlInput.value = url;
+            setStatus(messages.success, 'success');
+          })
+          .catch(function (error) {
+            filenameInput.value = '';
+            fileInput.value = '';
+            if (urlInput) urlInput.value = '';
+            setStatus(error.message || messages.error, 'error');
+          })
+          .finally(function () {
+            uploading = false;
+            if (form) form.classList.remove('is-uploading');
+          });
       });
+
+      if (form) {
+        form.addEventListener('submit', function (event) {
+          if (uploading) {
+            event.preventDefault();
+            setStatus(messages.wait, 'error');
+            return;
+          }
+          if (filenameInput.value && urlInput && !urlInput.value) {
+            event.preventDefault();
+            setStatus(messages.required, 'error');
+          }
+        });
+      }
     })();
   </script>
 </section>
@@ -517,12 +635,6 @@
       "default": "Upload your proposal, menu, or request and let us tailor a solution for your business."
     },
     {
-      "type": "text",
-      "id": "product_placeholder",
-      "label": "Product select placeholder",
-      "default": "Select the product"
-    },
-    {
       "type": "textarea",
       "id": "product_options",
       "label": "Product options (one per line)",
@@ -536,15 +648,35 @@
     },
     {
       "type": "text",
-      "id": "submit_label",
-      "label": "Submit label",
-      "default": "Submit"
-    },
-    {
-      "type": "text",
       "id": "success_message",
       "label": "Success message",
       "default": "Thanks — your message has been sent."
+    },
+    {
+      "type": "header",
+      "content": "Cloudinary document upload"
+    },
+    {
+      "type": "paragraph",
+      "content": "Documents upload to Cloudinary, then the file URL is sent with the Shopify contact form."
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_cloud_name",
+      "label": "Cloudinary cloud name",
+      "default": "fifebgtq"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_upload_preset",
+      "label": "Cloudinary unsigned upload preset",
+      "default": "ml_default"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_folder",
+      "label": "Cloudinary folder",
+      "default": "contact/documents"
     },
     {
       "type": "header",

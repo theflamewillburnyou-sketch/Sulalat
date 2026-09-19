@@ -165,6 +165,26 @@
       color: #b42318;
     }
 
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-upload-status {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-upload-status.is-error {
+      color: #b42318;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-upload-status.is-success {
+      color: var(--brand-primary, #53c295);
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form.is-uploading .primary-btn {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
     @media (max-width: 991px) {
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-panel {
         grid-template-columns: 1fr;
@@ -227,7 +247,7 @@
             class="input"
             type="text"
             name="contact[Full name]"
-            placeholder="Full Name *"
+            placeholder="{{ 'solution_inquiry.form.name' | t }}"
             required
             autocomplete="name"
           >
@@ -235,7 +255,7 @@
             class="input"
             type="email"
             name="contact[email]"
-            placeholder="Email Address *"
+            placeholder="{{ 'solution_inquiry.form.email' | t }}"
             required
             autocomplete="email"
           >
@@ -243,7 +263,7 @@
             class="input"
             type="tel"
             name="contact[Contact number]"
-            placeholder="Contact Number *"
+            placeholder="{{ 'solution_inquiry.form.contact' | t }}"
             required
             autocomplete="tel"
           >
@@ -251,12 +271,12 @@
             class="input"
             type="text"
             name="contact[City]"
-            placeholder="City *"
+            placeholder="{{ 'solution_inquiry.form.city' | t }}"
             required
             autocomplete="address-level2"
           >
           <select name="contact[Product]" required>
-            <option value="" disabled selected>{{ section.settings.product_placeholder | escape }}</option>
+            <option value="" disabled selected>{{ 'solution_inquiry.form.products' | t }}</option>
             {% for option in product_options %}
               {% assign clean_option = option | strip_html | strip %}
               {% if clean_option != blank %}
@@ -269,18 +289,25 @@
               class="input"
               type="text"
               name="contact[Document filename]"
-              placeholder="Attach Document"
+              placeholder="{{ 'solution_inquiry.form.add_file' | t }}"
               readonly
               data-inquiry-filename
               tabindex="-1"
             >
+            <input type="hidden" name="contact[Document URL]" value="" data-inquiry-url>
             <label class="solution-browse">
-              {{ section.settings.browse_label | escape }}
-              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" data-inquiry-file aria-label="Attach document">
+              {{ section.settings.browse_label | default: 'Browse' | escape }}
+              <input
+                type="file"
+                accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                data-inquiry-file
+                aria-label="{{ 'solution_inquiry.form.add_file_aria' | t }}"
+              >
             </label>
           </div>
-          <button type="submit" class="primary-btn">
-            {{ section.settings.submit_label | escape }}
+          <p class="solution-upload-status" data-inquiry-status hidden></p>
+          <button type="submit" class="primary-btn" data-inquiry-submit>
+            {{ 'solution_inquiry.form.submit' | t }}
           </button>
         {% endform %}
       </div>
@@ -291,14 +318,105 @@
     (function () {
       var section = document.querySelector('.solution-inquiry[data-section-id="{{ section.id }}"]');
       if (!section) return;
+
+      var form = section.querySelector('.solution-inquiry-form');
       var fileInput = section.querySelector('[data-inquiry-file]');
       var filenameInput = section.querySelector('[data-inquiry-filename]');
+      var urlInput = section.querySelector('[data-inquiry-url]');
+      var statusEl = section.querySelector('[data-inquiry-status]');
       if (!fileInput || !filenameInput) return;
+
+      var cloudName = {{ section.settings.cloudinary_cloud_name | default: 'fifebgtq' | json }};
+      var uploadPreset = {{ section.settings.cloudinary_upload_preset | default: 'ml_default' | json }};
+      var uploadFolder = {{ section.settings.cloudinary_folder | default: 'solution-inquiry/documents' | json }};
+      var uploading = false;
+      var messages = {
+        uploading: {{ 'solution_inquiry.form.uploading' | t | json }},
+        success: {{ 'solution_inquiry.form.upload_success' | t | json }},
+        error: {{ 'solution_inquiry.form.upload_error' | t | json }},
+        wait: {{ 'solution_inquiry.form.upload_wait' | t | json }},
+        required: {{ 'solution_inquiry.form.upload_required' | t | json }}
+      };
+
+      function setStatus(message, type) {
+        if (!statusEl) return;
+        if (!message) {
+          statusEl.hidden = true;
+          statusEl.textContent = '';
+          statusEl.classList.remove('is-error', 'is-success');
+          return;
+        }
+        statusEl.hidden = false;
+        statusEl.textContent = message;
+        statusEl.classList.toggle('is-error', type === 'error');
+        statusEl.classList.toggle('is-success', type === 'success');
+      }
+
+      function uploadToCloudinary(file) {
+        if (!cloudName || !uploadPreset) {
+          return Promise.reject(new Error('Cloudinary is not configured yet.'));
+        }
+
+        var body = new FormData();
+        body.append('file', file);
+        body.append('upload_preset', uploadPreset);
+        if (uploadFolder) body.append('folder', uploadFolder);
+
+        return fetch('https://api.cloudinary.com/v1_1/' + encodeURIComponent(cloudName) + '/auto/upload', {
+          method: 'POST',
+          body: body
+        }).then(function (response) {
+          return response.json().then(function (data) {
+            if (!response.ok || !data.secure_url) {
+              throw new Error((data && data.error && data.error.message) || messages.error);
+            }
+            return data.secure_url;
+          });
+        });
+      }
 
       fileInput.addEventListener('change', function () {
         var file = fileInput.files && fileInput.files[0];
+        if (urlInput) urlInput.value = '';
         filenameInput.value = file ? file.name : '';
+        setStatus('', '');
+
+        if (!file) return;
+
+        uploading = true;
+        if (form) form.classList.add('is-uploading');
+        setStatus(messages.uploading, '');
+
+        uploadToCloudinary(file)
+          .then(function (url) {
+            if (urlInput) urlInput.value = url;
+            setStatus(messages.success, 'success');
+          })
+          .catch(function (error) {
+            filenameInput.value = '';
+            fileInput.value = '';
+            if (urlInput) urlInput.value = '';
+            setStatus(error.message || messages.error, 'error');
+          })
+          .finally(function () {
+            uploading = false;
+            if (form) form.classList.remove('is-uploading');
+          });
       });
+
+      if (form) {
+        form.addEventListener('submit', function (event) {
+          if (uploading) {
+            event.preventDefault();
+            setStatus(messages.wait, 'error');
+            return;
+          }
+          if (filenameInput.value && urlInput && !urlInput.value) {
+            event.preventDefault();
+            setStatus(messages.required, 'error');
+          }
+        });
+      }
     })();
   </script>
 </section>
@@ -327,12 +445,6 @@
       "default": "Submit your project details or upload documents directly through our B2B inquiry form. Our team will connect with you to design a tailored solution for your business needs."
     },
     {
-      "type": "text",
-      "id": "product_placeholder",
-      "label": "Product select placeholder",
-      "default": "Select the product"
-    },
-    {
       "type": "textarea",
       "id": "product_options",
       "label": "Product options (one per line)",
@@ -346,15 +458,35 @@
     },
     {
       "type": "text",
-      "id": "submit_label",
-      "label": "Submit label",
-      "default": "Submit"
-    },
-    {
-      "type": "text",
       "id": "success_message",
       "label": "Success message",
       "default": "Thanks — your inquiry has been submitted."
+    },
+    {
+      "type": "header",
+      "content": "Cloudinary document upload"
+    },
+    {
+      "type": "paragraph",
+      "content": "Documents upload to Cloudinary, then the file URL is sent with the Shopify contact form."
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_cloud_name",
+      "label": "Cloudinary cloud name",
+      "default": "fifebgtq"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_upload_preset",
+      "label": "Cloudinary unsigned upload preset",
+      "default": "ml_default"
+    },
+    {
+      "type": "text",
+      "id": "cloudinary_folder",
+      "label": "Cloudinary folder",
+      "default": "solution-inquiry/documents"
     },
     {
       "type": "color",

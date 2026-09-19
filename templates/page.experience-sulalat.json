@@ -14,8 +14,8 @@
       "settings": {
         "background_image": "shopify://shop_images/892358b02182d5ab1e23104556cb4d58132eda40.png",
         "overlay_color": "#00000073",
-        "heading": "<p>Experience Sulalat</p>",
-        "text": "<p>From bean to blend, Sulalat curates exceptional coffees for every style and setting — combining heritage with innovation.</p>",
+        "heading": "<p>The Sulalat Experience</p>",
+        "text": "<p>Experience sourcing, roasting, equipment, and training under one roof. Our 4,000 sqm B2B space offers an exclusive window into our world.</p>",
         "primary_button_label": "Book an Experience",
         "primary_button_link": "",
         "secondary_button_label": "Explore the Space",
@@ -37,9 +37,9 @@
           "type": "experience",
           "settings": {
             "image": "shopify://shop_images/218d77146260801e6902b88bb0c02c48efaf2f08.png",
-            "title": "Live Coffee Roasting",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "button_label": "Book Now",
+            "title": "Live Roasting",
+            "text": "<p>Specialty and auction-grade coffee roasted in real time</p>",
+            "button_label": "Watch It Happen",
             "button_link": ""
           }
         },
@@ -47,9 +47,9 @@
           "type": "experience",
           "settings": {
             "image": "shopify://shop_images/ca764f2939a11a91bbffb499daff07aab9bea083.png",
-            "title": "Barista Training & Demo",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "button_label": "Book Now",
+            "title": "Chocolate & Gelato Production",
+            "text": "<p>In-house chocolate factory and gelato production facility</p>",
+            "button_label": "Step Inside",
             "button_link": ""
           }
         },
@@ -57,9 +57,9 @@
           "type": "experience",
           "settings": {
             "image": "shopify://shop_images/5840f5dc35f398e0e2e31c09dcc9498d7e816fdc.png",
-            "title": "Open Equipment Lab",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "button_label": "Book Now",
+            "title": "Equipment Lab",
+            "text": "<p>Demos and guidance on the tools we distribute</p>",
+            "button_label": "Try Our Tools",
             "button_link": ""
           }
         },
@@ -67,9 +67,19 @@
           "type": "experience",
           "settings": {
             "image": "shopify://shop_images/6fa0723f81e362e367a91b95c13b09f700d74597.png",
-            "title": "Tasting Sessions",
-            "text": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "button_label": "Book Now",
+            "title": "Cupping & Tasting",
+            "text": "<p>Dedicated zones for coffee, chocolate, and gelato</p>",
+            "button_label": "Taste for Yourself",
+            "button_link": ""
+          }
+        },
+        "experience_fEVARg": {
+          "type": "experience",
+          "settings": {
+            "image": "shopify://shop_images/image_394_1_6dbbda3e-75f9-4e51-b673-cfe009159597.png",
+            "title": "Training & Consultancy",
+            "text": "<p>Practical, certified guidance for café setups and baristas</p>",
+            "button_label": "Book a Session",
             "button_link": ""
           }
         }
@@ -78,7 +88,8 @@
         "exp_roasting",
         "exp_barista",
         "exp_equipment",
-        "exp_tasting"
+        "exp_tasting",
+        "experience_fEVARg"
       ],
       "settings": {
         "background_color": "#ffffff",
@@ -137,7 +148,7 @@
           "type": "offering",
           "settings": {
             "image": "shopify://shop_images/917afd115aad6694cb3e45b977d1c6d899c5b3c8.png",
-            "title": "Coffee",
+            "title": "Specialty Coffee",
             "button_label": "Download Menu",
             "button_link": ""
           }
@@ -146,7 +157,7 @@
           "type": "offering",
           "settings": {
             "image": "shopify://shop_images/1ba0946644a7aeb839e0c3e37e8abcdcff4014e4.png",
-            "title": "Bakery",
+            "title": "Artisan Gelato",
             "button_label": "Download Menu",
             "button_link": ""
           }
@@ -155,7 +166,7 @@
           "type": "offering",
           "settings": {
             "image": "shopify://shop_images/db8f420a69b49afaaf0f77fdb4329a65f87d4fa8.png",
-            "title": "Gelato",
+            "title": "Craft Chocolate",
             "button_label": "Download Menu",
             "button_link": ""
           }
@@ -164,7 +175,7 @@
           "type": "offering",
           "settings": {
             "image": "shopify://shop_images/image_397.png",
-            "title": "Chocolate",
+            "title": "Tools & Equipment",
             "button_label": "Download Menu",
             "button_link": ""
           }
@@ -178,7 +189,7 @@
       ],
       "name": "Experience offerings",
       "settings": {
-        "heading": "What We Are Offering",
+        "heading": "Everything You Can Try at Our Showroom",
         "background_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 100,
@@ -190,19 +201,19 @@
       "name": "Experience booking",
       "settings": {
         "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
-        "heading": "Book Your Coffee Experience",
-        "text": "Choose your experience, select your schedule, and reserve your spot.",
-        "experience_placeholder": "Select Experience",
+        "heading": "Book Your Experience",
+        "text": "Choose an experience, set your time, and let us ensure you make the most of your visit.",
+        "experience_placeholder": "Experience",
         "experience_options": "Live Coffee Roasting\nBarista Training & Demo\nOpen Equipment Lab\nTasting Sessions",
         "date_placeholder": "MM / YY",
         "time_slots": "Morning,Afternoon,Evening",
-        "guests_placeholder": "Number of Guests",
+        "guests_placeholder": "Guests (Select Number)",
         "guest_options": "1 Guest\n2 Guests\n3 Guests\n4 Guests\n5+ Guests",
-        "name_placeholder": "Full Name *",
-        "email_placeholder": "Email Address *",
-        "phone_placeholder": "Contact Number *",
-        "notes_placeholder": "Special Requests (Optional)",
-        "submit_label": "Submit",
+        "name_placeholder": "Full Name",
+        "email_placeholder": "Email",
+        "phone_placeholder": "Contact",
+        "notes_placeholder": "Let us know if you have any special requests (optional)",
+        "submit_label": "Reserve My Spot",
         "success_message": "Thanks — your booking request has been submitted.",
         "background_color": "#ffffff",
         "form_background": "#eaf8f1",

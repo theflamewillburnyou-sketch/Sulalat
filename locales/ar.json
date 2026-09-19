@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "search": {
@@ -71,6 +80,40 @@
       "linkedin": "رابط LinkedIn",
       "resume": "إرفاق السيرة الذاتية *",
       "resume_aria": "إرفاق السيرة الذاتية"
+    }
+  },
+  "solution_inquiry": {
+    "form": {
+      "name": "الاسم",
+      "email": "البريد الالكتروني",
+      "contact": "رقم التواصل",
+      "city": "المدينة",
+      "products": "المنتج",
+      "add_file": "اضافة ملف",
+      "add_file_aria": "اضافة ملف",
+      "submit": "ابدأ المحادثة",
+      "uploading": "جاري رفع المستند…",
+      "upload_success": "تم رفع المستند بنجاح.",
+      "upload_error": "تعذر رفع المستند. يرجى المحاولة مرة أخرى.",
+      "upload_wait": "يرجى انتظار انتهاء رفع المستند.",
+      "upload_required": "يجب اكتمال رفع المستند قبل الإرسال."
+    }
+  },
+  "contact_sulalat": {
+    "form": {
+      "first_name": "الاسم الأول",
+      "email": "البريد الالكتروني",
+      "contact": "رقم التواصل",
+      "city": "المدينة",
+      "add_file": "اضافة ملف",
+      "add_file_aria": "اضافة ملف",
+      "products": "اختر المنتجات",
+      "submit": "إرسال الاستفسار",
+      "uploading": "جاري رفع المستند…",
+      "upload_success": "تم رفع المستند بنجاح.",
+      "upload_error": "تعذر رفع المستند. يرجى المحاولة مرة أخرى.",
+      "upload_wait": "يرجى انتظار انتهاء رفع المستند.",
+      "upload_required": "يجب اكتمال رفع المستند قبل الإرسال."
     }
   },
   "sections": {

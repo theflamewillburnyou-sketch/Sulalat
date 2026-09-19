@@ -360,6 +360,40 @@
       "resume_aria": "Attach resume"
     }
   },
+  "solution_inquiry": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "contact": "Contact",
+      "city": "City",
+      "products": "Products",
+      "add_file": "Add File",
+      "add_file_aria": "Add file",
+      "submit": "Start the Conversation",
+      "uploading": "Uploading document…",
+      "upload_success": "Document uploaded successfully.",
+      "upload_error": "Could not upload document. Please try again.",
+      "upload_wait": "Please wait for the document upload to finish.",
+      "upload_required": "Document upload must finish before submitting."
+    }
+  },
+  "contact_sulalat": {
+    "form": {
+      "first_name": "First Name",
+      "email": "Email",
+      "contact": "Contact",
+      "city": "City",
+      "add_file": "Add File",
+      "add_file_aria": "Add file",
+      "products": "Select Products",
+      "submit": "Submit Inquiry",
+      "uploading": "Uploading document…",
+      "upload_success": "Document uploaded successfully.",
+      "upload_error": "Could not upload document. Please try again.",
+      "upload_wait": "Please wait for the document upload to finish.",
+      "upload_required": "Document upload must finish before submitting."
+    }
+  },
   "blogs": {
     "article": {
       "comments": {
