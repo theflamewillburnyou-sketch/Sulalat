@@ -19,6 +19,7 @@
       background: var(--sulalat-contact-bg, #ffffff);
       font-family: var(--body-font-family);
       color: #111;
+      padding:100px 0;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .container {
@@ -29,37 +30,37 @@
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.60fr);
       gap: 48px;
       align-items: start;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__heading {
       margin: 0 0 12px;
-      font-size: clamp(28px, 3.2vw, 42px);
+      font-size: clamp(24px, 3.2vw, 55px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: -0.02em;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__text {
-      margin: 0 0 32px;
-      font-size: 15px;
+      margin: 0 0 60px;
+      font-size: 16px;
       line-height: 1.6;
-      color: #8a8a8a;
+      color: #4B4B4B;
       max-width: 520px;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 20px;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 20px;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form .input,
@@ -73,7 +74,7 @@
       background: #fff;
       font: inherit;
       font-size: 15px;
-      color: #111;
+      color: #141211;
       outline: none;
       box-shadow: none;
       appearance: none;
@@ -109,21 +110,24 @@
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse {
       position: absolute;
-      right: 8px;
+      right: 4px;
       top: 50%;
       transform: translateY(-50%);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       min-width: 96px;
-      height: 36px;
+      width: 100%;
+      max-width: 196px;
+      height: calc(100% - 8px);
       padding: 0 18px;
       border-radius: 999px;
       background: var(--sulalat-contact-accent, #53c295);
       color: #fff;
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 400;
       cursor: pointer;
+      font-family: var(--secondary-font);
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse input {
@@ -136,25 +140,9 @@
       border: 0;
     }
 
-    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit {
-      align-self: flex-start;
-      min-width: 140px;
-      min-height: 48px;
-      margin-top: 6px;
-      padding: 12px 32px;
-      border: 0;
-      border-radius: 14px;
-      background: var(--sulalat-contact-accent, #53c295);
-      color: #fff;
-      font: inherit;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit:hover {
-      background: #45ad82;
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit{
+      max-width:max-content;
+      margin-top: 40px;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__status {
@@ -192,13 +180,14 @@
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social {
-      margin-top: 36px;
+      margin-top: 60px;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-label {
       margin: 0 0 16px;
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 500;
+      color:#000;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-list {
@@ -237,8 +226,8 @@
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card {
       position: relative;
       overflow: hidden;
-      border-radius: 28px;
-      min-height: 520px;
+      border-radius: 12px;
+      min-height: 615px;
       color: #fff;
       isolation: isolate;
     }
@@ -280,8 +269,9 @@
       gap: 14px;
       color: #fff;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 18px;
       line-height: 1.55;
+      font-weight:400;
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__info svg {
@@ -291,6 +281,19 @@
       margin-top: 2px;
     }
 
+    .sulalat-contact-map {
+      padding-bottom:100px !important;
+    }
+
+    @media (max-width: 1440px){
+      .sulalat-contact[data-section-id="{{ section.id }}"]{
+        padding:80px 0;
+      }
+      .sulalat-contact-map {
+        padding-bottom: 80px !important;
+      }
+    }
+
     @media (max-width: 991px) {
       .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__grid {
         grid-template-columns: 1fr;
@@ -298,8 +301,21 @@
       }
 
       .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card {
-        min-height: 420px;
+        min-height: 350px;
         order: -1;
+      }
+    }
+
+    @media (max-width: 767px){
+      .sulalat-contact[data-section-id="{{ section.id }}"]{
+          padding:70px 0;
+        }
+        .sulalat-contact-map {
+          padding-bottom: 70px !important;
+        }
+
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__info {
+        font-size: 16px;
       }
     }
 
@@ -312,6 +328,22 @@
         width: 100%;
       }
     }
+
+    @media (max-width: 575px){
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-body {
+        padding: 24px;
+      }
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__text {
+        margin: 0 0 30px;
+      }
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit {
+        margin-top: 20px;
+      }
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse {
+        max-width: 136px;
+      }
+    }
+
   </style>
 
   <div class="container">
@@ -406,7 +438,7 @@
             {% endfor %}
           </select>
 
-          <button type="submit" class="sulalat-contact__submit" data-contact-submit>
+          <button type="submit" class="sulalat-contact__submit primary-btn" data-contact-submit>
             {{ 'contact_sulalat.form.submit' | t }}
           </button>
         {% endform %}

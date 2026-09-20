@@ -1,0 +1,403 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/28e1c5b43866f2dc3a2496fa0241d8ed53c743cf_afec30ed-273d-4a5d-94a7-e35783eb0fb5.png",
+        "overlay_color": "#00000073",
+        "subtitle": "Insights",
+        "heading": "<h1>Stories, Techniques, & Industry Perspectives</h1>",
+        "text": "<p>Discover the ideas, lessons, and discoveries that shape how we source, produce, and think about coffee, chocolate, gelato, and hospitality.</p>",
+        "min_height": 520,
+        "min_height_mobile": 400,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "insight_tabs": {
+      "type": "insight-tabs",
+      "blocks": {
+        "card_brewing_1": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "The Perfect Pour-Over: Step by Step",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "link": "/blogs/news/the-perfect-pour-over-step-by-step"
+          }
+        },
+        "card_brewing_2": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "Espresso at Home: Techniques for Consistency",
+            "text": "From grind size to tamping, discover the secrets to café-quality espresso.",
+            "link": ""
+          }
+        },
+        "card_brewing_3": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Saudi Coffee Rituals: Brewing Tradition",
+            "text": "A cultural guide to preparing authentic Saudi coffee with heritage and flavor.",
+            "link": ""
+          }
+        },
+        "card_brewing_4": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "Cold Brew Basics",
+            "text": "A simple approach to smooth, refreshing cold brew at home.",
+            "link": ""
+          }
+        },
+        "card_brewing_5": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "French Press Fundamentals",
+            "text": "Get a fuller cup with the right grind, timing, and pour technique.",
+            "link": ""
+          }
+        },
+        "card_brewing_6": {
+          "type": "brewing_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Milk Steaming for Home Baristas",
+            "text": "Texture milk with confidence for lattes and cappuccinos at home.",
+            "link": ""
+          }
+        },
+        "card_origins_1": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "From Farm to Cup: Tracing Quality",
+            "text": "How careful sourcing and selection shape the cup in every roast.",
+            "link": ""
+          }
+        },
+        "card_origins_2": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "Yemeni Heritage Lots",
+            "text": "Exploring the landscapes and traditions behind distinctive Yemeni coffees.",
+            "link": ""
+          }
+        },
+        "card_origins_3": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Ethiopian Highlands Profile",
+            "text": "A closer look at altitude, variety, and processing in Ethiopia.",
+            "link": ""
+          }
+        },
+        "card_origins_4": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "Quality Control at Origin",
+            "text": "The standards and cupping practices that protect consistency.",
+            "link": ""
+          }
+        },
+        "card_origins_5": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "Partner Farms & Growers",
+            "text": "Stories from the people who grow the coffees we roast.",
+            "link": ""
+          }
+        },
+        "card_origins_6": {
+          "type": "origins_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Processing Methods Explained",
+            "text": "Washed, natural, and honey — how each method changes flavor.",
+            "link": ""
+          }
+        },
+        "card_blog_1": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "Inside the Roastery",
+            "text": "A day behind the scenes with the team shaping every batch.",
+            "link": ""
+          }
+        },
+        "card_blog_2": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "Hospitality Trends This Season",
+            "text": "What cafés and hotels are asking for in coffee and service.",
+            "link": ""
+          }
+        },
+        "card_blog_3": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Chocolate & Coffee Pairings",
+            "text": "Simple pairings that elevate tasting and retail experiences.",
+            "link": ""
+          }
+        },
+        "card_blog_4": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50.jpg",
+            "date": "12 April, 2020",
+            "title": "Building a Better Menu",
+            "text": "How to design drinks that guests remember and reorder.",
+            "link": ""
+          }
+        },
+        "card_blog_5": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_1.jpg",
+            "date": "12 April, 2020",
+            "title": "Training the Next Barista",
+            "text": "Practical notes on coaching teams for consistency and care.",
+            "link": ""
+          }
+        },
+        "card_blog_6": {
+          "type": "blog_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_2.jpg",
+            "date": "12 April, 2020",
+            "title": "Sustainability in Practice",
+            "text": "Small operational choices that add up across the supply chain.",
+            "link": ""
+          }
+        },
+        "card_report_1": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_3.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_report_2": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_4.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_report_3": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_5.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_report_4": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_3.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_report_5": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_4.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_report_6": {
+          "type": "report_card",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_50_5.jpg",
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "download_link": "",
+            "explore_label": "Explore",
+            "explore_link": ""
+          }
+        },
+        "card_video_1": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/6853596fd55003eefffa66d4c0f0da112e2ab9d6.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        },
+        "card_video_2": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/9b2f0cd10006df8b8343b25639416a063910ef28.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        },
+        "card_video_3": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/21dc712a3fbf4ec57eb75fe6801124c662dda858.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        },
+        "card_video_4": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/6853596fd55003eefffa66d4c0f0da112e2ab9d6.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        },
+        "card_video_5": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/9b2f0cd10006df8b8343b25639416a063910ef28.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        },
+        "card_video_6": {
+          "type": "video_card",
+          "settings": {
+            "image": "shopify://shop_images/21dc712a3fbf4ec57eb75fe6801124c662dda858.png",
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category",
+            "video_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_brewing_1",
+        "card_brewing_2",
+        "card_brewing_3",
+        "card_brewing_4",
+        "card_brewing_5",
+        "card_brewing_6",
+        "card_origins_1",
+        "card_origins_2",
+        "card_origins_3",
+        "card_origins_4",
+        "card_origins_5",
+        "card_origins_6",
+        "card_blog_1",
+        "card_blog_2",
+        "card_blog_3",
+        "card_blog_4",
+        "card_blog_5",
+        "card_blog_6",
+        "card_report_1",
+        "card_report_2",
+        "card_report_3",
+        "card_report_4",
+        "card_report_5",
+        "card_report_6",
+        "card_video_1",
+        "card_video_2",
+        "card_video_3",
+        "card_video_4",
+        "card_video_5",
+        "card_video_6"
+      ],
+      "settings": {
+        "tab_all": "All",
+        "tab_brewing": "Practical Guides",
+        "tab_origins": "Behind the Catalogue",
+        "tab_blog": "Industry Insights",
+        "tab_reports": "Transparency in Practice",
+        "tab_videos": "Media Library",
+        "view_all_label_brewing": "Explore Guides",
+        "view_all_brewing": "",
+        "view_all_label_origins": "Read More",
+        "view_all_origins": "",
+        "view_all_label_blog": "View Articles",
+        "view_all_blog": "",
+        "view_all_label_reports": "View Reports",
+        "view_all_reports": "",
+        "view_all_label_videos": "Explore",
+        "view_all_videos": "",
+        "view_all_all": "#",
+        "empty_text": "Content coming soon.",
+        "background_color": "#ffffff",
+        "padding_top": 0,
+        "padding_bottom": 80,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "insight_tabs"
+  ]
+}

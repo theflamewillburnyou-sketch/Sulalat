@@ -1,0 +1,125 @@
+{%- comment -%}
+  Single insight card markup. Accepts: block
+{%- endcomment -%}
+
+{% case block.type %}
+  {% when 'report_card' %}
+    {%- liquid
+      assign download_label = block.settings.download_label | default: 'Download'
+      assign explore_label = block.settings.explore_label | default: 'Explore'
+      assign download_href = block.settings.download_link | default: '#'
+      assign explore_href = block.settings.explore_link | default: '#'
+    -%}
+    <div class="insight-card insight-card--report">
+      <div class="insight-card-image">
+        {% if block.settings.image != blank %}
+          {{
+            block.settings.image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '320, 480, 640, 800, 900',
+              sizes: '(min-width: 992px) 33vw, (min-width: 750px) 50vw, 100vw',
+              alt: block.settings.title
+          }}
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      {% if block.settings.title != blank %}
+        <h3 class="insight-card-title">{{ block.settings.title | escape }}</h3>
+      {% endif %}
+      {% if block.settings.text != blank %}
+        <p class="insight-card-text">{{ block.settings.text | escape }}</p>
+      {% endif %}
+      <div class="insight-card-actions">
+        <a
+          class="insight-btn insight-btn--primary"
+          href="{{ download_href }}"
+          {% if block.settings.download_link != blank and block.settings.download_link contains 'http' %}target="_blank" rel="noopener"{% endif %}
+        >
+          {{ download_label | escape }}
+        </a>
+        <a class="insight-btn insight-btn--outline" href="{{ explore_href }}">
+          {{ explore_label | escape }}
+        </a>
+      </div>
+    </div>
+
+  {% when 'video_card' %}
+    {% if block.settings.video_link != blank %}
+      <a class="insight-card insight-card--video" href="{{ block.settings.video_link }}" {% if block.settings.video_link contains 'http' %}target="_blank" rel="noopener"{% endif %}>
+    {% else %}
+      <div class="insight-card insight-card--video">
+    {% endif %}
+      <div class="insight-card-image insight-card-image--video">
+        {% if block.settings.image != blank %}
+          {{
+            block.settings.image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '320, 480, 640, 800, 900',
+              sizes: '(min-width: 992px) 33vw, (min-width: 750px) 50vw, 100vw',
+              alt: block.settings.title
+          }}
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+        <span class="insight-play" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" focusable="false">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+      </div>
+      <div class="insight-video-meta">
+        {% if block.settings.title != blank %}
+          <h3 class="insight-card-title">{{ block.settings.title | escape }}</h3>
+        {% endif %}
+        <span class="insight-video-tag">{{ block.settings.category_label | default: 'Category' | escape }}</span>
+      </div>
+    {% if block.settings.video_link != blank %}
+      </a>
+    {% else %}
+      </div>
+    {% endif %}
+
+  {% else %}
+    {% if block.settings.link != blank %}
+      <a class="insight-card" href="{{ block.settings.link }}">
+    {% else %}
+      <div class="insight-card">
+    {% endif %}
+      <div class="insight-card-image">
+        {% if block.settings.image != blank %}
+          {{
+            block.settings.image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '320, 480, 640, 800, 900',
+              sizes: '(min-width: 992px) 33vw, (min-width: 750px) 50vw, 100vw',
+              alt: block.settings.title
+          }}
+        {% else %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+      <div class="insight-card-meta">
+        <span class="insight-card-accent" aria-hidden="true"></span>
+        {% if block.settings.date != blank %}
+          <p class="insight-card-date">{{ block.settings.date | escape }}</p>
+        {% endif %}
+      </div>
+      {% if block.settings.title != blank %}
+        <h3 class="insight-card-title">{{ block.settings.title | escape }}</h3>
+      {% endif %}
+      {% if block.settings.text != blank %}
+        <p class="insight-card-text">{{ block.settings.text | escape }}</p>
+      {% endif %}
+    {% if block.settings.link != blank %}
+      </a>
+    {% else %}
+      </div>
+    {% endif %}
+{% endcase %}

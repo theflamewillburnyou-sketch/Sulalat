@@ -1,0 +1,134 @@
+{%- comment -%}
+  Renders one insight group.
+  Accepts: section, category, label, view_all_link, view_all_label, layout ('slider' | 'grid')
+{%- endcomment -%}
+
+{%- liquid
+  assign layout_mode = layout | default: 'slider'
+  assign button_label = view_all_label | default: 'View All'
+  assign slide_count = 0
+
+  for block in section.blocks
+    if category == 'videos' and block.type == 'video_card'
+      assign slide_count = slide_count | plus: 1
+    elsif category == 'reports' and block.type == 'report_card'
+      assign slide_count = slide_count | plus: 1
+    elsif category == 'brewing' and block.type == 'brewing_card'
+      assign slide_count = slide_count | plus: 1
+    elsif category == 'origins' and block.type == 'origins_card'
+      assign slide_count = slide_count | plus: 1
+    elsif category == 'blog' and block.type == 'blog_card'
+      assign slide_count = slide_count | plus: 1
+    elsif block.type == 'insight_card' and block.settings.category == category
+      assign slide_count = slide_count | plus: 1
+    endif
+  endfor
+-%}
+
+{% if slide_count > 0 %}
+  <div
+    class="insight-group{% if layout_mode == 'grid' %} insight-group--grid{% endif %}{% if category == 'videos' %} insight-group--videos{% endif %}{% if category == 'reports' %} insight-group--reports{% endif %}"
+    {% unless layout_mode == 'grid' %}data-insight-group{% endunless %}
+  >
+    <div class="insight-panel-header{% if layout_mode == 'grid' %} insight-panel-header--simple{% endif %}">
+      <h2>{{ label | escape }}</h2>
+      {% unless layout_mode == 'grid' %}
+        {% if view_all_link != blank %}
+          <a class="insight-view-all primary-btn" href="{{ view_all_link }}">
+            {{ button_label | escape }}
+          </a>
+        {% else %}
+          <button type="button" class="insight-view-all" data-insight-tab="{{ category }}">
+            {{ button_label | escape }}
+          </button>
+        {% endif %}
+      {% endunless %}
+    </div>
+
+    {% if layout_mode == 'grid' %}
+      <div class="insight-grid">
+        {% for block in section.blocks %}
+          {% if category == 'videos' and block.type == 'video_card' %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% elsif category == 'reports' and block.type == 'report_card' %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% elsif category == 'brewing' and block.type == 'brewing_card' %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% elsif category == 'origins' and block.type == 'origins_card' %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% elsif category == 'blog' and block.type == 'blog_card' %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% elsif block.type == 'insight_card' and block.settings.category == category %}
+            <div class="insight-grid-item" {{ block.shopify_attributes }}>
+              {% render 'insight-card-item', block: block %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div
+        class="swiper insight-slider"
+        data-insight-slider
+        {% if category == 'videos' %}data-slides-per-view="2"{% endif %}
+      >
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            {% if category == 'videos' and block.type == 'video_card' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% elsif category == 'reports' and block.type == 'report_card' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% elsif category == 'brewing' and block.type == 'brewing_card' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% elsif category == 'origins' and block.type == 'origins_card' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% elsif category == 'blog' and block.type == 'blog_card' %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% elsif block.type == 'insight_card' and block.settings.category == category %}
+              <div class="swiper-slide" {{ block.shopify_attributes }}>
+                {% render 'insight-card-item', block: block %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="insight-slider-footer">
+        <div class="insight-progress" aria-hidden="true">
+          <span class="insight-progress-bar" data-insight-progress></span>
+        </div>
+        <div class="insight-nav-buttons">
+          <button type="button" data-insight-prev aria-label="Previous">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button type="button" data-insight-next aria-label="Next">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

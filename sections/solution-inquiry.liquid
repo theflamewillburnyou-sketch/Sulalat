@@ -65,7 +65,7 @@
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 20px;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input,
@@ -74,15 +74,28 @@
       width: 100%;
       height: 52px;
       padding: 0 22px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid #E4E4E4;
       border-radius: 999px;
       background: #fff;
       font-family: var(--body-font-family);
-      font-size: 15px;
+      font-size: 16px;
       color: #000;
       outline: none;
       box-shadow: none;
       appearance: none;
+    }
+
+
+    [dir="rtl"] .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input,
+    [dir="rtl"] .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input,
+    [dir="rtl"] .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
+      text-align:right;
+    }
+
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input::placeholder,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input::placeholder,
+    .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select::placeholder {
+      color:#808080;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
@@ -111,7 +124,7 @@
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-file-field .input {
-      padding-right: 118px;
+      padding-inline-end: 118px;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse {
@@ -126,12 +139,18 @@
       height: 100%;
       padding: 0 18px;
       border-radius: 999px;
-      background: #dff5eb;
+      background: rgb(83 194 149 / 20%);
       color: var(--brand-primary, #53c295);
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 500;
       cursor: pointer;
       border: 1px solid rgb(83 194 149 / 20%);
+      font-family: var(--secondary-font);
+    }
+
+    [dir="rtl"] .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse {
+      right: auto;
+      left:0;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-browse input {
@@ -149,6 +168,7 @@
       margin-top: 8px;
       min-width: 160px;
       border: none;
+      line-height: 1.4;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status {

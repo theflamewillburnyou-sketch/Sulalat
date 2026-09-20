@@ -1,0 +1,609 @@
+{%- liquid
+  assign share_url = request.origin | append: article.url
+  assign share_title = article.title | escape
+  assign views_count = article.metafields.custom.views.value | default: article.metafields.custom.views | default: section.settings.default_views
+  assign likes_count = article.metafields.custom.likes.value | default: article.metafields.custom.likes | default: section.settings.default_likes
+  assign related_limit = section.settings.related_count | default: 3
+-%}
+
+<section class="insight-article" data-section-id="{{ section.id }}">
+  <style>
+    .insight-article[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+      color: #141211;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__title {
+      margin: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: clamp(28px, 3.2vw, 42px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: #141211;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+      padding-top: 8px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share-label {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: #141211;
+      white-space: nowrap;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share-list {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1.5px solid var(--brand-primary, #53c295);
+      color: var(--brand-primary, #53c295);
+      text-decoration: none;
+      transition: 0.25s ease;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share-link:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__share-link svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__content {
+      margin: 0 0 28px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--brand-body-text, #535353);
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__content > *:first-child {
+      margin-top: 0;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__content > *:last-child {
+      margin-bottom: 0;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__content p {
+      margin: 0 0 1.15em;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__content img,
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__featured img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__featured {
+      margin: 0 0 28px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 28px;
+      margin: 0 0 72px;
+      padding: 4px 0;
+      color: var(--brand-primary, #53c295);
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__meta-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-header h2 {
+      margin: 0;
+      font-size: clamp(24px, 2.5vw, 36px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: #141211;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__view-all {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 28px;
+      border-radius: 999px;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: 0.25s ease;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__view-all:hover {
+      background: #45ad82;
+      color: #fff;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px 28px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card {
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__image {
+      overflow: hidden;
+      border-radius: 20px;
+      aspect-ratio: 4 / 3;
+      background: #f3f3f3;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__image img,
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__image svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card:hover .insight-related-card__image img {
+      transform: scale(1.05);
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 14px;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__accent {
+      width: 42px;
+      height: 3px;
+      background: var(--brand-primary, #53c295);
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__date {
+      margin: 0;
+      color: var(--brand-primary, #53c295);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__title {
+      margin: 0 0 12px;
+      color: #141211;
+      font-size: clamp(18px, 1.6vw, 22px);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .insight-article[data-section-id="{{ section.id }}"] .insight-related-card__text {
+      margin: 0;
+      color: var(--brand-body-text, #535353);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    @media (max-width: 991px) {
+      .insight-article[data-section-id="{{ section.id }}"] .insight-article__header {
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .insight-article[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .insight-article[data-section-id="{{ section.id }}"] .insight-article__meta {
+        gap: 16px 20px;
+        margin-bottom: 48px;
+      }
+
+      .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-header {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 28px;
+      }
+
+      .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="insight-article__inner">
+    <div class="insight-article__header">
+      <h1 class="insight-article__title">{{ article.title | escape }}</h1>
+
+      {% if section.settings.show_share %}
+        <div class="insight-article__share">
+          <p class="insight-article__share-label">{{ section.settings.share_label | default: 'Share:' | escape }}</p>
+          <ul class="insight-article__share-list">
+            <li>
+              <a
+                class="insight-article__share-link"
+                href="https://wa.me/?text={{ share_title | url_param_escape }}%20{{ share_url | url_encode }}"
+                target="_blank"
+                rel="noopener"
+                aria-label="Share on WhatsApp"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.52 3.48A11.86 11.86 0 0012.06 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.14 1.6 5.95L0 24l6.3-1.65a11.9 11.9 0 005.74 1.46h.01c6.55 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.43-8.43zM12.05 21.8h-.01a9.88 9.88 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.9 6.98c0 5.45-4.44 9.87-9.9 9.87zm5.43-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48a8.96 8.96 0 01-1.66-2.06c-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                class="insight-article__share-link"
+                href="https://twitter.com/intent/tweet?text={{ share_title | url_param_escape }}&url={{ share_url | url_encode }}"
+                target="_blank"
+                rel="noopener"
+                aria-label="Share on X"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.56l-5.14-6.71L5.2 22H1.94l8.03-9.17L1.5 2h6.72l4.64 6.15L18.244 2zm-1.15 18h1.82L7.02 3.94H5.07L17.094 20z"/>
+                </svg>
+              </a>
+            </li>
+            {% if settings.social_instagram_url != blank %}
+              <li>
+                <a
+                  class="insight-article__share-link"
+                  href="{{ settings.social_instagram_url }}"
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Instagram"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm0 2a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H7zm5 3.5A4.5 4.5 0 1112 16.5 4.5 4.5 0 0112 7.5zm0 2A2.5 2.5 0 1014.5 12 2.5 2.5 0 0012 9.5zM17.5 6a1 1 0 11-1 1 1 1 0 011-1z"/>
+                  </svg>
+                </a>
+              </li>
+            {% endif %}
+            <li>
+              <a
+                class="insight-article__share-link"
+                href="https://www.facebook.com/sharer.php?u={{ share_url | url_encode }}"
+                target="_blank"
+                rel="noopener"
+                aria-label="Share on Facebook"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v7h3v-7h3l1-3h-4V10c0-.6.4-1 1-1z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.show_featured_image and article.image != blank %}
+      <div class="insight-article__featured">
+        {{
+          article.image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'eager',
+            widths: '600, 900, 1200, 1600',
+            sizes: '(min-width: 992px) 1120px, 100vw',
+            alt: article.image.alt | default: article.title
+        }}
+      </div>
+    {% endif %}
+
+    <div class="insight-article__content rte">
+      {{ article.content }}
+    </div>
+
+    {% if section.settings.show_meta %}
+      <div class="insight-article__meta">
+        <div class="insight-article__meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <span>{{ article.published_at | date: section.settings.date_format }}</span>
+        </div>
+        {% if views_count != blank %}
+          <div class="insight-article__meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.6"/>
+              <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            <span>{{ views_count }} {{ section.settings.views_label | default: 'Views' | escape }}</span>
+          </div>
+        {% endif %}
+        {% if likes_count != blank %}
+          <div class="insight-article__meta-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0112 6.2 5.5 5.5 0 0121.5 12c-2.5 4.4-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            </svg>
+            <span>{{ likes_count }}</span>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.settings.show_related %}
+      {% assign related_shown = 0 %}
+      {% capture related_cards %}
+        {% for related in blog.articles %}
+          {% if related.id != article.id and related_shown < related_limit %}
+            {% assign related_shown = related_shown | plus: 1 %}
+            <a class="insight-related-card" href="{{ related.url }}">
+              <div class="insight-related-card__image">
+                {% if related.image != blank %}
+                  {{
+                    related.image
+                    | image_url: width: 900
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '320, 480, 640, 800, 900',
+                      sizes: '(min-width: 992px) 33vw, (min-width: 750px) 50vw, 100vw',
+                      alt: related.image.alt | default: related.title
+                  }}
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {% endif %}
+              </div>
+              <div class="insight-related-card__meta">
+                <span class="insight-related-card__accent" aria-hidden="true"></span>
+                <p class="insight-related-card__date">{{ related.published_at | date: '%d %B, %Y' }}</p>
+              </div>
+              <h3 class="insight-related-card__title">{{ related.title | escape }}</h3>
+              {% if related.excerpt != blank %}
+                <p class="insight-related-card__text">{{ related.excerpt | strip_html | truncate: 120 }}</p>
+              {% elsif related.content != blank %}
+                <p class="insight-related-card__text">{{ related.content | strip_html | truncate: 120 }}</p>
+              {% endif %}
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
+
+      {% if related_shown > 0 %}
+        <div class="insight-article__related">
+          <div class="insight-article__related-header">
+            <h2>{{ section.settings.related_heading | default: 'Related Posts' | escape }}</h2>
+            <a class="insight-article__view-all" href="{{ blog.url }}">
+              {{ section.settings.view_all_label | default: 'View All' | escape }}
+            </a>
+          </div>
+          <div class="insight-article__related-grid">
+            {{ related_cards }}
+          </div>
+        </div>
+      {% endif %}
+    {% endif %}
+    </div>
+  </div>
+</section>
+
+{% render 'structured-data-article', article: article %}
+
+{% schema %}
+{
+  "name": "Insight article",
+  "tag": "section",
+  "class": "insight-article-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share links",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "share_label",
+      "label": "Share label",
+      "default": "Share:"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_image",
+      "label": "Show featured image above content",
+      "default": true,
+      "info": "Turn on if the featured image is not already placed inside the article content."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_meta",
+      "label": "Show date / views / likes bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "date_format",
+      "label": "Date format",
+      "default": "%B %d, %Y"
+    },
+    {
+      "type": "text",
+      "id": "views_label",
+      "label": "Views label",
+      "default": "Views"
+    },
+    {
+      "type": "text",
+      "id": "default_views",
+      "label": "Default views count",
+      "default": "1,353",
+      "info": "Optional fallback. Prefer article metafield custom.views."
+    },
+    {
+      "type": "text",
+      "id": "default_likes",
+      "label": "Default likes count",
+      "default": "5",
+      "info": "Optional fallback. Prefer article metafield custom.likes."
+    },
+    {
+      "type": "header",
+      "content": "Related posts"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show related posts",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Related heading",
+      "default": "Related Posts"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "View All"
+    },
+    {
+      "type": "range",
+      "id": "related_count",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "label": "Related posts count",
+      "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ]
+}
+{% endschema %}

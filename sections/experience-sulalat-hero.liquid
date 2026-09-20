@@ -61,7 +61,7 @@
     .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading {
       margin: 0 0 20px;
       color: #ffffff;
-      font-size: var(--exp-hero-heading-size, 72px);
+      font-size: clamp(32px, 4vw, 60px);
       line-height: var(--exp-hero-heading-line-height, 78px);
       font-weight: 400;
       letter-spacing: -0.02em;
@@ -91,7 +91,7 @@
       align-items: center;
     }
 
-    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn {
+    {% comment %} .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -128,6 +128,12 @@
     .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--outline:hover {
       background: rgba(255, 255, 255, 0.12);
       color: #fff;
+    } {% endcomment %}
+
+    .experience-sulalat-hero__btn.secondary-btn {
+      border-color: #fff;
+      color: #fff;
+      backdrop-filter: blur(20px);
     }
 
     @media (max-width: 767px) {
@@ -189,7 +195,7 @@
         <div class="experience-sulalat-hero__actions">
           {% if section.settings.primary_button_label != blank %}
             <a
-              class="experience-sulalat-hero__btn experience-sulalat-hero__btn--primary"
+              class="experience-sulalat-hero__btn primary-btn"
               href="{{ section.settings.primary_button_link | default: '#' }}"
             >
               {{ section.settings.primary_button_label | escape }}
@@ -197,7 +203,7 @@
           {% endif %}
           {% if section.settings.secondary_button_label != blank %}
             <a
-              class="experience-sulalat-hero__btn experience-sulalat-hero__btn--outline"
+              class="experience-sulalat-hero__btn secondary-btn"
               href="{{ section.settings.secondary_button_link | default: '#' }}"
             >
               {{ section.settings.secondary_button_label | escape }}

@@ -109,6 +109,7 @@
       gap: 80px;
       {% comment %} max-width: 1311px; {% endcomment %}
       margin: 0 auto;
+      max-width: 1311px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .who-image img,
@@ -234,6 +235,10 @@
       letter-spacing: -0.01em;
       font-weight: 400;
       margin: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-card ul{
+      padding:0;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
@@ -590,14 +595,14 @@
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-row--image-right .social-farm-content {
-      margin-left: auto;
+      {% comment %} margin-left: auto; {% endcomment %}
       margin-right: 0;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content h3 {
       margin: 0 0 20px;
       color: #000;
-      font-size: clamp(24px, 2.8vw, 40px);
+      font-size: clamp(24px, 2.8vw, 50px);
       line-height: 1.2;
       font-weight: 400;
     }
@@ -770,6 +775,10 @@
       min-height: 72px;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn{
+      margin-top:20px;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta h3 {
       margin: 0 0 8px;
       color: #000;
@@ -783,15 +792,6 @@
       color: var(--brand-body-text, #535353);
       font-size: 15px;
       line-height: 1.4;
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn {
-      margin-top: 16px;
-      display: inline-flex;
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn.is-hidden {
-      display: none;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta-line {
@@ -998,10 +998,11 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-why {
       text-align: center;
-      max-width: 1153px;
+      max-width: min(1153px, 80%);
       margin: 0 auto 90px;
+      transition:all 0.8s linear;
     }
-
+    
     .about-tabs[data-section-id="{{ section.id }}"] .careers-why .carrers-why-content{
       padding:0 20px;
     }
@@ -1029,6 +1030,7 @@
       border-radius: 300px;
       overflow: hidden;
       background: #f3f3f3;
+      transition:all 0.8s linear;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image img,
@@ -1037,8 +1039,16 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      transition:all 0.3s linear;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .cst-img-scale .careers-why{
+      max-width:100%;
+    }
+    .about-tabs[data-section-id="{{ section.id }}"] .cst-img-scale .careers-hero-image{
+      border-radius:0;
+    }
+   
     .about-tabs[data-section-id="{{ section.id }}"] .careers-positions {
       max-width: 1240px;
       margin: 0 auto;
@@ -1389,26 +1399,6 @@
       cursor: pointer;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status {
-      margin: 8px 0 0;
-      font-size: 13px;
-      line-height: 1.4;
-      color: #535353;
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status.is-error {
-      color: #b42318;
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .careers-upload-status.is-success {
-      color: var(--brand-primary, #53c295);
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form.is-uploading .primary-btn {
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
     .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form .primary-btn {
       align-self: flex-start;
       margin-top: 8px;
@@ -1753,6 +1743,11 @@
         width: 100%;
         max-width: none;
       }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-icon {
+        width: 46px;
+        height: 46px;
+      }
     }
 
     @media (max-width: 575px){
@@ -1761,6 +1756,25 @@
       }
       .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
         grid-template-columns:100%;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image {
+        aspect-ratio:auto;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-location {
+        font-size: 16px;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-title {
+        font-size: 18px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .executive-meta {
+        text-align:center;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn{
+        white-space: normal;
+        margin: 0 auto;
       }
     }
 
@@ -2165,12 +2179,19 @@
                 </div>
               </div>
 
+              {%- assign first_executive = executive_blocks | first -%}
               <div class="executive-meta" data-executive-meta>
                 <div class="executive-meta-text">
-                  <h3 data-executive-name></h3>
-                  <p data-executive-role></p>
+                  <h3 data-executive-name>{{ first_executive.settings.name | escape }}</h3>
+                  <p data-executive-role>{{ first_executive.settings.role | escape }}</p>
                 </div>
-                <a class="primary-btn is-hidden" data-executive-button href="#">Explore More</a>
+                <a
+                  class="primary-btn{% if first_executive.settings.button_label == blank %} is-hidden{% endif %}"
+                  data-executive-button
+                  href="{{ first_executive.settings.button_link | default: '#' }}"
+                >
+                  {{ first_executive.settings.button_label | default: 'Explore More' | escape }}
+                </a>
               </div>
 
               <div class="team-slider-footer">
@@ -2235,10 +2256,17 @@
                 </div>
               </div>
 
+              {%- assign first_person = team_blocks | first -%}
               <div class="people-meta" data-people-meta>
-                <h3 data-people-name></h3>
-                <p data-people-role></p>
-                <a class="primary-btn is-hidden" data-people-button href="#">Explore More</a>
+                <h3 data-people-name>{{ first_person.settings.name | escape }}</h3>
+                <p data-people-role>{{ first_person.settings.role | escape }}</p>
+                <a
+                  class="primary-btn{% if first_person.settings.button_label == blank %} is-hidden{% endif %}"
+                  data-people-button
+                  href="{{ first_person.settings.button_link | default: '#' }}"
+                >
+                  {{ first_person.settings.button_label | default: 'Explore More' | escape }}
+                </a>
                 <div class="people-meta-line" aria-hidden="true"></div>
               </div>
 
@@ -2557,92 +2585,92 @@
                   <h2>{{ section.settings.careers_apply_heading | default: 'Apply Online' | escape }}</h2>
 
                   {%- assign careers_form_id = 'CareersApply-' | append: section.id -%}
-                  {% form 'contact', id: careers_form_id, class: 'careers-apply-form' %}
-                    {% if form.posted_successfully? %}
-                      <p class="careers-form-status careers-form-status--success" data-careers-submitted>
-                        {{ section.settings.careers_success_message | default: 'Thanks — your application has been submitted.' | escape }}
-                      </p>
-                    {% elsif form.errors %}
-                      <p class="careers-form-status careers-form-status--error" data-careers-submitted>
-                        {{ form.errors | default_errors }}
-                      </p>
-                    {% endif %}
+                    {% form 'contact', id: careers_form_id, class: 'careers-apply-form' %}
+                      {% if form.posted_successfully? %}
+                        <p class="careers-form-status careers-form-status--success" data-careers-submitted>
+                          {{ section.settings.careers_success_message | default: 'Thanks — your application has been submitted.' | escape }}
+                        </p>
+                      {% elsif form.errors %}
+                        <p class="careers-form-status careers-form-status--error" data-careers-submitted>
+                          {{ form.errors | default_errors }}
+                        </p>
+                      {% endif %}
 
-                    <input type="hidden" name="contact[Job title]" value="" data-career-job-field>
-                    <input
-                      class="input"
-                      type="text"
-                      name="contact[First name]"
-                      placeholder="{{ 'careers.form.first_name' | t }}"
-                      required
-                      autocomplete="given-name"
-                    >
-                    <input
-                      class="input"
-                      type="text"
-                      name="contact[Last name]"
-                      placeholder="{{ 'careers.form.last_name' | t }}"
-                      required
-                      autocomplete="family-name"
-                    >
-                    <input
-                      class="input"
-                      type="email"
-                      name="contact[email]"
-                      placeholder="{{ 'careers.form.email' | t }}"
-                      required
-                      autocomplete="email"
-                    >
-                    <input
-                      class="input"
-                      type="tel"
-                      name="contact[Contact number]"
-                      placeholder="{{ 'careers.form.phone' | t }}"
-                      required
-                      autocomplete="tel"
-                    >
-                    <input
-                      class="input"
-                      type="text"
-                      name="contact[City]"
-                      placeholder="{{ 'careers.form.city' | t }}"
-                      required
-                      autocomplete="address-level2"
-                    >
-                    <input
-                      class="input"
-                      type="url"
-                      name="contact[LinkedIn URL]"
-                      placeholder="{{ 'careers.form.linkedin' | t }}"
-                      autocomplete="url"
-                    >
-                    <div class="careers-file-field">
+                      <input type="hidden" name="contact[Job title]" value="" data-career-job-field>
                       <input
                         class="input"
                         type="text"
-                        name="contact[Resume filename]"
-                        placeholder="{{ 'careers.form.resume' | t }}"
-                        readonly
+                        name="contact[First name]"
+                        placeholder="{{ 'careers.form.first_name' | t }}"
                         required
-                        data-resume-filename
-                        tabindex="-1"
+                        autocomplete="given-name"
                       >
-                      <input type="hidden" name="contact[Resume URL]" value="" data-resume-url>
-                      <label class="careers-browse">
-                        {{ section.settings.careers_browse_label | default: 'Browse' | escape }}
+                      <input
+                        class="input"
+                        type="text"
+                        name="contact[Last name]"
+                        placeholder="{{ 'careers.form.last_name' | t }}"
+                        required
+                        autocomplete="family-name"
+                      >
+                      <input
+                        class="input"
+                        type="email"
+                        name="contact[email]"
+                        placeholder="{{ 'careers.form.email' | t }}"
+                        required
+                        autocomplete="email"
+                      >
+                      <input
+                        class="input"
+                        type="tel"
+                        name="contact[Contact number]"
+                        placeholder="{{ 'careers.form.phone' | t }}"
+                        required
+                        autocomplete="tel"
+                      >
+                      <input
+                        class="input"
+                        type="text"
+                        name="contact[City]"
+                        placeholder="{{ 'careers.form.city' | t }}"
+                        required
+                        autocomplete="address-level2"
+                      >
+                      <input
+                        class="input"
+                        type="url"
+                        name="contact[LinkedIn URL]"
+                        placeholder="{{ 'careers.form.linkedin' | t }}"
+                        autocomplete="url"
+                      >
+                      <div class="careers-file-field">
                         <input
-                          type="file"
-                          accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
-                          data-resume-input
-                          aria-label="{{ 'careers.form.resume_aria' | t }}"
+                          class="input"
+                          type="text"
+                          name="contact[Resume filename]"
+                          placeholder="{{ 'careers.form.resume' | t }}"
+                          readonly
+                          required
+                          data-resume-filename
+                          tabindex="-1"
                         >
-                      </label>
-                    </div>
-                    <p class="careers-upload-status" data-resume-status hidden></p>
-                    <button type="submit" class="primary-btn" data-careers-submit>
-                      {{ section.settings.careers_submit_label | default: 'Submit' | escape }}
-                    </button>
-                  {% endform %}
+                        <input type="hidden" name="contact[Resume URL]" value="" data-resume-url>
+                        <label class="careers-browse">
+                          {{ section.settings.careers_browse_label | default: 'Browse' | escape }}
+                          <input
+                            type="file"
+                            accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                            data-resume-input
+                            aria-label="{{ 'careers.form.resume_aria' | t }}"
+                          >
+                        </label>
+                      </div>
+                      <p class="careers-upload-status" data-resume-status hidden></p>
+                      <button type="submit" class="primary-btn" data-careers-submit>
+                        {{ section.settings.careers_submit_label | default: 'Submit' | escape }}
+                      </button>
+                    {% endform %}
                 </div>
               </div>
             </div>

@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "insight_article": {
+      "type": "insight-article",
+      "settings": {
+        "show_share": true,
+        "share_label": "Share:",
+        "show_featured_image": false,
+        "show_meta": true,
+        "date_format": "%B %d, %Y",
+        "views_label": "Views",
+        "default_views": "1,353",
+        "default_likes": "5",
+        "show_related": true,
+        "related_heading": "Related Posts",
+        "view_all_label": "View All",
+        "related_count": 3,
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 80,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "insight_article"
+  ]
+}

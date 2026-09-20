@@ -24,8 +24,8 @@
     .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__heading {
       margin: 0 0 48px;
       text-align: center;
-      color: #000;
-      font-size: clamp(36px, 4vw, 56px);
+      color: #141211;
+      font-size: clamp(24px, 3vw, 36px);
       line-height: 1.15;
       font-weight: 400;
       letter-spacing: -0.02em;
@@ -65,35 +65,14 @@
 
     .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__title {
       margin: 0 0 16px;
-      font-size: 20px;
+      font-size: 22px;
       line-height: 1.3;
       font-weight: 600;
       color: #000;
     }
 
-    .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      align-self: flex-start;
-      min-height: 44px;
-      padding: 10px 28px;
-      border-radius: var(--brand-radius-pill, 80px);
-      background: var(--brand-primary, #53c295);
-      border: 1px solid var(--brand-primary, #53c295);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      font-family: inherit;
-      text-decoration: none;
-      transition: 0.25s ease;
-      margin-top: auto;
-    }
-
-    .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__btn:hover {
-      background: var(--brand-primary-hover, #45ad82);
-      border-color: var(--brand-primary-hover, #45ad82);
-      color: #fff;
+    .experience-sulalat-offering__btn.primary-btn {
+      max-width: max-content;
     }
 
     @media (max-width: 1199px) {
@@ -146,7 +125,7 @@
 
             {% if block.settings.button_label != blank %}
               <a
-                class="experience-sulalat-offering__btn"
+                class="experience-sulalat-offering__btn primary-btn"
                 href="{{ block.settings.button_link | default: '#' }}"
                 {% if block.settings.button_link != blank %}download{% endif %}
               >

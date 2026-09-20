@@ -67,49 +67,29 @@
 
     .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-card__title {
       margin: 0 0 12px;
-      font-size: 20px;
+      font-size: 22px;
       line-height: 1.3;
-      font-weight: 600;
+      font-weight: 400;
       color: #000;
+      max-width: 322px;
     }
 
     .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-card__text {
       margin: 0 0 24px;
       font-size: 14px;
       line-height: 1.5;
-      color: var(--brand-body-text, #535353);
+      color:#535353;
       flex: 1;
+      max-width: 322px;
     }
 
     .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-card__text p {
       margin: 0;
     }
 
-    .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-card__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      align-self: flex-start;
-      min-height: 44px;
-      padding: 10px 28px;
-      border-radius: var(--brand-radius-pill, 80px);
-      background: var(--brand-primary, #53c295);
-      border: 1px solid var(--brand-primary, #53c295);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      font-family: inherit;
-      text-decoration: none;
-      transition: 0.25s ease;
-      margin-top: auto;
+    .experience-sulalat-card__btn.primary-btn {
+      max-width: max-content;
     }
-
-    .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-card__btn:hover {
-      background: var(--brand-primary-hover, #45ad82);
-      border-color: var(--brand-primary-hover, #45ad82);
-      color: #fff;
-    }
-
     .experience-sulalat-grid[data-section-id="{{ section.id }}"] .experience-sulalat-grid__nav {
       display: flex;
       justify-content: flex-end;
@@ -193,7 +173,7 @@
                   {% endif %}
 
                   {% if block.settings.button_label != blank %}
-                    <a class="experience-sulalat-card__btn" href="{{ block.settings.button_link | default: '#' }}">
+                    <a class="experience-sulalat-card__btn primary-btn" href="{{ block.settings.button_link | default: '#' }}">
                       {{ block.settings.button_label | escape }}
                     </a>
                   {% endif %}

@@ -296,7 +296,14 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     display: none;
 }
 
+/* secondary-banner  */
+h1.page-banner-heading:empty {
+    display: none;
+}
+
 /* responsive start  */
+
+
 /* @media screen and (max-width:1440px){
   body .container {
       max-width: 1240px!important;

@@ -1,0 +1,1178 @@
+{%- liquid
+  assign report_cards = section.blocks | where: 'type', 'report_card'
+  assign video_cards = section.blocks | where: 'type', 'video_card'
+  assign categories = 'all,brewing,origins,blog,reports,videos' | split: ','
+-%}
+
+<section class="insight-tabs" data-section-id="{{ section.id }}" data-insight-tabs>
+  <style>
+    .insight-tabs[data-section-id="{{ section.id }}"] {
+      font-family: var(--body-font-family);
+      background: {{ section.settings.background_color }};
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-bar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #EEF9F4;
+      padding: 20px 0;
+      margin-bottom: 100px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-tab-btn {
+      border: 0;
+      background: #eefaf5;
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+      opacity: 1;
+      color: #141211;
+      font-family: var(--body-font-family);
+      border-radius: 12px;
+      padding: 18px 28px;
+      transition: 0.25s ease;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-tab-btn.active {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      opacity: 1;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel {
+      display: none;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel.active {
+      display: block;
+      animation: insight-tab-fade-{{ section.id }} 0.35s ease;
+    }
+
+    @keyframes insight-tab-fade-{{ section.id }} {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header h2 {
+      margin: 0;
+      color: #141211;
+      font-size: clamp(24px, 3.5vw, 55px);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header--simple {
+      margin-bottom: 40px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 36px 28px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px 32px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-grid-item {
+      min-width: 0;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-view-all {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 28px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-view-all:hover {
+      background: #45ad82;
+      color: #fff;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider {
+      overflow: hidden;
+      margin: 0 -8px;
+      padding: 0 8px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider .swiper-wrapper {
+      align-items: stretch;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider .swiper-slide {
+      height: auto;
+      box-sizing: border-box;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-slider .swiper-slide {
+      width: auto;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      aspect-ratio: 4 / 3;
+      background: #f3f3f3;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image img,
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card:hover .insight-card-image img {
+      transform: scale(1.05);
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-group + .insight-group {
+      margin-top: 72px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 14px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-accent {
+      width: 42px;
+      height: 3px;
+      margin: 0;
+      background: var(--brand-primary, #53c295);
+      border-radius: 999px;
+      flex-shrink: 0;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-date {
+      margin: 0;
+      color: var(--brand-primary, #53c295);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-title {
+      margin: 0 0 12px;
+      color: #141211;
+      font-size: clamp(18px, 1.6vw, 22px);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-text {
+      margin: 0;
+      color: var(--brand-body-text, #535353);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--report .insight-card-title {
+      margin-top: 18px;
+      margin-bottom: 10px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--report .insight-card-text {
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-actions {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--grid .insight-card--report .insight-btn {
+      flex: 1;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: 0.25s ease;
+      cursor: pointer;
+      box-sizing: border-box;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--primary {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      border: 1px solid var(--brand-primary, #53c295);
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--primary:hover {
+      background: #45ad82;
+      border-color: #45ad82;
+      color: #fff;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--outline {
+      background: #fff;
+      color: var(--brand-primary, #53c295);
+      border: 1px solid var(--brand-primary, #53c295);
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--outline:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image--video {
+      position: relative;
+      aspect-ratio: 16 / 10;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-card-image {
+      aspect-ratio: 16 / 10;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgb(83 194 149 / 72%);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      pointer-events: none;
+      z-index: 2;
+      backdrop-filter: blur(2px);
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-play svg {
+      margin-left: 3px;
+      width: 22px;
+      height: 22px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-video-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--video .insight-card-title {
+      margin: 0;
+      flex: 1;
+      font-size: clamp(18px, 1.5vw, 22px);
+      font-weight: 600;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-video-tag {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-empty {
+      padding: 60px 0;
+      text-align: center;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin: 40px auto 0;
+      max-width: 800px;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-progress {
+      position: relative;
+      flex: 1;
+      height: 2px;
+      background: #e5e5e5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-progress-bar {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0;
+      background: var(--brand-primary, #53c295);
+      border-radius: inherit;
+      transition: width 0.4s ease;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons button {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid var(--brand-primary, #53c295);
+      background: transparent;
+      color: var(--brand-primary, #53c295);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.25s ease;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons button:hover {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons button:disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    @media (max-width: 991px) {
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-bar {
+        margin-bottom: 32px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tab-btn {
+        padding: 14px 18px;
+        font-size: 14px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header {
+        margin-bottom: 28px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 749px) {
+      .insight-tabs[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-nav {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tab-btn {
+        flex-shrink: 0;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider-footer {
+        margin-top: 28px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons button {
+        width: 44px;
+        height: 44px;
+      }
+    }
+  </style>
+
+  {%- capture tab_labels -%}
+    {{- section.settings.tab_all | default: 'All' | append: '||' -}}
+    {{- section.settings.tab_brewing | default: 'Practical Guides' | append: '||' -}}
+    {{- section.settings.tab_origins | default: 'Behind the Catalogue' | append: '||' -}}
+    {{- section.settings.tab_blog | default: 'Industry Insights' | append: '||' -}}
+    {{- section.settings.tab_reports | default: 'Transparency in Practice' | append: '||' -}}
+    {{- section.settings.tab_videos | default: 'Media Library' -}}
+  {%- endcapture -%}
+  {%- assign tab_label_list = tab_labels | split: '||' -%}
+
+  {%- assign content_categories = 'brewing,origins,blog,reports,videos' | split: ',' -%}
+
+  <div class="insight-tabs-bar">
+    <div class="container">
+      <div class="insight-tabs-nav" role="tablist" aria-label="Insight categories">
+        {% for category in categories %}
+          {% assign label = tab_label_list[forloop.index0] | strip %}
+          <button
+            type="button"
+            class="insight-tab-btn{% if forloop.first %} active{% endif %}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-insight-tab="{{ category }}"
+          >
+            {{ label | escape }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    {% for category in categories %}
+      <div
+        class="insight-panel{% if forloop.first %} active{% endif %}"
+        id="insight-{{ category }}-{{ section.id }}"
+        role="tabpanel"
+        data-insight-panel="{{ category }}"
+        {% unless forloop.first %}hidden{% endunless %}
+      >
+        {% if category == 'all' %}
+          {% assign all_has_content = false %}
+          {% for group_category in content_categories %}
+            {% assign group_link = '' %}
+            {% assign group_view_label = 'View All' %}
+            {% assign group_label = '' %}
+            {% case group_category %}
+              {% when 'brewing' %}
+                {% assign group_label = section.settings.tab_brewing | default: 'Practical Guides' %}
+                {% assign group_link = section.settings.view_all_brewing %}
+                {% assign group_view_label = section.settings.view_all_label_brewing | default: 'Explore Guides' %}
+              {% when 'origins' %}
+                {% assign group_label = section.settings.tab_origins | default: 'Behind the Catalogue' %}
+                {% assign group_link = section.settings.view_all_origins %}
+                {% assign group_view_label = section.settings.view_all_label_origins | default: 'Read More' %}
+              {% when 'blog' %}
+                {% assign group_label = section.settings.tab_blog | default: 'Industry Insights' %}
+                {% assign group_link = section.settings.view_all_blog %}
+                {% assign group_view_label = section.settings.view_all_label_blog | default: 'View All Articles' %}
+              {% when 'reports' %}
+                {% assign group_label = section.settings.tab_reports | default: 'Transparency in Practice' %}
+                {% assign group_link = section.settings.view_all_reports %}
+                {% assign group_view_label = section.settings.view_all_label_reports | default: 'View All Reports' %}
+              {% when 'videos' %}
+                {% assign group_label = section.settings.tab_videos | default: 'Media Library' %}
+                {% assign group_link = section.settings.view_all_videos %}
+                {% assign group_view_label = section.settings.view_all_label_videos | default: 'View All Videos' %}
+            {% endcase %}
+            {% capture group_markup %}
+              {% render 'insight-group', section: section, category: group_category, label: group_label, view_all_link: group_link, view_all_label: group_view_label %}
+            {% endcapture %}
+            {% assign group_markup_stripped = group_markup | strip %}
+            {% if group_markup_stripped != blank %}
+              {% assign all_has_content = true %}
+              {{ group_markup }}
+            {% endif %}
+          {% endfor %}
+          {% unless all_has_content %}
+            <p class="insight-empty">{{ section.settings.empty_text | default: 'Content coming soon.' | escape }}</p>
+          {% endunless %}
+        {% else %}
+          {% assign label = tab_label_list[forloop.index0] | strip %}
+          {% assign view_all_link = '' %}
+          {% assign view_all_label = 'View All' %}
+          {% case category %}
+            {% when 'brewing' %}
+              {% assign view_all_link = section.settings.view_all_brewing %}
+              {% assign view_all_label = section.settings.view_all_label_brewing | default: 'Explore Guides' %}
+            {% when 'origins' %}
+              {% assign view_all_link = section.settings.view_all_origins %}
+              {% assign view_all_label = section.settings.view_all_label_origins | default: 'Read More' %}
+            {% when 'blog' %}
+              {% assign view_all_link = section.settings.view_all_blog %}
+              {% assign view_all_label = section.settings.view_all_label_blog | default: 'View All Articles' %}
+            {% when 'reports' %}
+              {% assign view_all_link = section.settings.view_all_reports %}
+              {% assign view_all_label = section.settings.view_all_label_reports | default: 'View All Reports' %}
+            {% when 'videos' %}
+              {% assign view_all_link = section.settings.view_all_videos %}
+              {% assign view_all_label = section.settings.view_all_label_videos | default: 'View All Videos' %}
+          {% endcase %}
+          {% capture group_markup %}
+            {% render 'insight-group', section: section, category: category, label: label, view_all_link: view_all_link, view_all_label: view_all_label, layout: 'grid' %}
+          {% endcapture %}
+          {% assign group_markup_stripped = group_markup | strip %}
+          {% if group_markup_stripped != blank %}
+            {{ group_markup }}
+          {% else %}
+            <p class="insight-empty">{{ section.settings.empty_text | default: 'Content coming soon.' | escape }}</p>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.insight-tabs[data-section-id="{{ section.id }}"]');
+      if (!root || root.dataset.bound === 'true') return;
+      root.dataset.bound = 'true';
+
+      var swiperId = 0;
+
+      function setProgress(bar, swiper) {
+        if (!bar || !swiper || !swiper.slides || !swiper.slides.length) return;
+        var total = swiper.slides.length;
+        var perView = 1;
+        if (typeof swiper.slidesPerViewDynamic === 'function') {
+          perView = swiper.slidesPerViewDynamic() || 1;
+        } else if (typeof swiper.params.slidesPerView === 'number') {
+          perView = swiper.params.slidesPerView;
+        }
+        var value = (swiper.activeIndex + perView) / total;
+        if (swiper.isEnd) value = 1;
+        bar.style.width = (Math.min(Math.max(value, perView / total), 1) * 100) + '%';
+      }
+
+      function updateNav(swiper, group) {
+        if (!group || !swiper) return;
+        var prev = group.querySelector('[data-insight-prev]');
+        var next = group.querySelector('[data-insight-next]');
+        if (prev) prev.disabled = swiper.isBeginning;
+        if (next) next.disabled = swiper.isEnd;
+      }
+
+      function bindSliderEvents(instance, progress, group) {
+        instance.on('init', function () {
+          setProgress(progress, instance);
+          updateNav(instance, group);
+        });
+        instance.on('slideChange', function () {
+          setProgress(progress, instance);
+          updateNav(instance, group);
+        });
+        instance.on('resize', function () {
+          setProgress(progress, instance);
+          updateNav(instance, group);
+        });
+        instance.on('reachEnd', function () {
+          setProgress(progress, instance);
+          updateNav(instance, group);
+        });
+      }
+
+      function initGroup(group) {
+        if (!group || !window.Swiper) return;
+        var el = group.querySelector('[data-insight-slider]');
+        if (!el) return;
+
+        if (el.swiper) {
+          el.swiper.update();
+          setProgress(group.querySelector('[data-insight-progress]'), el.swiper);
+          updateNav(el.swiper, group);
+          return;
+        }
+
+        var progress = group.querySelector('[data-insight-progress]');
+        var prev = group.querySelector('[data-insight-prev]');
+        var next = group.querySelector('[data-insight-next]');
+        var isTwoUp = el.getAttribute('data-slides-per-view') === '2';
+        swiperId += 1;
+
+        var instance = new window.Swiper(el, isTwoUp
+          ? {
+              slidesPerView: 1,
+              spaceBetween: 16,
+              speed: 650,
+              grabCursor: true,
+              watchOverflow: true,
+              observer: true,
+              observeParents: true,
+              breakpoints: {
+                768: { slidesPerView: 2, spaceBetween: 28 }
+              }
+            }
+          : {
+              slidesPerView: 1.15,
+              spaceBetween: 16,
+              speed: 650,
+              grabCursor: true,
+              watchOverflow: true,
+              observer: true,
+              observeParents: true,
+              breakpoints: {
+                768: { slidesPerView: 2.4, spaceBetween: 22 },
+                1200: { slidesPerView: 4, spaceBetween: 28 }
+              }
+            }
+        );
+
+        bindSliderEvents(instance, progress, group);
+        setProgress(progress, instance);
+        updateNav(instance, group);
+
+        if (prev) {
+          prev.addEventListener('click', function () {
+            instance.slidePrev();
+          });
+        }
+        if (next) {
+          next.addEventListener('click', function () {
+            instance.slideNext();
+          });
+        }
+      }
+
+      function initPanel(panel) {
+        if (!panel) return;
+        panel.querySelectorAll('[data-insight-group]').forEach(initGroup);
+      }
+
+      function activateTab(category) {
+        root.querySelectorAll('.insight-tab-btn').forEach(function (btn) {
+          var active = btn.getAttribute('data-insight-tab') === category;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+
+        root.querySelectorAll('.insight-panel').forEach(function (panel) {
+          var active = panel.getAttribute('data-insight-panel') === category;
+          panel.classList.toggle('active', active);
+          panel.hidden = !active;
+          if (active) {
+            window.requestAnimationFrame(function () {
+              initPanel(panel);
+            });
+          }
+        });
+      }
+
+      function loadSwiper(callback) {
+        if (window.Swiper) {
+          callback();
+          return;
+        }
+        if (!document.querySelector('link[href*="swiper-bundle.min.css"]')) {
+          var link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css';
+          document.head.appendChild(link);
+        }
+        var script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js';
+        script.onload = callback;
+        document.head.appendChild(script);
+      }
+
+      root.addEventListener('click', function (event) {
+        var btn = event.target.closest('[data-insight-tab]');
+        if (!btn || !root.contains(btn)) return;
+        activateTab(btn.getAttribute('data-insight-tab'));
+      });
+
+      loadSwiper(function () {
+        initPanel(root.querySelector('.insight-panel.active'));
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Insight tabs",
+  "tag": "section",
+  "class": "insight-tabs-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tabs"
+    },
+    {
+      "type": "text",
+      "id": "tab_all",
+      "label": "Tab — All",
+      "default": "All"
+    },
+    {
+      "type": "text",
+      "id": "tab_brewing",
+      "label": "Tab — Practical Guides",
+      "default": "Practical Guides"
+    },
+    {
+      "type": "text",
+      "id": "tab_origins",
+      "label": "Tab — Behind the Catalogue",
+      "default": "Behind the Catalogue"
+    },
+    {
+      "type": "text",
+      "id": "tab_blog",
+      "label": "Tab — Industry Insights",
+      "default": "Industry Insights"
+    },
+    {
+      "type": "text",
+      "id": "tab_reports",
+      "label": "Tab — Transparency in Practice",
+      "default": "Transparency in Practice"
+    },
+    {
+      "type": "text",
+      "id": "tab_videos",
+      "label": "Tab — Media Library",
+      "default": "Media Library"
+    },
+    {
+      "type": "header",
+      "content": "View all buttons"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_brewing",
+      "label": "Button — Practical Guides",
+      "default": "Explore Guides"
+    },
+    {
+      "type": "url",
+      "id": "view_all_brewing",
+      "label": "Link — Practical Guides"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_origins",
+      "label": "Button — Behind the Catalogue",
+      "default": "Read More"
+    },
+    {
+      "type": "url",
+      "id": "view_all_origins",
+      "label": "Link — Behind the Catalogue"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_blog",
+      "label": "Button — Industry Insights",
+      "default": "View All Articles"
+    },
+    {
+      "type": "url",
+      "id": "view_all_blog",
+      "label": "Link — Industry Insights"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_reports",
+      "label": "Button — Transparency in Practice",
+      "default": "View All Reports"
+    },
+    {
+      "type": "url",
+      "id": "view_all_reports",
+      "label": "Link — Transparency in Practice"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label_videos",
+      "label": "Button — Media Library",
+      "default": "View All Videos"
+    },
+    {
+      "type": "url",
+      "id": "view_all_videos",
+      "label": "Link — Media Library"
+    },
+    {
+      "type": "url",
+      "id": "view_all_all",
+      "label": "Link — All (optional)"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "Empty category message",
+      "default": "Content coming soon."
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brewing_card",
+      "name": "Practical Guides",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "12 April, 2020"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Insight title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Short description for this insight card."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "origins_card",
+      "name": "Behind the Catalogue",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "12 April, 2020"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Insight title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Short description for this insight card."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "blog_card",
+      "name": "Industry Insights",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "12 April, 2020"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Insight title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Short description for this insight card."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "type": "report_card",
+      "name": "Transparency in Practice",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Annual Report 2024"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Learn how to master the pour-over method with our barista-approved guide."
+        },
+        {
+          "type": "text",
+          "id": "download_label",
+          "label": "Download button label",
+          "default": "Download"
+        },
+        {
+          "type": "url",
+          "id": "download_link",
+          "label": "Download link"
+        },
+        {
+          "type": "text",
+          "id": "explore_label",
+          "label": "Explore button label",
+          "default": "Explore"
+        },
+        {
+          "type": "url",
+          "id": "explore_link",
+          "label": "Explore link"
+        }
+      ]
+    },
+    {
+      "type": "video_card",
+      "name": "Media Library",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Thumbnail"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Why Specialty Coffee Matters"
+        },
+        {
+          "type": "text",
+          "id": "category_label",
+          "label": "Category tag",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "video_link",
+          "label": "Video link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Insight tabs",
+      "blocks": [
+        {
+          "type": "brewing_card",
+          "settings": {
+            "date": "12 April, 2020",
+            "title": "The Perfect Pour-Over: Step by Step",
+            "text": "Learn how to master the pour-over method with our barista-approved guide."
+          }
+        },
+        {
+          "type": "origins_card",
+          "settings": {
+            "date": "12 April, 2020",
+            "title": "From Farm to Cup: Tracing Quality",
+            "text": "How careful sourcing and selection shape the cup in every roast."
+          }
+        },
+        {
+          "type": "blog_card",
+          "settings": {
+            "date": "12 April, 2020",
+            "title": "Inside the Roastery",
+            "text": "A day behind the scenes with the team shaping every batch."
+          }
+        },
+        {
+          "type": "report_card",
+          "settings": {
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "explore_label": "Explore"
+          }
+        },
+        {
+          "type": "report_card",
+          "settings": {
+            "title": "Annual Report 2024",
+            "text": "Learn how to master the pour-over method with our barista-approved guide.",
+            "download_label": "Download",
+            "explore_label": "Explore"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category"
+          }
+        },
+        {
+          "type": "video_card",
+          "settings": {
+            "title": "Why Specialty Coffee Matters",
+            "category_label": "Category"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

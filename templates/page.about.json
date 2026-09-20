@@ -44,7 +44,7 @@
           "settings": {
             "year": "2015",
             "heading": "A Historic First",
-            "text": "<ul><li>Became the first Arab company to win the La Esmeralda Auction</li><li>Joined the Cup of Excellence</li><li>Partnered with La Marzocco, Compak, and Profitec to support emerging specialty cafés</li><li>Introduced semi-professional espresso machines through Profitec, bringing specialty-grade quality to home baristas</li></ul>",
+            "text": "<ul>\n<li>Became the first Arab company to win the La Esmeralda Auction</li>\n<li>Joined the Cup of Excellence</li>\n<li>Partnered with La Marzocco, Compak, and Profitec to support emerging specialty cafés</li>\n<li>Introduced semi-professional espresso machines through Profitec, bringing specialty-grade quality to home baristas</li>\n</ul>",
             "image": "shopify://shop_images/timeline-slide-3.png"
           }
         },
@@ -53,7 +53,7 @@
           "settings": {
             "year": "2016",
             "heading": "Setting the Foundations",
-            "text": "<ul><li>Established our first direct trade relationship with the Lamastus family farms in Panama</li><li>Organized Saudi Arabia's first AeroPress Championship</li><li>Expanded into new roasting, warehousing, and logistics facilities</li><li>Introduced the first Loring roaster in the Middle East</li></ul>",
+            "text": "<ul>\n<li>Established our first direct trade relationship with the Lamastus family farms in Panama</li>\n<li>Organized Saudi Arabia's first AeroPress Championship</li>\n<li>Expanded into new roasting, warehousing, and logistics facilities</li>\n<li>Introduced the first Loring roaster in the Middle East</li>\n</ul>",
             "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
@@ -62,7 +62,7 @@
           "settings": {
             "year": "2018",
             "heading": "Investing in the People ",
-            "text": "<ul><li>Hosted Saudi Arabia's first WCEP program to empower local baristas and sensory professionals</li><li>Contracted a state-of-the-art automated roasting facility near Riyadh</li><li>Organized the first Saudi Barista Championship</li></ul>",
+            "text": "<ul>\n<li>Hosted Saudi Arabia's first WCEP program to empower local baristas and sensory professionals</li>\n<li>Contracted a state-of-the-art automated roasting facility near Riyadh</li>\n<li>Organized the first Saudi Barista Championship</li>\n</ul>",
             "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
@@ -71,7 +71,7 @@
           "settings": {
             "year": "2020",
             "heading": "A Shift Toward Home",
-            "text": "<ul><li>Experienced a rise in retail demand from home baristas, as more people began asking how to bring specialty-grade quality into their own kitchens</li><li>Inaugurated our first-ever showroom and a coffee bar serving specialty coffee </li></ul>",
+            "text": "<ul>\n<li>Experienced a rise in retail demand from home baristas, as more people began asking how to bring specialty-grade quality into their own kitchens</li>\n<li>Inaugurated our first-ever showroom and a coffee bar serving specialty coffee </li>\n</ul>",
             "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
@@ -98,7 +98,7 @@
           "settings": {
             "year": "2025",
             "heading": "Making Quality More Accessible",
-            "text": "<ul><li>Strengthened our retail presence through distribution agreements with Lulu Hypermarket, Spinneys, and Al Hatab Bakery</li><li>Made our products available for delivery through Ninja, Keeta, and Hunger Station</li><li>Began sponsoring podcast programs, including Mics</li><li>Expanded the showroom to include a craft chocolate factory and artisan gelato production lab, complementing the existing coffee bar and roastery under one roof</li></ul>",
+            "text": "<ul>\n<li>Strengthened our retail presence through distribution agreements with Lulu Hypermarket, Spinneys, and Al Hatab Bakery</li>\n<li>Made our products available for delivery through Ninja, Keeta, and Hunger Station</li>\n<li>Began sponsoring podcast programs, including Mics</li>\n<li>Expanded the showroom to include a craft chocolate factory and artisan gelato production lab, complementing the existing coffee bar and roastery under one roof</li>\n</ul>",
             "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
@@ -259,9 +259,7 @@
           "settings": {
             "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
             "name": "Naser Al-Wohaibi",
-            "role": "Chief Executive Officer",
-            "button_label": "Learn More →",
-            "button_link": ""
+            "role": "Chief Executive Officer"
           }
         },
         "team_2": {
@@ -269,9 +267,7 @@
           "settings": {
             "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
             "name": "Abdallah Al-Manea",
-            "role": "Founder of Salve & Senmar ",
-            "button_label": "Learn More →",
-            "button_link": ""
+            "role": "Founder of Salve & Senmar "
           }
         },
         "team_3": {
@@ -279,9 +275,7 @@
           "settings": {
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Ammar Al-Naser",
-            "role": "F&B Products Lead",
-            "button_label": "Learn More →",
-            "button_link": ""
+            "role": "F&B Products Lead"
           }
         },
         "team_4": {
@@ -289,9 +283,7 @@
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Abdulaziz Al-Manea",
-            "role": "Coffee Quality and Training Lead",
-            "button_label": "Learn More →",
-            "button_link": ""
+            "role": "Coffee Quality and Training Lead"
           }
         },
         "team_member_nqQMXe": {
@@ -299,9 +291,7 @@
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Omar Al-Yousef",
-            "role": "Chief Operating Officer",
-            "button_label": "Learn More →",
-            "button_link": ""
+            "role": "Chief Operating Officer"
           }
         },
         "partner_bialetti_1": {
@@ -608,8 +598,6 @@
         "people_subheading": "Sulalat is home to a team of certified Q-graders, international judges, roasters, chocolatiers, gelato specialists, educators, and operational professionals.",
         "partners_heading": "Available Near You",
         "partners_subheading": "Find our products across the Kingdom's leading retailers and platforms.",
-        "partners_supplier_heading": "Backed by Trusted Equipment Makers",
-        "partners_supplier_subheading": "We work with leading global equipment makers to bring precision and consistency to every step of the process.",
         "partners_distributor_label": "Distributor",
         "partners_supplier_label": "Supplier",
         "careers_why_heading": "Join the People Behind the Craft ",
@@ -620,9 +608,6 @@
         "careers_detail_label": "Job Detail",
         "careers_apply_heading": "Apply Online",
         "careers_browse_label": "Browse",
-        "cloudinary_cloud_name": "fifebgtq",
-        "cloudinary_upload_preset": "ml_default",
-        "cloudinary_folder": "careers/resumes",
         "careers_submit_label": "Submit",
         "careers_success_message": "Thanks — your application has been submitted."
       }

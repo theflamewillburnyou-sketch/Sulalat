@@ -343,3 +343,15 @@
 
   ready(init);
 })();
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const heroImage = document.querySelector(".careers-hero-image");
+  const careersOverview = document.querySelector(".careers-overview");
+
+  if (heroImage && careersOverview) {
+    heroImage.addEventListener("mouseenter", function () {
+      careersOverview.classList.add("cst-img-scale");
+    });
+  }
+});

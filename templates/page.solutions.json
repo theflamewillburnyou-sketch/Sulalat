@@ -125,8 +125,8 @@
         "media_position": "right",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
-        "padding_top": 40,
-        "padding_bottom": 20,
+        "padding_top": 60,
+        "padding_bottom": 28,
         "padding_top_mobile": 24,
         "padding_bottom_mobile": 12
       }
@@ -143,8 +143,8 @@
         "media_position": "left",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
-        "padding_top": 20,
-        "padding_bottom": 20,
+        "padding_top": 28,
+        "padding_bottom": 28,
         "padding_top_mobile": 12,
         "padding_bottom_mobile": 12
       }
@@ -161,7 +161,7 @@
         "media_position": "right",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
-        "padding_top": 20,
+        "padding_top": 28,
         "padding_bottom": 40,
         "padding_top_mobile": 12,
         "padding_bottom_mobile": 24
@@ -173,11 +173,12 @@
         "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
         "heading": "Let’s Build Your Menu Together ",
         "text": "Share your project details, and our team will take it from there.",
-        "product_placeholder": "Select the product",
         "product_options": "Coffee\nChocolate\nGelato\nBakery\nEquipment",
         "browse_label": "Browse",
-        "submit_label": "Submit",
         "success_message": "Thanks — your inquiry has been submitted.",
+        "cloudinary_cloud_name": "fifebgtq",
+        "cloudinary_upload_preset": "ml_default",
+        "cloudinary_folder": "solution-inquiry/documents",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
         "padding_top": 40,

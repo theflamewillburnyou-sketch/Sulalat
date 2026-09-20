@@ -22,10 +22,9 @@
 
     .solution-services[data-section-id="{{ section.id }}"] .solution-services-intro h2 {
       margin: 0 0 16px;
-      color: #000;
-      font-size: clamp(32px, 3.4vw, 48px);
+      font-size: clamp(32px, 3.5vw, 55px);
       line-height: 1.15;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .solution-services[data-section-id="{{ section.id }}"] .solution-services-intro p {
@@ -72,9 +71,9 @@
     .solution-services[data-section-id="{{ section.id }}"] .service-card h3 {
       margin: 0 0 10px;
       color: #000;
-      font-size: clamp(22px, 2vw, 28px);
+      font-size: clamp(22px, 2.5vw, 35px);
       line-height: 1.25;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .solution-services[data-section-id="{{ section.id }}"] .service-card p {
@@ -83,15 +82,10 @@
       line-height: 24px;
       letter-spacing: -0.01em;
       color: var(--brand-body-text, #535353);
-      max-width: 520px;
+      {% comment %} max-width: 520px; {% endcomment %}
     }
 
     @media (max-width: 991px) {
-      .solution-services[data-section-id="{{ section.id }}"] .solution-services-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
       .solution-services[data-section-id="{{ section.id }}"] .solution-services-intro {
         margin-bottom: 32px;
       }
@@ -101,12 +95,21 @@
       .solution-services[data-section-id="{{ section.id }}"] {
         padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
       }
+      .solution-services[data-section-id="{{ section.id }}"] .solution-services-grid {
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 575px){
+      .solution-services[data-section-id="{{ section.id }}"] .solution-services-grid {
+          grid-template-columns: 100%;
+      }
     }
   </style>
 
   <div class="container">
     {% if section.settings.heading != blank or section.settings.subheading != blank %}
-      <div class="solution-services-intro">
+      <div class="solution-services-intro section-title">
         {% if section.settings.heading != blank %}
           <h2>{{ section.settings.heading | escape }}</h2>
         {% endif %}

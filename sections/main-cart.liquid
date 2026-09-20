@@ -32,7 +32,7 @@
   <style>
     .sulalat-cart[data-section-id="{{ section.id }}"] {
       padding: var(--sulalat-cart-pad-top, 48px) 0 var(--sulalat-cart-pad-bottom, 80px);
-      background: #fbf9f9;
+      background: #fff;
       font-family: var(--body-font-family);
       color: #111;
     }
@@ -45,11 +45,11 @@
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__title {
       margin: 0 0 28px;
-      font-size: clamp(32px, 4vw, 48px);
+      font-size: clamp(32px, 4vw, 65px);
       line-height: 1.15;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: -0.02em;
-      color: #111;
+      color: #000;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__layout {
@@ -65,7 +65,7 @@
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__panel {
       background: #fff;
-      border: 1px solid #e8e8e8;
+      border: 1px solid #e6e6e6;
       border-radius: 20px;
       padding: 28px 32px;
     }
@@ -81,9 +81,9 @@
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-label {
       margin: 0;
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 600;
-      white-space: nowrap;
+      color: #141211;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-form {
@@ -92,27 +92,32 @@
       gap: 12px;
       flex: 1;
       min-width: 240px;
+      border: 1px solid #e6e6e6;
+      border-radius: 999px;
+      padding: 3px;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-input {
       flex: 1;
       min-height: 46px;
-      border: 1px solid #e0e0e0;
+      {% comment %} border: 1px solid #e6e6e6; {% endcomment %}
       border-radius: 999px;
       padding: 10px 20px;
       font: inherit;
       font-size: 14px;
       background: #fff;
       color: #111;
+      border:0;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-input::placeholder {
-      color: #9a9a9a;
+      color: #0009;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-input:focus {
       outline: none;
       border-color: var(--sulalat-cart-accent, #53c295);
+      border:0;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__actions {
@@ -128,12 +133,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
-      padding: 12px 28px;
+      min-height: 46px;
+      padding: 10px 28px;
       border-radius: 999px;
       font: inherit;
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 400;
       text-decoration: none;
       cursor: pointer;
       transition: 0.25s ease;
@@ -149,10 +154,10 @@
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--outline:hover {
       background: var(--sulalat-cart-accent-soft, #eaf8f1);
       color: var(--sulalat-cart-accent, #53c295);
-    }
+    } 
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--soft {
-      background: var(--sulalat-cart-accent-soft, #eaf8f1);
+      background:rgb(83 194 149 / 10%);
       border: 1px solid var(--sulalat-cart-accent, #53c295);
       color: var(--sulalat-cart-accent, #53c295);
     }
@@ -160,7 +165,7 @@
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--soft:hover {
       background: var(--sulalat-cart-accent, #53c295);
       color: #fff;
-    }
+    } 
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--primary {
       background: var(--sulalat-cart-accent, #53c295);
@@ -176,10 +181,11 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__summary-title {
-      margin: 0 0 24px;
-      font-size: 22px;
+      margin: 0 0 16px;
+      font-size: 20px;
       line-height: 1.3;
       font-weight: 600;
+      color: #141211;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__summary-row {
@@ -189,10 +195,11 @@
       gap: 16px;
       padding: 14px 0;
       font-size: 16px;
+      letter-spacing: 3%;
     }
 
-    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__summary-row + .sulalat-cart__summary-row {
-      border-top: 1px solid #ececec;
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__summary-row {
+      border-bottom: 1px solid #DBDBDB;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__summary-row span:last-child {
@@ -200,7 +207,7 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__checkout {
-      margin-top: 24px;
+      margin-top: 16px;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__discounts {
@@ -224,8 +231,8 @@
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .cart__summary {
       margin-top: 0;
-      padding-bottom: 0;
-      border: 0;
+      {% comment %} padding-bottom: 0;
+      border: 0; {% endcomment %}
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-items {
@@ -251,10 +258,11 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-items__th {
-      font-size: 14px;
-      font-weight: 500;
-      color: #9a9a9a;
+      font-size: 16px;
       text-align: start;
+      letter-spacing: 3%;
+      font-weight: 400;
+      color: #000;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-items__th--price,
@@ -289,9 +297,9 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__image {
-      flex: 0 0 72px;
-      width: 72px;
-      height: 72px;
+      flex: 0 0 100px;
+      width: 100px;
+      height: 100px;
       border-radius: 12px;
       overflow: hidden;
       background: #f3f3f3;
@@ -315,22 +323,24 @@
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__sku {
       font-size: 12px;
       line-height: 1.4;
-      color: #9a9a9a;
+      color: rgb(0 0 0 / 80%);
       margin-bottom: 4px;
       overflow-wrap: anywhere;
       word-break: normal;
+      letter-spacing:3%;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__title {
       display: block;
       font-size: 16px;
       line-height: 1.35;
-      font-weight: 600;
-      color: #111;
+      font-weight: 500;
+      color: rgb(0 0 0 / 80%);
       text-decoration: none;
       white-space: normal;
       overflow-wrap: break-word;
       word-break: normal;
+      letter-spacing:3%;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__variants {
@@ -344,8 +354,11 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__amount {
-      font-size: 15px;
+      font-size: 16px;
       white-space: nowrap;
+      color:rgb(0 0 0 / 80%);
+      letter-spacing:3%;
+      
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__amount--bold {
@@ -372,6 +385,9 @@
       border: 0;
       min-width: 110px;
       justify-content: center;
+      height:50px;
+      border: 1px solid #E6E6E6;
+      background:#fff;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__qty .qty-input__input {
@@ -386,13 +402,18 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__qty .qty-input__btn {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border: 0;
       background: transparent;
       color: #111;
       padding: 0;
       box-shadow: none;
+      background: #E6E6E6;
+    }
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__qty .qty-input__btn::before,
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__qty .qty-input__btn::after {
+      background-color: #666666;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__qty quantity-input {
@@ -409,12 +430,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      {% comment %} border-radius: 50%;
       border: 1px solid #e0e0e0;
       color: #8a8a8a;
-      background: #fff;
+      background: #fff; {% endcomment %}
       transition: 0.2s ease;
       text-decoration: none;
     }
@@ -425,8 +446,8 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__remove-btn svg {
-      width: 14px;
-      height: 14px;
+      width: 100%;
+      height: 100%;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .cart-empty {
@@ -434,9 +455,25 @@
       padding: 40px 20px;
     }
 
+    @media (max-width: 1280px){
+      .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__layout {
+        grid-template-columns: 1.5fr 1fr;
+      }
+
+    }
+
+    @media (max-width: 1200px){
+       .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__layout {
+        grid-template-columns: 100%;
+      }
+      .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__panel--summary {
+        order: -1;
+      }
+    }
+
     @media (max-width: 991px) {
       .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__layout {
-        grid-template-columns: 1fr;
+        grid-template-columns: 100%;
       }
 
       .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__panel--summary {
@@ -532,7 +569,7 @@
 
             {%- if cart != empty -%}
               <div class="sulalat-cart__actions">
-                <a class="sulalat-cart__btn sulalat-cart__btn--outline" href="{{ shop_url }}">
+                <a class="sulalat-cart__btn sulalat-cart__btn--soft" href="{{ shop_url }}">
                   Return to shop
                 </a>
                 <button type="submit" name="update" class="sulalat-cart__btn sulalat-cart__btn--soft">
@@ -555,7 +592,7 @@
                   form="sulalat-coupon-form"
                   data-sulalat-coupon-input
                 >
-                <button type="button" class="sulalat-cart__btn sulalat-cart__btn--primary" data-sulalat-coupon-apply style="width: auto; min-width: 140px;">
+                <button type="button" class="sulalat-cart__btn primary-btn" data-sulalat-coupon-apply style="width: auto; min-width: 140px;">
                   Apply Coupon
                 </button>
               </div>
@@ -672,7 +709,7 @@
               {%- endif -%}
 
               <div class="sulalat-cart__checkout">
-                <button class="sulalat-cart__btn sulalat-cart__btn--primary" name="checkout" type="submit">
+                <button class="sulalat-cart__btn primary-btn" name="checkout" type="submit">
                   Proceed To Checkout
                 </button>
               </div>
