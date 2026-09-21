@@ -6,10 +6,23 @@
 
 <section class="insight-tabs" data-section-id="{{ section.id }}" data-insight-tabs>
   <style>
+    {% comment %} flash refresh  {% endcomment %}
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider.swiper-initialized {
+      opacity: 1;
+      visibility: visible;
+    }
+    {% comment %} flash refresh  {% endcomment %}
+
     .insight-tabs[data-section-id="{{ section.id }}"] {
       font-family: var(--body-font-family);
       background: {{ section.settings.background_color }};
       padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      padding: 0px 0 100px;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .container {
@@ -104,41 +117,23 @@
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 40px 32px;
+      gap: 30px;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-grid-item {
       min-width: 0;
     }
 
-    .insight-tabs[data-section-id="{{ section.id }}"] .insight-view-all {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 12px 28px;
-      border: 0;
-      border-radius: 999px;
-      background: var(--brand-primary, #53c295);
-      color: #fff;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: inherit;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: 0.25s ease;
-    }
-
-    .insight-tabs[data-section-id="{{ section.id }}"] .insight-view-all:hover {
-      background: #45ad82;
-      color: #fff;
-    }
-
-    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider {
+    {% comment %} .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider {
       overflow: hidden;
       margin: 0 -8px;
       padding: 0 8px;
+    } {% endcomment %}
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider {
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-slider .swiper-wrapper {
@@ -165,7 +160,7 @@
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image {
       position: relative;
       overflow: hidden;
-      border-radius: 20px;
+      border-radius: 12px;
       aspect-ratio: 4 / 3;
       background: #f3f3f3;
     }
@@ -184,7 +179,7 @@
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-group + .insight-group {
-      margin-top: 72px;
+      margin-top: 100px;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-meta {
@@ -195,8 +190,8 @@
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-accent {
-      width: 42px;
-      height: 3px;
+      width: 25px;
+      height: 2px;
       margin: 0;
       background: var(--brand-primary, #53c295);
       border-radius: 999px;
@@ -206,8 +201,9 @@
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-date {
       margin: 0;
       color: var(--brand-primary, #53c295);
-      font-size: 14px;
+      font-size: 17px;
       line-height: 1.4;
+      font-family: var(--secondary-font);
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-title {
@@ -221,7 +217,7 @@
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-text {
       margin: 0;
       color: var(--brand-body-text, #535353);
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.55;
     }
 
@@ -252,15 +248,40 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 10px 22px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 500;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 11px 20px;
       text-decoration: none;
       transition: 0.25s ease;
       cursor: pointer;
       box-sizing: border-box;
+      border-radius: 999px;
+      border:1px solid;
+      flex-grow: 1;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 0;
+        height: 100%;
+        background: #fff;
+        transition: width .5s ease-in-out;
+        z-index: -1;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn:hover::before{
+        right: auto;
+        left: 0;
+        width: 100%;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn:hover{
+      color:var(--brand-primary, #53c295);
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--primary {
@@ -269,21 +290,10 @@
       border: 1px solid var(--brand-primary, #53c295);
     }
 
-    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--primary:hover {
-      background: #45ad82;
-      border-color: #45ad82;
-      color: #fff;
-    }
-
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--outline {
-      background: #fff;
-      color: var(--brand-primary, #53c295);
-      border: 1px solid var(--brand-primary, #53c295);
-    }
-
-    .insight-tabs[data-section-id="{{ section.id }}"] .insight-btn--outline:hover {
-      background: var(--brand-primary, #53c295);
-      color: #fff;
+      background: rgb(83 194 149 / 10%);
+      color:var(--brand-primary, #53c295);
+      border-color:var(--brand-primary, #53c295);
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image--video {
@@ -312,6 +322,7 @@
       pointer-events: none;
       z-index: 2;
       backdrop-filter: blur(2px);
+      border: 1px solid #fff;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-play svg {
@@ -325,7 +336,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-top: 16px;
+      margin-top: 30px;
     }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--video .insight-card-title {
@@ -342,7 +353,7 @@
       justify-content: center;
       min-height: 32px;
       padding: 6px 14px;
-      border-radius: 8px;
+      border-radius: 12px;
       background: var(--brand-primary, #53c295);
       color: #fff;
       font-size: 13px;
@@ -416,6 +427,21 @@
       pointer-events: none;
     }
 
+    @media (max-width: 1440px){
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-bar {
+        margin-bottom: 80px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-group + .insight-group {
+        margin-top: 80px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] {
+        padding: 0 0 80px;
+      }
+    
+    }
+
     @media (max-width: 991px) {
       .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-bar {
         margin-bottom: 32px;
@@ -438,6 +464,25 @@
       .insight-tabs[data-section-id="{{ section.id }}"] .insight-group--videos .insight-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+    }
+
+    @media (max-width: 767px){
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-tabs-bar {
+        margin-bottom: 70px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-group + .insight-group {
+        margin-top: 70px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] {
+        padding: 0 0 70px;
+      }
+
+      .insight-tabs[data-section-id="{{ section.id }}"] .insight-panel-header {
+        margin-bottom: 30px;
+      }
+    
     }
 
     @media (max-width: 749px) {
@@ -667,35 +712,54 @@
         var prev = group.querySelector('[data-insight-prev]');
         var next = group.querySelector('[data-insight-next]');
         var isTwoUp = el.getAttribute('data-slides-per-view') === '2';
+        var isReport = group.classList.contains('insight-group--reports');
+        var isVideo = group.classList.contains('insight-group--videos');
         swiperId += 1;
 
         var instance = new window.Swiper(el, isTwoUp
-          ? {
-              slidesPerView: 1,
-              spaceBetween: 16,
-              speed: 650,
-              grabCursor: true,
-              watchOverflow: true,
-              observer: true,
-              observeParents: true,
-              breakpoints: {
-                768: { slidesPerView: 2, spaceBetween: 28 }
-              }
+      ? {
+          slidesPerView: 1,
+          spaceBetween: 16,
+          speed: 650,
+          grabCursor: true,
+          watchOverflow: true,
+          observer: true,
+          observeParents: true,
+
+         breakpoints: {
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 22
+            },
+
+            1200: {
+              slidesPerView: 2.15,
+              spaceBetween: 28
             }
-          : {
-              slidesPerView: 1.15,
-              spaceBetween: 16,
-              speed: 650,
-              grabCursor: true,
-              watchOverflow: true,
-              observer: true,
-              observeParents: true,
-              breakpoints: {
-                768: { slidesPerView: 2.4, spaceBetween: 22 },
-                1200: { slidesPerView: 4, spaceBetween: 28 }
-              }
+          }
+        }
+      : {
+          slidesPerView: 1.15,
+          spaceBetween: 16,
+          speed: 650,
+          grabCursor: true,
+          watchOverflow: true,
+          observer: true,
+          observeParents: true,
+
+        breakpoints: {
+            768: {
+              slidesPerView: isReport ? 2 : 2.4,
+              spaceBetween: 22
+            },
+
+            1200: {
+              slidesPerView: isReport ? 3 : 3.25,
+              spaceBetween: 28
             }
-        );
+          }
+        }
+    );
 
         bindSliderEvents(instance, progress, group);
         setProgress(progress, instance);

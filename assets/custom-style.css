@@ -349,7 +349,7 @@ body .container {
 }
 @media screen and (max-width:991px){
     body header #main-menu-content .main-nav {
-        gap: 30px;
+        gap: 25px;
     }
 
     body store-header.header.header--overlay .main-nav__item--primary {
@@ -358,6 +358,11 @@ body .container {
     body store-header.header.header--overlay .search__input {
       font-size:15px;
        padding-left: 110px;
+    }
+
+    body store-header.header.header--product .main-nav__item--primary,
+    body store-header.header.header--product .main-nav__toggle-btn {
+      font-size: 15px;
     }
 
     footer .footer__main {
@@ -401,6 +406,28 @@ body .container {
    body header #main-menu-content .main-nav {
         gap: 5px;
    }
+
+    body store-header.header.header--product .main-nav__item--primary,
+    body store-header.header.header--product .main-nav__toggle-btn {
+      font-size: 20px;
+    }
+
+  body store-header.header.header--product .main-nav__child,
+  body store-header.header.header--product .main-nav__child.mega-nav--columns {
+    background: transparent !important;
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+    border:0;
+    border-radius: 20px;
+    box-shadow: none;
+    color: #000;
+  }
+
+  body store-header.header.header--product .main-nav__child a,
+  body store-header.header.header--product .main-nav__child .child-nav__item,
+  body store-header.header.header--product .main-nav__child .main-nav__item {
+    color: #000 !important;
+  }
    
     header .header__logo {
         margin-bottom: 0;
@@ -412,13 +439,13 @@ body .container {
         width: 100%;
     }
 
-  body store-header.header {
-    padding-top: 34px;
-    padding-bottom: 8px;
-  }
-  body store-header.header.is-scrolled {
-    padding-top: 12px;
-}
+      body store-header.header {
+        padding-top: 34px;
+        padding-bottom: 8px;
+      }
+      body store-header.header.is-scrolled {
+        padding-top: 12px;
+    }
 
   .header__grid {
     flex-wrap: nowrap;
@@ -476,8 +503,8 @@ body .container {
 
   /* Circular hamburger */
   .main-menu__toggle {
-    width: 40px;
-    height: 40px;
+    width: 54px;
+    height: 54px;
     margin: 0;
     border: 1.5px solid currentColor;
     border-radius: 50%;
