@@ -1,0 +1,167 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3_a45960ee-d11f-4531-b52c-60962eec458c.png",
+        "overlay_color": "#00000073",
+        "subtitle": "",
+        "heading": "<p>Shop</p>",
+        "text": "<p>Explore specialty coffee, equipment, and essentials crafted for hospitality partners.</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "shop_categories": {
+      "type": "shop-categories",
+      "blocks": {
+        "category_coffee": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Coffee",
+            "link": ""
+          }
+        },
+        "category_chocolate": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3_a45960ee-d11f-4531-b52c-60962eec458c.png",
+            "title": "Chocolate",
+            "link": ""
+          }
+        },
+        "category_capsules": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/category-3.png",
+            "title": "Capsules",
+            "link": ""
+          }
+        },
+        "category_brewing": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/category-4.png",
+            "title": "Brewing Gear",
+            "link": ""
+          }
+        },
+        "category_spare": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/4ccf726f89ed8abc65b03363f0be91cf3519b7fd.png",
+            "title": "Spare Parts",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_coffee",
+        "category_chocolate",
+        "category_capsules",
+        "category_brewing",
+        "category_spare"
+      ],
+      "settings": {
+        "columns": 5,
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 32,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 20
+      }
+    },
+    "shop_category_products": {
+      "type": "shop-category-products",
+      "settings": {
+        "collection": "specialty-coffee",
+        "products_to_show": 6,
+        "banner_image": "shopify://shop_images/503f4c4106f4976812b99f3f15ff5a4db46bc773.jpg",
+        "banner_heading": "Specialty Coffee",
+        "banner_button_label": "Discover More",
+        "banner_button_link": "",
+        "banner_overlay": "#00000066",
+        "banner_height": 340,
+        "banner_height_mobile": 240,
+        "heading": "Specialty Coffee",
+        "view_products_label": "View Products",
+        "view_products_link": "",
+        "empty_text": "Select a collection to show products here.",
+        "background_color": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 80,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "shop_category_products_brewing": {
+      "type": "shop-category-products",
+      "settings": {
+        "collection": "brewing-tools",
+        "products_to_show": 6,
+        "banner_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b_1.jpg",
+        "banner_heading": "Brewing Tools",
+        "banner_button_label": "Discover More",
+        "banner_button_link": "",
+        "banner_overlay": "#00000066",
+        "banner_height": 340,
+        "banner_height_mobile": 240,
+        "heading": "Brewing Tools",
+        "view_products_label": "View Products",
+        "view_products_link": "",
+        "empty_text": "Select a collection to show products here.",
+        "background_color": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 80,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "shop_category_products_chocolate": {
+      "type": "shop-category-products",
+      "settings": {
+        "collection": "specialty-coffee-specialty-coffee-blends",
+        "products_to_show": 6,
+        "banner_image": "shopify://shop_images/288fafea62090ec19723df6084eb918683136c13.jpg",
+        "banner_heading": "Chocolate",
+        "banner_button_label": "Discover More",
+        "banner_button_link": "",
+        "banner_overlay": "#00000066",
+        "banner_height": 340,
+        "banner_height_mobile": 240,
+        "heading": "Chocolate",
+        "view_products_label": "View Products",
+        "view_products_link": "",
+        "empty_text": "Select a collection to show products here.",
+        "background_color": "#ffffff",
+        "padding_top": 24,
+        "padding_bottom": 80,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "shop_categories",
+    "shop_category_products",
+    "shop_category_products_brewing",
+    "shop_category_products_chocolate"
+  ]
+}

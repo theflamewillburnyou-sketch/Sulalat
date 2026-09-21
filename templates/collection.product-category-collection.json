@@ -9,19 +9,18 @@
  */
 {
   "sections": {
-    "page_banner_TwctdG": {
+    "page_banner": {
       "type": "page-banner",
-      "name": "Page Banner",
       "settings": {
         "background_image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3.png",
-        "overlay_color": "rgba(0,0,0,0.45)",
+        "overlay_color": "#00000073",
         "subtitle": "",
-        "heading": "",
-        "text": "",
-        "min_height": 650,
-        "min_height_mobile": 480,
+        "heading": "<p>Shop</p>",
+        "text": "<p>Explore specialty coffee, equipment, and essentials crafted for hospitality partners.</p>",
+        "min_height": 520,
+        "min_height_mobile": 420,
         "padding_top": 120,
-        "padding_bottom": 90,
+        "padding_bottom": 80,
         "heading_size": 65,
         "heading_line_height": 70,
         "heading_size_mobile": 40,
@@ -97,14 +96,14 @@
       "settings": {
         "nav_background": "#eefaf5",
         "search_placeholder": "Search...",
-        "products_per_page": 9,
+        "products_per_page": 12,
         "load_more_label": "Load More",
         "padding_bottom": 80
       }
     }
   },
   "order": [
-    "page_banner_TwctdG",
+    "page_banner",
     "sulalat_collection"
   ]
 }
