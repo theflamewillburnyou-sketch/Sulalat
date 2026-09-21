@@ -1,0 +1,92 @@
+{%- comment -%}
+  Renders one Coffee Preparation media item from a metaobject.
+  Expected metaobject fields:
+  - image (file / image)
+  - video (file / video) optional
+  - video_url (url) optional
+  - show_play (boolean) optional
+  - link (url) optional
+  Params: item, index, heading
+{%- endcomment -%}
+{%- liquid
+  assign item_class = 'sulalat-prep__item sulalat-prep__item--wide'
+  if index == 1 or index == 4
+    assign item_class = 'sulalat-prep__item sulalat-prep__item--tall'
+  endif
+
+  assign item_image = item.image.value | default: item.image | default: item.photo.value | default: item.photo
+  assign item_video_raw = item.video.value | default: item.video
+  assign item_video_url = item.video_url.value | default: item.video_url | default: item.external_video.value | default: item.external_video
+  assign item_link = item.link.value | default: item.link
+  assign show_play = item.show_play.value | default: item.show_play | default: false
+
+  assign item_video = blank
+  assign video_as_image = blank
+
+  if item_video_raw != blank
+    if item_video_raw.media_type == 'video'
+      assign item_video = item_video_raw
+    elsif item_video_raw.media_type == 'image'
+      assign video_as_image = item_video_raw
+    elsif item_video_raw.sources != blank
+      assign item_video = item_video_raw
+    else
+      assign video_as_image = item_video_raw
+    endif
+  endif
+
+  if item_image == blank and video_as_image != blank
+    assign item_image = video_as_image
+  endif
+
+  assign is_video = false
+  if item_video != blank or item_video_url != blank
+    assign is_video = true
+    assign show_play = true
+  endif
+
+  assign item_href = item_link
+  if item_href == blank and item_video_url != blank
+    assign item_href = item_video_url
+  endif
+
+  assign prep_alt = item_image.alt | default: heading | default: 'Coffee preparation'
+-%}
+
+{%- if item_href != blank -%}
+  <a class="{{ item_class }}" href="{{ item_href }}" {% if is_video and item_video_url != blank %}target="_blank" rel="noopener"{% endif %}>
+{%- else -%}
+  <div class="{{ item_class }}">
+{%- endif -%}
+
+  {%- if item_video != blank -%}
+    {{ item_video | video_tag: autoplay: false, loop: false, muted: true, controls: false, image_size: '1200x' }}
+  {%- elsif item_image != blank -%}
+    {{
+      item_image
+      | image_url: width: 1400
+      | image_tag:
+        loading: 'lazy',
+        widths: '480, 720, 960, 1200, 1400',
+        sizes: '(min-width: 992px) 40vw, 100vw',
+        alt: prep_alt
+    }}
+  {%- else -%}
+    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+  {%- endif -%}
+
+  {%- if show_play -%}
+    <span class="sulalat-prep__play" aria-hidden="true">
+      <span>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M8 5v14l11-7L8 5z"/>
+        </svg>
+      </span>
+    </span>
+  {%- endif -%}
+
+{%- if item_href != blank -%}
+  </a>
+{%- else -%}
+  </div>
+{%- endif -%}

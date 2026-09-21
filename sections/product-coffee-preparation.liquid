@@ -1,0 +1,354 @@
+{%- liquid
+  assign prep_heading_mf = product.metafields.custom.coffee_preparation_heading.value
+  assign prep_heading = prep_heading_mf | default: section.settings.heading
+
+  assign prep_mf = product.metafields.custom.coffee_preparation
+  assign prep_items = prep_mf.value
+  assign prep_is_list = false
+  if prep_mf.type contains 'list.'
+    assign prep_is_list = true
+  endif
+
+  assign use_metafields = false
+  if prep_items != blank
+    assign use_metafields = true
+  endif
+-%}
+
+{%- if use_metafields or section.blocks.size > 0 or request.design_mode -%}
+<section
+  class="sulalat-prep"
+  data-section-id="{{ section.id }}"
+  style="
+    --prep-pad-top: {{ section.settings.padding_top }}px;
+    --prep-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --prep-bg: {{ section.settings.background_color }};
+    --prep-accent: {{ section.settings.accent_color }};
+  "
+>
+  <style>
+    .sulalat-prep[data-section-id="{{ section.id }}"] {
+      padding: var(--prep-pad-top) 0 var(--prep-pad-bottom);
+      background: var(--prep-bg);
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__heading {
+      margin: 0 0 36px;
+      text-align: center;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.2fr;
+      grid-template-rows: auto auto;
+      gap: 18px;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item {
+      position: relative;
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f3f3f3;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall {
+      grid-row: span 2;
+      min-height: 520px;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--wide {
+      min-height: 250px;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item img,
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item video,
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.18);
+      pointer-events: none;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play span {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--prep-accent, #53c295);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play svg {
+      width: 22px;
+      height: 22px;
+      margin-left: 3px;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__empty {
+      margin: 0;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+    }
+
+    @media (max-width: 991px) {
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall {
+        grid-row: auto;
+        min-height: 280px;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-prep[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__heading {
+        margin-bottom: 24px;
+      }
+
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--wide {
+        min-height: 220px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    {%- if prep_heading != blank -%}
+      <h2 class="sulalat-prep__heading">{{ prep_heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if use_metafields -%}
+      <div class="sulalat-prep__grid">
+        {%- if prep_is_list -%}
+          {%- for item in prep_items -%}
+            {% render 'sulalat-prep-item', item: item, index: forloop.index, heading: prep_heading %}
+          {%- endfor -%}
+        {%- else -%}
+          {% render 'sulalat-prep-item', item: prep_items, index: 1, heading: prep_heading %}
+        {%- endif -%}
+      </div>
+    {%- elsif section.blocks.size > 0 -%}
+      <div class="sulalat-prep__grid">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign item_class = 'sulalat-prep__item sulalat-prep__item--wide'
+            if forloop.first or forloop.index == 4
+              assign item_class = 'sulalat-prep__item sulalat-prep__item--tall'
+            endif
+            assign is_video = false
+            if block.settings.video != blank or block.settings.video_url != blank
+              assign is_video = true
+            endif
+            assign item_href = block.settings.link
+            if item_href == blank and block.settings.video_url != blank
+              assign item_href = block.settings.video_url
+            endif
+            assign show_play = block.settings.show_play
+            if is_video
+              assign show_play = true
+            endif
+          -%}
+
+          {%- if item_href != blank -%}
+            <a class="{{ item_class }}" href="{{ item_href }}" {% if is_video %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>
+          {%- else -%}
+            <div class="{{ item_class }}" {{ block.shopify_attributes }}>
+          {%- endif -%}
+
+            {%- if block.settings.video != blank -%}
+              {{ block.settings.video | video_tag: autoplay: false, loop: false, muted: true, controls: false, image_size: '1200x' }}
+            {%- elsif block.settings.image != blank -%}
+              {%- assign prep_alt = block.settings.image.alt | default: block.settings.label | default: prep_heading -%}
+              {{
+                block.settings.image
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '480, 720, 960, 1200, 1400',
+                  sizes: '(min-width: 992px) 40vw, 100vw',
+                  alt: prep_alt
+              }}
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+
+            {%- if show_play -%}
+              <span class="sulalat-prep__play" aria-hidden="true">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M8 5v14l11-7L8 5z"/>
+                  </svg>
+                </span>
+              </span>
+            {%- endif -%}
+
+          {%- if item_href != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- elsif request.design_mode -%}
+      <p class="sulalat-prep__empty">
+        Add product metafield <strong>custom.coffee_preparation</strong> (list of Coffee preparation item metaobjects), or use section blocks as fallback.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Coffee preparation",
+  "tag": "section",
+  "class": "sulalat-prep-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Reads product metafields custom.coffee_preparation (list of metaobjects) and optional custom.coffee_preparation_heading. Section blocks are used only as fallback."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Fallback heading",
+      "default": "Coffee Preparation",
+      "info": "Used when custom.coffee_preparation_heading is empty."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Play button color",
+      "default": "#53c295"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Fallback media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Shopify-hosted video"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "External video URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_play",
+          "label": "Show play icon",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Accessibility label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coffee preparation"
+    }
+  ]
+}
+{% endschema %}

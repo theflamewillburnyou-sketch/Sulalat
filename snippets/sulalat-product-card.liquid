@@ -1,6 +1,11 @@
 {%- comment -%}
-  Sulalat collection product card
-  Params: product, collection (optional), color_index (optional), section_id
+  Sulalat product card (collection / related)
+  Params:
+  - product
+  - collection (optional)
+  - color_index (optional)
+  - section_id
+  - brand_media (optional) — colored panel + icon instead of product photo
 {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -14,13 +19,36 @@
   assign color_key = color_index | default: 0 | modulo: 3
   assign card_tone = card_colors[color_key]
 
-  assign title_ar = product.metafields.custom.title_ar | default: product.metafields.custom.arabic_title
-  assign short_desc = product.metafields.descriptors.subtitle | default: product.metafields.custom.short_description
+  assign title_ar_mf = product.metafields.custom.title_ar | default: product.metafields.custom.arabic_title
+  assign title_ar = title_ar_mf.value | default: title_ar_mf
+
+  assign short_mf = product.metafields.custom.short_description
+  if short_mf == blank
+    assign short_mf = product.metafields.descriptors.subtitle
+  endif
+  assign short_desc = short_mf.value | default: short_mf | strip_html | strip
   if short_desc == blank and product.description != blank
     assign short_desc = product.description | strip_html | truncate: 80
   endif
   if short_desc == blank
     assign short_desc = 'Short description here.'
+  endif
+
+  assign badge_mf = product.metafields.custom.card_badge | default: product.metafields.custom.badge
+  assign badge_image = badge_mf.value | default: badge_mf
+  assign show_badge = false
+  if badge_image != blank
+    assign show_badge = true
+  elsif product.tags contains 'badge' or product.tags contains 'featured'
+    assign show_badge = true
+  endif
+
+  assign use_brand_media = false
+  if brand_media
+    assign use_brand_media = true
+  endif
+  if use_brand_media == false and product.featured_media == blank
+    assign use_brand_media = true
   endif
 
   assign form_id = 'SulalatCard-' | append: section_id | append: '-' | append: product.id
@@ -29,7 +57,30 @@
 
 <article class="sulalat-product-card sulalat-product-card--{{ card_tone }}" data-product-id="{{ product.id }}">
   <a class="sulalat-product-card__media" href="{{ product_url }}">
-    {% if product.featured_media != blank %}
+    {%- if show_badge -%}
+      <span class="sulalat-product-card__badge" aria-hidden="true">
+        {%- if badge_image != blank -%}
+          {{
+            badge_image
+            | image_url: width: 120
+            | image_tag: loading: 'lazy', widths: '60, 90, 120', alt: ''
+          }}
+        {%- else -%}
+          <span class="sulalat-product-card__badge-seal"></span>
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+
+    {%- if use_brand_media -%}
+      <span class="sulalat-product-card__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" focusable="false">
+          <path d="M18 40c0 8.284 6.716 15 15 15s15-6.716 15-15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M22 28h22l-2 12H24l-2-12z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M26 28V22a7 7 0 0 1 14 0v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M30 18c1.5-3 5-3 6.5 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </span>
+    {%- else -%}
       <img
         class="sulalat-product-card__image"
         src="{{ product.featured_media | image_url: width: 900 }}"
@@ -45,20 +96,12 @@
         width="{{ product.featured_media.width }}"
         height="{{ product.featured_media.height }}"
       >
-    {% else %}
-      <span class="sulalat-product-card__icon" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" focusable="false">
-          <path d="M18 40c0 8.284 6.716 15 15 15s15-6.716 15-15" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M22 28h22l-2 12H24l-2-12z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
-          <path d="M26 28V22a7 7 0 0 1 14 0v6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          <path d="M30 18c1.5-3 5-3 6.5 0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </span>
-    {% endif %}
+    {%- endif -%}
+
     <span class="sulalat-product-card__band">
-      {% if title_ar != blank %}
+      {%- if title_ar != blank -%}
         <span class="sulalat-product-card__band-ar" dir="rtl">{{ title_ar | escape }}</span>
-      {% endif %}
+      {%- endif -%}
       <span class="sulalat-product-card__band-en">{{ product.title | escape }}</span>
     </span>
   </a>
@@ -69,27 +112,27 @@
     </h3>
     <p class="sulalat-product-card__desc">{{ short_desc | escape }}</p>
     <p class="sulalat-product-card__price">
-      {% if current_variant.compare_at_price > current_variant.price %}
+      {%- if current_variant.compare_at_price > current_variant.price -%}
         <s>{{ current_variant.compare_at_price | money }}</s>
-      {% endif %}
+      {%- endif -%}
       <span>{{ current_variant.price | money }}</span>
     </p>
 
     <div class="sulalat-product-card__actions">
       <a class="sulalat-btn sulalat-btn--primary" href="{{ product_url }}">View Details</a>
 
-      {% if product.has_only_default_variant and current_variant.available %}
+      {%- if product.has_only_default_variant and current_variant.available -%}
         {% form 'product', product, id: form_id, class: 'sulalat-product-card__form' %}
           <input type="hidden" name="id" value="{{ current_variant.id }}">
           <button type="submit" name="add" class="sulalat-btn sulalat-btn--outline">
             Add to Cart
           </button>
         {% endform %}
-      {% elsif current_variant.available %}
+      {%- elsif current_variant.available -%}
         <a class="sulalat-btn sulalat-btn--outline" href="{{ product_url }}">Add to Cart</a>
-      {% else %}
+      {%- else -%}
         <span class="sulalat-btn sulalat-btn--outline is-disabled" aria-disabled="true">Sold out</span>
-      {% endif %}
+      {%- endif -%}
     </div>
   </div>
 </article>

@@ -1,0 +1,425 @@
+{%- liquid
+  assign rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | plus: 0
+  if rating_count == 0 and section.settings.reviews_count_fallback > 0
+    assign rating_count = section.settings.reviews_count_fallback
+  endif
+
+  assign brand_value = product.vendor
+  assign sku_value = product.selected_or_first_available_variant.sku
+  assign category_value = product.type
+  if category_value == blank and product.collections.size > 0
+    assign category_value = product.collections.first.title
+  endif
+
+  assign show_meta = false
+  if section.settings.show_brand and brand_value != blank
+    assign show_meta = true
+  endif
+  if section.settings.show_sku and sku_value != blank
+    assign show_meta = true
+  endif
+  if section.settings.show_category and category_value != blank
+    assign show_meta = true
+  endif
+-%}
+
+{%- if product.description != blank or section.settings.show_reviews or request.design_mode -%}
+<script src="{{ 'tabs.js' | asset_url }}" defer="defer"></script>
+
+{%- if section.settings.show_reviews and section.settings.custom_reviews == blank -%}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (document.getElementById('shopify-product-reviews')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = "{{ 'reviews.css' | asset_url }}";
+        document.body.appendChild(link);
+      }
+    }, { once: true });
+  </script>
+{%- endif -%}
+
+<section
+  class="sulalat-desc-tabs"
+  data-section-id="{{ section.id }}"
+  style="
+    --sdt-pad-top: {{ section.settings.padding_top }}px;
+    --sdt-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sdt-bg: {{ section.settings.background_color }};
+    --sdt-accent: {{ section.settings.accent_color }};
+    --sdt-tab-bg: {{ section.settings.tab_bar_background }};
+  "
+>
+  <style>
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] {
+      padding: var(--sdt-pad-top) 0 var(--sdt-pad-bottom);
+      background: var(--sdt-bg);
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__inner {
+      max-width: 920px;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist {
+      margin-bottom: 28px;
+      background: var(--sdt-tab-bg);
+      border-radius: 4px 4px 0 0;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist::after {
+      display: none;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist__scroller {
+      gap: 0;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist__tab {
+      margin: 0;
+      margin-inline-end: 0;
+      padding: 14px 28px;
+      border: 0;
+      background: transparent;
+      color: #6b6b6b;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.3;
+      cursor: pointer;
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist__tab[aria-selected='true'] {
+      color: var(--sdt-accent);
+      background: color-mix(in srgb, var(--sdt-accent) 12%, white);
+      border-bottom-color: var(--sdt-accent);
+      text-decoration: none;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__copy {
+      margin: 0 0 28px;
+      color: #4a4a4a;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__copy p {
+      margin: 0 0 1em;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__meta {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__meta-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 16px 24px;
+      align-items: baseline;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__meta-label {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.01em;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__meta-value {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 400;
+      color: #4a4a4a;
+      word-break: break-word;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__reviews {
+      min-height: 40px;
+    }
+
+    @media screen and (max-width: 749px) {
+      .sulalat-desc-tabs[data-section-id="{{ section.id }}"] {
+        padding-top: {{ section.settings.padding_top_mobile }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .tablist__tab {
+        padding: 12px 18px;
+        font-size: 14px;
+      }
+
+      .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-desc-tabs__meta-row {
+        grid-template-columns: 100px minmax(0, 1fr);
+        gap: 8px 16px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-desc-tabs__inner">
+      <tabbed-content>
+        <div class="tablist overflow-hidden relative no-js-hidden">
+          <div class="tablist__scroller flex" role="tablist">
+            {%- if product.description != blank or request.design_mode -%}
+              <button
+                type="button"
+                class="tablist__tab"
+                id="sulalat-desc-tab-{{ section.id }}"
+                role="tab"
+                aria-controls="sulalat-desc-panel-{{ section.id }}"
+                aria-selected="true"
+              >
+                {{ section.settings.description_label | escape }}
+              </button>
+            {%- endif -%}
+
+            {%- if section.settings.show_reviews -%}
+              <button
+                type="button"
+                class="tablist__tab"
+                id="sulalat-reviews-tab-{{ section.id }}"
+                role="tab"
+                aria-controls="sulalat-reviews-panel-{{ section.id }}"
+                aria-selected="{% if product.description == blank and request.design_mode == false %}true{% else %}false{% endif %}"
+              >
+                {{ section.settings.reviews_label | escape }}{% if rating_count > 0 %} ({{ rating_count }}){% endif %}
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if product.description != blank or request.design_mode -%}
+          <div
+            id="sulalat-desc-panel-{{ section.id }}"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="sulalat-desc-tab-{{ section.id }}"
+          >
+            <div class="sulalat-desc-tabs__copy rte">
+              {%- if product.description != blank -%}
+                {{ product.description }}
+              {%- elsif request.design_mode -%}
+                <p>Add a product description in the Shopify admin to show it here.</p>
+              {%- endif -%}
+            </div>
+
+            {%- if show_meta -%}
+              <ul class="sulalat-desc-tabs__meta">
+                {%- if section.settings.show_brand and brand_value != blank -%}
+                  <li class="sulalat-desc-tabs__meta-row">
+                    <span class="sulalat-desc-tabs__meta-label">{{ section.settings.brand_label | escape }}</span>
+                    <span class="sulalat-desc-tabs__meta-value">{{ brand_value | escape }}</span>
+                  </li>
+                {%- endif -%}
+                {%- if section.settings.show_sku and sku_value != blank -%}
+                  <li class="sulalat-desc-tabs__meta-row">
+                    <span class="sulalat-desc-tabs__meta-label">{{ section.settings.sku_label | escape }}</span>
+                    <span class="sulalat-desc-tabs__meta-value">{{ sku_value | escape }}</span>
+                  </li>
+                {%- endif -%}
+                {%- if section.settings.show_category and category_value != blank -%}
+                  <li class="sulalat-desc-tabs__meta-row">
+                    <span class="sulalat-desc-tabs__meta-label">{{ section.settings.category_label | escape }}</span>
+                    <span class="sulalat-desc-tabs__meta-value">{{ category_value | escape }}</span>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.show_reviews -%}
+          <div
+            id="sulalat-reviews-panel-{{ section.id }}"
+            role="tabpanel"
+            tabindex="0"
+            aria-labelledby="sulalat-reviews-tab-{{ section.id }}"
+            {% if product.description != blank or request.design_mode %}hidden{% endif %}
+          >
+            <div class="sulalat-desc-tabs__reviews">
+              {%- if section.settings.custom_reviews != blank -%}
+                {{ section.settings.custom_reviews }}
+              {%- else -%}
+                <div class="spr-reviews" id="shopify-product-reviews" data-id="{{ product.id }}">
+                  {{ product.metafields.spr.reviews }}
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
+      </tabbed-content>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product description tabs",
+  "tag": "section",
+  "class": "section-product-description-tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "description_label",
+      "label": "Description tab label",
+      "default": "Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews",
+      "label": "Show reviews tab",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reviews_label",
+      "label": "Reviews tab label",
+      "default": "Reviews"
+    },
+    {
+      "type": "number",
+      "id": "reviews_count_fallback",
+      "label": "Reviews count fallback",
+      "default": 0,
+      "info": "Used when no review app count is available."
+    },
+    {
+      "type": "liquid",
+      "id": "custom_reviews",
+      "label": "Custom reviews app code",
+      "info": "Paste your reviews app embed code here if not using Shopify Product Reviews."
+    },
+    {
+      "type": "header",
+      "content": "Description meta"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_brand",
+      "label": "Show brand (vendor)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "brand_label",
+      "label": "Brand label",
+      "default": "Brand"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sku",
+      "label": "Show SKU",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "sku_label",
+      "label": "SKU label",
+      "default": "SKU"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show category (product type)",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "category_label",
+      "label": "Category label",
+      "default": "CATEGORY"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "tab_bar_background",
+      "label": "Tab bar background",
+      "default": "#f7f7f7"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Active tab color",
+      "default": "#53c295"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product description tabs"
+    }
+  ]
+}
+{% endschema %}

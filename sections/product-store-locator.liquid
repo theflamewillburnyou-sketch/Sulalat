@@ -1,0 +1,776 @@
+{%- comment -%}
+  Where to get this product — store locator.
+  Primary data: product metafield custom.store_locations (list of Store location metaobjects).
+  Fallback: section blocks (shared demo / Theme Editor).
+
+  Expected metaobject fields (flexible names):
+  - name / store_name / title
+  - country
+  - city
+  - address (optional)
+  - latitude / lat
+  - longitude / lng / lon
+  - map_embed (optional HTML iframe)
+{%- endcomment -%}
+
+{%- liquid
+  assign stores_mf = product.metafields.custom.store_locations
+  if stores_mf == blank
+    assign stores_mf = product.metafields.custom.where_to_buy
+  endif
+  if stores_mf == blank
+    assign stores_mf = product.metafields.custom.stores
+  endif
+
+  assign use_metafields = false
+  if stores_mf != blank and stores_mf.value != blank
+    assign use_metafields = true
+  endif
+
+  assign default_lat = section.settings.default_lat | default: '24.7136'
+  assign default_lng = section.settings.default_lng | default: '46.6753'
+  assign default_zoom = section.settings.default_zoom | default: 12
+-%}
+
+{%- capture stores_json -%}
+[
+{%- if use_metafields -%}
+  {%- if stores_mf.type contains 'list.' -%}
+    {%- assign first_store = true -%}
+    {%- for item in stores_mf.value -%}
+      {%- liquid
+        assign s_name = item.name.value | default: item.name | default: item.store_name.value | default: item.store_name | default: item.title.value | default: item.title
+        assign s_country = item.country.value | default: item.country
+        assign s_city = item.city.value | default: item.city
+        assign s_address = item.address.value | default: item.address
+        assign s_lat = item.latitude.value | default: item.latitude | default: item.lat.value | default: item.lat
+        assign s_lng = item.longitude.value | default: item.longitude | default: item.lng.value | default: item.lng | default: item.lon.value | default: item.lon
+        assign s_embed = item.map_embed.value | default: item.map_embed
+      -%}
+      {%- if s_name != blank or s_city != blank or s_country != blank -%}
+        {%- unless first_store -%},{%- endunless -%}
+        {
+          "id": {{ forloop.index | json }},
+          "name": {{ s_name | default: s_city | json }},
+          "country": {{ s_country | default: '' | json }},
+          "city": {{ s_city | default: '' | json }},
+          "address": {{ s_address | default: '' | json }},
+          "lat": {{ s_lat | default: '' | json }},
+          "lng": {{ s_lng | default: '' | json }},
+          "embed": {{ s_embed | default: '' | json }}
+        }
+        {%- assign first_store = false -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    {%- assign item = stores_mf.value -%}
+    {%- liquid
+      assign s_name = item.name.value | default: item.name | default: item.store_name.value | default: item.store_name | default: item.title.value | default: item.title
+      assign s_country = item.country.value | default: item.country
+      assign s_city = item.city.value | default: item.city
+      assign s_address = item.address.value | default: item.address
+      assign s_lat = item.latitude.value | default: item.latitude | default: item.lat.value | default: item.lat
+      assign s_lng = item.longitude.value | default: item.longitude | default: item.lng.value | default: item.lng | default: item.lon.value | default: item.lon
+      assign s_embed = item.map_embed.value | default: item.map_embed
+    -%}
+    {
+      "id": 1,
+      "name": {{ s_name | default: s_city | json }},
+      "country": {{ s_country | default: '' | json }},
+      "city": {{ s_city | default: '' | json }},
+      "address": {{ s_address | default: '' | json }},
+      "lat": {{ s_lat | default: '' | json }},
+      "lng": {{ s_lng | default: '' | json }},
+      "embed": {{ s_embed | default: '' | json }}
+    }
+  {%- endif -%}
+{%- elsif section.blocks.size > 0 -%}
+  {%- assign first_store = true -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'store' and block.settings.name != blank -%}
+      {%- unless first_store -%},{%- endunless -%}
+      {
+        "id": {{ forloop.index | json }},
+        "name": {{ block.settings.name | json }},
+        "country": {{ block.settings.country | json }},
+        "city": {{ block.settings.city | json }},
+        "address": {{ block.settings.address | json }},
+        "lat": {{ block.settings.latitude | json }},
+        "lng": {{ block.settings.longitude | json }},
+        "embed": {{ block.settings.map_embed | json }}
+      }
+      {%- assign first_store = false -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
+]
+{%- endcapture -%}
+
+{%- liquid
+  assign stores_json_clean = stores_json | strip
+  assign has_stores = false
+  if stores_json_clean != '[]' and stores_json_clean != blank
+    assign has_stores = true
+  endif
+-%}
+
+{%- if has_stores or request.design_mode -%}
+<section
+  class="sulalat-store-locator"
+  data-section-id="{{ section.id }}"
+  style="
+    --ssl-pad-top: {{ section.settings.padding_top }}px;
+    --ssl-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --ssl-bg: {{ section.settings.background_color }};
+    --ssl-accent: {{ section.settings.accent_color }};
+    --ssl-map-height: {{ section.settings.map_height }}px;
+    --ssl-map-radius: {{ section.settings.map_radius }}px;
+  "
+>
+  <style>
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] {
+      padding: var(--ssl-pad-top) 0 var(--ssl-pad-bottom);
+      background: var(--ssl-bg);
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__heading {
+      margin: 0 0 28px;
+      text-align: center;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__filters {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+      gap: 14px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__field {
+      position: relative;
+      min-width: 0;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      height: 52px;
+      padding: 0 44px 0 18px;
+      border: 1px solid #d8d8d8;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 15px;
+      line-height: 1.3;
+      cursor: pointer;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: #fafafa;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select:focus {
+      outline: 2px solid color-mix(in srgb, var(--ssl-accent) 45%, white);
+      outline-offset: 1px;
+      border-color: var(--ssl-accent);
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__chevron {
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      width: 12px;
+      height: 12px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #6b6b6b;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search {
+      height: 52px;
+      min-width: 140px;
+      padding: 0 28px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--ssl-accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search:hover {
+      filter: brightness(0.96);
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__map {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--ssl-map-radius);
+      background: #e9eef2;
+      height: var(--ssl-map-height);
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__map iframe,
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__map img {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      object-fit: cover;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__result {
+      margin-top: 14px;
+      color: #535353;
+      font-size: 15px;
+      line-height: 1.5;
+      min-height: 1.5em;
+    }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__empty {
+      text-align: center;
+      color: #6b6b6b;
+      font-size: 15px;
+      padding: 24px;
+    }
+
+    @media screen and (max-width: 989px) {
+      .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search {
+        grid-column: 1 / -1;
+        width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      .sulalat-store-locator[data-section-id="{{ section.id }}"] {
+        padding-top: {{ section.settings.padding_top_mobile }}px;
+        padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__filters {
+        grid-template-columns: 1fr;
+      }
+
+      .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__map {
+        height: {{ section.settings.map_height_mobile }}px;
+        border-radius: 16px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="sulalat-store-locator__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+
+    {%- if has_stores -%}
+      <store-locator
+        class="sulalat-store-locator__widget"
+        data-stores='{{ stores_json_clean | strip_newlines | escape }}'
+        data-default-lat="{{ default_lat | escape }}"
+        data-default-lng="{{ default_lng | escape }}"
+        data-default-zoom="{{ default_zoom | escape }}"
+        data-label-country="{{ section.settings.placeholder_country | escape }}"
+        data-label-city="{{ section.settings.placeholder_city | escape }}"
+        data-label-store="{{ section.settings.placeholder_store | escape }}"
+        data-msg-none="{{ section.settings.message_none | escape }}"
+        data-msg-select="{{ section.settings.message_select | escape }}"
+      >
+        <form class="sulalat-store-locator__filters" data-locator-form>
+          <div class="sulalat-store-locator__field">
+            <label class="visually-hidden" for="ssl-country-{{ section.id }}">{{ section.settings.placeholder_country | escape }}</label>
+            <select id="ssl-country-{{ section.id }}" class="sulalat-store-locator__select" data-country required>
+              <option value="">{{ section.settings.placeholder_country | escape }}</option>
+            </select>
+            <svg class="sulalat-store-locator__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="sulalat-store-locator__field">
+            <label class="visually-hidden" for="ssl-city-{{ section.id }}">{{ section.settings.placeholder_city | escape }}</label>
+            <select id="ssl-city-{{ section.id }}" class="sulalat-store-locator__select" data-city disabled>
+              <option value="">{{ section.settings.placeholder_city | escape }}</option>
+            </select>
+            <svg class="sulalat-store-locator__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="sulalat-store-locator__field">
+            <label class="visually-hidden" for="ssl-store-{{ section.id }}">{{ section.settings.placeholder_store | escape }}</label>
+            <select id="ssl-store-{{ section.id }}" class="sulalat-store-locator__select" data-store disabled>
+              <option value="">{{ section.settings.placeholder_store | escape }}</option>
+            </select>
+            <svg class="sulalat-store-locator__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 4.5L6 8l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <button type="submit" class="sulalat-store-locator__search">
+            {{ section.settings.search_label | escape }}
+          </button>
+        </form>
+
+        <div class="sulalat-store-locator__map" data-map>
+          <iframe
+            data-map-frame
+            title="{{ section.settings.heading | default: 'Store map' | escape }}"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q={{ default_lat | url_encode }},{{ default_lng | url_encode }}&z={{ default_zoom }}&output=embed"
+          ></iframe>
+        </div>
+
+        <p class="sulalat-store-locator__result" data-result aria-live="polite"></p>
+      </store-locator>
+
+      <script>
+        (function () {
+          if (customElements.get('store-locator')) return;
+
+          class StoreLocator extends HTMLElement {
+            connectedCallback() {
+              try {
+                this.stores = JSON.parse(this.getAttribute('data-stores') || '[]');
+              } catch (e) {
+                this.stores = [];
+              }
+
+              this.form = this.querySelector('[data-locator-form]');
+              this.countryEl = this.querySelector('[data-country]');
+              this.cityEl = this.querySelector('[data-city]');
+              this.storeEl = this.querySelector('[data-store]');
+              this.mapFrame = this.querySelector('[data-map-frame]');
+              this.mapHost = this.querySelector('[data-map]');
+              this.resultEl = this.querySelector('[data-result]');
+              this.defaultLat = this.getAttribute('data-default-lat') || '24.7136';
+              this.defaultLng = this.getAttribute('data-default-lng') || '46.6753';
+              this.defaultZoom = this.getAttribute('data-default-zoom') || '12';
+
+              this.populateCountries();
+              this.countryEl.addEventListener('change', () => this.onCountryChange());
+              this.cityEl.addEventListener('change', () => this.onCityChange());
+              this.form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                this.search();
+              });
+
+              if (this.stores.length === 1) {
+                const only = this.stores[0];
+                if (only.country) {
+                  this.countryEl.value = only.country;
+                  this.onCountryChange();
+                }
+                if (only.city) {
+                  this.cityEl.value = only.city;
+                  this.onCityChange();
+                }
+                if (only.name) {
+                  this.storeEl.value = String(only.id);
+                }
+                this.search();
+              }
+            }
+
+            uniqueSorted(values) {
+              return [...new Set(values.filter(Boolean))].sort((a, b) =>
+                a.localeCompare(b, undefined, { sensitivity: 'base' })
+              );
+            }
+
+            resetSelect(select, placeholder, disabled) {
+              select.innerHTML = '';
+              const opt = document.createElement('option');
+              opt.value = '';
+              opt.textContent = placeholder;
+              select.appendChild(opt);
+              select.disabled = !!disabled;
+              select.value = '';
+            }
+
+            populateCountries() {
+              const countries = this.uniqueSorted(this.stores.map((s) => s.country));
+              this.resetSelect(this.countryEl, this.getAttribute('data-label-country'), false);
+              countries.forEach((country) => {
+                const opt = document.createElement('option');
+                opt.value = country;
+                opt.textContent = country;
+                this.countryEl.appendChild(opt);
+              });
+              this.resetSelect(this.cityEl, this.getAttribute('data-label-city'), true);
+              this.resetSelect(this.storeEl, this.getAttribute('data-label-store'), true);
+            }
+
+            onCountryChange() {
+              const country = this.countryEl.value;
+              const cities = this.uniqueSorted(
+                this.stores.filter((s) => s.country === country).map((s) => s.city)
+              );
+              this.resetSelect(this.cityEl, this.getAttribute('data-label-city'), !country);
+              cities.forEach((city) => {
+                const opt = document.createElement('option');
+                opt.value = city;
+                opt.textContent = city;
+                this.cityEl.appendChild(opt);
+              });
+              this.resetSelect(this.storeEl, this.getAttribute('data-label-store'), true);
+            }
+
+            onCityChange() {
+              const country = this.countryEl.value;
+              const city = this.cityEl.value;
+              const stores = this.stores.filter((s) => s.country === country && s.city === city);
+              this.resetSelect(this.storeEl, this.getAttribute('data-label-store'), !city);
+              stores.forEach((store) => {
+                const opt = document.createElement('option');
+                opt.value = String(store.id);
+                opt.textContent = store.name || store.address || store.city;
+                this.storeEl.appendChild(opt);
+              });
+            }
+
+            buildMapSrc(store) {
+              if (store && store.embed && String(store.embed).includes('<iframe')) {
+                return { type: 'html', value: store.embed };
+              }
+              if (store && store.lat && store.lng) {
+                return {
+                  type: 'url',
+                  value:
+                    'https://maps.google.com/maps?q=' +
+                    encodeURIComponent(store.lat + ',' + store.lng) +
+                    '&z=15&output=embed'
+                };
+              }
+              const queryParts = [];
+              if (store) {
+                if (store.address) queryParts.push(store.address);
+                if (store.name) queryParts.push(store.name);
+                if (store.city) queryParts.push(store.city);
+                if (store.country) queryParts.push(store.country);
+              }
+              const query = queryParts.join(', ') || this.defaultLat + ',' + this.defaultLng;
+              return {
+                type: 'url',
+                value:
+                  'https://maps.google.com/maps?q=' +
+                  encodeURIComponent(query) +
+                  '&z=' +
+                  encodeURIComponent(this.defaultZoom) +
+                  '&output=embed'
+              };
+            }
+
+            renderMap(store) {
+              const map = this.buildMapSrc(store);
+              if (map.type === 'html') {
+                this.mapHost.innerHTML = map.value;
+                this.mapFrame = this.mapHost.querySelector('iframe');
+                if (this.mapFrame) {
+                  this.mapFrame.setAttribute('loading', 'lazy');
+                  this.mapFrame.style.width = '100%';
+                  this.mapFrame.style.height = '100%';
+                  this.mapFrame.style.border = '0';
+                }
+                return;
+              }
+              if (!this.mapFrame || !this.mapHost.contains(this.mapFrame)) {
+                this.mapHost.innerHTML =
+                  '<iframe data-map-frame title="Store map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:100%;border:0;"></iframe>';
+                this.mapFrame = this.mapHost.querySelector('[data-map-frame]');
+              }
+              this.mapFrame.src = map.value;
+            }
+
+            search() {
+              const country = this.countryEl.value;
+              const city = this.cityEl.value;
+              const storeId = this.storeEl.value;
+
+              let matches = this.stores.slice();
+              if (country) matches = matches.filter((s) => s.country === country);
+              if (city) matches = matches.filter((s) => s.city === city);
+              if (storeId) matches = matches.filter((s) => String(s.id) === storeId);
+
+              if (!matches.length) {
+                this.resultEl.textContent = this.getAttribute('data-msg-none') || 'No stores found.';
+                this.renderMap(null);
+                return;
+              }
+
+              const selected = matches[0];
+              this.renderMap(selected);
+
+              const bits = [selected.name, selected.address, selected.city, selected.country].filter(Boolean);
+              this.resultEl.textContent = bits.join(' · ');
+            }
+          }
+
+          customElements.define('store-locator', StoreLocator);
+        })();
+      </script>
+    {%- elsif request.design_mode -%}
+      <p class="sulalat-store-locator__empty">
+        Add product metafield <strong>custom.store_locations</strong> (list of Store location metaobjects),
+        or add Store blocks in this section as a fallback.
+      </p>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Where to get product",
+  "tag": "section",
+  "class": "section-sulalat-store-locator",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Reads product metafield custom.store_locations (list of Store location metaobjects). Falls back to section blocks. Each product only shows the stores linked to it."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Where to get this product"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_country",
+      "label": "Country placeholder",
+      "default": "Enter or select country"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_city",
+      "label": "City placeholder",
+      "default": "Enter or select city"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_store",
+      "label": "Store placeholder",
+      "default": "Enter or select store"
+    },
+    {
+      "type": "text",
+      "id": "search_label",
+      "label": "Search button",
+      "default": "Search"
+    },
+    {
+      "type": "text",
+      "id": "message_none",
+      "label": "No results message",
+      "default": "No stores found for this selection."
+    },
+    {
+      "type": "text",
+      "id": "message_select",
+      "label": "Select prompt",
+      "default": "Select a country, city, or store to search."
+    },
+    {
+      "type": "header",
+      "content": "Default map"
+    },
+    {
+      "type": "text",
+      "id": "default_lat",
+      "label": "Default latitude",
+      "default": "24.7136",
+      "info": "Shown before a store is selected (Riyadh by default)."
+    },
+    {
+      "type": "text",
+      "id": "default_lng",
+      "label": "Default longitude",
+      "default": "46.6753"
+    },
+    {
+      "type": "range",
+      "id": "default_zoom",
+      "min": 8,
+      "max": 18,
+      "step": 1,
+      "label": "Default zoom",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "map_height",
+      "min": 280,
+      "max": 720,
+      "step": 10,
+      "unit": "px",
+      "label": "Map height",
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "map_height_mobile",
+      "min": 220,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "label": "Map height (mobile)",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "map_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Map corner radius",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors & spacing"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Search button",
+      "default": "#53c295"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store (fallback)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Store name",
+          "default": "Sulalat Store"
+        },
+        {
+          "type": "text",
+          "id": "country",
+          "label": "Country",
+          "default": "Saudi Arabia"
+        },
+        {
+          "type": "text",
+          "id": "city",
+          "label": "City",
+          "default": "Riyadh"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Address"
+        },
+        {
+          "type": "text",
+          "id": "latitude",
+          "label": "Latitude",
+          "default": "24.7136"
+        },
+        {
+          "type": "text",
+          "id": "longitude",
+          "label": "Longitude",
+          "default": "46.6753"
+        },
+        {
+          "type": "textarea",
+          "id": "map_embed",
+          "label": "Optional map embed iframe",
+          "info": "If set, used instead of lat/lng Google Maps embed."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Where to get product",
+      "blocks": [
+        {
+          "type": "store",
+          "settings": {
+            "name": "Sulalat — Al Wurood",
+            "country": "Saudi Arabia",
+            "city": "Riyadh",
+            "address": "Al Wurood, Riyadh",
+            "latitude": "24.7136",
+            "longitude": "46.6753"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

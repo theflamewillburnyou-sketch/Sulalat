@@ -656,12 +656,17 @@
 
                 {% when 'short_description' %}
                   {% liquid
+                    assign short_mf = product.metafields.custom.short_description
                     assign short_desc = metafield_short_desc
                     if short_desc == blank
                       assign short_desc = block.settings.text
                     endif
                   %}
-                  {% if short_desc != blank %}
+                  {% if short_mf != blank and short_mf.type contains 'rich_text' %}
+                    <div class="sulalat-pdp__block sulalat-pdp__block--sm" {{ block.shopify_attributes }}>
+                      <div class="sulalat-pdp__short rte">{{ short_mf | metafield_tag }}</div>
+                    </div>
+                  {% elsif short_desc != blank %}
                     <div class="sulalat-pdp__block sulalat-pdp__block--sm" {{ block.shopify_attributes }}>
                       <p class="sulalat-pdp__short">{{ short_desc | escape }}</p>
                     </div>

@@ -102,7 +102,148 @@
         "accent_hover_color": "#45ad82",
         "media_radius": 20,
         "padding_top": 40,
-        "padding_bottom": 80
+        "padding_bottom": 40
+      }
+    },
+    "taste_info": {
+      "type": "product-taste-info",
+      "settings": {
+        "taste_heading": "Taste Profile",
+        "info_heading": "Information",
+        "label_country": "Country",
+        "label_process": "Process",
+        "label_roast": "Roast",
+        "label_altitude": "Altitude",
+        "label_variety": "Variety",
+        "label_sca": "SCA Score",
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "table_value_bg": "#eaf8f1",
+        "padding_top": 48,
+        "padding_bottom": 48,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32
+      }
+    },
+    "coffee_preparation": {
+      "type": "product-coffee-preparation",
+      "blocks": {
+        "prep_1": {
+          "type": "media",
+          "settings": {
+            "show_play": false
+          }
+        },
+        "prep_2": {
+          "type": "media",
+          "settings": {
+            "show_play": true
+          }
+        },
+        "prep_3": {
+          "type": "media",
+          "settings": {
+            "show_play": true
+          }
+        },
+        "prep_4": {
+          "type": "media",
+          "settings": {
+            "show_play": false
+          }
+        }
+      },
+      "block_order": [
+        "prep_1",
+        "prep_2",
+        "prep_3",
+        "prep_4"
+      ],
+      "settings": {
+        "heading": "Coffee Preparation",
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "description_tabs": {
+      "type": "product-description-tabs",
+      "settings": {
+        "description_label": "Description",
+        "show_reviews": true,
+        "reviews_label": "Reviews",
+        "reviews_count_fallback": 11,
+        "custom_reviews": "",
+        "show_brand": true,
+        "brand_label": "Brand",
+        "show_sku": true,
+        "sku_label": "SKU",
+        "show_category": true,
+        "category_label": "CATEGORY",
+        "background_color": "#ffffff",
+        "tab_bar_background": "#f7f7f7",
+        "accent_color": "#53c295",
+        "padding_top": 40,
+        "padding_bottom": 64,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 40
+      }
+    },
+    "store_locator": {
+      "type": "product-store-locator",
+      "blocks": {
+        "store_riyadh": {
+          "type": "store",
+          "settings": {
+            "name": "Sulalat — Al Wurood",
+            "country": "Saudi Arabia",
+            "city": "Riyadh",
+            "address": "Al Wurood, Riyadh",
+            "latitude": "24.7136",
+            "longitude": "46.6753",
+            "map_embed": ""
+          }
+        },
+        "store_jeddah": {
+          "type": "store",
+          "settings": {
+            "name": "Sulalat — Jeddah",
+            "country": "Saudi Arabia",
+            "city": "Jeddah",
+            "address": "Jeddah",
+            "latitude": "21.4858",
+            "longitude": "39.1925",
+            "map_embed": ""
+          }
+        }
+      },
+      "block_order": [
+        "store_riyadh",
+        "store_jeddah"
+      ],
+      "settings": {
+        "heading": "Where to get this product",
+        "placeholder_country": "Enter or select country",
+        "placeholder_city": "Enter or select city",
+        "placeholder_store": "Enter or select store",
+        "search_label": "Search",
+        "message_none": "No stores found for this selection.",
+        "message_select": "Select a country, city, or store to search.",
+        "default_lat": "24.7136",
+        "default_lng": "46.6753",
+        "default_zoom": 12,
+        "map_height": 480,
+        "map_height_mobile": 320,
+        "map_radius": 16,
+        "background_color": "#ffffff",
+        "accent_color": "#53c295",
+        "padding_top": 40,
+        "padding_bottom": 64,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 40
       }
     },
     "recommendations": {
@@ -110,18 +251,19 @@
       "settings": {
         "heading": "Related Products",
         "heading_align": "text-start",
-        "products_to_show": 8,
+        "products_to_show": 6,
+        "brand_media": true,
         "slides_desktop": 3,
         "slides_tablet": 2,
         "slides_mobile": 1.1,
         "slide_gap": 28,
         "transition_speed": 600,
-        "enable_loop": true,
-        "show_navigation": true,
-        "enable_autoplay": true,
+        "enable_loop": false,
+        "show_navigation": false,
+        "enable_autoplay": false,
         "autoplay_delay": 4,
         "pause_on_hover": true,
-        "background_color": "#fbf9f9",
+        "background_color": "#ffffff",
         "padding_top": 60,
         "padding_bottom": 80
       }
@@ -129,6 +271,10 @@
   },
   "order": [
     "main",
+    "taste_info",
+    "coffee_preparation",
+    "description_tabs",
+    "store_locator",
     "recommendations"
   ]
 }

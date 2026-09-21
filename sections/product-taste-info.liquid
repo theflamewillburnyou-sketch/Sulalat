@@ -1,0 +1,462 @@
+{%- liquid
+  assign taste_mf = product.metafields.custom.taste_profile
+  if taste_mf == blank
+    assign taste_mf = product.metafields.custom.taste_profile_text
+  endif
+  assign taste_text = taste_mf.value
+
+  assign flavor_mf = product.metafields.custom.flavor_notes
+  assign flavor_notes = flavor_mf.value
+  assign flavor_is_list = false
+  if flavor_mf.type contains 'list.'
+    assign flavor_is_list = true
+  endif
+
+  assign info_country = product.metafields.custom.country.value
+  assign info_process = product.metafields.custom.process.value
+  assign info_roast = product.metafields.custom.roast.value
+  assign info_altitude = product.metafields.custom.altitude.value
+  assign info_variety = product.metafields.custom.variety.value
+  assign info_sca = product.metafields.custom.sca_score.value
+
+  assign has_taste = false
+  if taste_text != blank or taste_mf != blank or flavor_notes != blank
+    assign has_taste = true
+  endif
+
+  assign has_info = false
+  if info_country != blank or info_process != blank or info_roast != blank or info_altitude != blank or info_variety != blank or info_sca != blank
+    assign has_info = true
+  endif
+-%}
+
+{%- if has_taste or has_info or request.design_mode -%}
+<section
+  class="sulalat-taste-info"
+  data-section-id="{{ section.id }}"
+  style="
+    --sti-pad-top: {{ section.settings.padding_top }}px;
+    --sti-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sti-bg: {{ section.settings.background_color }};
+    --sti-accent: {{ section.settings.accent_color }};
+    --sti-table-value-bg: {{ section.settings.table_value_bg }};
+  "
+>
+  <style>
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] {
+      padding: var(--sti-pad-top) 0 var(--sti-pad-bottom);
+      background: var(--sti-bg);
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(32px, 5vw, 72px);
+      align-items: start;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__heading {
+      margin: 0 0 16px;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__text {
+      margin: 0 0 28px;
+      max-width: 520px;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__text p {
+      margin: 0 0 10px;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px 36px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 110px;
+      text-align: center;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #f3f3f3;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__name {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #e8e8e8;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table th,
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table td {
+      padding: 16px 20px;
+      text-align: left;
+      font-size: 15px;
+      line-height: 1.4;
+      border-bottom: 1px solid #ececec;
+      vertical-align: middle;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table tr:last-child th,
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table th {
+      width: 42%;
+      font-weight: 500;
+      color: #1a1a1a;
+      background: #fff;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table td {
+      font-weight: 400;
+      color: #1a1a1a;
+      background: var(--sti-table-value-bg, #eaf8f1);
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__empty {
+      margin: 0;
+      color: #888;
+      font-size: 14px;
+    }
+
+    @media (max-width: 991px) {
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-list {
+        gap: 20px 24px;
+      }
+
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item {
+        width: 96px;
+      }
+
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media {
+        width: 80px;
+        height: 80px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="sulalat-taste-info__grid">
+      <div class="sulalat-taste-info__taste">
+        <h2 class="sulalat-taste-info__heading">{{ section.settings.taste_heading | escape }}</h2>
+
+        {%- if taste_mf != blank and taste_mf.type contains 'rich_text' -%}
+          <div class="sulalat-taste-info__text">{{ taste_mf | metafield_tag }}</div>
+        {%- elsif taste_text != blank -%}
+          <div class="sulalat-taste-info__text">{{ taste_text | newline_to_br }}</div>
+        {%- elsif request.design_mode -%}
+          <p class="sulalat-taste-info__empty">Add “Taste profile” (`custom.taste_profile`) on the product metafields.</p>
+        {%- endif -%}
+
+        {%- if flavor_notes != blank -%}
+          <ul class="sulalat-flavor-list">
+            {%- if flavor_is_list -%}
+              {%- for note in flavor_notes -%}
+                {%- liquid
+                  assign note_name = note.name.value | default: note.name | default: note.label.value | default: note.label | default: note.title.value | default: note.title
+                  assign note_image = note.image.value | default: note.image | default: note.photo.value | default: note.photo
+                -%}
+                <li class="sulalat-flavor-item">
+                  <div class="sulalat-flavor-item__media">
+                    {%- if note_image != blank -%}
+                      {{
+                        note_image
+                        | image_url: width: 240
+                        | image_tag:
+                          loading: 'lazy',
+                          widths: '96, 160, 240',
+                          sizes: '96px',
+                          alt: note_name
+                      }}
+                    {%- else -%}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {%- endif -%}
+                  </div>
+                  {%- if note_name != blank -%}
+                    <p class="sulalat-flavor-item__name">{{ note_name | escape }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            {%- else -%}
+              {%- liquid
+                assign note = flavor_notes
+                assign note_name = note.name.value | default: note.name | default: note.label.value | default: note.label | default: note.title.value | default: note.title
+                assign note_image = note.image.value | default: note.image | default: note.photo.value | default: note.photo
+              -%}
+              <li class="sulalat-flavor-item">
+                <div class="sulalat-flavor-item__media">
+                  {%- if note_image != blank -%}
+                    {{
+                      note_image
+                      | image_url: width: 240
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '96, 160, 240',
+                        sizes: '96px',
+                        alt: note_name
+                    }}
+                  {%- else -%}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+                </div>
+                {%- if note_name != blank -%}
+                  <p class="sulalat-flavor-item__name">{{ note_name | escape }}</p>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          </ul>
+        {%- elsif request.design_mode -%}
+          <p class="sulalat-taste-info__empty">Add “Flavor notes” metaobject entries on the product.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="sulalat-taste-info__info">
+        <h2 class="sulalat-taste-info__heading">{{ section.settings.info_heading | escape }}</h2>
+
+        {%- if has_info -%}
+          <table class="sulalat-info-table">
+            <tbody>
+              {%- if info_country != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_country | escape }}</th>
+                  <td>{{ info_country | escape }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if info_process != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_process | escape }}</th>
+                  <td>{{ info_process | escape }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if info_roast != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_roast | escape }}</th>
+                  <td>{{ info_roast | escape }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if info_altitude != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_altitude | escape }}</th>
+                  <td>{{ info_altitude | escape }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if info_variety != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_variety | escape }}</th>
+                  <td>{{ info_variety | escape }}</td>
+                </tr>
+              {%- endif -%}
+              {%- if info_sca != blank -%}
+                <tr>
+                  <th scope="row">{{ section.settings.label_sca | escape }}</th>
+                  <td>{{ info_sca | escape }}</td>
+                </tr>
+              {%- endif -%}
+            </tbody>
+          </table>
+        {%- elsif request.design_mode -%}
+          <p class="sulalat-taste-info__empty">Fill Country, Process, Roast, Altitude, Variety, and SCA Score on the product.</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Taste profile & info",
+  "tag": "section",
+  "class": "sulalat-taste-info-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Uses product metafields: custom.taste_profile (or taste_profile_text), flavor_notes, country, process, roast, altitude, variety, sca_score."
+    },
+    {
+      "type": "text",
+      "id": "taste_heading",
+      "label": "Taste profile heading",
+      "default": "Taste Profile"
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Information heading",
+      "default": "Information"
+    },
+    {
+      "type": "header",
+      "content": "Table labels"
+    },
+    {
+      "type": "text",
+      "id": "label_country",
+      "label": "Country label",
+      "default": "Country"
+    },
+    {
+      "type": "text",
+      "id": "label_process",
+      "label": "Process label",
+      "default": "Process"
+    },
+    {
+      "type": "text",
+      "id": "label_roast",
+      "label": "Roast label",
+      "default": "Roast"
+    },
+    {
+      "type": "text",
+      "id": "label_altitude",
+      "label": "Altitude label",
+      "default": "Altitude"
+    },
+    {
+      "type": "text",
+      "id": "label_variety",
+      "label": "Variety label",
+      "default": "Variety"
+    },
+    {
+      "type": "text",
+      "id": "label_sca",
+      "label": "SCA Score label",
+      "default": "SCA Score"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#53c295"
+    },
+    {
+      "type": "color",
+      "id": "table_value_bg",
+      "label": "Table value background",
+      "default": "#eaf8f1"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "Taste profile & info"
+    }
+  ]
+}
+{% endschema %}
