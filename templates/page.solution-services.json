@@ -14,10 +14,10 @@
       "name": "Page Banner",
       "settings": {
         "background_image": "shopify://shop_images/1466e00e1b242677f589925ad57566e3bdd8b799.png",
-        "overlay_color": "rgba(0,0,0,0.45)",
-        "subtitle": "About Us",
-        "heading": "<p>Our Journey,<br/>Our Passion.</p>",
-        "text": "<p>We're on a mission to bring world-class quality to every cup.</p>",
+        "overlay_color": "#00000073",
+        "subtitle": "",
+        "heading": "<h1>Services</h1>",
+        "text": "<p>We supply, install, and support world-class brewing equipment from leading global brands.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -50,7 +50,7 @@
             "image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef.png",
             "title": "Routine Maintenance",
             "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
-            "link": ""
+            "link": "shopify://pages/routine-maintenance"
           }
         },
         "corrective_maintenance": {
@@ -59,7 +59,7 @@
             "image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504.png",
             "title": "Corrective Maintenance",
             "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
-            "link": ""
+            "link": "shopify://pages/corrective-maintenance"
           }
         }
       },
@@ -87,7 +87,7 @@
             "image": "shopify://shop_images/b4767a81b251dc8b99cc353f0086c6132131fb49.png",
             "title": "Cupping",
             "text": "Sensory evaluation and quality control.",
-            "link": ""
+            "link": "shopify://pages/cupping"
           }
         },
         "barista": {
@@ -96,7 +96,7 @@
             "image": "shopify://shop_images/b74a5b3894f04c1dc5279102f1246adc071b8694.png",
             "title": "Barista",
             "text": "Practical brewing, espresso, and latte art mastery.",
-            "link": ""
+            "link": "shopify://pages/barista"
           }
         }
       },
