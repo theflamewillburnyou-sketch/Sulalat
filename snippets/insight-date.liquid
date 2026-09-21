@@ -1,0 +1,72 @@
+{%- comment -%}
+  Formats insight card dates.
+  English input examples: "12 April, 2020" / "12 April 2020"
+  Arabic output example: "24 أغسطس 2026"
+{%- endcomment -%}
+{%- liquid
+  assign date_raw = date_text | default: '' | strip
+  assign date_output = date_raw
+  assign date_dir = 'ltr'
+
+  assign locale_code = localization.language.iso_code | default: request.locale.iso_code | split: '-' | first | downcase
+
+  if locale_code == 'ar' and date_raw != blank
+    assign cleaned = date_raw | replace: ',', ' ' | replace: '  ', ' ' | strip
+    assign parts = cleaned | split: ' '
+    assign day_part = ''
+    assign month_part = ''
+    assign year_part = ''
+
+    if parts.size >= 3
+      assign maybe_day = parts[0] | plus: 0
+      if maybe_day > 0 or parts[0] == '0' or parts[0] == '00'
+        assign day_part = parts[0]
+        assign month_part = parts[1] | downcase
+        assign year_part = parts[2]
+      else
+        assign month_part = parts[0] | downcase
+        assign day_part = parts[1]
+        assign year_part = parts[2]
+      endif
+    endif
+
+    assign month_name = ''
+    case month_part
+      when 'january', 'jan'
+        assign month_name = 'يناير'
+      when 'february', 'feb'
+        assign month_name = 'فبراير'
+      when 'march', 'mar'
+        assign month_name = 'مارس'
+      when 'april', 'apr'
+        assign month_name = 'أبريل'
+      when 'may'
+        assign month_name = 'مايو'
+      when 'june', 'jun'
+        assign month_name = 'يونيو'
+      when 'july', 'jul'
+        assign month_name = 'يوليو'
+      when 'august', 'aug'
+        assign month_name = 'أغسطس'
+      when 'september', 'sep', 'sept'
+        assign month_name = 'سبتمبر'
+      when 'october', 'oct'
+        assign month_name = 'أكتوبر'
+      when 'november', 'nov'
+        assign month_name = 'نوفمبر'
+      when 'december', 'dec'
+        assign month_name = 'ديسمبر'
+    endcase
+
+    if month_name != blank and day_part != blank and year_part != blank
+      assign day_num = day_part | plus: 0
+      assign date_output = day_num | append: ' ' | append: month_name | append: ' ' | append: year_part
+      assign date_dir = 'rtl'
+    elsif date_raw != blank
+      assign date_dir = 'rtl'
+    endif
+  endif
+-%}
+{%- if date_output != blank -%}
+  <p class="insight-card-date" dir="{{ date_dir }}">{{ date_output | escape }}</p>
+{%- endif -%}

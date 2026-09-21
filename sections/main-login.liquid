@@ -15,6 +15,9 @@
     {%- endif -%}
 
     {%- form 'customer_login', class: 'form form-width mx-auto', novalidate: 'novalidate' -%}
+      <input type="hidden" name="redirect_to" value="/pages/dashboard">
+      <input type="hidden" name="return_to" value="/pages/dashboard">
+      <input type="hidden" name="checkout_url" value="/pages/dashboard">
       {%- if form.errors -%}
         <div class="alert mb-8 bg-error-bg text-error-text" tabindex="-1" autofocus>
           {{ form.errors | default_errors }}

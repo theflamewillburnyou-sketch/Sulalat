@@ -1,0 +1,135 @@
+{%- comment -%}
+  Tracks Wish Keeper / wishlist heart clicks into shared localStorage
+  used by the dashboard My Wishlist tab and /pages/wishlist.
+{%- endcomment -%}
+<script>
+  (function () {
+    var customerId = {% if customer %}{{ customer.id | json }}{% else %}null{% endif %};
+    var storageKey = 'sulalat_wishlist_v2_' + (customerId != null ? String(customerId) : 'guest');
+
+    function readList() {
+      try {
+        var raw = window.localStorage.getItem(storageKey);
+        var parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed.map(String) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function writeList(ids) {
+      var seen = {};
+      var out = [];
+      (ids || []).forEach(function (id) {
+        var key = String(id);
+        if (!key || seen[key]) return;
+        seen[key] = true;
+        out.push(key);
+      });
+      try {
+        window.localStorage.setItem(storageKey, JSON.stringify(out));
+      } catch (e) {}
+      return out;
+    }
+
+    function findProductIdNear(el) {
+      var node = el;
+      while (node && node !== document.body) {
+        if (!node.getAttribute) {
+          node = node.parentElement;
+          continue;
+        }
+
+        var attrs = [
+          'data-product-id',
+          'data-productid',
+          'data-id',
+          'data-product',
+          'data-wishlist-product-id',
+          'data-wk-product-id',
+          'data-hiko-product-id'
+        ];
+        for (var i = 0; i < attrs.length; i++) {
+          var val = node.getAttribute(attrs[i]);
+          if (val && /^\d+$/.test(String(val))) return String(val);
+        }
+
+        var handle =
+          node.getAttribute('data-product-handle') ||
+          node.getAttribute('data-handle') ||
+          node.getAttribute('data-wk-handle');
+        if (handle) {
+          var byHandle = document.querySelector(
+            '[data-product-handle="' + handle + '"][data-product-id], [data-handle="' + handle + '"][data-product-id]'
+          );
+          if (byHandle && byHandle.getAttribute('data-product-id')) {
+            return String(byHandle.getAttribute('data-product-id'));
+          }
+        }
+
+        var link = node.matches && node.matches('a[href*="/products/"]')
+          ? node
+          : node.querySelector && node.querySelector('a[href*="/products/"]');
+        if (link) {
+          var match = String(link.getAttribute('href') || '').match(/\/products\/([^\/\?#]+)/);
+          if (match && window.meta && window.meta.product && window.meta.product.handle === match[1] && window.meta.product.id) {
+            return String(window.meta.product.id);
+          }
+        }
+
+        node = node.parentElement;
+      }
+
+      if (window.meta && window.meta.product && window.meta.product.id) {
+        return String(window.meta.product.id);
+      }
+      return null;
+    }
+
+    function isWishlistTrigger(el) {
+      if (!el || !el.closest) return null;
+      return el.closest(
+        [
+          '[class*="wish"]',
+          '[class*="Wish"]',
+          '[class*="keeper"]',
+          '[class*="Keeper"]',
+          '[class*="hiko"]',
+          '[class*="Hiko"]',
+          '[id*="wish"]',
+          '[id*="Wish"]',
+          '[aria-label*="wish"]',
+          '[aria-label*="Wish"]',
+          '[aria-label*="favorite"]',
+          '[aria-label*="Favorite"]',
+          '[data-wishlist]',
+          '[data-wish-keeper]',
+          '[data-wk-wishlist]',
+          '[data-action*="wish"]',
+          'button[name*="wish"]'
+        ].join(', ')
+      );
+    }
+
+    document.addEventListener(
+      'click',
+      function (event) {
+        var trigger = isWishlistTrigger(event.target);
+        if (!trigger) return;
+        var productId = findProductIdNear(trigger);
+        if (!productId) return;
+        setTimeout(function () {
+          var list = readList();
+          var idx = list.indexOf(productId);
+          if (idx === -1) list.push(productId);
+          else list.splice(idx, 1);
+          writeList(list);
+          document.dispatchEvent(
+            new CustomEvent('sulalat:wishlist:updated', { detail: { ids: list } })
+          );
+        }, 300);
+      },
+      true
+    );
+  })();
+</script>

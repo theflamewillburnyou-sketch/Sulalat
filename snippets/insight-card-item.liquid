@@ -108,7 +108,7 @@
       <div class="insight-card-meta">
         <span class="insight-card-accent" aria-hidden="true"></span>
         {% if block.settings.date != blank %}
-          <p class="insight-card-date">{{ block.settings.date | escape }}</p>
+          {% render 'insight-date', date_text: block.settings.date %}
         {% endif %}
       </div>
       {% if block.settings.title != blank %}

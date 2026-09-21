@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "wishlist_page": {
+      "type": "wishlist-page",
+      "blocks": {
+        "wishlistsuite_wishlist_list_block_R4f9jR": {
+          "type": "shopify://apps/wishlistsuite/blocks/wishlist-list-block/c2905ea4-a4c7-46db-b02a-fc294afa02e5",
+          "settings": {
+            "collection_url": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": [
+        "wishlistsuite_wishlist_list_block_R4f9jR"
+      ],
+      "settings": {
+        "heading": "My Wishlist",
+        "subtitle": "Save your favorite products for later",
+        "setup_text": "Add the WishlistSuite wishlist block here in the theme editor (Add block → Apps → WishlistSuite).",
+        "padding_top": 48,
+        "padding_bottom": 80,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "wishlist_page"
+  ]
+}

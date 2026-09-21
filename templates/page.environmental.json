@@ -1,0 +1,156 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/2caf8bf6ec05dbc0dd21dd243bbb93a20111d9d0.jpg",
+        "overlay_color": "#00000073",
+        "subtitle": "",
+        "heading": "<p>Environmental</p>",
+        "text": "<p>Protecting natural resources through responsible sourcing, production, and everyday practice.</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "initiative_story": {
+      "type": "initiatives-intro",
+      "settings": {
+        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "heading": "Responsibility rooted in every step",
+        "subheading": "",
+        "text": "<p>Our Environmental initiative guides how we source, produce, and operate - with a focus on reducing impact and protecting the ecosystems we depend on.</p><p>From packaging choices to production practices, we work toward a cleaner, more responsible specialty coffee future.</p>",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 48,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "initiative_objectives": {
+      "type": "initiative-objectives",
+      "blocks": {
+        "objective_1": {
+          "type": "objective",
+          "settings": {
+            "text": "Reduce carbon emissions across operations by year 2028"
+          }
+        },
+        "objective_2": {
+          "type": "objective",
+          "settings": {
+            "text": "Achieve zero waste to landfill in manufacturing units by 2026"
+          }
+        },
+        "objective_3": {
+          "type": "objective",
+          "settings": {
+            "text": "Source packaging from recyclable or compostable materials"
+          }
+        },
+        "objective_4": {
+          "type": "objective",
+          "settings": {
+            "text": "Partner with farms that meet verified sustainability standards"
+          }
+        },
+        "objective_5": {
+          "type": "objective",
+          "settings": {
+            "text": "Increase renewable energy use across production facilities"
+          }
+        },
+        "objective_6": {
+          "type": "objective",
+          "settings": {
+            "text": "Improve water and resource efficiency in daily operations"
+          }
+        },
+        "objective_7": {
+          "type": "objective",
+          "settings": {
+            "text": "Publish annual environmental progress reports"
+          }
+        },
+        "objective_8": {
+          "type": "objective",
+          "settings": {
+            "text": "Support projects that protect local ecosystems"
+          }
+        }
+      },
+      "block_order": [
+        "objective_1",
+        "objective_2",
+        "objective_3",
+        "objective_4",
+        "objective_5",
+        "objective_6",
+        "objective_7",
+        "objective_8"
+      ],
+      "settings": {
+        "background_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b.jpg",
+        "overlay_color": "#00000099",
+        "panel_bg": "#1a1a1acc",
+        "fallback_bg": "#1a1a1a",
+        "bullet_color": "#53c295",
+        "heading": "Key Objectives & Targets",
+        "min_height": 560,
+        "min_height_mobile": 420,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "initiative_register": {
+      "type": "initiative-register",
+      "settings": {
+        "heading": "Be Part of the Change",
+        "text": "Stay connected with Sulalat's environmental initiatives and progress.",
+        "image": "shopify://shop_images/image_408.png",
+        "name_placeholder": "Full Name*",
+        "email_placeholder": "Email Address*",
+        "phone_placeholder": "Contact Number*",
+        "city_placeholder": "City*",
+        "button_label": "Register",
+        "success_message": "Thank you. We have received your registration.",
+        "agree_prefix": "By creating an account means you agree to our",
+        "terms_label": "Terms and Conditions",
+        "agree_middle": "and our",
+        "privacy_label": "Privacy Policy",
+        "terms_link": "",
+        "privacy_link": "",
+        "background_color": "#ffffff",
+        "form_bg": "#eaf8f1",
+        "button_bg": "#53c295",
+        "button_text": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 96,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 64
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "initiative_story",
+    "initiative_objectives",
+    "initiative_register"
+  ]
+}

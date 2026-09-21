@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "overlay_color": "#00000073",
+        "subtitle": "",
+        "heading": "<h1>Beyond the Product </h1>",
+        "text": "<p>Discover how we invest in the farmers, cafés, and communities that make the specialty sector what it is today.</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "initiatives_intro": {
+      "type": "initiatives-intro",
+      "settings": {
+        "image": "shopify://shop_images/a198dd2949b06cc46afd8b1b100f0f2ce75aadd7.png",
+        "heading": "A Story of Hearts Before Headlines",
+        "subheading": "Sustainability is an act of gratitude.",
+        "text": "<p>Our direct relationships and auction participation support farmers who prioritize quality, transparency, and ethical practice. The care behind our products also guides how we build partnerships, contribute to communities, and create long-term value throughout our ecosystem.</p>",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 40,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 24
+      }
+    },
+    "initiatives_grid": {
+      "type": "initiatives-grid",
+      "blocks": {
+        "initiative_1": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Support Farmers Directly",
+            "subtitle": "Long-term sourcing relationships that prioritize fair practices, transparency, and shared standards",
+            "link": "shopify://pages/green-future-initiatives"
+          }
+        },
+        "initiative_2": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Compete for Quality, Globally",
+            "subtitle": "International coffee auctions to secure the finest auction-grade crops available",
+            "link": "shopify://pages/chocolate"
+          }
+        },
+        "initiative_3": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Educate the Next Generation",
+            "subtitle": "Barista training, professional development programs, and World Competitions Educational Program (WCEP)",
+            "link": "shopify://pages/bakery-gelato"
+          }
+        },
+        "initiative_4": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Grow the Specialty Coffee Sector",
+            "subtitle": "Championships, sponsorships, and industry events to grow specialty infrastructure and culture ",
+            "link": "shopify://pages/cafe-consultancy"
+          }
+        },
+        "initiative_5": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Grow with the Kingdom ",
+            "subtitle": "Local employment, specialty sector development, and a commitment to quality of life",
+            "link": "shopify://pages/community-empowering"
+          }
+        },
+        "initiative_6": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Reach People at Home",
+            "subtitle": "Retail partnerships, equipment distribution, and educational content for home baristas",
+            "link": "shopify://pages/wellbeing-growth"
+          }
+        },
+        "initiative_7": {
+          "type": "initiative",
+          "settings": {
+            "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
+            "title": "Share the Story, Everywhere",
+            "subtitle": "Sharing the culture, craft, and stories behind what we make to extend the conversation about specialty",
+            "link": "shopify://pages/environmental"
+          }
+        }
+      },
+      "block_order": [
+        "initiative_1",
+        "initiative_2",
+        "initiative_3",
+        "initiative_4",
+        "initiative_5",
+        "initiative_6",
+        "initiative_7"
+      ],
+      "settings": {
+        "heading": "Our Initiatives",
+        "text": "<p>‘Quality of Life’ has been at the heart of our work since the beginning, and today we continue this commitment in line with the goals of Saudi Vision 2030. We are dedicated to creating distinctive experiences and leaving a positive impact on our partners and the communities they serve.</p>",
+        "columns": 4,
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 96,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 64
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "initiatives_intro",
+    "initiatives_grid"
+  ]
+}

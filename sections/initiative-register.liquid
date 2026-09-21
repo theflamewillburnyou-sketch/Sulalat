@@ -1,0 +1,452 @@
+{%- assign form_id = 'InitiativeRegister-' | append: section.id -%}
+{%- assign privacy_url = section.settings.privacy_link | default: shop.privacy_policy.url -%}
+{%- assign terms_url = section.settings.terms_link | default: shop.terms_of_service.url -%}
+
+<section class="initiative-register" data-section-id="{{ section.id }}">
+  <style>
+    .initiative-register[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: stretch;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form-wrap {
+      background: {{ section.settings.form_bg }};
+      border-radius: 16px;
+      padding: clamp(28px, 4vw, 44px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__heading {
+      margin: 0 0 12px;
+      color: #1a1a1a;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__text {
+      margin: 0 0 28px;
+      color: var(--brand-body-text, #535353);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input {
+      width: 100%;
+      height: 52px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 15px;
+      font-family: inherit;
+      box-shadow: none;
+      outline: none;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input::placeholder {
+      color: #9a9a9a;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input:focus {
+      box-shadow: 0 0 0 2px {{ section.settings.button_bg }};
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 4px 0 6px;
+      color: var(--brand-body-text, #535353);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree input {
+      margin-top: 3px;
+      flex-shrink: 0;
+      accent-color: {{ section.settings.button_bg }};
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 28px;
+      border: 0;
+      border-radius: 10px;
+      background: {{ section.settings.button_bg }};
+      color: {{ section.settings.button_text }};
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit:hover {
+      opacity: 0.9;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status {
+      margin: 0 0 8px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status--success {
+      color: {{ section.settings.button_bg }};
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status--error {
+      color: #c0392b;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media {
+      border-radius: 16px;
+      overflow: hidden;
+      background: #f3f3f3;
+      min-height: 100%;
+      aspect-ratio: 4 / 5;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media img,
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 991px) {
+      .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__layout {
+        grid-template-columns: 1fr;
+      }
+
+      .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media {
+        aspect-ratio: 16 / 11;
+        min-height: 0;
+        order: -1;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .initiative-register[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form-wrap,
+      .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media {
+        border-radius: 12px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="initiative-register__layout">
+      <div class="initiative-register__form-wrap">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="initiative-register__heading">{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="initiative-register__text">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+
+        {% form 'contact', id: form_id, class: 'initiative-register__form' %}
+          {%- if form.posted_successfully? -%}
+            <p class="initiative-register__status initiative-register__status--success">
+              {{ section.settings.success_message | escape }}
+            </p>
+          {%- elsif form.errors -%}
+            <p class="initiative-register__status initiative-register__status--error">
+              {{ form.errors | default_errors }}
+            </p>
+          {%- endif -%}
+
+          <input type="hidden" name="contact[Initiative]" value="{{ page.title | default: 'Initiative' | escape }}">
+
+          <input
+            class="input"
+            type="text"
+            name="contact[Full name]"
+            placeholder="{{ section.settings.name_placeholder | escape }}"
+            required
+            autocomplete="name"
+          >
+          <input
+            class="input"
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.email_placeholder | escape }}"
+            required
+            autocomplete="email"
+          >
+          <input
+            class="input"
+            type="tel"
+            name="contact[Contact number]"
+            placeholder="{{ section.settings.phone_placeholder | escape }}"
+            required
+            autocomplete="tel"
+          >
+          <input
+            class="input"
+            type="text"
+            name="contact[City]"
+            placeholder="{{ section.settings.city_placeholder | escape }}"
+            required
+            autocomplete="address-level2"
+          >
+
+          <label class="initiative-register__agree">
+            <input type="checkbox" name="contact[Agreed to terms]" value="Yes" required>
+            <span>
+              {{ section.settings.agree_prefix | escape }}
+              {%- if terms_url != blank -%}
+                <a href="{{ terms_url }}">{{ section.settings.terms_label | escape }}</a>
+              {%- else -%}
+                {{ section.settings.terms_label | escape }}
+              {%- endif -%}
+              {{ section.settings.agree_middle | escape }}
+              {%- if privacy_url != blank -%}
+                <a href="{{ privacy_url }}">{{ section.settings.privacy_label | escape }}</a>
+              {%- else -%}
+                {{ section.settings.privacy_label | escape }}
+              {%- endif -%}
+              .
+            </span>
+          </label>
+
+          <button type="submit" class="initiative-register__submit">
+            {{ section.settings.button_label | escape }}
+          </button>
+        {% endform %}
+      </div>
+
+      <div class="initiative-register__media">
+        {%- if section.settings.image != blank -%}
+          {%- assign register_alt = section.settings.image.alt | default: section.settings.heading -%}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              loading: 'lazy',
+              widths: '400, 700, 1000, 1400',
+              sizes: '(min-width: 992px) 45vw, 100vw',
+              alt: register_alt
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Initiative register",
+  "tag": "section",
+  "class": "initiative-register-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Be Part of the Change"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Stay connected with Sulalat’s sustainability journey and upcoming initiatives."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "name_placeholder",
+      "label": "Name placeholder",
+      "default": "Full Name*"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Email Address*"
+    },
+    {
+      "type": "text",
+      "id": "phone_placeholder",
+      "label": "Phone placeholder",
+      "default": "Contact Number*"
+    },
+    {
+      "type": "text",
+      "id": "city_placeholder",
+      "label": "City placeholder",
+      "default": "City*"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Register"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you. We have received your registration."
+    },
+    {
+      "type": "text",
+      "id": "agree_prefix",
+      "label": "Agreement prefix",
+      "default": "By creating an account means you agree to our"
+    },
+    {
+      "type": "text",
+      "id": "terms_label",
+      "label": "Terms label",
+      "default": "Terms and Conditions"
+    },
+    {
+      "type": "text",
+      "id": "agree_middle",
+      "label": "Agreement middle",
+      "default": " and our "
+    },
+    {
+      "type": "text",
+      "id": "privacy_label",
+      "label": "Privacy label",
+      "default": "Privacy Policy"
+    },
+    {
+      "type": "url",
+      "id": "terms_link",
+      "label": "Terms link"
+    },
+    {
+      "type": "url",
+      "id": "privacy_link",
+      "label": "Privacy link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "form_bg",
+      "label": "Form panel background",
+      "default": "#eaf8f1"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Button background",
+      "default": "#53c295"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Initiative register"
+    }
+  ]
+}
+{% endschema %}

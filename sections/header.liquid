@@ -28,7 +28,7 @@
   endif
 
   assign is_product_header = false
-  if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'article' or request.page_type == 'blog'
+  if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'article' or request.page_type == 'blog' or template.suffix == 'dashboard' or template.suffix == 'dashboard-orders' or template.suffix == 'wishlist'
     assign is_product_header = true
   endif
 -%}
@@ -653,12 +653,12 @@
           </shopify-account>
         {%- else -%}
           {%- if customer -%}
-            <a class="header__icon" href="{{ routes.account_url }}">
+            <a class="header__icon" href="/pages/dashboard">
               {% render 'icon-customer' %}
               <span class="visually-hidden">{{ 'sections.header.account' | t }}</span>
             </a>
           {%- else -%}
-            <a class="header__icon" href="{{ routes.account_login_url }}">
+            <a class="header__icon" href="/customer_authentication/login?return_to={{ '/pages/dashboard' | url_encode }}">
               {% render 'icon-customer' %}
               <span class="visually-hidden">{{ 'sections.header.log_in' | t }}</span>
             </a>

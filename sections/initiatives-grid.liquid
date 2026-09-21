@@ -1,0 +1,335 @@
+<section class="initiatives-grid" data-section-id="{{ section.id }}">
+  <style>
+    .initiatives-grid[data-section-id="{{ section.id }}"] {
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      background: {{ section.settings.background_color }};
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro {
+      max-width: 820px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro h2 {
+      margin: 0 0 18px;
+      color: #1a1a1a;
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.2;
+      font-weight: 400;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro p,
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro .rte {
+      margin: 0;
+      color: var(--brand-body-text, #535353);
+      font-size: 16px;
+      line-height: 26px;
+      letter-spacing: -0.01em;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro .rte p {
+      margin: 0 0 10px;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro .rte p:last-child {
+      margin-bottom: 0;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list {
+      display: grid;
+      grid-template-columns: repeat({{ section.settings.columns }}, minmax(0, 1fr));
+      gap: 36px 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media {
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f3f3f3;
+      aspect-ratio: 16 / 11;
+      margin-bottom: 16px;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media img,
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.45s ease;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card:hover .initiative-card__media img {
+      transform: scale(1.04);
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__title {
+      margin: 0 0 6px;
+      color: #1a1a1a;
+      font-size: clamp(18px, 1.5vw, 22px);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__subtitle {
+      margin: 0;
+      color: var(--brand-body-text, #6b6b6b);
+      font-size: 15px;
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+    @media (max-width: 991px) {
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro {
+        margin-bottom: 40px;
+      }
+
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px 20px;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .initiatives-grid[data-section-id="{{ section.id }}"] {
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media {
+        border-radius: 12px;
+      }
+    }
+  </style>
+
+  <div class="container">
+    {%- if section.settings.heading != blank or section.settings.text != blank -%}
+      <div class="initiatives-grid__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2>{{ section.settings.heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <div class="rte">{{ section.settings.text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <ul class="initiatives-grid__list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a class="initiative-card" href="{{ block.settings.link }}">
+            {%- else -%}
+              <div class="initiative-card">
+            {%- endif -%}
+              <div class="initiative-card__media">
+                {%- if block.settings.image != blank -%}
+                  {%- assign card_alt = block.settings.image.alt | default: block.settings.title -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 900
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '320, 480, 640, 900',
+                      sizes: '(min-width: 992px) 22vw, (min-width: 750px) 45vw, 100vw',
+                      alt: card_alt
+                  }}
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </div>
+              {%- if block.settings.title != blank -%}
+                <h3 class="initiative-card__title">{{ block.settings.title | escape }}</h3>
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="initiative-card__subtitle">{{ block.settings.subtitle | escape }}</p>
+              {%- endif -%}
+            {%- if block.settings.link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Initiatives grid",
+  "tag": "section",
+  "class": "initiatives-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Sulalat’s Initiatives"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Our Main Stream ecosystem brings together specialty coffee, craft chocolate, artisan gelato, and café operations under one dedicated partnership.</p>"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns (desktop)",
+      "default": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "initiative",
+      "name": "Initiative",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Green Future"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "World-Class Specialty Coffee"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Initiatives grid",
+      "blocks": [
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Green Future",
+            "subtitle": "World-Class Specialty Coffee"
+          }
+        },
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Community Empowering",
+            "subtitle": "Premium Equipment & Tools"
+          }
+        },
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Wellbeing & Growth",
+            "subtitle": "World-Class Specialty Coffee"
+          }
+        },
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Environmental",
+            "subtitle": "Premium Equipment & Tools"
+          }
+        },
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Academy",
+            "subtitle": "World-Class Specialty Coffee"
+          }
+        },
+        {
+          "type": "initiative",
+          "settings": {
+            "title": "Green Future",
+            "subtitle": "Premium Equipment & Tools"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

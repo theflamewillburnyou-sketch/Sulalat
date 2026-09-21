@@ -1,0 +1,285 @@
+<section class="initiative-objectives" data-section-id="{{ section.id }}">
+  <style>
+    .initiative-objectives[data-section-id="{{ section.id }}"] {
+      position: relative;
+      overflow: hidden;
+      min-height: {{ section.settings.min_height }}px;
+      display: flex;
+      align-items: center;
+      padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      font-family: var(--body-font-family);
+      color: #fff;
+      background: {{ section.settings.fallback_bg }};
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__bg img,
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__bg svg.placeholder-svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__shade {
+      position: absolute;
+      inset: 0;
+      background: {{ section.settings.overlay_color }};
+      pointer-events: none;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__panel {
+      max-width: 560px;
+      padding: clamp(28px, 4vw, 40px);
+      border-radius: 16px;
+      background: {{ section.settings.panel_bg }};
+      backdrop-filter: blur(6px);
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__heading {
+      margin: 0 0 22px;
+      color: #fff;
+      font-size: clamp(26px, 2.8vw, 36px);
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li {
+      position: relative;
+      padding-left: 26px;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.45em;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: {{ section.settings.bullet_color }};
+    }
+
+    @media (max-width: 749px) {
+      .initiative-objectives[data-section-id="{{ section.id }}"] {
+        min-height: {{ section.settings.min_height_mobile }}px;
+        padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+
+      .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__panel {
+        max-width: none;
+        border-radius: 12px;
+      }
+    }
+  </style>
+
+  <div class="initiative-objectives__bg" aria-hidden="true">
+    {%- if section.settings.background_image != blank -%}
+      {{
+        section.settings.background_image
+        | image_url: width: 2400
+        | image_tag:
+          loading: 'lazy',
+          widths: '800, 1200, 1600, 2000, 2400',
+          sizes: '100vw',
+          alt: ''
+      }}
+    {%- else -%}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- endif -%}
+  </div>
+  <div class="initiative-objectives__shade" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="initiative-objectives__panel">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="initiative-objectives__heading">{{ section.settings.heading | escape }}</h2>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="initiative-objectives__list">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.text != blank -%}
+              <li {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Initiative objectives",
+  "tag": "section",
+  "class": "initiative-objectives-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#00000099"
+    },
+    {
+      "type": "color",
+      "id": "panel_bg",
+      "label": "Panel background",
+      "default": "#1a1a1acc"
+    },
+    {
+      "type": "color",
+      "id": "fallback_bg",
+      "label": "Fallback background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "bullet_color",
+      "label": "Bullet color",
+      "default": "#53c295"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Key Objectives & Targets"
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "min": 360,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "label": "Minimum height",
+      "default": 560
+    },
+    {
+      "type": "range",
+      "id": "min_height_mobile",
+      "min": 280,
+      "max": 700,
+      "step": 10,
+      "unit": "px",
+      "label": "Minimum height (mobile)",
+      "default": 420
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 24,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 24,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "objective",
+      "name": "Objective",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Reduce carbon emissions by 10% across operations by year 2028"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Initiative objectives",
+      "blocks": [
+        {
+          "type": "objective",
+          "settings": {
+            "text": "Reduce carbon emissions by 10% across operations by year 2028"
+          }
+        },
+        {
+          "type": "objective",
+          "settings": {
+            "text": "Achieve zero waste to landfill in our manufacturing units by year 2026"
+          }
+        },
+        {
+          "type": "objective",
+          "settings": {
+            "text": "Source 80% of packaging from recyclable or compostable materials by 2027"
+          }
+        },
+        {
+          "type": "objective",
+          "settings": {
+            "text": "Partner with farms that meet verified sustainability standards"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

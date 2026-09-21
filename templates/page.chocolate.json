@@ -1,0 +1,135 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "page_banner": {
+      "type": "page-banner",
+      "settings": {
+        "background_image": "shopify://shop_images/82cfc73d1cb5398dab1f8212ae6567e3cbafffcd.png",
+        "overlay_color": "#00000073",
+        "subtitle": "",
+        "heading": "<p>Chocolate</p>",
+        "text": "<p>Bean-to-Bar Perfection</p>",
+        "min_height": 650,
+        "min_height_mobile": 480,
+        "padding_top": 120,
+        "padding_bottom": 90,
+        "heading_size": 65,
+        "heading_line_height": 70,
+        "heading_size_mobile": 40,
+        "heading_line_height_mobile": 44
+      }
+    },
+    "initiative_story": {
+      "type": "initiatives-intro",
+      "settings": {
+        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "heading": "Where craftsmanship meets cacao",
+        "subheading": "",
+        "text": "<p>At Sulalat, chocolate-making is both an art and a science. Every batch begins with carefully selected cacao beans, responsibly sourced from trusted origins. Our bean-to-bar process allows complete control over flavor, texture, and quality — ensuring excellence at every stage.</p><p>We combine modern techniques with deep respect for traditional chocolate craftsmanship to create products that meet the expectations of chefs, bakers, and chocolate lovers alike.</p>",
+        "background_color": "#ffffff",
+        "padding_top": 80,
+        "padding_bottom": 48,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 28
+      }
+    },
+    "initiative_objectives": {
+      "type": "initiative-objectives",
+      "blocks": {
+        "objective_1": {
+          "type": "objective",
+          "settings": {
+            "text": "Ensure full bean-to-bar production control to maintain premium quality standards."
+          }
+        },
+        "objective_2": {
+          "type": "objective",
+          "settings": {
+            "text": "Source ethically produced and sustainable cacao from certified suppliers."
+          }
+        },
+        "objective_3": {
+          "type": "objective",
+          "settings": {
+            "text": "Reduce environmental impact through efficient production and responsible packaging."
+          }
+        },
+        "objective_4": {
+          "type": "objective",
+          "settings": {
+            "text": "Maintain consistent flavor profiles tailored for professional and retail use."
+          }
+        },
+        "objective_5": {
+          "type": "objective",
+          "settings": {
+            "text": "Innovate continuously to meet evolving culinary and consumer needs."
+          }
+        }
+      },
+      "block_order": [
+        "objective_1",
+        "objective_2",
+        "objective_3",
+        "objective_4",
+        "objective_5"
+      ],
+      "settings": {
+        "background_image": "shopify://shop_images/4fc0a709ecba78922c1cb56fa50b53ec4afe18f3.png",
+        "overlay_color": "#00000099",
+        "panel_bg": "#1a1a1acc",
+        "fallback_bg": "#1a1a1a",
+        "bullet_color": "#53c295",
+        "heading": "Key Objectives & Targets",
+        "min_height": 560,
+        "min_height_mobile": 420,
+        "padding_top": 80,
+        "padding_bottom": 80,
+        "padding_top_mobile": 48,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "initiative_register": {
+      "type": "initiative-register",
+      "settings": {
+        "heading": "Be Part of the Change",
+        "text": "Register below to stay connected with Sulalat’s sustainability initiatives, product innovations, and industry insights. Together, we can shape a more responsible and flavorful future.",
+        "image": "shopify://shop_images/7a1dfbf1d34a6165ca3f8b44873f6384df6f7082.png",
+        "name_placeholder": "Full Name*",
+        "email_placeholder": "Email Address*",
+        "phone_placeholder": "Contact Number*",
+        "city_placeholder": "City*",
+        "button_label": "Register",
+        "success_message": "Thank you. We have received your registration.",
+        "agree_prefix": "By creating an account means you agree to our",
+        "terms_label": "Terms and Conditions",
+        "agree_middle": "and our",
+        "privacy_label": "Privacy Policy",
+        "terms_link": "",
+        "privacy_link": "",
+        "background_color": "#ffffff",
+        "form_bg": "#eaf8f1",
+        "button_bg": "#53c295",
+        "button_text": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 96,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 64
+      }
+    }
+  },
+  "order": [
+    "page_banner",
+    "initiative_story",
+    "initiative_objectives",
+    "initiative_register"
+  ]
+}
