@@ -5,7 +5,7 @@
   - collection (optional)
   - color_index (optional)
   - section_id
-  - brand_media (optional) — colored panel + icon instead of product photo
+  - details_label (optional) — primary CTA text, default "View Details"
 {%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
@@ -53,6 +53,7 @@
 
   assign form_id = 'SulalatCard-' | append: section_id | append: '-' | append: product.id
   assign image_alt = product.featured_media.alt | default: product.title
+  assign details_btn_label = details_label | default: 'View Details'
 -%}
 
 <article class="sulalat-product-card sulalat-product-card--{{ card_tone }}" data-product-id="{{ product.id }}">
@@ -119,7 +120,7 @@
     </p>
 
     <div class="sulalat-product-card__actions">
-      <a class="sulalat-btn sulalat-btn--primary" href="{{ product_url }}">View Details</a>
+      <a class="sulalat-btn sulalat-btn--primary" href="{{ product_url }}">{{ details_btn_label | escape }}</a>
 
       {%- if product.has_only_default_variant and current_variant.available -%}
         {% form 'product', product, id: form_id, class: 'sulalat-product-card__form' %}

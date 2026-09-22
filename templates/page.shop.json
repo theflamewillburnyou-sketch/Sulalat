@@ -14,9 +14,9 @@
       "settings": {
         "background_image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3_a45960ee-d11f-4531-b52c-60962eec458c.png",
         "overlay_color": "#00000073",
-        "subtitle": "",
-        "heading": "<p>Shop</p>",
-        "text": "<p>Explore specialty coffee, equipment, and essentials crafted for hospitality partners.</p>",
+        "subtitle": "Shop",
+        "heading": "<h1>Discover Our Collection</h1>",
+        "text": "<p>Explore specialty coffee, craft chocolate, artisan gelato, equipment, and accessories for café-quality coffee and hospitality experiences at home. </p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -34,7 +34,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
-            "title": "Coffee",
+            "title": "Specialty Coffee",
             "link": ""
           }
         },
@@ -42,7 +42,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3_a45960ee-d11f-4531-b52c-60962eec458c.png",
-            "title": "Chocolate",
+            "title": "Craft Chocolate",
             "link": ""
           }
         },
@@ -50,7 +50,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-3.png",
-            "title": "Capsules",
+            "title": "Artisan Gelato",
             "link": ""
           }
         },
@@ -58,7 +58,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-4.png",
-            "title": "Brewing Gear",
+            "title": "Tools & Equipment",
             "link": ""
           }
         },
@@ -66,7 +66,7 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/4ccf726f89ed8abc65b03363f0be91cf3519b7fd.png",
-            "title": "Spare Parts",
+            "title": "Spare Essentials",
             "link": ""
           }
         }
@@ -94,13 +94,13 @@
         "products_to_show": 6,
         "banner_image": "shopify://shop_images/503f4c4106f4976812b99f3f15ff5a4db46bc773.jpg",
         "banner_heading": "Specialty Coffee",
-        "banner_button_label": "Discover More",
+        "banner_button_label": "Explore Coffee Crops",
         "banner_button_link": "",
         "banner_overlay": "#00000066",
         "banner_height": 340,
         "banner_height_mobile": 240,
-        "heading": "Specialty Coffee",
-        "view_products_label": "View Products",
+        "heading": "Our Coffee Portfolio",
+        "view_products_label": "View All Products",
         "view_products_link": "",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",
@@ -116,14 +116,14 @@
         "collection": "brewing-tools",
         "products_to_show": 6,
         "banner_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b_1.jpg",
-        "banner_heading": "Brewing Tools",
-        "banner_button_label": "Discover More",
+        "banner_heading": "Equipment for Cafés & Roasteries ",
+        "banner_button_label": "Explore Equipment",
         "banner_button_link": "",
         "banner_overlay": "#00000066",
         "banner_height": 340,
         "banner_height_mobile": 240,
-        "heading": "Brewing Tools",
-        "view_products_label": "View Products",
+        "heading": "Professional Tools & Equipment",
+        "view_products_label": "View All Tools",
         "view_products_link": "",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",
@@ -139,14 +139,14 @@
         "collection": "specialty-coffee-specialty-coffee-blends",
         "products_to_show": 6,
         "banner_image": "shopify://shop_images/288fafea62090ec19723df6084eb918683136c13.jpg",
-        "banner_heading": "Chocolate",
-        "banner_button_label": "Discover More",
+        "banner_heading": "Service & Replacement Parts",
+        "banner_button_label": "Explore Spare Parts",
         "banner_button_link": "",
         "banner_overlay": "#00000066",
         "banner_height": 340,
         "banner_height_mobile": 240,
-        "heading": "Chocolate",
-        "view_products_label": "View Products",
+        "heading": "Find Spare Essentials",
+        "view_products_label": "View Spare Parts",
         "view_products_link": "",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",

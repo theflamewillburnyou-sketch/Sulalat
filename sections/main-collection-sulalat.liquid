@@ -483,7 +483,8 @@
                       product: item,
                       collection: item.collections.first,
                       color_index: forloop.index0,
-                      section_id: section.id
+                      section_id: section.id,
+                      details_label: 'View Product'
                     %}
                   </li>
                 {% endif %}
@@ -542,7 +543,8 @@
                     product: product,
                     collection: collection,
                     color_index: forloop.index0,
-                    section_id: section.id
+                    section_id: section.id,
+                    details_label: 'View Product'
                   %}
                 </li>
               {% endfor %}
@@ -981,7 +983,7 @@
       "type": "text",
       "id": "load_more_label",
       "label": "Load more label",
-      "default": "Load More"
+      "default": "Browse more"
     },
     {
       "type": "range",
