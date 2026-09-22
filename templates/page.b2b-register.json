@@ -1,0 +1,86 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "b2b-register",
+      "disabled": true,
+      "settings": {
+        "company_tag": "b2b",
+        "personal_tag": "personal",
+        "heading": "Create Your Account",
+        "subtitle": "It's free and easy",
+        "company_label": "Company Account",
+        "personal_label": "Personal Account",
+        "placeholder_company": "Company Name",
+        "placeholder_brand": "Brand Name",
+        "placeholder_cr": "CR Number",
+        "placeholder_vat": "VAT Number",
+        "placeholder_region": "Region",
+        "placeholder_city": "City",
+        "placeholder_first_name": "First Name",
+        "placeholder_last_name": "Last Name",
+        "placeholder_email": "E-mail Address",
+        "placeholder_phone": "Phone Number",
+        "placeholder_password": "Password",
+        "agree_prefix": "By creating an account means you agree to the",
+        "terms_label": "Terms and Conditions",
+        "terms_link": "",
+        "agree_middle": ", and our",
+        "privacy_label": "Privacy Policy",
+        "privacy_link": "",
+        "submit_label": "Sign Up",
+        "show_login_link": true,
+        "login_text": "Already have an account?",
+        "login_link_label": "Log in",
+        "background_color": "#f3f3f3",
+        "card_background": "#ffffff",
+        "accent_color": "#53c295",
+        "padding_top": 64,
+        "padding_bottom": 80,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 48
+      }
+    },
+    "17900594170aa50dd5": {
+      "type": "apps",
+      "blocks": {
+        "forms_inline_XiaxHt": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "1164553",
+            "text_color": "#202020",
+            "button_background_color": "#202020",
+            "button_label_color": "#FFFFFF",
+            "links_color": "#1878B9",
+            "errors_color": "#E02229",
+            "text_alignment": "center",
+            "form_alignment": "center",
+            "padding_top": 48,
+            "padding_bottom": 48,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_XiaxHt"
+      ],
+      "settings": {
+        "full_width": false,
+        "show_space": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "17900594170aa50dd5"
+  ]
+}
