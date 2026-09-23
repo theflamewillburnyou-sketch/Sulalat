@@ -46,32 +46,54 @@
       font-size: clamp(28px, 3vw, 40px);
       line-height: 1.2;
       font-weight: 600;
+      color: #1a1a1a;
     }
 
     .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
       display: grid;
-      grid-template-columns: 1.05fr 1.2fr;
-      grid-template-rows: auto auto;
-      gap: 18px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: minmax(280px, 38vw) minmax(280px, 38vw);
+      gap: 16px;
     }
 
     .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item {
       position: relative;
       display: block;
-      border-radius: 16px;
+      border-radius: 14px;
       overflow: hidden;
       background: #f3f3f3;
       text-decoration: none;
       color: inherit;
+      min-height: 0;
+      height: 100%;
     }
 
-    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall {
-      grid-row: span 2;
-      min-height: 520px;
+    /* Screenshot layout:
+       [ narrower portrait ][ wider landscape ]
+       [ wider landscape   ][ narrower portrait ] */
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-1 {
+      grid-column: 1 / 6;
+      grid-row: 1;
     }
 
-    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--wide {
-      min-height: 250px;
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-2 {
+      grid-column: 6 / 13;
+      grid-row: 1;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-3 {
+      grid-column: 1 / 8;
+      grid-row: 2;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-4 {
+      grid-column: 8 / 13;
+      grid-row: 2;
+    }
+
+    .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-n {
+      grid-column: span 6;
+      min-height: 240px;
     }
 
     .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item img,
@@ -89,25 +111,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0, 0, 0, 0.18);
+      background: rgba(0, 0, 0, 0.22);
       pointer-events: none;
     }
 
     .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play span {
-      width: 64px;
-      height: 64px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.92);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--prep-accent, #53c295);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      color: #1a1a1a;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
     }
 
     .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play svg {
-      width: 22px;
-      height: 22px;
+      width: 26px;
+      height: 26px;
       margin-left: 3px;
     }
 
@@ -120,12 +142,13 @@
 
     @media (max-width: 991px) {
       .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-rows: minmax(220px, 36vw) minmax(220px, 36vw);
+        gap: 14px;
       }
 
-      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall {
-        grid-row: auto;
-        min-height: 280px;
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play span {
+        width: 56px;
+        height: 56px;
       }
     }
 
@@ -140,12 +163,25 @@
 
       .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__grid {
         grid-template-columns: 1fr;
+        grid-template-rows: none;
         gap: 14px;
       }
 
-      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--tall,
-      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--wide {
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-1,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-2,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-3,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-4,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-n {
+        grid-column: 1;
+        grid-row: auto;
         min-height: 220px;
+        height: auto;
+        aspect-ratio: 16 / 10;
+      }
+
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-1,
+      .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item--pos-4 {
+        aspect-ratio: 4 / 5;
       }
     }
   </style>
@@ -169,10 +205,17 @@
       <div class="sulalat-prep__grid">
         {%- for block in section.blocks -%}
           {%- liquid
-            assign item_class = 'sulalat-prep__item sulalat-prep__item--wide'
-            if forloop.first or forloop.index == 4
-              assign item_class = 'sulalat-prep__item sulalat-prep__item--tall'
+            assign pos_class = 'sulalat-prep__item--pos-n'
+            if forloop.index == 1
+              assign pos_class = 'sulalat-prep__item--pos-1'
+            elsif forloop.index == 2
+              assign pos_class = 'sulalat-prep__item--pos-2'
+            elsif forloop.index == 3
+              assign pos_class = 'sulalat-prep__item--pos-3'
+            elsif forloop.index == 4
+              assign pos_class = 'sulalat-prep__item--pos-4'
             endif
+            assign item_class = 'sulalat-prep__item ' | append: pos_class
             assign is_video = false
             if block.settings.video != blank or block.settings.video_url != blank
               assign is_video = true

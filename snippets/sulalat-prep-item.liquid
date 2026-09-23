@@ -9,10 +9,17 @@
   Params: item, index, heading
 {%- endcomment -%}
 {%- liquid
-  assign item_class = 'sulalat-prep__item sulalat-prep__item--wide'
-  if index == 1 or index == 4
-    assign item_class = 'sulalat-prep__item sulalat-prep__item--tall'
+  assign pos_class = 'sulalat-prep__item--pos-n'
+  if index == 1
+    assign pos_class = 'sulalat-prep__item--pos-1'
+  elsif index == 2
+    assign pos_class = 'sulalat-prep__item--pos-2'
+  elsif index == 3
+    assign pos_class = 'sulalat-prep__item--pos-3'
+  elsif index == 4
+    assign pos_class = 'sulalat-prep__item--pos-4'
   endif
+  assign item_class = 'sulalat-prep__item ' | append: pos_class
 
   assign item_image = item.image.value | default: item.image | default: item.photo.value | default: item.photo
   assign item_video_raw = item.video.value | default: item.video

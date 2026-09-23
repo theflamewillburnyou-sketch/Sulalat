@@ -211,15 +211,37 @@
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__discounts {
-      margin: 0 0 8px;
+      margin: 0;
       padding: 0;
       list-style: none;
     }
 
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__discounts li {
-      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid #DBDBDB;
+      font-size: 16px;
       color: #0f6b4c;
-      margin-bottom: 6px;
+    }
+
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__coupon-input[readonly] {
+      color: #0f6b4c;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--remove {
+      background: #fff;
+      border: 1px solid var(--sulalat-cart-accent, #53c295);
+      color: var(--sulalat-cart-accent, #53c295);
+    }
+
+    .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart__btn--remove:hover {
+      background: var(--sulalat-cart-accent-soft, #eaf8f1);
+      color: var(--sulalat-cart-accent, #53c295);
     }
 
     /* Neutralize theme cart CSS that breaks this layout */
@@ -580,9 +602,30 @@
           </div>
 
           {%- if cart != empty and section.settings.show_coupon -%}
+            {%- liquid
+              assign applied_coupon_code = ''
+              if cart.discount_codes.size > 0
+                for discount_code in cart.discount_codes
+                  if discount_code.applicable and applied_coupon_code == blank
+                    assign applied_coupon_code = discount_code.code
+                  endif
+                endfor
+              endif
+              if applied_coupon_code == blank and cart.cart_level_discount_applications.size > 0
+                for discount in cart.cart_level_discount_applications
+                  if discount.type == 'discount_code' and applied_coupon_code == blank
+                    assign applied_coupon_code = discount.title
+                  endif
+                endfor
+              endif
+            -%}
             <div class="sulalat-cart__panel sulalat-cart__panel--coupon">
               <p class="sulalat-cart__coupon-label">Coupon Code</p>
-              <div class="sulalat-cart__coupon-form" data-sulalat-coupon>
+              <div
+                class="sulalat-cart__coupon-form"
+                data-sulalat-coupon
+                {% if applied_coupon_code != blank %}data-coupon-applied="true"{% endif %}
+              >
                 <input
                   type="text"
                   class="sulalat-cart__coupon-input"
@@ -591,10 +634,30 @@
                   autocomplete="off"
                   form="sulalat-coupon-form"
                   data-sulalat-coupon-input
+                  {% if applied_coupon_code != blank %}
+                    value="{{ applied_coupon_code | escape }}"
+                    readonly
+                  {% endif %}
                 >
-                <button type="button" class="sulalat-cart__btn primary-btn" data-sulalat-coupon-apply style="width: auto; min-width: 140px;">
-                  Apply Coupon
-                </button>
+                {%- if applied_coupon_code != blank -%}
+                  <button
+                    type="button"
+                    class="sulalat-cart__btn sulalat-cart__btn--remove"
+                    data-sulalat-coupon-remove
+                    style="width: auto; min-width: 140px;"
+                  >
+                    Remove
+                  </button>
+                {%- else -%}
+                  <button
+                    type="button"
+                    class="sulalat-cart__btn primary-btn"
+                    data-sulalat-coupon-apply
+                    style="width: auto; min-width: 140px;"
+                  >
+                    Apply Coupon
+                  </button>
+                {%- endif -%}
               </div>
             </div>
           {%- endif -%}
@@ -667,18 +730,21 @@
                 </details-disclosure>
               {%- endif -%}
 
+              <div class="sulalat-cart__summary-row">
+                <span>Subtotal:</span>
+                <span>{%- render 'price-as-money', price: cart.original_total_price, show_money_with_currency: true -%}</span>
+              </div>
+
               {%- if cart.cart_level_discount_applications.size > 0 -%}
                 <ul class="sulalat-cart__discounts" aria-label="{{ 'customer.order.discount' | t }}" role="list">
                   {%- for discount in cart.cart_level_discount_applications -%}
-                    <li>{{ discount.title | escape_once }} (−{{ discount.total_allocated_amount | money }})</li>
+                    <li>
+                      <span>{{ discount.title | escape_once }}</span>
+                      <span>(−{{ discount.total_allocated_amount | money }})</span>
+                    </li>
                   {%- endfor -%}
                 </ul>
               {%- endif -%}
-
-              <div class="sulalat-cart__summary-row">
-                <span>Subtotal:</span>
-                <span>{%- render 'price-as-money', price: cart.total_price, show_money_with_currency: true -%}</span>
-              </div>
 
               <div class="sulalat-cart__summary-row">
                 <span>Total:</span>
@@ -748,9 +814,11 @@
       (function () {
         var root = document.querySelector('.sulalat-cart[data-section-id="{{ section.id }}"]');
         if (!root) return;
+
         var input = root.querySelector('[data-sulalat-coupon-input]');
-        var button = root.querySelector('[data-sulalat-coupon-apply]');
-        if (!input || !button) return;
+        var applyButton = root.querySelector('[data-sulalat-coupon-apply]');
+        var removeButton = root.querySelector('[data-sulalat-coupon-remove]');
+        if (!input) return;
 
         function applyCoupon() {
           var code = (input.value || '').trim();
@@ -761,13 +829,45 @@
           window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect={{ routes.cart_url }}';
         }
 
-        button.addEventListener('click', applyCoupon);
-        input.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            applyCoupon();
+        function removeCoupon() {
+          if (removeButton) {
+            removeButton.disabled = true;
+            removeButton.textContent = 'Removing…';
           }
-        });
+
+          fetch('{{ routes.cart_url }}/update.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json'
+            },
+            body: JSON.stringify({ discount: '' })
+          })
+            .then(function (response) {
+              if (!response.ok) throw new Error('Failed to remove coupon');
+              window.location.href = '{{ routes.cart_url }}';
+            })
+            .catch(function () {
+              if (removeButton) {
+                removeButton.disabled = false;
+                removeButton.textContent = 'Remove';
+              }
+            });
+        }
+
+        if (applyButton) {
+          applyButton.addEventListener('click', applyCoupon);
+          input.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              applyCoupon();
+            }
+          });
+        }
+
+        if (removeButton) {
+          removeButton.addEventListener('click', removeCoupon);
+        }
       })();
     </script>
   {%- endif -%}
