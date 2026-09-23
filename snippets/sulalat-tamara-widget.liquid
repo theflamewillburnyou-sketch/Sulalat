@@ -1,0 +1,39 @@
+{%- comment -%}
+  Official Tamara summary widget (Tamara has no theme app block like Tabby).
+  Params: public_key, country (SA|AE|KW|BH), amount (optional string)
+{%- endcomment -%}
+{%- liquid
+  assign tamara_key = public_key | strip
+  assign tamara_country = country | default: 'SA' | upcase
+  if tamara_country == 'SA_OR_AE' or tamara_country == 'SAUDI ARABIA'
+    assign tamara_country = 'SA'
+  endif
+  assign tamara_amount = amount
+  if tamara_amount == blank
+    assign tamara_amount = product.selected_or_first_available_variant.price | money_without_currency | remove: ','
+  endif
+  assign tamara_lang = request.locale.iso_code | default: 'en'
+-%}
+
+{%- if tamara_key != blank -%}
+  <div class="sulalat-tamara-widget" data-tamara-widget data-tamara-amount="{{ tamara_amount | escape }}">
+    <script>
+      window.tamaraWidgetConfig = window.tamaraWidgetConfig || {
+        lang: {{ tamara_lang | json }},
+        country: {{ tamara_country | json }},
+        publicKey: {{ tamara_key | json }},
+        style: {
+          fontSize: '13px',
+          badgeRatio: 1
+        }
+      };
+    </script>
+    <script defer src="https://cdn.tamara.co/widget-v2/tamara-widget.js"></script>
+    <tamara-widget
+      type="tamara-summary"
+      amount="{{ tamara_amount | escape }}"
+      config='{"badgePosition":"right","showExtraContent":""}'
+      inline-type="2"
+    ></tamara-widget>
+  </div>
+{%- endif -%}

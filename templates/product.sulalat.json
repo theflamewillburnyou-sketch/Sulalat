@@ -63,9 +63,9 @@
           "type": "bulk_box",
           "settings": {
             "heading": "Looking to buy as Bulk?",
-            "text": "Special deals for you! Reach us for more details.",
+            "text": "Buying in bulk? We’ve got special deals and personalized assistance just for you.",
             "link_label": "Buy as Bulk",
-            "link": ""
+            "link": "shopify://pages/b2b-register"
           }
         },
         "promo_banner": {
@@ -80,10 +80,20 @@
         "payments": {
           "type": "payments",
           "settings": {
-            "tabby_text": "4 interest-free payments. No late fees. Shariah-compliant!",
-            "tabby_link": "",
-            "tamara_text": "Pay monthly or split in 4. No hidden fees. Shariah-compliant!",
-            "tamara_link": ""
+            "installments": 4,
+            "show_tabby": true,
+            "tabby_text_before": "4 interest-free payments of",
+            "tabby_text_after": "No processing fees. Shariah-compliant.",
+            "tabby_link_label": "Learn more",
+            "tabby_link": "https://tabby.ai/en-SA",
+            "show_tamara": true,
+            "tamara_public_key": "",
+            "tamara_country": "SA",
+            "tamara_text_before": "Pay",
+            "tamara_per_month_label": "/mo",
+            "tamara_text_after": "or in 4 payments. Shariah-compliant.",
+            "tamara_link_label": "More options",
+            "tamara_link": "https://tamara.co/en-SA"
           }
         }
       },
@@ -134,25 +144,37 @@
         "prep_1": {
           "type": "media",
           "settings": {
-            "show_play": false
+            "video_url": "",
+            "show_play": false,
+            "link": "",
+            "label": ""
           }
         },
         "prep_2": {
           "type": "media",
           "settings": {
-            "show_play": true
+            "video_url": "",
+            "show_play": true,
+            "link": "",
+            "label": ""
           }
         },
         "prep_3": {
           "type": "media",
           "settings": {
-            "show_play": true
+            "video_url": "",
+            "show_play": true,
+            "link": "",
+            "label": ""
           }
         },
         "prep_4": {
           "type": "media",
           "settings": {
-            "show_play": false
+            "video_url": "",
+            "show_play": false,
+            "link": "",
+            "label": ""
           }
         }
       },
@@ -255,6 +277,7 @@
         "heading": "Related Products",
         "heading_align": "text-start",
         "products_to_show": 6,
+        "brand_media": true,
         "slides_desktop": 3,
         "slides_tablet": 2,
         "slides_mobile": 1.1,

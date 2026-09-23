@@ -433,37 +433,80 @@
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-card {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 18px 20px;
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      background: #fff;
+      gap: 14px;
+      padding: 16px 18px;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #f7f7f7 0%, #ffffff 100%);
       text-decoration: none;
       color: inherit;
-      min-height: 88px;
+      min-height: 84px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-logo {
       flex-shrink: 0;
-      width: 72px;
-      height: 36px;
+      width: 78px;
+      height: 40px;
       object-fit: contain;
       display: block;
+      border-radius: 6px;
     }
 
-    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-logo-fallback {
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-badge {
       flex-shrink: 0;
-      font-size: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 78px;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 6px;
+      font-size: 15px;
       font-weight: 700;
-      color: #111;
-      min-width: 72px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-badge--tabby {
+      background: #3dcd95;
+      color: #0b2b1f;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-badge--tamara {
+      background: linear-gradient(135deg, #f5a3c7 0%, #c47bff 55%, #ff9a5a 100%);
+      color: #1a1a1a;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-text {
       margin: 0;
       font-size: 13px;
       line-height: 1.45;
-      color: #555;
+      color: #333;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-link {
+      position: relative;
+      z-index: 2;
+      display: inline;
+      color: var(--sulalat-pdp-accent, #53c295);
+      text-decoration: none;
+      font-weight: 500;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-link:hover {
+      text-decoration: underline;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-card--widget {
+      display: block;
+      padding: 12px 16px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-tamara-widget {
+      width: 100%;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__info > * + * {
@@ -880,9 +923,31 @@
               {% endif %}
 
             {% when 'payments' %}
-              <div class="sulalat-pdp__payments" {{ block.shopify_attributes }}>
-                {% if block.settings.tabby_text != blank %}
-                  <{% if block.settings.tabby_link != blank %}a href="{{ block.settings.tabby_link }}"{% else %}div{% endif %} class="sulalat-pdp__pay-card">
+              {%- liquid
+                assign installment_parts = block.settings.installments | default: 4
+                if installment_parts < 2
+                  assign installment_parts = 4
+                endif
+                assign installment_cents = current_variant.price | divided_by: installment_parts
+                assign installment_money = installment_cents | money
+                assign installment_plain = installment_cents | money_without_currency | remove: ','
+                assign product_amount_plain = current_variant.price | money_without_currency | remove: ','
+
+                assign tabby_href = block.settings.tabby_link | default: 'https://tabby.ai/en-SA'
+                assign tamara_href = block.settings.tamara_link | default: 'https://tamara.co/en-SA'
+                assign use_tamara_widget = false
+                if block.settings.tamara_public_key != blank
+                  assign use_tamara_widget = true
+                endif
+              -%}
+              <div
+                class="sulalat-pdp__payments"
+                data-bnpl-payments
+                data-installments="{{ installment_parts }}"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.show_tabby %}
+                  <div class="sulalat-pdp__pay-card">
                     {% if block.settings.tabby_logo != blank %}
                       {{
                         block.settings.tabby_logo
@@ -890,25 +955,57 @@
                         | image_tag: class: 'sulalat-pdp__pay-logo', loading: 'lazy', alt: 'Tabby'
                       }}
                     {% else %}
-                      <span class="sulalat-pdp__pay-logo-fallback">tabby</span>
+                      <span class="sulalat-pdp__pay-badge sulalat-pdp__pay-badge--tabby" aria-hidden="true">tabby</span>
                     {% endif %}
-                    <p class="sulalat-pdp__pay-text">{{ block.settings.tabby_text | escape }}</p>
-                  </{% if block.settings.tabby_link != blank %}a{% else %}div{% endif %}>
+                    <p class="sulalat-pdp__pay-text">
+                      {{ block.settings.tabby_text_before | default: '4 interest-free payments of' | escape }}
+                      <span data-bnpl-amount>{{ installment_money }}</span>.
+                      {{ block.settings.tabby_text_after | default: 'No processing fees. Shariah-compliant.' | escape }}
+                      <a
+                        class="sulalat-pdp__pay-link"
+                        href="{{ tabby_href }}"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        {{ block.settings.tabby_link_label | default: 'Learn more' | escape }}
+                      </a>
+                    </p>
+                  </div>
                 {% endif %}
 
-                {% if block.settings.tamara_text != blank %}
-                  <{% if block.settings.tamara_link != blank %}a href="{{ block.settings.tamara_link }}"{% else %}div{% endif %} class="sulalat-pdp__pay-card">
-                    {% if block.settings.tamara_logo != blank %}
-                      {{
-                        block.settings.tamara_logo
-                        | image_url: width: 200
-                        | image_tag: class: 'sulalat-pdp__pay-logo', loading: 'lazy', alt: 'Tamara'
-                      }}
+                {% if block.settings.show_tamara %}
+                  <div class="sulalat-pdp__pay-card{% if use_tamara_widget %} sulalat-pdp__pay-card--widget{% endif %}">
+                    {% if use_tamara_widget %}
+                      {% render 'sulalat-tamara-widget',
+                        public_key: block.settings.tamara_public_key,
+                        country: block.settings.tamara_country,
+                        amount: product_amount_plain
+                      %}
                     {% else %}
-                      <span class="sulalat-pdp__pay-logo-fallback">tamara</span>
+                      {% if block.settings.tamara_logo != blank %}
+                        {{
+                          block.settings.tamara_logo
+                          | image_url: width: 200
+                          | image_tag: class: 'sulalat-pdp__pay-logo', loading: 'lazy', alt: 'Tamara'
+                        }}
+                      {% else %}
+                        <span class="sulalat-pdp__pay-badge sulalat-pdp__pay-badge--tamara" aria-hidden="true">tamara</span>
+                      {% endif %}
+                      <p class="sulalat-pdp__pay-text">
+                        {{ block.settings.tamara_text_before | default: 'Pay' | escape }}
+                        <span data-bnpl-amount>{{ installment_money }}</span>{{ block.settings.tamara_per_month_label | default: '/mo' | escape }},
+                        {{ block.settings.tamara_text_after | default: 'or in 4 payments. Shariah-compliant.' | escape }}
+                        <a
+                          class="sulalat-pdp__pay-link"
+                          href="{{ tamara_href }}"
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {{ block.settings.tamara_link_label | default: 'More options' | escape }}
+                        </a>
+                      </p>
                     {% endif %}
-                    <p class="sulalat-pdp__pay-text">{{ block.settings.tamara_text | escape }}</p>
-                  </{% if block.settings.tamara_link != blank %}a{% else %}div{% endif %}>
+                  </div>
                 {% endif %}
               </div>
           {% endcase %}
@@ -958,6 +1055,9 @@
       var variantInput = root.querySelector('[data-variant-id-input]');
       var qtyInput = root.querySelector('[data-qty-input]');
       var totalEl = root.querySelector('[data-total-price]');
+      var bnplAmounts = root.querySelectorAll('[data-bnpl-amount]');
+      var bnplWrap = root.querySelector('[data-bnpl-payments]');
+      var bnplParts = bnplWrap ? parseInt(bnplWrap.getAttribute('data-installments'), 10) || 4 : 4;
       var addBtn = root.querySelector('[name="add"]');
       var buyNowBtn = root.querySelector('[data-buy-now]');
       var gallerySliderEl = root.querySelector('[data-sulalat-gallery-slider]');
@@ -1046,6 +1146,12 @@
         if (variantInput) variantInput.value = variant.id;
         var qty = Math.max(1, parseInt(qtyInput && qtyInput.value, 10) || 1);
         if (totalEl) totalEl.textContent = formatMoney(variant.price * qty);
+        if (bnplAmounts && bnplAmounts.length) {
+          var installment = Math.round(variant.price / bnplParts);
+          bnplAmounts.forEach(function (el) {
+            el.textContent = formatMoney(installment);
+          });
+        }
         if (addBtn) {
           addBtn.disabled = !variant.available;
           addBtn.textContent = variant.available
@@ -1478,36 +1584,119 @@
       "limit": 1,
       "settings": [
         {
+          "type": "range",
+          "id": "installments",
+          "min": 2,
+          "max": 12,
+          "step": 1,
+          "label": "Installment parts",
+          "default": 4
+        },
+        {
+          "type": "header",
+          "content": "Tabby"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_tabby",
+          "label": "Show Tabby",
+          "default": true
+        },
+        {
           "type": "image_picker",
           "id": "tabby_logo",
           "label": "Tabby logo"
         },
         {
           "type": "text",
-          "id": "tabby_text",
-          "label": "Tabby text",
-          "default": "4 interest-free payments. No late fees. Shariah-compliant!"
+          "id": "tabby_text_before",
+          "label": "Tabby text before amount",
+          "default": "4 interest-free payments of"
+        },
+        {
+          "type": "text",
+          "id": "tabby_text_after",
+          "label": "Tabby text after amount",
+          "default": "No processing fees. Shariah-compliant."
+        },
+        {
+          "type": "text",
+          "id": "tabby_link_label",
+          "label": "Tabby link label",
+          "default": "Learn more"
         },
         {
           "type": "url",
           "id": "tabby_link",
-          "label": "Tabby link"
+          "label": "Tabby Learn more URL",
+          "info": "Required for a clickable Learn more link. Leave blank to use https://tabby.ai/en-SA"
+        },
+        {
+          "type": "header",
+          "content": "Tamara"
+        },
+        {
+          "type": "paragraph",
+          "content": "Tamara usually does not add a theme App block like Tabby. Paste your Tamara Public Key below to load the official widget (More options becomes clickable). Find it in the Tamara merchant dashboard."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_tamara",
+          "label": "Show Tamara",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "tamara_public_key",
+          "label": "Tamara public key",
+          "info": "Enables the official Tamara widget with a working More options popup."
+        },
+        {
+          "type": "select",
+          "id": "tamara_country",
+          "label": "Tamara country",
+          "options": [
+            { "value": "SA", "label": "Saudi Arabia" },
+            { "value": "AE", "label": "United Arab Emirates" },
+            { "value": "KW", "label": "Kuwait" },
+            { "value": "BH", "label": "Bahrain" }
+          ],
+          "default": "SA"
         },
         {
           "type": "image_picker",
           "id": "tamara_logo",
-          "label": "Tamara logo"
+          "label": "Tamara logo (fallback card)"
         },
         {
           "type": "text",
-          "id": "tamara_text",
-          "label": "Tamara text",
-          "default": "Pay monthly or split in 4. No hidden fees. Shariah-compliant!"
+          "id": "tamara_text_before",
+          "label": "Tamara text before amount",
+          "default": "Pay"
+        },
+        {
+          "type": "text",
+          "id": "tamara_per_month_label",
+          "label": "Per month label",
+          "default": "/mo"
+        },
+        {
+          "type": "text",
+          "id": "tamara_text_after",
+          "label": "Tamara text after amount",
+          "default": "or in 4 payments. Shariah-compliant."
+        },
+        {
+          "type": "text",
+          "id": "tamara_link_label",
+          "label": "Tamara link label",
+          "default": "More options"
         },
         {
           "type": "url",
           "id": "tamara_link",
-          "label": "Tamara link"
+          "label": "Tamara More options URL",
+          "info": "Used when Public Key is empty. Leave blank to use https://tamara.co/en-SA"
         }
       ]
     },
