@@ -37,7 +37,7 @@
             "heading": "Auction-Grade Coffee",
             "text": "Find rare harvests and everyday favorites selected through more than 88 international auctions and global farms. Each coffee is chosen with regional tastes and hospitality environments in mind.",
             "button_label": "Explore the Collection →",
-            "button_link": "#",
+            "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946.png"
           }
         },
@@ -48,7 +48,7 @@
             "heading": "A Strong Start for Every Café",
             "text": "Start with everything in place. As Saudi Arabia's trusted B2B specialty supplier, we provide coffee, equipment, training, and operational support through a single relationship.",
             "button_label": "Plan Your Café →",
-            "button_link": "",
+            "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946_f48b696a-2574-4f9e-90ed-95a299d9e305.png"
           }
         }
@@ -80,7 +80,7 @@
             "heading": "Supporting the Way You Serve ",
             "text": "Shop professional espresso machines, grinders, and brewing systems chosen for performance under daily demand.",
             "button_label": "Equip Your Café →",
-            "button_link": "#",
+            "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5.png"
           }
         },
@@ -91,7 +91,7 @@
             "heading": "Tools for Better Brewing",
             "text": "Find high-quality, easy-to-use equipment and brewing tools for specialty coffee at home.",
             "button_label": "Find Your Setup →",
-            "button_link": "",
+            "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5_d2d8781f-621e-442a-8b21-872c4def8803.png"
           }
         }

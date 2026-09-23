@@ -20,14 +20,16 @@
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(24px, 4vw, 48px);
+      gap:0;
       align-items: stretch;
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form-wrap {
       background: {{ section.settings.form_bg }};
-      border-radius: 16px;
-      padding: clamp(28px, 4vw, 44px);
+      border-radius: 16px 0 0 16px;
+      padding: clamp(24px, 4vw, 44px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -36,9 +38,9 @@
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__heading {
       margin: 0 0 12px;
       color: #1a1a1a;
-      font-size: clamp(28px, 3vw, 40px);
+      font-size: clamp(24px, 3vw, 50px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__text {
@@ -56,16 +58,14 @@
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input {
       width: 100%;
-      height: 52px;
-      padding: 0 18px;
-      border: 0;
-      border-radius: 10px;
-      background: #fff;
-      color: #1a1a1a;
-      font-size: 15px;
-      font-family: inherit;
-      box-shadow: none;
-      outline: none;
+      border: none;
+      border-radius: 24px;
+      padding: 13px 20px; 
+      font-size: 16px;
+      color: #808080;
+      background: #ffffff;
+      border:1px solid #E4E4E4;
+      height:50px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input::placeholder {
@@ -74,30 +74,67 @@
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__form .input:focus {
       box-shadow: 0 0 0 2px {{ section.settings.button_bg }};
+      outline-offset: 1px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree {
-      display: flex;
+       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      margin: 4px 0 6px;
-      color: var(--brand-body-text, #535353);
-      font-size: 13px;
-      line-height: 1.45;
+      gap: 8px;
+      font-size: 14px;
+      line-height: -1%;
+      color: #535353;
+      margin-top: 4px;
+      max-width: 390px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree input {
-      margin-top: 3px;
+      appearance: none;
+      margin: 2px 0 0;
       flex-shrink: 0;
-      accent-color: {{ section.settings.button_bg }};
+      background: transparent;
+      width: 16px;
+      height: 16px;
+      border: 1px solid #AFAFAF;
+      border-radius: 4px;
+      position: relative;
     }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree input::before{
+      content: "";
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      left: 4px;
+      width: 7px;
+      height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(40deg);
+      -ms-transform: rotate(40deg);
+      transform: rotate(40deg);
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree input:checked::before{
+       opacity:1;
+    }
+
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree input:checked{
+       background:#53c295;
+    }
+
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree a {
-      color: inherit;
-      text-decoration: underline;
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
     }
 
-    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit {
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__agree a:hover{
+       text-decoration: underline;
+    }
+
+    {% comment %} .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -116,8 +153,11 @@
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit:hover {
       opacity: 0.9;
+    } {% endcomment %}
+    .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__submit.primary-btn{
+      max-width:max-content;
+      margin-top:40px;
     }
-
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status {
       margin: 0 0 8px;
       font-size: 14px;
@@ -125,19 +165,20 @@
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status--success {
-      color: {{ section.settings.button_bg }};
+      color: #2f7a54;
+      font-size: 13px;
+      margin: 0 0 8px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status--error {
       color: #c0392b;
+      font-size: 13px;
+      margin: 0 0 8px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media {
-      border-radius: 16px;
-      overflow: hidden;
-      background: #f3f3f3;
-      min-height: 100%;
-      aspect-ratio: 4 / 5;
+      position: relative;
+      min-height: 320px;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__media img,
@@ -148,7 +189,7 @@
       display: block;
     }
 
-    @media (max-width: 991px) {
+    @media (max-width: 767px) {
       .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__layout {
         grid-template-columns: 1fr;
       }
@@ -247,7 +288,7 @@
             </span>
           </label>
 
-          <button type="submit" class="initiative-register__submit">
+          <button type="submit" class="initiative-register__submit primary-btn">
             {{ section.settings.button_label | escape }}
           </button>
         {% endform %}

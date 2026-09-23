@@ -16,7 +16,7 @@
     .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__layout {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-      gap: clamp(32px, 5vw, 72px);
+      gap: clamp(24px, 8vw, 120px);
       align-items: center;
     }
 
@@ -42,7 +42,7 @@
     .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__heading {
       margin: 0 0 18px;
       color: #1a1a1a;
-      font-size: clamp(36px, 4vw, 55px);
+      font-size: clamp(24px, 3.5vw, 50px);
       line-height: 1.15;
       font-weight: 400;
     }
@@ -57,7 +57,7 @@
 
     .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__text {
       margin: 0;
-      color: var(--brand-body-text, #535353);
+      color: #535353;
       font-size: 16px;
       line-height: 26px;
       letter-spacing: -0.01em;
@@ -72,13 +72,17 @@
     }
 
     @media (max-width: 991px) {
-      .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__layout {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
+      
 
       .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__content {
         max-width: none;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .initiatives-intro[data-section-id="{{ section.id }}"] .initiatives-intro__layout {
+          grid-template-columns: 1fr;
+          gap: 28px;
       }
     }
 

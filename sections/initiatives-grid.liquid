@@ -22,7 +22,7 @@
     .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro h2 {
       margin: 0 0 18px;
       color: #1a1a1a;
-      font-size: clamp(32px, 3.5vw, 48px);
+      font-size: clamp(24px, 3.5vw, 48px);
       line-height: 1.2;
       font-weight: 400;
     }
@@ -31,6 +31,7 @@
     .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro .rte {
       margin: 0;
       color: var(--brand-body-text, #535353);
+      color:#141211;
       font-size: 16px;
       line-height: 26px;
       letter-spacing: -0.01em;
@@ -51,6 +52,13 @@
       list-style: none;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list li {
+      width: calc(100% / 4 - 23px);
     }
 
     .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card {
@@ -60,11 +68,11 @@
     }
 
     .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media {
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
       background: #f3f3f3;
       aspect-ratio: 16 / 11;
-      margin-bottom: 16px;
+      margin-bottom: 30px;
     }
 
     .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media img,
@@ -97,6 +105,9 @@
     }
 
     @media (max-width: 991px) {
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list li {
+        width: calc(100% / 3 - 14px);
+      }
       .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__intro {
         margin-bottom: 40px;
       }
@@ -105,6 +116,13 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 28px 20px;
       }
+    }
+
+    @media (max-width: 767px){
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list li {
+          width: calc(100% / 2 - 14px);
+      }
+    
     }
 
     @media (max-width: 749px) {
@@ -119,6 +137,11 @@
 
       .initiatives-grid[data-section-id="{{ section.id }}"] .initiative-card__media {
         border-radius: 12px;
+      }
+    }
+    @media (max-width: 575px){
+      .initiatives-grid[data-section-id="{{ section.id }}"] .initiatives-grid__list li {
+          width: 100%;
       }
     }
   </style>
