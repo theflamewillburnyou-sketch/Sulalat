@@ -120,7 +120,7 @@
     </p>
 
     <div class="sulalat-product-card__actions">
-      <a class="sulalat-btn sulalat-btn--primary" href="{{ product_url }}">{{ details_btn_label | escape }}</a>
+      <a class="sulalat-btn primary-btn" href="{{ product_url }}">{{ details_btn_label | escape }}</a>
 
       {%- if product.has_only_default_variant and current_variant.available -%}
         {% form 'product', product, id: form_id, class: 'sulalat-product-card__form' %}
