@@ -658,23 +658,23 @@
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-card-title {
       margin: 0 0 14px;
       color: #1a1a1a;
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 25px;
+      font-weight: 400;
       line-height: 1.3;
     }
 
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-card-name {
       margin: 0 0 8px;
       color: #1a1a1a;
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 18px;
+      font-weight: 400;
       line-height: 1.4;
     }
 
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-card-lines {
       margin: 0;
       color: #1a1a1a;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 1.55;
       font-style: normal;
     }
@@ -686,7 +686,7 @@
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-card-phone {
       margin: 10px 0 0;
       color: #1a1a1a;
-      font-size: 14px;
+      font-size: 18px;
       line-height: 1.4;
     }
 
@@ -698,30 +698,8 @@
       padding-top: 22px;
     }
 
-    .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 8px 22px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      font-family: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-btn--primary {
-      border: 0;
-      background: var(--brand-primary, #53c295);
-      color: #fff;
-    }
-
-    .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-btn--primary:hover {
-      background: #45ad82;
-      color: #fff;
+    .sulalat-dashboard[data-section-id="{{ section.id }}"] .primary-btn{
+      padding:11px 26px;
     }
 
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__address-btn--outline {
@@ -1984,14 +1962,14 @@
                     <div class="sulalat-dashboard__address-card-actions">
                       <button
                         type="button"
-                        class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--primary"
+                        class="sulalat-dashboard__address-btn primary-btn"
                         data-address-edit="{{ address.id }}"
                       >
                         Update
                       </button>
                       <button
                         type="button"
-                        class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--outline"
+                        class="sulalat-dashboard__address-btn sulalat-btn--outline"
                         data-delete-address
                         data-target="/account/addresses/{{ address.id }}"
                         data-confirm-message="Are you sure you wish to delete this address?"
@@ -2011,8 +1989,8 @@
                   </address>
                   <p class="sulalat-dashboard__address-card-phone">T: +971 50 2252222</p>
                   <div class="sulalat-dashboard__address-card-actions">
-                    <button type="button" class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--primary" data-address-add>Update</button>
-                    <button type="button" class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--outline">Remove</button>
+                    <button type="button" class="sulalat-dashboard__address-btn primary-btn" data-address-add>Update</button>
+                    <button type="button" class="sulalat-dashboard__address-btn sulalat-btn--outline">Remove</button>
                   </div>
                 </article>
                 <article class="sulalat-dashboard__address-card">
@@ -2024,8 +2002,8 @@
                   </address>
                   <p class="sulalat-dashboard__address-card-phone">T: +971 50 2252222</p>
                   <div class="sulalat-dashboard__address-card-actions">
-                    <button type="button" class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--primary" data-address-add>Update</button>
-                    <button type="button" class="sulalat-dashboard__address-btn sulalat-dashboard__address-btn--outline">Remove</button>
+                    <button type="button" class="sulalat-dashboard__address-btn primary-btn" data-address-add>Update</button>
+                    <button type="button" class="sulalat-dashboard__address-btn sulalat-btn--outline">Remove</button>
                   </div>
                 </article>
               {%- endif -%}

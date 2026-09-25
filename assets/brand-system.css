@@ -139,6 +139,44 @@
   box-shadow: var(--brand-shadow);
 }
 
+    .sulalat-btn--outline {
+      background: rgb(83 194 149 / 10%);
+      color: var(--brand-primary, #53c295);
+      border-color: var(--brand-primary, #53c295);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 11px 20px;
+      text-decoration: none;
+      transition: 0.25s ease;
+      cursor: pointer;
+      box-sizing: border-box;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+
+    .sulalat-btn--outline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 100%;
+      background: #fff;
+      transition: width .5s ease-in-out;
+      z-index: -1;
+    }
+
+    .sulalat-btn--outline:hover::before {
+      right: auto;
+      left: 0;
+      width: 100%;
+    }
+
 @media (min-width: 769px) {
   .main-nav__item--primary {
     font-size: 17px;
