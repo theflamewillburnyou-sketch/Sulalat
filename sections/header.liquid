@@ -28,7 +28,7 @@
   endif
 
   assign is_product_header = false
-  if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'article' or request.page_type == 'blog' or template.suffix == 'dashboard' or template.suffix == 'dashboard-orders' or template.suffix == 'wishlist' or template.suffix == 'product-category-collection' or template.suffix == 'b2b-register'
+  if request.page_type == 'product' or request.page_type == 'cart' or request.page_type == 'article' or request.page_type == 'blog' or template.suffix == 'dashboard' or template.suffix == 'dashboard-orders' or template.suffix == 'wishlist' or template.suffix == 'b2b-register'
     assign is_product_header = true
   endif
 -%}
