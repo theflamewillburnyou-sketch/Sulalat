@@ -12,7 +12,7 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/7a1dfbf1d34a6165ca3f8b44873f6384df6f7082.png",
+        "background_image": "shopify://shop_images/7a1dfbf1d34a6165ca3f8b44873f6384df6f7082_851041f8-e50e-4cc0-9877-5818ba804b18.png",
         "overlay_color": "#00000073",
         "subtitle": "",
         "heading": "<p>Bakery & Gelato</p>",
@@ -30,7 +30,7 @@
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
-        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "image": "shopify://shop_images/c9ffad01f8faa9de3c3f3a4439af07618025cbc7.jpg",
         "heading": "Where creativity meets craftsmanship",
         "subheading": "",
         "text": "<p>Our Bakery & Gelato range brings together skilled craftsmanship, premium ingredients, and scalable production. Whether it’s freshly baked pastries or indulgent gelato, every product is developed with performance, flavor, and visual appeal in mind.</p><p>We work closely with our partners to create recipes that align with their brand identity — from classic favorites to signature creations — ensuring consistency across locations without compromising on taste or quality.</p>",
@@ -83,7 +83,7 @@
         "objective_5"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/2b565679e6d49f73b66d4f1176b4dcd270ef0aa2.png",
+        "background_image": "shopify://shop_images/00741cb340429ccc9f0d57be012c29c1979c5d61.jpg",
         "overlay_color": "#00000099",
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
@@ -102,7 +102,7 @@
       "settings": {
         "heading": "Be Part of the Change",
         "text": "Register below to stay connected with Sulalat’s sustainability initiatives, product innovations, and industry insights. Together, we can shape a more responsible and flavorful future.",
-        "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
+        "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
         "phone_placeholder": "Contact Number*",

@@ -12,7 +12,7 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/about-banner.png",
+        "background_image": "shopify://shop_images/9e64f3e3201a7a65a2048b7e2517700c196e8ba8.jpg",
         "overlay_color": "#00000073",
         "subtitle": "About",
         "heading": "<h1>Honoring Every Hand, Every Harvest, Every Story</h1>",
@@ -44,8 +44,8 @@
           "settings": {
             "year": "2015",
             "heading": "A Historic First",
-            "text": "<ul>\n<li>Became the first Arab company to win the La Esmeralda Auction</li>\n<li>Joined the Cup of Excellence</li>\n<li>Partnered with La Marzocco, Compak, and Profitec to support emerging specialty cafés</li>\n<li>Introduced semi-professional espresso machines through Profitec, bringing specialty-grade quality to home baristas</li>\n</ul>",
-            "image": "shopify://shop_images/timeline-slide-3.png"
+            "text": "<ul><li>Became the first Arab company to win the La Esmeralda Auction</li></ul><ul><li>Joined the Cup of Excellence</li></ul><ul><li>Partnered with La Marzocco, Compak, and Profitec to support emerging specialty cafés</li></ul><ul><li>Introduced semi-professional espresso machines through Profitec, bringing specialty-grade quality to home baristas</li></ul>",
+            "image": "shopify://shop_images/72397f74806b46ec4f1e1a4b2b37a2b4a3ba670a.png"
           }
         },
         "timeline_item_khc7y6": {
@@ -62,7 +62,7 @@
           "settings": {
             "year": "2018",
             "heading": "Investing in the People ",
-            "text": "<ul>\n<li>Hosted Saudi Arabia's first WCEP program to empower local baristas and sensory professionals</li>\n<li>Contracted a state-of-the-art automated roasting facility near Riyadh</li>\n<li>Organized the first Saudi Barista Championship</li>\n</ul>",
+            "text": "<ul><li>Hosted Saudi Arabia's first WCEP program to empower local baristas and sensory professionals</li></ul><ul><li>Contracted a state-of-the-art automated roasting facility near Riyadh</li></ul><ul><li>Organized the first Saudi Barista Championship</li></ul>",
             "image": "shopify://shop_images/Frame_1948756672.png"
           }
         },
@@ -243,6 +243,17 @@
             "button_link": ""
           }
         },
+        "executive_member_q67WrT": {
+          "type": "executive_member",
+          "settings": {
+            "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
+            "name": "Rashid Al-Jarwa",
+            "role": "Chairman",
+            "linkedin_url": "",
+            "button_label": "Explore More",
+            "button_link": ""
+          }
+        },
         "exec_2": {
           "type": "executive_member",
           "settings": {
@@ -259,7 +270,9 @@
           "settings": {
             "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
             "name": "Naser Al-Wohaibi",
-            "role": "Chief Executive Officer"
+            "role": "Chief Executive Officer",
+            "button_label": "Explore More",
+            "button_link": ""
           }
         },
         "team_2": {
@@ -267,7 +280,9 @@
           "settings": {
             "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
             "name": "Abdallah Al-Manea",
-            "role": "Founder of Salve & Senmar "
+            "role": "Founder of Salve & Senmar ",
+            "button_label": "Explore More",
+            "button_link": ""
           }
         },
         "team_3": {
@@ -275,7 +290,9 @@
           "settings": {
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Ammar Al-Naser",
-            "role": "F&B Products Lead"
+            "role": "F&B Products Lead",
+            "button_label": "Explore More",
+            "button_link": ""
           }
         },
         "team_4": {
@@ -283,15 +300,20 @@
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Abdulaziz Al-Manea",
-            "role": "Coffee Quality and Training Lead"
+            "role": "Coffee Quality and Training Lead",
+            "button_label": "Explore More",
+            "button_link": ""
           }
         },
         "team_member_nqQMXe": {
           "type": "team_member",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Omar Al-Yousef",
-            "role": "Chief Operating Officer"
+            "role": "Chief Operating Officer",
+            "button_label": "Explore More",
+            "button_link": ""
           }
         },
         "partner_bialetti_1": {
@@ -536,6 +558,7 @@
         "social_farm_3",
         "social_farm_4",
         "exec_1",
+        "executive_member_q67WrT",
         "exec_2",
         "team_1",
         "team_2",
@@ -573,7 +596,7 @@
         "tab_partners_label": "Partners",
         "tab_careers_label": "Careers",
         "placeholder_text": "Coming soon",
-        "who_image": "shopify://shop_images/who-we-are.png",
+        "who_image": "shopify://shop_images/e7e25dd757b81c8125d81d475a89862d9c29d730.jpg",
         "who_tag": "Our Story",
         "who_heading": "Enriching Life's Shared Joys",
         "who_paragraph_1": "Sulalat is a specialized ecosystem offering artisanal products, rooted in the careful selection of the finest harvests from the worlds of coffee, chocolate, and gelato. Since 2014, we've brought together globally sourced ingredients, certified expertise, and in-house production to serve the hospitality sector across the Middle East, with a partner network spanning more than 15 countries.",
@@ -582,14 +605,14 @@
         "timeline_subheading": "Here are some highlights from moments that mark our growth.",
         "vision_heading": "Our Vision",
         "vision_text": "To become a trusted name for quality, consistency, and taste across the world.",
-        "vision_image": "shopify://shop_images/vision-card-1.png",
-        "mission_image": "shopify://shop_images/vision-card-2.png",
+        "vision_image": "shopify://shop_images/02a670f5d3c30f005a9206aae6dcf05bb911e28d.jpg",
+        "mission_image": "shopify://shop_images/ccd11b554a965f3e828abd168c838644e204422f.jpg",
         "mission_heading": "Our Mission",
         "mission_text": "To source, produce, and deliver specialty food and beverage products with care and operational integrity.",
         "culture_heading": "The Foundation of Our Beliefs",
         "culture_paragraph_1": "We started as a team of just two. Now, we have evolved into a complete family, united in our purpose to set the highest standards and strive for the best.",
         "culture_paragraph_2": "We believe lasting growth comes from the values we practice every day, in our relationships, our work, and the standards we set for ourselves.",
-        "culture_image": "shopify://shop_images/culture.png",
+        "culture_image": "shopify://shop_images/c8c92ae5cbaaf511dcfd92c8c79d0bfc35afe3f7.jpg",
         "certificates_heading": "Our Certifications",
         "certificates_subheading": "<p>Our facilities, processes, and operations are supported by international certifications. Explore our commitment to consistency, safety, and responsible production.</p>",
         "executive_heading": "The Leaders Behind Our Vision /A Shared Purpose ",
@@ -598,16 +621,21 @@
         "people_subheading": "Sulalat is home to a team of certified Q-graders, international judges, roasters, chocolatiers, gelato specialists, educators, and operational professionals.",
         "partners_heading": "Available Near You",
         "partners_subheading": "Find our products across the Kingdom's leading retailers and platforms.",
+        "partners_supplier_heading": "Our Suppliers",
+        "partners_supplier_subheading": "We work with trusted suppliers who share our standards for quality and care",
         "partners_distributor_label": "Distributor",
         "partners_supplier_label": "Supplier",
         "careers_why_heading": "Join the People Behind the Craft ",
         "careers_why_text": "Sulalat’s products are known for the thoughtful detail our team brings to everything we do. With an ever-growing portfolio, we’re always looking for more people who care about quality, skill, and flavor.",
-        "careers_image": "shopify://shop_images/c27f2c2946c2a29be23158a7350ae8c6544e7c08.png",
+        "careers_image": "shopify://shop_images/909c7bd9f54f1ff3f3ba0b85fbc10e945aa14681.jpg",
         "careers_positions_heading": "View Open Roles ",
         "careers_positions_subheading": "Explore current openings at Sulalat. Feel at home with a team that values curiosity, collaboration, and continuous growth.",
         "careers_detail_label": "Job Detail",
         "careers_apply_heading": "Apply Online",
         "careers_browse_label": "Browse",
+        "cloudinary_cloud_name": "fifebgtq",
+        "cloudinary_upload_preset": "ml_default",
+        "cloudinary_folder": "careers/resumes",
         "careers_submit_label": "Submit",
         "careers_success_message": "Thanks — your application has been submitted."
       }

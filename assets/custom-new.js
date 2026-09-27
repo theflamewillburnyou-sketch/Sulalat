@@ -355,3 +355,168 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  function initShopifyFormStyles() {
+    const formEmbed = document.querySelector("shopify-forms-embed");
+
+    if (!formEmbed) {
+      setTimeout(initShopifyFormStyles, 300);
+      return;
+    }
+
+    const shadow = formEmbed.shadowRoot;
+
+    if (!shadow) {
+      setTimeout(initShopifyFormStyles, 300);
+      return;
+    }
+
+    // Prevent duplicate styles
+    if (shadow.querySelector("#sulalat-custom-form-style")) {
+      return;
+    }
+
+    const style = document.createElement("style");
+    style.id = "sulalat-custom-form-style";
+
+    style.textContent = `
+
+      /* =========================
+         SULALAT FIGMA FORM
+         ========================= */
+
+      form {
+        gap: 10px !important;
+      }
+
+      /* INPUTS */
+      input:not([type="checkbox"]):not([type="radio"]),
+      select,
+      textarea {
+        width: 100% !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        padding: 0 16px !important;
+        border: 1px solid #dedede !important;
+        border-radius: 999px !important;
+        background: #ffffff !important;
+        color: #202020 !important;
+        font-family: inherit !important;
+        font-size: 16px !important;
+        font-weight: 400 !important;
+        outline: none !important;
+        box-shadow: none !important;
+        box-sizing: border-box !important;
+        transition:
+          border-color .25s ease,
+          box-shadow .25s ease !important;
+      }
+
+      form label {
+        font-size: 16px !important;
+      }
+
+
+      /* PLACEHOLDER */
+      input::placeholder,
+      textarea::placeholder {
+        color: #9c9c9c !important;
+        opacity: 1 !important;
+      }
+
+
+      /* FOCUS */
+      input:not([type="checkbox"]):not([type="radio"]):focus,
+      select:focus,
+      textarea:focus {
+        border-color: #53c295 !important;
+        box-shadow: 0 0 0 2px rgba(83,194,149,.10) !important;
+      }
+
+
+      /* CHECKBOX */
+      input[type="checkbox"] {
+        width: 15px !important;
+        height: 15px !important;
+
+        accent-color: #53c295 !important;
+      }
+
+
+      /* LABEL */
+      label {
+        font-family: inherit !important;
+        font-size: 12px !important;
+        font-weight: 400 !important;
+        color: #555555 !important;
+      }
+
+
+      /* LINKS */
+      a {
+        color: #53c295 !important;
+        text-decoration: none !important;
+      }
+
+
+      /* SUBMIT BUTTON */
+      button[type="submit"] {
+        width: auto !important;
+        min-width: 125px !important;
+        min-height: 42px !important;
+
+        padding: 10px 28px !important;
+
+        border: 1px solid #53c295 !important;
+        border-radius: 50px !important;
+
+        background: #53c295 !important;
+        color: #ffffff !important;
+
+        font-family: inherit !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
+
+        box-shadow: none !important;
+
+        cursor: pointer !important;
+
+        transition:
+          background .25s ease,
+          color .25s ease,
+          border-color .25s ease !important;
+      }
+
+
+      button[type="submit"]:hover {
+        background: #ffffff !important;
+        color: #53c295 !important;
+      }
+
+    `;
+
+    shadow.appendChild(style);
+
+    console.log("Sulalat Shopify Form styles added");
+  }
+
+
+  /*
+   * Shopify Forms loads asynchronously,
+   * so run immediately + watch DOM.
+   */
+  initShopifyFormStyles();
+
+  const observer = new MutationObserver(function () {
+    initShopifyFormStyles();
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+});

@@ -12,11 +12,11 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3.png",
+        "background_image": "shopify://shop_images/e9a68910446d64d82ba27f8cd1ca7fcec629efb8.jpg",
         "overlay_color": "#00000073",
         "subtitle": "Contact",
-        "heading": "<h1>Start the Conversation </h1>",
-        "text": "<p>Explore our products, plan a new café, or get the support you need in the hospitality sector. Our team is here to help.</p>",
+        "heading": "<h1>Start the Conversation&nbsp;</h1>",
+        "text": "<p>Explore our products, plan a new café, or get the support you need in the hospitality sector.&nbsp;Our team is here to help.</p>",
         "min_height": 520,
         "min_height_mobile": 400,
         "padding_top": 120,
@@ -40,7 +40,7 @@
         "cloudinary_folder": "contact/documents",
         "show_social": true,
         "social_heading": "Follow Our Journey",
-        "card_image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504_da8d9e46-c662-44a8-bb5f-85830e1eb163.png",
+        "card_image": "shopify://shop_images/a313eb217a0d42c3e6ed88b641d7c9c0b2b763c9.jpg",
         "email": "info@sulalat.com",
         "phone": "+966 56 440 0407",
         "address": "2329 Makkah Al Mukarramah Branch Road Store #2 Ground floor, Najm al Qurais Building, Riyadh 12821",

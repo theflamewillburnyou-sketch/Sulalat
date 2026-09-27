@@ -142,19 +142,16 @@
     }
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__heading {
-      margin: 0 0 28px;
       text-align: center;
-      font-size: clamp(28px, 3vw, 40px);
-      line-height: 1.2;
-      font-weight: 600;
     }
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__filters {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
-      gap: 14px;
+      gap: 15px;
       align-items: stretch;
-      margin-bottom: 22px;
+      max-width: 1107px;
+      margin: 40px auto;
     }
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__field {
@@ -164,18 +161,24 @@
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select {
       width: 100%;
-      appearance: none;
-      -webkit-appearance: none;
-      height: 52px;
-      padding: 0 44px 0 18px;
-      border: 1px solid #d8d8d8;
-      border-radius: 10px;
+      padding: 10px 30px;
+      height: 43px;
+      border: 1px solid #E6E6E6;
+      border-radius: 999px;
       background: #fff;
-      color: #1a1a1a;
-      font-size: 15px;
-      line-height: 1.3;
-      cursor: pointer;
+      color: #141211;
+      font-family: inherit;
+      outline: none;
+      appearance: none;
+      font-size: 16px;
+      font-weight:400;
     }
+
+    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select::placeholder{
+      color: #676767;
+    }
+
+   
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__select:disabled {
       opacity: 0.55;
@@ -193,14 +196,18 @@
       position: absolute;
       top: 50%;
       right: 16px;
-      width: 12px;
-      height: 12px;
+      width: 20px;
+      height: 20px;
       transform: translateY(-50%);
       pointer-events: none;
-      color: #6b6b6b;
+      color: #000000;
+    }
+    
+    .sulalat-store-locator__chevron path {
+      stroke-width: 1px;
     }
 
-    .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search {
+    {% comment %} .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search {
       height: 52px;
       min-width: 140px;
       padding: 0 28px;
@@ -216,7 +223,7 @@
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__search:hover {
       filter: brightness(0.96);
-    }
+    } {% endcomment %}
 
     .sulalat-store-locator[data-section-id="{{ section.id }}"] .sulalat-store-locator__map {
       position: relative;
@@ -280,7 +287,9 @@
 
   <div class="container">
     {%- if section.settings.heading != blank -%}
-      <h2 class="sulalat-store-locator__heading">{{ section.settings.heading | escape }}</h2>
+      <div class="section-title">
+        <h2 class="sulalat-store-locator__heading">{{ section.settings.heading | escape }}</h2>
+      </div>
     {%- endif -%}
 
     {%- if has_stores -%}
@@ -327,7 +336,7 @@
             </svg>
           </div>
 
-          <button type="submit" class="sulalat-store-locator__search">
+          <button type="submit" class="sulalat-store-locator__search primary-btn">
             {{ section.settings.search_label | escape }}
           </button>
         </form>

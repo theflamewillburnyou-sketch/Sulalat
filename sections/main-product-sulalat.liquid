@@ -50,7 +50,9 @@
       display: grid;
       grid-template-columns: 88px minmax(0, 1fr);
       gap: 16px;
-      align-items: start;
+      align-items:center;
+      position: sticky;
+      top: 170px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumbs {
@@ -150,24 +152,25 @@
 
     /* Info */
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__title {
-      margin: 0 0 12px;
-      font-size: clamp(28px, 3vw, 40px);
+      margin: 0 0 15px;
+      font-size: clamp(18px, 2.5vw, 26px);
       line-height: 1.15;
-      font-weight: 700;
+      font-weight: 400;
       letter-spacing: -0.02em;
+      color:#141211;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__short {
       margin: 0 0 10px;
       font-size: 16px;
-      color: #333;
+      color: #535353;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__desc {
       margin: 0 0 20px;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.55;
-      color: #555;
+      color: #141211;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__desc p {
@@ -308,7 +311,10 @@
       grid-template-columns: 1fr;
     }
 
-    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn {
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn {
+      width:100%;
+    }
+    {% comment %} .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -345,7 +351,7 @@
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn--outline:hover {
       background: color-mix(in srgb, var(--sulalat-pdp-accent, #53c295) 8%, white);
-    }
+    } {% endcomment %}
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn:disabled {
       opacity: 0.45;
@@ -357,23 +363,25 @@
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk {
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 22px 24px;
-      background: #fafafa;
+      border: 1px solid #D8D8D8;
+      border-radius: 12px;
+      padding: 30px;
+      background: #F6F6F6;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-title {
       margin: 0 0 8px;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 400;
+      color:#141211;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-text {
       margin: 0 0 10px;
       font-size: 14px;
       line-height: 1.5;
-      color: #666;
+      color:#141211;
+      letter-spacing:-1%;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__bulk-link {
@@ -381,6 +389,7 @@
       font-weight: 600;
       text-decoration: underline;
       text-underline-offset: 3px;
+      font-size: 16px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__error {
@@ -814,7 +823,7 @@
                       {% if block.settings.show_buy_now %}
                         <button
                           type="button"
-                          class="sulalat-pdp__btn sulalat-pdp__btn--primary"
+                          class="sulalat-pdp__btn primary-btn"
                           data-buy-now
                           {% unless current_variant.available %}disabled{% endunless %}
                         >
@@ -824,7 +833,7 @@
                       <button
                         type="submit"
                         name="add"
-                        class="sulalat-pdp__btn sulalat-pdp__btn--outline"
+                        class="sulalat-pdp__btn sulalat-btn--outline"
                         data-add-to-cart-text="{{ block.settings.add_to_cart_label | escape }}"
                         {% unless current_variant.available %}disabled{% endunless %}
                       >
@@ -841,11 +850,11 @@
                   {% if block.settings.label != blank %}
                     <div class="sulalat-pdp__block sulalat-pdp__subscribe" {{ block.shopify_attributes }}>
                       {% if block.settings.link != blank %}
-                        <a class="sulalat-pdp__btn sulalat-pdp__btn--primary" href="{{ block.settings.link }}">
+                        <a class="sulalat-pdp__btn primary-btn" href="{{ block.settings.link }}">
                           {{ block.settings.label | escape }}
                         </a>
                       {% else %}
-                        <button type="button" class="sulalat-pdp__btn sulalat-pdp__btn--primary" data-subscribe-btn>
+                        <button type="button" class="sulalat-pdp__btn primary-btn" data-subscribe-btn>
                           {{ block.settings.label | escape }}
                         </button>
                       {% endif %}

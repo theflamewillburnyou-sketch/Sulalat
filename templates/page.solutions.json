@@ -12,11 +12,11 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/28e1c5b43866f2dc3a2496fa0241d8ed53c743cf.png",
+        "background_image": "shopify://shop_images/0640ce0146069364b09c921618c36908e1747b8b.jpg",
         "overlay_color": "#00000073",
         "subtitle": "B2B Solutions",
-        "heading": "<p>Built Around the Needs of Hospitality </p>",
-        "text": "<p>Explore end-to-end B2B solutions across specialty coffee, craft chocolate, artisan gelato, and café operations, backed by 13 years of expertise and in-house production. </p>",
+        "heading": "<p>Built Around the Needs of Hospitality&nbsp;</p>",
+        "text": "<p>Explore end-to-end B2B solutions across specialty coffee, craft chocolate, artisan gelato, and café operations, backed by 13 years of expertise and in-house production.&nbsp;</p>",
         "min_height": 520,
         "min_height_mobile": 420,
         "padding_top": 120,
@@ -38,7 +38,7 @@
             "text": "Find rare harvests and everyday favorites selected through more than 88 international auctions and global farms. Each coffee is chosen with regional tastes and hospitality environments in mind.",
             "button_label": "Explore the Collection →",
             "button_link": "shopify://pages/shop",
-            "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946.png"
+            "image": "shopify://shop_images/5de2c710cd60795627573500a6e375bb8c0b43be.jpg"
           }
         },
         "coffee_ground": {
@@ -81,7 +81,7 @@
             "text": "Shop professional espresso machines, grinders, and brewing systems chosen for performance under daily demand.",
             "button_label": "Equip Your Café →",
             "button_link": "shopify://pages/shop",
-            "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5.png"
+            "image": "shopify://shop_images/82ccd617811ae45670062fbfa2c8bdd8b55322af.jpg"
           }
         },
         "equip_home": {
@@ -121,7 +121,7 @@
         "text": "Elevate every menu with our chocolate portfolio. Developed for pastry chefs, cafés, and hospitality businesses, SENMAR offers versatile formats for desserts, beverages, baking, and menu innovation.",
         "button_label": "Discover SENMAR →",
         "button_link": "shopify://pages/chocolate",
-        "image": "shopify://shop_images/c84ebf8026b51ddb6fb7085d2b165760da5a841b.png",
+        "image": "shopify://shop_images/8c0965ac2338300fbec63cd1367828de85892fc9.png",
         "media_position": "right",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
@@ -139,7 +139,7 @@
         "text": "Expand your menu with artisan gelato developed for cafés, bakeries, and hospitality venues looking to offer a memorable experience.",
         "button_label": "Explore Salve →",
         "button_link": "shopify://pages/bakery-gelato",
-        "image": "shopify://shop_images/d51a639cb5f555ac781efe0820f1917bca9c19be.png",
+        "image": "shopify://shop_images/37f237507ad2cc5bce0e6919cc042a0dfefe5315.jpg",
         "media_position": "left",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
@@ -157,7 +157,7 @@
         "text": "Access all you need to serve well, every day. Our team works alongside yours, training baristas, setting up workflows, calibrating equipment, and supporting product development for as long as you need us.",
         "button_label": "Support Your Team →",
         "button_link": "shopify://pages/cafe-consultancy",
-        "image": "shopify://shop_images/3106ed784771d5294d1af226f2798c57910ff085.png",
+        "image": "shopify://shop_images/7689e70e0aa769f4e6bd8610d986c69925f3f5bc.jpg",
         "media_position": "right",
         "background_color": "#ffffff",
         "card_background": "#eaf8f1",
@@ -170,7 +170,7 @@
     "solution_inquiry": {
       "type": "solution-inquiry",
       "settings": {
-        "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
+        "image": "shopify://shop_images/9665f007aec6887c1e0af79cd200ba53a48c0838.jpg",
         "heading": "Let’s Build Your Menu Together ",
         "text": "Share your project details, and our team will take it from there.",
         "product_options": "Coffee\nChocolate\nGelato\nBakery\nEquipment",

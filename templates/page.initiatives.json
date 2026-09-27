@@ -12,10 +12,10 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "background_image": "shopify://shop_images/78ff149786183d64c6f0c12d6da71d4d982a4283.jpg",
         "overlay_color": "#00000073",
         "subtitle": "",
-        "heading": "<h1>Beyond the Product </h1>",
+        "heading": "<h1>Beyond the Product&nbsp;</h1>",
         "text": "<p>Discover how we invest in the farmers, cafés, and communities that make the specialty sector what it is today.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
@@ -30,7 +30,7 @@
     "initiatives_intro": {
       "type": "initiatives-intro",
       "settings": {
-        "image": "shopify://shop_images/a198dd2949b06cc46afd8b1b100f0f2ce75aadd7.png",
+        "image": "shopify://shop_images/e872892e4785220ada9fdc46b6dda5a7e1ccc2d0.png",
         "heading": "A Story of Hearts Before Headlines",
         "subheading": "Sustainability is an act of gratitude.",
         "text": "<p>Our direct relationships and auction participation support farmers who prioritize quality, transparency, and ethical practice. The care behind our products also guides how we build partnerships, contribute to communities, and create long-term value throughout our ecosystem.</p>",

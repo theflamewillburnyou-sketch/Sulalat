@@ -12,7 +12,7 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/82cfc73d1cb5398dab1f8212ae6567e3cbafffcd.png",
+        "background_image": "shopify://shop_images/4e5839e2ae4888bada02edd010c0f8b8cce28297.png",
         "overlay_color": "#00000073",
         "subtitle": "",
         "heading": "<p>Chocolate</p>",
@@ -30,7 +30,7 @@
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
-        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "image": "shopify://shop_images/05f75a575a20fe64763347128a7d17e74b070a6e.jpg",
         "heading": "Where craftsmanship meets cacao",
         "subheading": "",
         "text": "<p>At Sulalat, chocolate-making is both an art and a science. Every batch begins with carefully selected cacao beans, responsibly sourced from trusted origins. Our bean-to-bar process allows complete control over flavor, texture, and quality — ensuring excellence at every stage.</p><p>We combine modern techniques with deep respect for traditional chocolate craftsmanship to create products that meet the expectations of chefs, bakers, and chocolate lovers alike.</p>",
@@ -83,7 +83,7 @@
         "objective_5"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/4fc0a709ecba78922c1cb56fa50b53ec4afe18f3.png",
+        "background_image": "shopify://shop_images/dafc43511245814c549dcda993be2243d6cb1937.png",
         "overlay_color": "#00000099",
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
@@ -102,7 +102,7 @@
       "settings": {
         "heading": "Be Part of the Change",
         "text": "Register below to stay connected with Sulalat’s sustainability initiatives, product innovations, and industry insights. Together, we can shape a more responsible and flavorful future.",
-        "image": "shopify://shop_images/7a1dfbf1d34a6165ca3f8b44873f6384df6f7082.png",
+        "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
         "phone_placeholder": "Contact Number*",

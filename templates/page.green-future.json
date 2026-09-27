@@ -30,7 +30,7 @@
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
-        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "image": "shopify://shop_images/e6c548605fb785f20d9a62448e95aceb22e3eaf5.png",
         "heading": "Where knowledge and passion brew success",
         "subheading": "",
         "text": "<p>At Sulalat, growth and responsibility go hand in hand. Through our Sustainability & Green Future initiative, we invest in practices that protect the environment while supporting the communities we work with.</p><p>From sourcing to production, every step is guided by a commitment to reduce impact, elevate quality, and build a more sustainable specialty coffee future for the Kingdom.</p>",
@@ -104,7 +104,7 @@
         "objective_8"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b.jpg",
+        "background_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b_ca7cadbc-4be4-46f3-ac0d-4747cc68249a.jpg",
         "overlay_color": "#00000099",
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
@@ -123,7 +123,7 @@
       "settings": {
         "heading": "Be Part of the Change",
         "text": "Stay connected with Sulalat’s sustainability journey and upcoming initiatives.",
-        "image": "shopify://shop_images/image_408.png",
+        "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
         "phone_placeholder": "Contact Number*",

@@ -12,7 +12,7 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/2caf8bf6ec05dbc0dd21dd243bbb93a20111d9d0.jpg",
+        "background_image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef_2ffd1e83-45cc-445f-ba02-22defe8fb1f9.png",
         "overlay_color": "#00000073",
         "subtitle": "",
         "heading": "<p>Routine Maintenance</p>",
@@ -30,7 +30,7 @@
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
-        "image": "shopify://shop_images/90df3af03fe69750a4e3bc75fb6ad38fcce0c273.png",
+        "image": "shopify://shop_images/9823a3fc0f4d4e948d78320d091ccbad59022970.png",
         "heading": "Prevent issues before they start",
         "subheading": "",
         "text": "<p>Routine Maintenance from Sulalat helps cafes and hospitality partners protect equipment performance with planned service visits and clear checklists.</p><p>Regular care reduces downtime, extends machine life, and keeps every cup consistent for your guests.</p>",
@@ -104,7 +104,7 @@
         "objective_8"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b.jpg",
+        "background_image": "shopify://shop_images/7e68cce5fd28ccfc7723732cd407dc1ae534da1b.png",
         "overlay_color": "#00000099",
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
@@ -123,7 +123,7 @@
       "settings": {
         "heading": "Be Part of the Change",
         "text": "Stay connected with Sulalat's routine maintenance programs and service plans.",
-        "image": "shopify://shop_images/image_408.png",
+        "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
         "phone_placeholder": "Contact Number*",

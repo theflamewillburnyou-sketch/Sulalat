@@ -25,6 +25,34 @@
         {%- endif -%}
       </div>
     {%- endif -%}
+    <div class="cst-wishlist-header">
+      <div class="container">
+        <div class="wishlist-header-wrap">
+          <div class="section-title">
+            <h2>My Wishlist</h2>
+          </div>
+          <div class="sulalat-wishlist-page__wishlist-actions">
+            <button
+              type="button"
+              class="sulalat-wishlist-page__remove-all primary-btn"
+              data-wishlist-remove-all
+            >
+              Remove All
+            </button>
+      
+            <button
+              type="button"
+              class="sulalat-wishlist-page__add-all sulalat-btn--outline"
+              data-wishlist-add-all
+            >
+              Add All To Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
 
     <div class="sulalat-wishlist-page__app">
       {%- if section.blocks.size > 0 -%}
@@ -40,64 +68,271 @@
   </div>
 
   <style>
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] {
-      padding: var(--wl-pad-top) 0 var(--wl-pad-bottom);
-      background: #fff;
-      position: relative;
-      z-index: 0;
-    }
+/* =========================
+   WishlistSuite - Figma Card
+   ========================= */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__inner{
+  margin-bottom:40px !important;
+}
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wishlist-header-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__inner {
-      width: min(1200px, calc(100% - 40px));
-      margin: 0 auto;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__wishlist-actions button {
+    padding: 13px 20px !important;
+    height: 40px;
+    font-size: 16px;
+    font-family: var(--secondary-font);
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__header {
-      margin-bottom: 28px;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-header-container {
+    display: none;
+}
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-action-bar {
+  display: none !important;
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__title {
-      margin: 0 0 8px;
-      color: #1a1a1a;
-      font-size: clamp(28px, 3vw, 36px);
-      font-weight: 700;
-      line-height: 1.2;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__subtitle {
-      margin: 0;
-      color: #666;
-      font-size: 15px;
-      line-height: 1.5;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid-item {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__app {
-      min-height: 200px;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-wrapper,
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card {
+  width: 100% !important;
+  height: 100%;
+}
 
-    /* Keep app-injected wishlist UI in normal document flow under the sticky header */
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__app > * {
-      position: relative !important;
-      top: auto !important;
-      margin-top: 0 !important;
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card {
+  display: flex !important;
+  flex-direction: column;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
 
-    .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__empty {
-      padding: 40px 24px;
-      border: 1px solid #ececec;
-      border-radius: 16px;
-      color: #666;
-      font-size: 14px;
-      line-height: 1.55;
-      text-align: center;
-    }
+/* Product image box */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-inner {
+  position: relative;
+  width: 100%;
+}
 
-    @media (max-width: 749px) {
-      .sulalat-wishlist-page[data-section-id="{{ section.id }}"] {
-        padding: var(--wl-pad-top-m) 0 var(--wl-pad-bottom-m);
-      }
-    }
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background: #f7f7f7;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
+.wls-card:hover .wls-card-img {
+  transform: scale(1.025);
+}
+
+/* Price pill - top left */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-sale-badge {
+  position: absolute !important;
+  top: 16px !important;
+  left: 16px !important;
+  right: auto !important;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 32px;
+  padding: 6px 14px;
+
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #53c295 !important;
+  color: #fff !important;
+
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1;
+}
+
+/* Remove button */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
+.wls-card-inner button:not(.wls-atc-btn),
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
+.wls-card-inner .wls-remove-btn {
+  border: 0;
+}
+
+/* Content */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-content {
+  display: flex !important;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 0 0 !important;
+  background: transparent !important;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-info {
+  flex: 1;
+}
+
+/* Vendor / small text */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-vendor {
+  margin: 0 0 8px;
+  color: #151515;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Product title */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-title {
+  margin: 0 0 10px !important;
+  color: #111 !important;
+  font-size: 20px !important;
+  font-weight: 400 !important;
+  line-height: 1.3 !important;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-title a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/* Existing app price/variant text */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-price,
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-variant {
+  margin: 0 0 8px !important;
+  color: #5f5f5f !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* Actions */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-actions {
+  margin-top: 20px !important;
+}
+
+/* Add to cart */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
+.wls-atc-btn.sulalat-btn--outline {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100% !important;
+    max-width:135px;
+    margin: 0 !important;
+    padding: 12px 20px !important;
+    border: 1px solid #53c295 !important;
+    border-radius: 999px !important;
+    background: rgb(83 194 149 / 10%) !important;
+    color: #36ad7d !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s linear;
+    font-family: var(--secondary-font);
+    box-shadow: none;
+    transform: none;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
+.wls-atc-btn.sulalat-btn--outline:hover {
+  color: var(--brand-primary, #53c295);
+}
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-wrapper:hover {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Tablet */
+@media (max-width: 991px) {
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px 18px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 749px) {
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-title {
+    font-size: 18px !important;
+  }
+
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-sale-badge {
+    top: 12px !important;
+    left: 12px !important;
+  }
+}
   </style>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const wishlistApp = document.querySelector(
+      '.sulalat-wishlist-page[data-section-id="{{ section.id }}"]'
+    );
+
+    if (!wishlistApp) return;
+
+    function addPrimaryBtnClass() {
+      wishlistApp.querySelectorAll('.wls-atc-btn').forEach(function (btn) {
+        btn.classList.add('sulalat-btn--outline');
+      });
+    }
+
+    // If wishlist cards are already rendered
+    addPrimaryBtnClass();
+
+    // Wishlist app may render/re-render cards dynamically
+    const observer = new MutationObserver(function () {
+      addPrimaryBtnClass();
+    });
+
+    observer.observe(wishlistApp, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>
 </section>
 
 {% schema %}

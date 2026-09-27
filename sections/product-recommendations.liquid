@@ -16,21 +16,13 @@
     background: {{ section.settings.background_color }};
     font-family: var(--body-font-family);
     overflow: hidden;
+    display:block;
   }
 
   .sulalat-related[data-section-id="{{ section.id }}"] .container {
     max-width: var(--brand-container-max, 1440px);
     margin: 0 auto;
     padding: 0 var(--brand-container-padding-x, 20px);
-  }
-
-  .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__heading {
-    margin: 0 0 36px;
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.2;
-    font-weight: 600;
-    color: #000;
-    letter-spacing: -0.02em;
   }
 
   .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__heading.text-center {
@@ -324,9 +316,11 @@
   {%- if recommendations.performed and recommendations.products_count > 0 -%}
     <div class="container">
       {% if section.settings.heading != blank %}
-        <h2 class="sulalat-related__heading {{ section.settings.heading_align }}">
-          {{ section.settings.heading | escape }}
-        </h2>
+        <div class="section-title">
+          <h2 class="sulalat-related__heading {{ section.settings.heading_align }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        </div>
       {% endif %}
 
       <div class="sulalat-related__slider-wrap">

@@ -12,7 +12,7 @@
     "experience_hero": {
       "type": "experience-sulalat-hero",
       "settings": {
-        "background_image": "shopify://shop_images/892358b02182d5ab1e23104556cb4d58132eda40.png",
+        "background_image": "shopify://shop_images/0cd0a72b369fa1411b00b9a3eb63eb785f3516c6.jpg",
         "overlay_color": "#00000073",
         "heading": "<p>The Sulalat Experience</p>",
         "text": "<p>Experience sourcing, roasting, equipment, and training under one roof. Our 4,000 sqm B2B space offers an exclusive window into our world.</p>",
@@ -147,7 +147,7 @@
         "offering_pAmqfG": {
           "type": "offering",
           "settings": {
-            "image": "shopify://shop_images/917afd115aad6694cb3e45b977d1c6d899c5b3c8.png",
+            "image": "shopify://shop_images/0c70e1b0c44fd004c9dca73129db16bbec9de225.jpg",
             "title": "Specialty Coffee",
             "button_label": "Download Menu",
             "button_link": ""
@@ -156,7 +156,7 @@
         "offering_6CqAiW": {
           "type": "offering",
           "settings": {
-            "image": "shopify://shop_images/1ba0946644a7aeb839e0c3e37e8abcdcff4014e4.png",
+            "image": "shopify://shop_images/d1211e2d355d68dceab3a35b8034649a9bb73c8f.jpg",
             "title": "Artisan Gelato",
             "button_label": "Download Menu",
             "button_link": ""
@@ -165,7 +165,7 @@
         "offering_q4tEVT": {
           "type": "offering",
           "settings": {
-            "image": "shopify://shop_images/db8f420a69b49afaaf0f77fdb4329a65f87d4fa8.png",
+            "image": "shopify://shop_images/da212c06fb391e7edeb4ee20a96b4623bdb99459.jpg",
             "title": "Craft Chocolate",
             "button_label": "Download Menu",
             "button_link": ""
@@ -174,7 +174,7 @@
         "offering_PNg3kX": {
           "type": "offering",
           "settings": {
-            "image": "shopify://shop_images/image_397.png",
+            "image": "shopify://shop_images/68991e2f3649fa7d1bc9538e02b670007e1c6fab.jpg",
             "title": "Tools & Equipment",
             "button_label": "Download Menu",
             "button_link": ""
@@ -200,7 +200,7 @@
       "type": "experience-sulalat-booking",
       "name": "Experience booking",
       "settings": {
-        "image": "shopify://shop_images/6e73d58c507d324964629746ec1136f78bcdf23a.png",
+        "image": "shopify://shop_images/a126a1e14e2b3700708da6dd0b30bbee7dd31fdd.jpg",
         "heading": "Book Your Experience",
         "text": "Choose an experience, set your time, and let us ensure you make the most of your visit.",
         "experience_placeholder": "Experience",
