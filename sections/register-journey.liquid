@@ -1,0 +1,403 @@
+<section
+  class="sulalat-reg"
+  data-section-id="{{ section.id }}"
+  style="
+    --reg-accent: {{ section.settings.accent_color }};
+    --reg-accent-hover: {{ section.settings.accent_hover_color }};
+    --reg-selected-bg: {{ section.settings.selected_bg }};
+    --reg-heading: {{ section.settings.heading_color }};
+    --reg-text: {{ section.settings.text_color }};
+    --reg-bg: {{ section.settings.bg_color }};
+    --reg-pt: {{ section.settings.padding_top }}px;
+    --reg-pb: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <style>
+    .sulalat-reg[data-section-id="{{ section.id }}"] {
+      background: var(--reg-bg);
+      padding: var(--reg-pt) 0 var(--reg-pb);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__inner {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__head {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__title {
+      margin: 0 0 12px;
+      font-family: var(--heading-font-family);
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--reg-heading);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__subtitle {
+      margin: 0;
+      font-family: var(--body-font-family);
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--reg-text);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__option {
+      position: relative;
+      display: block;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+      pointer-events: none;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 32px 28px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__card:hover {
+      border-color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:focus-visible + .sulalat-reg__card {
+      outline: 2px solid var(--reg-accent);
+      outline-offset: 3px;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card {
+      background: var(--reg-selected-bg);
+      border-color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #f3f3f3;
+      border: 1px solid #dbdad9;
+      color: var(--reg-accent);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon svg {
+      width: 34px;
+      height: 34px;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card .sulalat-reg__icon {
+      background: rgba(83, 194, 149, 0.16);
+      border-color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__body {
+      min-width: 0;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__type {
+      display: block;
+      margin: 0 0 6px;
+      font-family: var(--heading-font-family);
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--reg-heading);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__label {
+      display: block;
+      margin: 0 0 10px;
+      font-family: var(--body-font-family);
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__desc {
+      display: block;
+      margin: 0;
+      font-family: var(--body-font-family);
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--reg-text);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__check {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #f3f3f3;
+      border: 1px solid #dbdad9;
+      color: #ffffff;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__check svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card .sulalat-reg__check {
+      background: var(--reg-accent);
+      border-color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card .sulalat-reg__check svg {
+      opacity: 1;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 220px;
+      padding: 14px 36px;
+      box-sizing: border-box;
+      font-family: var(--body-font-family);
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.2;
+      text-decoration: none;
+      color: #ffffff;
+      background: var(--reg-accent);
+      border: 1.5px solid var(--reg-accent);
+      border-radius: 999px;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:hover,
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:focus-visible {
+      background: #ffffff;
+      color: var(--reg-accent);
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:focus-visible {
+      outline: 2px solid var(--reg-accent);
+      outline-offset: 3px;
+    }
+    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+    @media (max-width: 989px) {
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__card {
+        gap: 20px;
+        padding: 28px 20px;
+      }
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon {
+        width: 68px;
+        height: 68px;
+      }
+    }
+    @media (max-width: 749px) {
+      .sulalat-reg[data-section-id="{{ section.id }}"] {
+        padding: calc(var(--reg-pt) * 0.6) 0 calc(var(--reg-pb) * 0.6);
+      }
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__head {
+        margin-bottom: 28px;
+      }
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__options {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__actions {
+        margin-top: 28px;
+      }
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn {
+        width: 100%;
+      }
+    }
+  </style>
+
+  {%- liquid
+    assign b2c_url = routes.account_login_url
+    assign b2b_url = '/pages/b2b-register'
+    if section.settings.default_selected == 'b2b'
+      assign start_url = b2b_url
+    else
+      assign start_url = b2c_url
+    endif
+  -%}
+
+  <div class="container">
+    <div class="sulalat-reg__inner">
+      <div class="sulalat-reg__head">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="sulalat-reg__title">{{ section.settings.heading | escape }}</h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="sulalat-reg__subtitle">{{ section.settings.subheading | escape }}</p>
+        {%- endif -%}
+      </div>
+
+      <fieldset class="sulalat-reg__options">
+        <legend class="sulalat-reg__sr">{{ section.settings.heading | escape }}</legend>
+
+        <label class="sulalat-reg__option">
+          <input
+            class="sulalat-reg__input"
+            type="radio"
+            name="register_type_{{ section.id }}"
+            value="b2c"
+            data-url="{{ b2c_url }}"
+            {% if section.settings.default_selected != 'b2b' %}checked{% endif %}
+          >
+          <span class="sulalat-reg__card">
+            <span class="sulalat-reg__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21c0-4.2 3.6-7 8-7s8 2.8 8 7"/>
+              </svg>
+            </span>
+            <span class="sulalat-reg__body">
+              <span class="sulalat-reg__type">{{ section.settings.b2c_title | escape }}</span>
+              <span class="sulalat-reg__label">{{ section.settings.b2c_label | escape }}</span>
+              <span class="sulalat-reg__desc">{{ section.settings.b2c_desc | escape }}</span>
+            </span>
+            <span class="sulalat-reg__check" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg>
+            </span>
+          </span>
+        </label>
+
+        <label class="sulalat-reg__option">
+          <input
+            class="sulalat-reg__input"
+            type="radio"
+            name="register_type_{{ section.id }}"
+            value="b2b"
+            data-url="{{ b2b_url }}"
+            {% if section.settings.default_selected == 'b2b' %}checked{% endif %}
+          >
+          <span class="sulalat-reg__card">
+            <span class="sulalat-reg__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="7" width="18" height="13" rx="2"/>
+                <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>
+                <path d="M3 13h18"/>
+                <path d="M11 13h2v2h-2z"/>
+              </svg>
+            </span>
+            <span class="sulalat-reg__body">
+              <span class="sulalat-reg__type">{{ section.settings.b2b_title | escape }}</span>
+              <span class="sulalat-reg__label">{{ section.settings.b2b_label | escape }}</span>
+              <span class="sulalat-reg__desc">{{ section.settings.b2b_desc | escape }}</span>
+            </span>
+            <span class="sulalat-reg__check" aria-hidden="true">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></svg>
+            </span>
+          </span>
+        </label>
+      </fieldset>
+
+      <div class="sulalat-reg__actions">
+        <a class="sulalat-reg__btn primary-btn" href="{{ start_url }}" data-reg-continue>
+          {{ section.settings.button_label | escape }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.sulalat-reg[data-section-id="{{ section.id }}"]');
+      if (!root) return;
+      var btn = root.querySelector('[data-reg-continue]');
+      var inputs = root.querySelectorAll('.sulalat-reg__input');
+      if (!btn) return;
+
+      function syncHref() {
+        var checked = root.querySelector('.sulalat-reg__input:checked');
+        if (checked) btn.setAttribute('href', checked.getAttribute('data-url'));
+      }
+
+      inputs.forEach(function (input) {
+        input.addEventListener('change', syncHref);
+      });
+
+      btn.addEventListener('click', syncHref);
+      window.addEventListener('pageshow', syncHref);
+      syncHref();
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Register journey",
+  "tag": "div",
+  "class": "sulalat-reg-wrapper",
+  "settings": [
+    { "type": "header", "content": "Heading" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choose your registration journey" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Select the option that best describes how you want to register." },
+
+    { "type": "header", "content": "B2C card" },
+    { "type": "text", "id": "b2c_title", "label": "Title", "default": "B2C" },
+    { "type": "text", "id": "b2c_label", "label": "Label", "default": "For Individual Customers" },
+    { "type": "text", "id": "b2c_desc", "label": "Description", "default": "Personal shopping and consumer account" },
+
+    { "type": "header", "content": "B2B card" },
+    { "type": "text", "id": "b2b_title", "label": "Title", "default": "B2B" },
+    { "type": "text", "id": "b2b_label", "label": "Label", "default": "For Business Customers" },
+    { "type": "text", "id": "b2b_desc", "label": "Description", "default": "Wholesale, company, and trade accounts" },
+
+    { "type": "header", "content": "Button and default" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Continue" },
+    {
+      "type": "select",
+      "id": "default_selected",
+      "label": "Preselected option",
+      "options": [
+        { "value": "b2c", "label": "B2C" },
+        { "value": "b2b", "label": "B2B" }
+      ],
+      "default": "b2c"
+    },
+
+    { "type": "header", "content": "Colors" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#53c295" },
+    { "type": "color", "id": "accent_hover_color", "label": "Accent hover", "default": "#45ad82" },
+    { "type": "color", "id": "selected_bg", "label": "Selected card background", "default": "#e7f5ef" },
+    { "type": "color", "id": "heading_color", "label": "Heading", "default": "#1a1a1a" },
+    { "type": "color", "id": "text_color", "label": "Body text", "default": "#4a4a4a" },
+    { "type": "color", "id": "bg_color", "label": "Section background", "default": "#ffffff" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 140 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "presets": [
+    { "name": "Register journey" }
+  ]
+}
+{% endschema %}

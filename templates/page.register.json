@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+    "sections": {
+      "register_journey": {
+        "type": "register-journey",
+        "settings": {
+          "heading": "Choose your registration journey",
+          "subheading": "Select the option that best describes how you want to register.",
+          "default_selected": "b2c"
+        }
+      }
+    },
+    "order": [
+      "register_journey"
+    ]
+  }
+  

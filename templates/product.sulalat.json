@@ -24,6 +24,7 @@
         },
         "description": {
           "type": "description",
+          "disabled": true,
           "settings": {
             "truncate": 0
           }
