@@ -73,8 +73,8 @@
           "settings": {
             "show_icon": true,
             "text": "Buy 4 or more 250g bags of coffee, get 15% discount on each.",
-            "background": "#eaf8f1",
-            "text_color": "#0f6b4c"
+            "background": "#f6f6f6",
+            "text_color": "#141211"
           }
         },
         "payments": {
@@ -82,6 +82,7 @@
           "settings": {
             "installments": 4,
             "show_tabby": true,
+            "tabby_logo": "shopify://shop_images/image_416.png",
             "tabby_text_before": "4 interest-free payments of",
             "tabby_text_after": "No processing fees. Shariah-compliant.",
             "tabby_link_label": "Learn more",
@@ -89,6 +90,7 @@
             "show_tamara": true,
             "tamara_public_key": "",
             "tamara_country": "SA",
+            "tamara_logo": "shopify://shop_images/image_417.png",
             "tamara_text_before": "Pay",
             "tamara_per_month_label": "/mo",
             "tamara_text_after": "or in 4 payments. Shariah-compliant.",
@@ -115,7 +117,7 @@
         "accent_hover_color": "#45ad82",
         "media_radius": 20,
         "padding_top": 40,
-        "padding_bottom": 40
+        "padding_bottom": 100
       }
     },
     "taste_info": {
@@ -132,10 +134,10 @@
         "background_color": "#ffffff",
         "accent_color": "#53c295",
         "table_value_bg": "#eaf8f1",
-        "padding_top": 48,
-        "padding_bottom": 48,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "coffee_preparation": {
@@ -188,10 +190,10 @@
         "heading": "Coffee Preparation",
         "background_color": "#ffffff",
         "accent_color": "#53c295",
-        "padding_top": 40,
-        "padding_bottom": 80,
+        "padding_top": 100,
+        "padding_bottom": 100,
         "padding_top_mobile": 28,
-        "padding_bottom_mobile": 48
+        "padding_bottom_mobile": 72
       }
     },
     "description_tabs": {
@@ -211,10 +213,10 @@
         "background_color": "#ffffff",
         "tab_bar_background": "#f7f7f7",
         "accent_color": "#53c295",
-        "padding_top": 40,
-        "padding_bottom": 64,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 40
+        "padding_top": 0,
+        "padding_bottom": 100,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 72
       }
     },
     "store_locator": {
@@ -265,10 +267,10 @@
         "map_radius": 16,
         "background_color": "#ffffff",
         "accent_color": "#53c295",
-        "padding_top": 40,
-        "padding_bottom": 64,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 40
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0
       }
     },
     "recommendations": {
@@ -289,8 +291,8 @@
         "autoplay_delay": 4,
         "pause_on_hover": true,
         "background_color": "#ffffff",
-        "padding_top": 60,
-        "padding_bottom": 80
+        "padding_top": 100,
+        "padding_bottom": 100
       }
     }
   },

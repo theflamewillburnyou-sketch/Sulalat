@@ -356,167 +356,789 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
+// register page css through js 
 document.addEventListener("DOMContentLoaded", function () {
 
-  function initShopifyFormStyles() {
-    const formEmbed = document.querySelector("shopify-forms-embed");
+  const BLOCK_SELECTOR =
+    "#shopify-block-AY3hpdVFSOENGeEpOW__forms_inline_XiaxHt";
 
-    if (!formEmbed) {
-      setTimeout(initShopifyFormStyles, 300);
+  function initShopifyForm() {
+    const block = document.querySelector(BLOCK_SELECTOR);
+
+    if (!block) {
+      setTimeout(initShopifyForm, 300);
+      return;
+    }
+
+    const formEmbed = block.querySelector("shopify-forms-embed");
+
+    if (!formEmbed || !formEmbed.shadowRoot) {
+      setTimeout(initShopifyForm, 300);
       return;
     }
 
     const shadow = formEmbed.shadowRoot;
+    const form = shadow.querySelector("form");
 
-    if (!shadow) {
-      setTimeout(initShopifyFormStyles, 300);
+    if (!form) {
+      setTimeout(initShopifyForm, 300);
       return;
     }
 
-    // Prevent duplicate styles
-    if (shadow.querySelector("#sulalat-custom-form-style")) {
-      return;
+    function convertLabelsToPlaceholders() {
+
+  const inputs = form.querySelectorAll(
+    'input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="number"]'
+  );
+
+  inputs.forEach(function (input) {
+
+    if (input.dataset.sulalatPlaceholderInit === "true") return;
+
+    let label = null;
+
+    if (input.id) {
+      label = form.querySelector(
+        'label[for="' + CSS.escape(input.id) + '"]'
+      );
     }
 
-    const style = document.createElement("style");
-    style.id = "sulalat-custom-form-style";
+    if (!label) {
+      label = input.closest("label");
+    }
 
-    style.textContent = `
+    if (!label) {
+      let parent = input.parentElement;
 
-      /* =========================
-         SULALAT FIGMA FORM
-         ========================= */
+      for (let i = 0; i < 4 && parent; i++) {
 
-      form {
-        gap: 10px !important;
+        label = parent.querySelector("label");
+
+        if (label) break;
+
+        parent = parent.parentElement;
+      }
+    }
+
+    if (!label) return;
+
+
+    /* Get label text */
+    const labelText = label.textContent.trim();
+
+    if (labelText) {
+      input.placeholder = labelText;
+    }
+
+
+    /*
+     * Visually hide original Shopify label.
+     * Keep it in DOM for accessibility.
+     */
+    label.style.setProperty(
+      "position",
+      "absolute",
+      "important"
+    );
+
+    label.style.setProperty(
+      "width",
+      "1px",
+      "important"
+    );
+
+    label.style.setProperty(
+      "height",
+      "1px",
+      "important"
+    );
+
+    label.style.setProperty(
+      "padding",
+      "0",
+      "important"
+    );
+
+    label.style.setProperty(
+      "margin",
+      "-1px",
+      "important"
+    );
+
+    label.style.setProperty(
+      "overflow",
+      "hidden",
+      "important"
+    );
+
+    label.style.setProperty(
+      "clip",
+      "rect(0, 0, 0, 0)",
+      "important"
+    );
+
+    label.style.setProperty(
+      "white-space",
+      "nowrap",
+      "important"
+    );
+
+    label.style.setProperty(
+      "border",
+      "0",
+      "important"
+    );
+
+
+    input.dataset.sulalatPlaceholderInit = "true";
+
+  });
+
+}
+
+convertLabelsToPlaceholders();
+
+
+    /* =========================================
+       ADD CUSTOM CSS ONCE
+       ========================================= */
+
+    if (!shadow.querySelector("#sulalat-account-form-style")) {
+
+      const style = document.createElement("style");
+
+      style.id = "sulalat-account-form-style";
+
+      style.textContent = `
+
+        /* =====================================
+           MAIN EMBED
+           ===================================== */
+
+        :host {
+          display: block !important;
+          width: 100% !important;
+        }
+
+        *{
+          font-family: Roboto, sans-serif !important;
+        }
+
+        /* =====================================
+           MAIN FORM CONTAINER
+           ===================================== */
+
+        [data-sizing="form-wrapper"],
+        section[role="dialog"] {
+          width: 100% !important;
+          max-width: 1199px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          box-sizing: border-box !important;
+          font-family: Roboto, sans-serif;
+        }
+
+        ._gridItem_1q1d2_172._gridItemContent_1q1d2_257 {
+            padding: 0;
+          }
+
+          /* =====================================
+          TITLE
+          Same as .section-title h2
+          ===================================== */
+
+        h2._textHeading_2aowh_35 {
+          margin-top: 0 !important;
+          margin-bottom: 20px !important;
+          color: #141211 !important;
+          font-family: inherit !important;
+          font-size: clamp(24px, 2vw, 36px) !important;
+          font-weight: inherit !important;
+          line-height: 1.2 !important;
+        }
+
+                /* =====================================
+          SUBTITLE
+          It's free and easy
+          ===================================== */
+
+        ._textBody_2aowh_10 p {
+          color: #141211 !important;
+          font-family: inherit !important;
+          font-size: 16px !important;
+          font-weight: 400 !important;
+          line-height: 24px !important;
+          letter-spacing: -0.01em !important;
+          margin-top: 14px !important;
+          margin-bottom: 0 !important;
+        }
+
+
+        /* =====================================
+           FORM
+
+           IMPORTANT:
+           Do NOT make form itself a grid.
+           ===================================== */
+
+        form {
+          display: flex !important;
+          flex-direction: column !important;
+          width: 100% !important;
+          max-width: 1199px !important;
+          margin: 0 auto !important;
+          padding: 0 !important;
+          gap: 0 !important;
+          text-align: left !important;
+          box-sizing: border-box !important;
+        }
+
+
+        /* =====================================
+           CUSTOM FIELD GRID
+           Created by our JS
+           ===================================== */
+
+        .sulalat-account-fields {
+          display: grid !important;
+          grid-template-columns:
+            minmax(0, 1fr)
+            minmax(0, 1fr) !important;
+
+          column-gap: 12px !important;
+          row-gap: 10px !important;
+          width: 100% !important;
+          margin: 26px 0 0 !important;
+          box-sizing: border-box !important;
+        }
+
+
+        .sulalat-account-fields > * {
+          width: 100% !important;
+          min-width: 0 !important;
+
+          margin: 0 !important;
+
+          box-sizing: border-box !important;
+        }
+
+
+        /* Password stays half width */
+        .sulalat-account-fields
+        .sulalat-password-field {
+          grid-column: 1 / 2 !important;
+        }
+
+
+        /* =====================================
+           INPUT DESIGN
+           SAME AS SULALAT DASHBOARD
+           ===================================== */
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        input[type="number"],
+        select {
+
+          display: block !important;
+
+          width: 100% !important;
+
+          height: 50px !important;
+          min-height: 50px !important;
+
+          margin: 0 !important;
+
+          padding: 10px 20px !important;
+
+          border: 1px solid #E6E6E6 !important;
+          border-radius: 999px !important;
+
+          background: #ffffff !important;
+
+          color: #141211 !important;
+
+          font-family: inherit !important;
+          font-size: 16px !important;
+          font-weight: 400 !important;
+
+          line-height: normal !important;
+
+          outline: none !important;
+
+          appearance: none !important;
+          -webkit-appearance: none !important;
+
+          box-shadow: none !important;
+
+          box-sizing: border-box !important;
+
+          transition:
+            border-color .25s ease,
+            box-shadow .25s ease !important;
+        }
+
+
+        input::placeholder {
+          color: #9A9A9A !important;
+
+          font-size: 16px !important;
+          font-weight: 400 !important;
+
+          opacity: 1 !important;
+        }
+
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+
+          border-color: #53C295 !important;
+
+          box-shadow:
+            0 0 0 2px rgba(83, 194, 149, .08) !important;
+        }
+
+
+        /* =====================================
+           PHONE COUNTRY CODE
+           ===================================== */
+
+        input[type="tel"] {
+          padding-left: 20px !important;
+          padding-right: 20px !important;
+        }
+
+
+        /* =====================================
+           LABELS
+           ===================================== */
+
+        label {
+          font-family: inherit !important;
+
+          font-size: 14px !important;
+          font-weight: 400 !important;
+
+          color: #555555 !important;
+
+          line-height: 1.4 !important;
+        }
+
+        /* =====================================
+        SHOPIFY FLOATING LABEL FIX
+        ===================================== */
+
+      input[type="text"]:focus ~ label,
+      input[type="email"]:focus ~ label,
+      input[type="tel"]:focus ~ label,
+      input[type="password"]:focus ~ label,
+      input[type="number"]:focus ~ label {
+        opacity: 0 !important;
+        visibility: hidden !important;
       }
 
-      /* INPUTS */
-      input:not([type="checkbox"]):not([type="radio"]),
-      select,
-      textarea {
-        width: 100% !important;
-        height: 42px !important;
-        min-height: 42px !important;
-        padding: 0 16px !important;
-        border: 1px solid #dedede !important;
-        border-radius: 999px !important;
-        background: #ffffff !important;
-        color: #202020 !important;
-        font-family: inherit !important;
-        font-size: 16px !important;
-        font-weight: 400 !important;
-        outline: none !important;
-        box-shadow: none !important;
-        box-sizing: border-box !important;
-        transition:
-          border-color .25s ease,
-          box-shadow .25s ease !important;
-      }
-
-      form label {
-        font-size: 16px !important;
+      label:has(input:focus) {
+        opacity: 0 !important;
+        visibility: hidden !important;
       }
 
 
-      /* PLACEHOLDER */
-      input::placeholder,
-      textarea::placeholder {
-        color: #9c9c9c !important;
-        opacity: 1 !important;
+        /* =====================================
+           CHECKBOX
+           ===================================== */
+
+        input[type="checkbox"] {
+          appearance: none !important;
+          -webkit-appearance: none !important;
+
+          position: relative !important;
+
+          flex: 0 0 16px !important;
+
+          width: 16px !important;
+          height: 16px !important;
+
+          min-width: 16px !important;
+          min-height: 16px !important;
+
+          margin: 0 8px 0 0 !important;
+
+          padding: 0 !important;
+
+          border: 1px solid #D5D5D5 !important;
+          border-radius: 2px !important;
+
+          background: #ffffff !important;
+
+          box-sizing: border-box !important;
+
+          cursor: pointer !important;
+        }
+
+
+        input[type="checkbox"]:checked {
+          border-color: #53C295 !important;
+          background: #ffffff !important;
+        }
+
+
+        input[type="checkbox"]:checked::after {
+          content: "" !important;
+
+          position: absolute !important;
+
+          left: 4px !important;
+          top: 1px !important;
+
+          width: 4px !important;
+          height: 8px !important;
+
+          border: solid #53C295 !important;
+
+          border-width:
+            0
+            1.5px
+            1.5px
+            0 !important;
+
+          transform: rotate(45deg) !important;
+        }
+
+
+        /* =====================================
+           LINKS
+           ===================================== */
+
+        a {
+          color: #53C295 !important;
+          text-decoration: none !important;
+        }
+
+
+        a:hover {
+          color: #53C295 !important;
+          text-decoration: underline !important;
+        }
+
+
+        /* =====================================
+           SUBMIT BUTTON
+           SAME DIRECTION AS .primary-btn
+           ===================================== */
+
+        button[type="submit"] {
+          position: relative !important;
+
+          isolation: isolate !important;
+          overflow: hidden !important;
+
+          display: inline-flex !important;
+
+          justify-content: center !important;
+          align-items: center !important;
+
+          align-self: flex-start !important;
+
+          width: auto !important;
+          min-width: 0 !important;
+          min-height: auto !important;
+
+          margin: 26px 0 0 !important;
+
+          padding: 11px 60px !important;
+
+          border: 1px solid #53C295 !important;
+          border-radius: 999px !important;
+
+          background: #53C295 !important;
+
+          color: #ffffff !important;
+
+          font-family: inherit !important;
+
+          font-size: 16px !important;
+          font-weight: 500 !important;
+
+          line-height: normal !important;
+
+          text-decoration: none !important;
+
+          box-shadow: none !important;
+
+          cursor: pointer !important;
+
+          transition:
+            color .5s ease-in-out !important;
+        }
+
+
+        button[type="submit"]::before {
+          content: "" !important;
+
+          position: absolute !important;
+
+          top: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+
+          width: 0 !important;
+          height: 100% !important;
+
+          background: #ffffff !important;
+
+          transition:
+            width .5s ease-in-out !important;
+
+          z-index: -1 !important;
+        }
+
+
+        button[type="submit"]:hover {
+          color: #53C295 !important;
+          background: #53C295 !important;
+        }
+
+
+        button[type="submit"]:hover::before {
+          right: auto !important;
+          left: 0 !important;
+
+          width: 100% !important;
+        }
+
+
+        /* =====================================
+           PRIVACY / TERMS
+           ===================================== */
+
+        .sulalat-terms-field {
+          width: 100% !important;
+
+          margin-top: 26px !important;
+
+          grid-column: 1 / -1 !important;
+        }
+
+        ._formDisclaimer_jnbzb_38 {
+          color: #141211 !important;
+          font-size: 16px !important;
+          line-height: 24px !important;
+          letter-spacing: -0.01em !important;
+          text-decoration: none !important;
+          font-family: Roboto, sans-serif;
+        }
+
+
+        /* =====================================
+           REMOVE UNWANTED TEXTAREA
+           Only if Shopify generates an empty
+           textarea in this account form
+           ===================================== */
+
+        textarea:empty {
+          display: none !important;
+        }
+
+        
+
+
+        /* =====================================
+           TABLET / MOBILE
+           ===================================== */
+
+        @media screen and (max-width: 749px) {
+
+          [data-sizing="form-wrapper"],
+          section[role="dialog"],
+          form {
+            max-width: 100% !important;
+          }
+
+
+          .sulalat-account-fields {
+            grid-template-columns: 1fr !important;
+
+            column-gap: 0 !important;
+            row-gap: 12px !important;
+
+            margin-top: 22px !important;
+          }
+
+
+          .sulalat-account-fields
+          .sulalat-password-field {
+            grid-column: 1 !important;
+          }
+
+
+          input[type="text"],
+          input[type="email"],
+          input[type="tel"],
+          input[type="password"],
+          input[type="number"],
+          select {
+            height: 50px !important;
+            min-height: 50px !important;
+
+            padding: 10px 18px !important;
+
+            font-size: 15px !important;
+          }
+
+
+          input::placeholder {
+            font-size: 15px !important;
+          }
+
+
+          button[type="submit"] {
+            margin-top: 22px !important;
+
+            padding: 11px 40px !important;
+
+            font-size: 15px !important;
+          }
+        }
+
+      `;
+
+      shadow.appendChild(style);
+    }
+
+
+    /* =========================================
+       BUILD FIELD GRID
+       ========================================= */
+
+    if (!form.querySelector(".sulalat-account-fields")) {
+
+      /*
+       * Find field wrappers using actual inputs.
+       * This avoids relying on Shopify's generated
+       * random class names.
+       */
+
+      const fields = Array.from(
+        form.querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="number"], select'
+        )
+      );
+
+
+      const wrappers = [];
+
+
+      fields.forEach(function (field) {
+
+        let wrapper = field.parentElement;
+
+
+        /*
+         * Move upward until we reach the
+         * Shopify field container directly
+         * below the form.
+         */
+        while (
+          wrapper &&
+          wrapper.parentElement &&
+          wrapper.parentElement !== form
+        ) {
+
+          wrapper = wrapper.parentElement;
+
+        }
+
+
+        if (
+          wrapper &&
+          wrapper !== form &&
+          !wrappers.includes(wrapper)
+        ) {
+
+          wrappers.push(wrapper);
+
+        }
+
+      });
+
+
+      if (wrappers.length) {
+
+        const grid = document.createElement("div");
+
+        grid.className = "sulalat-account-fields";
+
+
+        /*
+         * Insert grid where first field
+         * originally existed.
+         */
+        wrappers[0].before(grid);
+
+
+        wrappers.forEach(function (wrapper) {
+
+          const passwordInput =
+            wrapper.querySelector('input[type="password"]');
+
+
+          if (passwordInput) {
+
+            wrapper.classList.add(
+              "sulalat-password-field"
+            );
+
+          }
+
+
+          grid.appendChild(wrapper);
+
+        });
+
       }
 
-
-      /* FOCUS */
-      input:not([type="checkbox"]):not([type="radio"]):focus,
-      select:focus,
-      textarea:focus {
-        border-color: #53c295 !important;
-        box-shadow: 0 0 0 2px rgba(83,194,149,.10) !important;
-      }
+    }
 
 
-      /* CHECKBOX */
-      input[type="checkbox"] {
-        width: 15px !important;
-        height: 15px !important;
+    console.log(
+      "Sulalat account form styling initialized"
+    );
 
-        accent-color: #53c295 !important;
-      }
-
-
-      /* LABEL */
-      label {
-        font-family: inherit !important;
-        font-size: 12px !important;
-        font-weight: 400 !important;
-        color: #555555 !important;
-      }
-
-
-      /* LINKS */
-      a {
-        color: #53c295 !important;
-        text-decoration: none !important;
-      }
-
-
-      /* SUBMIT BUTTON */
-      button[type="submit"] {
-        width: auto !important;
-        min-width: 125px !important;
-        min-height: 42px !important;
-
-        padding: 10px 28px !important;
-
-        border: 1px solid #53c295 !important;
-        border-radius: 50px !important;
-
-        background: #53c295 !important;
-        color: #ffffff !important;
-
-        font-family: inherit !important;
-        font-size: 12px !important;
-        font-weight: 500 !important;
-
-        box-shadow: none !important;
-
-        cursor: pointer !important;
-
-        transition:
-          background .25s ease,
-          color .25s ease,
-          border-color .25s ease !important;
-      }
-
-
-      button[type="submit"]:hover {
-        background: #ffffff !important;
-        color: #53c295 !important;
-      }
-
-    `;
-
-    shadow.appendChild(style);
-
-    console.log("Sulalat Shopify Form styles added");
   }
 
 
-  /*
-   * Shopify Forms loads asynchronously,
-   * so run immediately + watch DOM.
-   */
-  initShopifyFormStyles();
+  /* =========================================
+     INITIAL LOAD
+     ========================================= */
+
+  initShopifyForm();
+
+  
+
+
+  /* =========================================
+     SHOPIFY FORMS LOAD ASYNC
+     ========================================= */
 
   const observer = new MutationObserver(function () {
-    initShopifyFormStyles();
+
+    initShopifyForm();
+
   });
 
+
   observer.observe(document.body, {
+
     childList: true,
     subtree: true
+
   });
 
 });
+

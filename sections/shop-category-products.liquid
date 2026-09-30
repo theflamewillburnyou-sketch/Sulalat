@@ -62,34 +62,11 @@
     .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__banner-content h2 {
       margin: 0 0 35px;
       color: #fff;
-      font-size: clamp(32px, 4vw, 55px);
+      font-size: clamp(26px, 3vw, 46px);
       line-height: 1.15;
       font-weight: 400;
+      text-wrap: balance;
     }
-
-    {% comment %} .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__banner-btn,
-    .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__view-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 10px 24px;
-      border-radius: 999px;
-      background: var(--brand-primary, #53c295);
-      border: 1px solid var(--brand-primary, #53c295);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: inherit;
-      text-decoration: none;
-      transition: 0.25s ease;
-    }
-
-    .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__banner-btn:hover,
-    .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__view-btn:hover {
-      background: var(--brand-primary-hover, #45ad82);
-      border-color: var(--brand-primary-hover, #45ad82);
-    } {% endcomment %}
 
     .shop-category-products[data-section-id="{{ section.id }}"] .primary-btn{
         width: 100%;
@@ -108,7 +85,7 @@
     .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__header h2 {
       margin: 0;
       color: #141211;
-      font-size: clamp(24px, 3vw, 36px);
+      font-size: clamp(24px, 2vw, 36px);
       line-height: 1.2;
       font-weight: 400;
     }
@@ -127,7 +104,7 @@
       flex-direction: column;
       height: 100%;
       width: 100%;
-      max-width: 286px;
+      max-width: 326px;
       margin: 0 auto;
     }
 
@@ -184,6 +161,7 @@
       justify-content: center;
       gap: 2px;
       text-align: center;
+      display:none;
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-product-card__band-ar,
@@ -203,7 +181,7 @@
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-product-card__title {
       margin: 0 0 15px;
-      font-size: 22px;
+      font-size:clamp(16px,3vw, 22px);
       line-height: 1.3;
       font-weight: 400;
     }

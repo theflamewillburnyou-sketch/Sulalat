@@ -36,8 +36,8 @@
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__heading {
-      margin: 0 0 12px;
-      font-size: clamp(24px, 3.2vw, 55px);
+      margin: 0 0 20px;
+      font-size: clamp(24px, 2vw, 36px);
       line-height: 1.2;
       font-weight: 400;
       letter-spacing: -0.02em;
@@ -337,10 +337,21 @@
         margin: 0 0 30px;
       }
       .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__submit {
-        margin-top: 20px;
+        margin-top: 10px;
       }
       .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__browse {
         max-width: 136px;
+      }
+      
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__row {
+        gap:14px;
+      }
+
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form .input,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form input,
+    .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__form select {
+        height: 40px;
+        font-size:14px;
       }
     }
 

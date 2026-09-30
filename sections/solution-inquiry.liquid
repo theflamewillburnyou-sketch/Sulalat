@@ -47,9 +47,9 @@
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content h2 {
-      margin: 0 0 14px;
+      margin: 0 0 20px;
       color: #000;
-      font-size: clamp(32px, 3.2vw, 48px);
+      font-size: clamp(24px, 2vw, 36px);
       line-height: 1.15;
       font-weight: 400;
     }
@@ -224,6 +224,24 @@
         padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
       }
     }
+
+    @media (max-width: 575px){
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form{
+        gap:14px;
+      }
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input,
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input,
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
+        height: 40px;
+        font-size:14px;
+      }
+
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
+        padding: 24px 15px;
+      }
+    
+    }
+
   </style>
 
   <div class="container">

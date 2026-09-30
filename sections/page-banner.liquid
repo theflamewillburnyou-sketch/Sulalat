@@ -72,11 +72,11 @@
     .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
     .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading {
       margin-bottom: 20px;
-      color: #ffffff;
-      text-align: start;
-      font-size: clamp(32px, 4.5vw, 65px);
-      line-height: 1.2;
+      color: #fff;
       font-weight: 400;
+      font-size: clamp(32px, 3.2vw, 50px);
+      line-height: 1.33;
+      text-wrap: balance;
     }
 
     .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading p{
@@ -104,13 +104,10 @@
         min-height: var(--page-banner-min-height-mobile, 480px);
         padding-top: 80px;
         padding-bottom: 60px;
+        height:min(690px, 80vh);
+        align-items: end;
       }
 
-      {% comment %} .page-banner[data-section-id="{{ section.id }}"] .page-banner-content h1,
-      .page-banner[data-section-id="{{ section.id }}"] .page-banner-content .page-banner-heading {
-        font-size: var(--page-banner-heading-size-mobile, 40px);
-        line-height: var(--page-banner-heading-line-height-mobile, 44px);
-      } {% endcomment %}
     }
   </style>
 

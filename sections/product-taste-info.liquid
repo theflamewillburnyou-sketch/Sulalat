@@ -64,16 +64,17 @@
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__heading {
-      margin: 0 0 16px;
-      font-size: clamp(28px, 3vw, 40px);
+      margin: 0 0 35px;
+      font-size: clamp(24px, 3vw, 36px);
       line-height: 1.2;
-      font-weight: 600;
+      font-weight: 400;
+      color:#141211;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__text {
       margin: 0 0 28px;
       max-width: 520px;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
       font-size: 16px;
       line-height: 1.6;
     }
@@ -89,7 +90,7 @@
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 28px 36px;
+      gap: 50px;
       list-style: none;
       margin: 0;
       padding: 0;
@@ -99,17 +100,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-      width: 110px;
+      gap: 25px;
+      width:auto;
       text-align: center;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media {
-      width: 96px;
-      height: 96px;
+      width: 142px;
+      height: 142px;
       border-radius: 50%;
       overflow: hidden;
-      background: #f3f3f3;
+      background: rgb(83 194 149 / 10%);
+      border:1px solid #53C295;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media img {
@@ -121,18 +123,24 @@
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__name {
       margin: 0;
-      font-size: 15px;
+      font-size: clamp(16px, 2vw, 20px);
       line-height: 1.3;
-      font-weight: 500;
-      color: #1a1a1a;
+      font-weight: 600;
+      color: #141211;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table {
       width: 100%;
       border-collapse: collapse;
       border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #e8e8e8;
+      border: 1px solid #C7C7C7;
+    }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] table.sulalat-info-table tr:nth-child(odd) {
+      background: #fff;
+    }
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] table.sulalat-info-table tr:nth-child(even) {
+      background: #EEF9F5;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table th,
@@ -151,22 +159,39 @@
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table th {
-      width: 42%;
+      width: 50%;
       font-weight: 500;
-      color: #1a1a1a;
-      background: #fff;
+      color: #141211;
+      font-size: 18px;
+      line-height: normal;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table td {
+      color: #141211;
       font-weight: 400;
-      color: #1a1a1a;
-      background: var(--sti-table-value-bg, #eaf8f1);
+      font-size: 18px;
+      line-height: normal;
     }
 
     .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-taste-info__empty {
       margin: 0;
       color: #888;
       font-size: 14px;
+    }
+
+    @media (max-width: 1400px){
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-item__media {
+        width: 120px;
+        height: 120px;
+      }
+    
+    }
+
+    @media (max-width: 1200px){
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-flavor-list {
+        gap:25px;
+      }
+    
     }
 
     @media (max-width: 991px) {
@@ -193,6 +218,21 @@
         width: 80px;
         height: 80px;
       }
+
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table th {
+        font-size: 16px;
+      }
+
+    .sulalat-taste-info[data-section-id="{{ section.id }}"] .sulalat-info-table td {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 575px){
+      .sulalat-taste-info[data-section-id="{{ section.id }}"] .tablist {
+        margin-bottom: 30px;
+      }
+
     }
   </style>
 

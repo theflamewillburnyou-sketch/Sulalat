@@ -156,6 +156,7 @@
       box-sizing: border-box;
       border-radius: 999px;
       border: 1px solid;
+      font-family: var(--secondary-font);
     }
 
     .sulalat-btn--outline::before {

@@ -48,7 +48,7 @@
     /* Gallery */
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
       display: grid;
-      grid-template-columns: 88px minmax(0, 1fr);
+      grid-template-columns: 100px minmax(0, 1fr);
       gap: 16px;
       align-items:center;
       position: sticky;
@@ -186,14 +186,19 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 28px;
-      font-size: 14px;
-      color: #555;
+      font-size: 17px;
+      color: rgba(0 0 0 / 70%);
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__stars {
       display: inline-flex;
       gap: 2px;
-      color: #f5a623;
+      color: #F3A20D;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__stars svg {
+      width:20px;
+      aspect-ratio:1;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__stars .is-empty {
@@ -202,13 +207,16 @@
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__option {
       margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__option-label {
       display: block;
-      margin-bottom: 12px;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 400;
+      color:#141211;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pills {
@@ -222,9 +230,9 @@
       min-width: 88px;
       min-height: 44px;
       padding: 10px 22px;
-      border-radius: var(--brand-radius-pill, 80px);
-      border: 1.5px solid #d9d9d9;
-      background: #fff;
+      border-radius: 12px;
+      border: 1.5px solid #E0E0E0;
+      background: #F6F6F6;
       color: #666;
       font: inherit;
       font-size: 15px;
@@ -246,10 +254,11 @@
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__purchase-row {
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-direction: column;
+      align-items: start;
+      gap: 24px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__qty {
@@ -291,13 +300,15 @@
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__total {
-      font-size: clamp(22px, 2.4vw, 30px);
-      font-weight: 700;
+      font-size: clamp(20px, 2.4vw, 25px);
+      font-weight: 400;
       letter-spacing: -0.02em;
+      color:#141211;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__total-label {
-      font-weight: 700;
+      font-weight: 400;
+      color:#828282;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions {
@@ -414,16 +425,18 @@
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__promo {
       display: flex;
+      flex-wrap:wrap;
       align-items: center;
       justify-content: center;
       gap: 12px;
       text-align: center;
-      padding: 16px 24px;
-      border-radius: 14px;
-      background: var(--sulalat-pdp-promo-bg, #eaf8f1);
-      color: var(--sulalat-pdp-promo-text, #0f6b4c);
-      font-size: 15px;
-      font-weight: 500;
+      padding: 8px 24px;
+      border-radius: 10px;
+      background: var(--sulalat-pdp-promo-bg, #f6f6f6);
+      color: var(--sulalat-pdp-promo-text, #141211);
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid #E0E0E0;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__promo-icon {
@@ -443,22 +456,22 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 16px 18px;
+      padding: 8px 18px;
       border: 1px solid #e8e8e8;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #f7f7f7 0%, #ffffff 100%);
+      border-radius: 10px;
+      background:#f6f6f6;
       text-decoration: none;
       color: inherit;
-      min-height: 84px;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid #E0E0E0;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-logo {
       flex-shrink: 0;
-      width: 78px;
-      height: 40px;
-      object-fit: contain;
+      width: auto;
+      height: 20px;
       display: block;
-      border-radius: 6px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-badge {
@@ -489,9 +502,10 @@
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-text {
       margin: 0;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.45;
-      color: #333;
+      color: #141211;
+      font-weight: 400;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__pay-link {
@@ -499,8 +513,8 @@
       z-index: 2;
       display: inline;
       color: var(--sulalat-pdp-accent, #53c295);
-      text-decoration: none;
-      font-weight: 500;
+      text-decoration:underline;
+      font-weight: 400;
       cursor: pointer;
       pointer-events: auto;
     }
@@ -523,7 +537,7 @@
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__block {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__block--sm {
@@ -558,6 +572,8 @@
 
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
         grid-template-columns: 72px minmax(0, 1fr);
+        position:relative;
+        top:0;
       }
 
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main {
