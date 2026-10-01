@@ -403,6 +403,10 @@
       gap: 12px;
       flex-shrink: 0;
     }
+    
+    [dir="rtl"] .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons {
+      flex-direction:row-reverse;
+    }
 
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-nav-buttons button {
       width: 52px;

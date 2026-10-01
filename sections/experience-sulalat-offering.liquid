@@ -80,6 +80,13 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
+    
+    @media (max-width: 767px) {
+      .experience-sulalat-offering[data-section-id="{{ section.id }}"] {
+        --exp-offering-padding-bottom: 70px;
+        padding-bottom:70px;
+      }
+    }
 
     @media (max-width: 575px) {
       .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__grid {
@@ -88,6 +95,11 @@
 
       .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__heading {
         margin-bottom: 32px;
+      }
+
+      .experience-sulalat-offering[data-section-id="{{ section.id }}"] .experience-sulalat-offering__title {
+        font-size: 20px;
+        font-weight: 500;
       }
     }
   </style>

@@ -59,11 +59,12 @@
     }
 
     .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading {
-      margin: 0 0 20px;
-      color: #ffffff;
-      font-size: clamp(32px, 4vw, 60px);
-      line-height: var(--exp-hero-heading-line-height, 78px);
+      margin-bottom: 20px;
+      color: #fff;
       font-weight: 400;
+      font-size: clamp(32px, 3.2vw, 50px);
+      line-height: 1.33;
+      text-wrap: balance;
       letter-spacing: -0.02em;
     }
 
@@ -91,49 +92,11 @@
       align-items: center;
     }
 
-    {% comment %} .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 12px 32px;
-      border-radius: var(--brand-radius-pill, 80px);
-      font-size: 16px;
-      font-weight: 500;
-      font-family: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      transition: 0.25s ease;
-      border: 1px solid transparent;
-    }
-
-    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--primary {
-      background: var(--brand-primary, #53c295);
-      border-color: var(--brand-primary, #53c295);
-      color: #000;
-    }
-
-    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--primary:hover {
-      background: var(--brand-primary-hover, #45ad82);
-      border-color: var(--brand-primary-hover, #45ad82);
-      color: #000;
-    }
-
-    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--outline {
-      background: transparent;
-      border-color: #fff;
-      color: #fff;
-    }
-
-    .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__btn--outline:hover {
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-    } {% endcomment %}
 
     .experience-sulalat-hero__btn.secondary-btn {
       border-color: #fff;
       color: #fff;
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(50px);
     }
 
     @media (max-width: 767px) {
@@ -143,11 +106,6 @@
         padding-bottom: 60px;
         height: min(690px, 80vh);
         align-items: end;
-      }
-
-      .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__heading {
-        font-size: var(--exp-hero-heading-size-mobile, 40px);
-        line-height: var(--exp-hero-heading-line-height-mobile, 44px);
       }
 
       .experience-sulalat-hero[data-section-id="{{ section.id }}"] .experience-sulalat-hero__actions {

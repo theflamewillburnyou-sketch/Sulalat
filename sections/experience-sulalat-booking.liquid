@@ -216,8 +216,34 @@
     }
 
     @media (max-width: 575px) {
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {
+        padding: 30px 15px;
+      }
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__times {
         grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form {
+        gap: 14px;
+      }
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input,
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select {
+        height: 40px;
+        font-size: 14px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea {
+         font-size: 14px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__time-btn {
+        min-height: 40px;
+        font-size: 14px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form .primary-btn {
+        padding-inline: 40px;
       }
     }
   </style>

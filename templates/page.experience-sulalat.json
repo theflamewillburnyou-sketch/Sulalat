@@ -93,7 +93,7 @@
       ],
       "settings": {
         "background_color": "#ffffff",
-        "padding_top": 80,
+        "padding_top": 100,
         "padding_bottom": 100,
         "card_gap": 24,
         "slides_per_view_desktop": 3.2,
@@ -135,7 +135,7 @@
       "settings": {
         "heading": "Gallery",
         "background_color": "#ffffff",
-        "padding_top": 80,
+        "padding_top": 0,
         "padding_bottom": 100,
         "slide_gap": 24,
         "slide_width": 78
@@ -191,7 +191,7 @@
       "settings": {
         "heading": "Everything You Can Try at Our Showroom",
         "background_color": "#ffffff",
-        "padding_top": 80,
+        "padding_top": 0,
         "padding_bottom": 100,
         "card_gap": 24
       }
@@ -217,7 +217,7 @@
         "success_message": "Thanks — your booking request has been submitted.",
         "background_color": "#ffffff",
         "form_background": "#eaf8f1",
-        "padding_top": 40,
+        "padding_top": 0,
         "padding_bottom": 100
       }
     }

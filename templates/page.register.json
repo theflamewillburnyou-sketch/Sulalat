@@ -8,18 +8,32 @@
  * ------------------------------------------------------------
  */
 {
-    "sections": {
-      "register_journey": {
-        "type": "register-journey",
-        "settings": {
-          "heading": "Choose your registration journey",
-          "subheading": "Select the option that best describes how you want to register.",
-          "default_selected": "b2c"
-        }
+  "sections": {
+    "register_journey": {
+      "type": "register-journey",
+      "settings": {
+        "heading": "Choose your registration journey",
+        "subheading": "Select the option that best describes how you want to register.",
+        "b2c_title": "B2C",
+        "b2c_label": "For Individual Customers",
+        "b2c_desc": "Personal shopping and consumer account",
+        "b2b_title": "B2B",
+        "b2b_label": "For Business Customers",
+        "b2b_desc": "Wholesale, company, and trade accounts",
+        "button_label": "Continue",
+        "default_selected": "b2c",
+        "accent_color": "#53c295",
+        "accent_hover_color": "#45ad82",
+        "selected_bg": "#e7f5ef",
+        "heading_color": "#1a1a1a",
+        "text_color": "#4a4a4a",
+        "bg_color": "#ffffff",
+        "padding_top": 100,
+        "padding_bottom": 80
       }
-    },
-    "order": [
-      "register_journey"
-    ]
-  }
-  
+    }
+  },
+  "order": [
+    "register_journey"
+  ]
+}

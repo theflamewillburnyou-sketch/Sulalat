@@ -28,27 +28,27 @@
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__head {
       text-align: center;
-      margin-bottom: 44px;
+      margin-bottom: 60px;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__title {
-      margin: 0 0 12px;
+      margin: 0 0 20px;
       font-family: var(--heading-font-family);
-      font-size: clamp(28px, 3vw, 40px);
-      font-weight: 600;
+      font-size: clamp(24px, 2vw, 36px);
+      font-weight: 400;
       line-height: 1.2;
       color: var(--reg-heading);
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__subtitle {
       margin: 0;
       font-family: var(--body-font-family);
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.5;
-      color: var(--reg-text);
+      color: #141211;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__options {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+      gap: 30px;
       border: 0;
       margin: 0;
       padding: 0;
@@ -70,13 +70,13 @@
       position: relative;
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 30px;
       height: 100%;
       box-sizing: border-box;
-      padding: 32px 28px;
+      padding: 60px 40px;
       background: #ffffff;
-      border: 1px solid #e5e5e5;
-      border-radius: 16px;
+      border: 1px solid #DADADA;
+      border-radius: 12px;
       cursor: pointer;
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
@@ -88,7 +88,7 @@
       outline-offset: 3px;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card {
-      background: var(--reg-selected-bg);
+      background: #E7F5EF;
       border-color: var(--reg-accent);
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon {
@@ -96,20 +96,20 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      background: #f3f3f3;
+      background: #8282821a;
       border: 1px solid #dbdad9;
       color: var(--reg-accent);
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon svg {
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card .sulalat-reg__icon {
-      background: rgba(83, 194, 149, 0.16);
+      background: #53c2951a;
       border-color: var(--reg-accent);
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__body {
@@ -117,10 +117,10 @@
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__type {
       display: block;
-      margin: 0 0 6px;
+      margin: 0 0 12px;
       font-family: var(--heading-font-family);
-      font-size: 22px;
-      font-weight: 500;
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 400;
       line-height: 1.2;
       color: var(--reg-heading);
     }
@@ -128,8 +128,8 @@
       display: block;
       margin: 0 0 10px;
       font-family: var(--body-font-family);
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 400;
       line-height: 1.3;
       color: var(--reg-accent);
     }
@@ -137,19 +137,19 @@
       display: block;
       margin: 0;
       font-family: var(--body-font-family);
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.5;
-      color: var(--reg-text);
+      color:#535353;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__check {
       position: absolute;
-      top: 14px;
-      right: 14px;
+      top: 25px;
+      right: 25px;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 22px;
-      height: 22px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: #f3f3f3;
       border: 1px solid #dbdad9;
@@ -157,8 +157,8 @@
       transition: background-color 0.2s ease, border-color 0.2s ease;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__check svg {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
       opacity: 0;
     }
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__input:checked + .sulalat-reg__card .sulalat-reg__check {
@@ -171,35 +171,9 @@
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__actions {
       display: flex;
       justify-content: center;
-      margin-top: 40px;
+      margin-top: 60px;
     }
-    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 220px;
-      padding: 14px 36px;
-      box-sizing: border-box;
-      font-family: var(--body-font-family);
-      font-size: 15px;
-      font-weight: 600;
-      line-height: 1.2;
-      text-decoration: none;
-      color: #ffffff;
-      background: var(--reg-accent);
-      border: 1.5px solid var(--reg-accent);
-      border-radius: 999px;
-      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-    }
-    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:hover,
-    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:focus-visible {
-      background: #ffffff;
-      color: var(--reg-accent);
-    }
-    .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__btn:focus-visible {
-      outline: 2px solid var(--reg-accent);
-      outline-offset: 3px;
-    }
+ 
     .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__sr {
       position: absolute;
       width: 1px;
@@ -211,16 +185,16 @@
     @media (max-width: 989px) {
       .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__card {
         gap: 20px;
-        padding: 28px 20px;
+        padding: 44px 30px;
       }
       .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon {
-        width: 68px;
-        height: 68px;
+        width: 90px;
+        height: 90px;
       }
     }
     @media (max-width: 749px) {
       .sulalat-reg[data-section-id="{{ section.id }}"] {
-        padding: calc(var(--reg-pt) * 0.6) 0 calc(var(--reg-pb) * 0.6);
+        padding: calc(var(--reg-pt) * 0.7) 0 calc(var(--reg-pb) * 0.7);
       }
       .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__head {
         margin-bottom: 28px;
@@ -236,6 +210,23 @@
         width: 100%;
       }
     }
+
+    @media (max-width: 575px){
+      .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__card {
+          gap: 20px;
+          padding: 24px;
+          flex-wrap: wrap;
+          flex-direction: column;
+          justify-content: center;
+          text-align: center;
+       }
+
+       .sulalat-reg[data-section-id="{{ section.id }}"] .sulalat-reg__icon {
+          width: min(90px, 40vw);
+          height: min(90px, 40vw);
+        }
+    }
+
   </style>
 
   {%- liquid
