@@ -117,6 +117,8 @@
       width: 100%;
       display: block;
       border-radius: 20px;
+      aspect-ratio: 1 / 1.1;
+      object-fit: cover;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .section-tag {
@@ -202,8 +204,8 @@
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider .swiper-slide {
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 40px;
+      align-items: start;
+      padding: 60px 40px;
       height: auto;
     }
 
@@ -244,7 +246,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
       width: 100%;
-      height: 495px;
+      height:100%;
       object-fit: cover;
       border-radius: 20px;
       display: block;
@@ -264,7 +266,7 @@
       align-items: center;
       justify-content: space-between;
       flex: 1;
-      max-width: 700px;
+      max-width: 100%;
       min-width: 200px;
     }
 
@@ -345,6 +347,17 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button svg {
       display: block;
+      width: 16px;
+      height: 16px;
+      transition: all 0.2s linear;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button svg path {
+      transition: all 0.2s linear;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons button:hover svg path {
+      fill:#fff;
     }
 
     /* Vision & Mission */
@@ -380,7 +393,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .vision-content h2 {
       line-height: 1.15;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       color: #000000;
       font-size: clamp(24px, 3.5vw, 36px);
       font-weight: 400;
@@ -435,16 +448,16 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .culture-content h2 {
       line-height: 1.15;
-      margin-bottom: 35px;
+      margin-bottom: 20px;
       color: #000000;
-      font-size: clamp(28px, 3vw, 55px);
+      font-size: clamp(24px, 3.5vw, 36px);
       font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .culture-content p {
       line-height: 1.7;
       margin-bottom: 20px;
-      color: var(--brand-muted-text, #535353);
+      color: #141211;
       text-align: left;
       font-size: 16px;
     }
@@ -461,9 +474,9 @@
     .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
       width: 100%;
       height: 100%;
-      min-height: 620px;
       object-fit: cover;
       display: block;
+      aspect-ratio: 1;
       transition: 0.6s;
     }
 
@@ -484,24 +497,27 @@
       font-weight: 400;
       line-height: 1.7;
       margin-bottom: 15px;
-      color: var(--brand-muted-text, #535353);
+      color: #141211;
       text-align: left;
       font-size: 16px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .culture-list li::before {
       content: "✓";
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--brand-primary, #53c295);
+      width: 18px;
+      height: 18px;
+      /* border-radius: 50%; */
+      /* background: var(--brand-primary, #53c295); */
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 0;
       font-weight: 700;
       flex-shrink: 0;
+      background-image: url('https://cdn.shopify.com/s/files/1/0693/4023/3891/files/Vector.png?v=1790877750');
+      background-repeat: no-repeat;
+      background-size: 100%;
     }
 
     /* Certificates */
@@ -530,7 +546,7 @@
       width: auto;
       max-width: 100%;
       height: auto;
-      max-height: 120px;
+      max-height: 140px;
       aspect-ratio: 1;
       object-fit: contain;
       margin: 0 auto 20px;
@@ -626,6 +642,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content .primary-btn {
       display: inline-flex;
+      margin-top: 45px;
     }
 
     /* Leadership & Team */
@@ -874,6 +891,12 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button svg {
       display: block;
+      width:16px;
+      height:16px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button:hover svg path {
+      fill:#fff;
     }
 
     /* Partners */
@@ -915,7 +938,7 @@
       appearance: none;
       background: none;
       border: none;
-      border-bottom: 2px solid transparent;
+      border-bottom: 2px solid #E4E4E4;
       padding: 30px 15px;
       margin: 0;
       cursor: pointer;
@@ -950,6 +973,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .partners-filter-btn.active {
       color: #53C295;
       border-bottom-color: var(--brand-primary, #53c295);
+      font-weight: 500;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .partners-grid {
@@ -964,7 +988,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 180px;
+      min-height: 230px;
       padding: 28px 24px;
       background: #fff;
       border: 1px solid #D2D2D2;
@@ -987,7 +1011,6 @@
       width: auto;
       max-width: 100%;
       height: auto;
-      max-height: 72px;
       object-fit: contain;
       display: block;
     }
@@ -1099,7 +1122,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card {
       display: grid;
-      grid-template-columns: auto minmax(160px, 220px) 1fr auto;
+      grid-template-columns: auto minmax(160px, 300px) 1fr auto;
       align-items: center;
       gap: 40px;
       padding: 22px 28px;
@@ -1149,9 +1172,9 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-card-title {
       margin: 0;
-      font-size: 20px;
+      font-size: 24px;
       line-height: 1.25;
-      font-weight: 600;
+      font-weight: 400;
       color: #000;
     }
 
@@ -1221,9 +1244,9 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-bottom: 36px;
-      font-size: 14px;
+      font-size: 17px;
       line-height: 1.4;
-      color: #9a9a9a;
+      color: #5D5D5D;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb a,
@@ -1250,7 +1273,6 @@
       border-right: 1.5px solid currentColor;
       border-top: 1.5px solid currentColor;
       transform: rotate(45deg);
-      opacity: 0.55;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-current {
@@ -1260,8 +1282,12 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-home svg {
       display: block;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-home svg path{
+      color:#5D5D5D;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-detail-layout {
@@ -1310,7 +1336,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .career-detail-block h3 {
       margin: 0 0 16px;
       color: #000;
-      font-size: 20px;
+      font-size: 24px;
       line-height: 1.3;
       font-weight: 400;
     }
@@ -1330,16 +1356,16 @@
       gap: 12px;
       font-size: 15px;
       line-height: 1.55;
-      color: var(--brand-body-text, #535353);
+      color: #141211;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .career-check-list li::before {
       content: "";
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       margin-top: 2px;
       border-radius: 50%;
-      background: var(--brand-primary, #53c295) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.2l2.8 2.8 6.2-6.2' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+      background: url("https://cdn.shopify.com/s/files/1/0693/4023/3891/files/Vector.png?v=1790877750") center / 100% no-repeat;
       flex-shrink: 0;
     }
 
@@ -1444,6 +1470,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status--success {
       color: var(--brand-primary, #53c295);
+      order: 99;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status--error {
@@ -1513,10 +1540,10 @@
         width: 100%;
       }
 
-      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
+      {% comment %} .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
         height: 360px;
-      }
+      } {% endcomment %}
 
       .about-tabs[data-section-id="{{ section.id }}"] .culture-image img,
       .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
@@ -1824,6 +1851,23 @@
         padding-inline:40px;
         min-width: 0;
       }
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-progress {
+        flex-wrap: wrap;
+        display:none;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
+        aspect-ratio: 16 / 9;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-year{
+        font-size:18px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons {
+        display: none;
+      }
     }
 
   </style>
@@ -1958,13 +2002,13 @@
               </div>
               <div class="timeline-buttons">
                 <button type="button" class="timeline-prev" aria-label="Previous timeline slide">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                    <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                    <path d="M0.338923 9.33707C-0.11286 8.88529 -0.11286 8.1528 0.338923 7.70102L7.70115 0.338787C8.15294 -0.112996 8.88542 -0.112996 9.3372 0.338787C9.78899 0.79057 9.78899 1.52306 9.3372 1.97484L2.793 8.51904L9.3372 15.0632C9.78899 15.515 9.78899 16.2475 9.3372 16.6993C8.88542 17.1511 8.15294 17.1511 7.70115 16.6993L0.338923 9.33707ZM17.353 8.51904V9.67591H1.15695V8.51904V7.36218H17.353V8.51904Z" fill="#53C295"/>
                   </svg>
                 </button>
                 <button type="button" class="timeline-next" aria-label="Next timeline slide">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                    <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                    <path d="M17.0141 9.33707C17.4659 8.88529 17.4659 8.1528 17.0141 7.70102L9.65187 0.338787C9.20009 -0.112996 8.46761 -0.112996 8.01582 0.338787C7.56404 0.79057 7.56404 1.52306 8.01582 1.97484L14.56 8.51904L8.01582 15.0632C7.56404 15.515 7.56404 16.2475 8.01582 16.6993C8.46761 17.1511 9.20009 17.1511 9.65187 16.6993L17.0141 9.33707ZM0 8.51904V9.67591H16.1961V8.51904V7.36218H0V8.51904Z" fill="#53C295"/>
                   </svg>
                 </button>
               </div>
@@ -2248,13 +2292,13 @@
                 </div>
                 <div class="team-nav-buttons">
                   <button type="button" class="executive-prev" aria-label="Previous executive">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                    <path d="M0.338923 9.33707C-0.11286 8.88529 -0.11286 8.1528 0.338923 7.70102L7.70115 0.338787C8.15294 -0.112996 8.88542 -0.112996 9.3372 0.338787C9.78899 0.79057 9.78899 1.52306 9.3372 1.97484L2.793 8.51904L9.3372 15.0632C9.78899 15.515 9.78899 16.2475 9.3372 16.6993C8.88542 17.1511 8.15294 17.1511 7.70115 16.6993L0.338923 9.33707ZM17.353 8.51904V9.67591H1.15695V8.51904V7.36218H17.353V8.51904Z" fill="#53C295"/>
+                  </svg>
                   </button>
                   <button type="button" class="executive-next" aria-label="Next executive">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                      <path d="M17.0141 9.33707C17.4659 8.88529 17.4659 8.1528 17.0141 7.70102L9.65187 0.338787C9.20009 -0.112996 8.46761 -0.112996 8.01582 0.338787C7.56404 0.79057 7.56404 1.52306 8.01582 1.97484L14.56 8.51904L8.01582 15.0632C7.56404 15.515 7.56404 16.2475 8.01582 16.6993C8.46761 17.1511 9.20009 17.1511 9.65187 16.6993L17.0141 9.33707ZM0 8.51904V9.67591H16.1961V8.51904V7.36218H0V8.51904Z" fill="#53C295"/>
                     </svg>
                   </button>
                 </div>
@@ -2324,13 +2368,13 @@
                 </div>
                 <div class="team-nav-buttons">
                   <button type="button" class="people-prev" aria-label="Previous team member">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                      <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                      <path d="M0.338923 9.33707C-0.11286 8.88529 -0.11286 8.1528 0.338923 7.70102L7.70115 0.338787C8.15294 -0.112996 8.88542 -0.112996 9.3372 0.338787C9.78899 0.79057 9.78899 1.52306 9.3372 1.97484L2.793 8.51904L9.3372 15.0632C9.78899 15.515 9.78899 16.2475 9.3372 16.6993C8.88542 17.1511 8.15294 17.1511 7.70115 16.6993L0.338923 9.33707ZM17.353 8.51904V9.67591H1.15695V8.51904V7.36218H17.353V8.51904Z" fill="#53C295"/>
                     </svg>
                   </button>
                   <button type="button" class="people-next" aria-label="Next team member">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                      <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                      <path d="M17.0141 9.33707C17.4659 8.88529 17.4659 8.1528 17.0141 7.70102L9.65187 0.338787C9.20009 -0.112996 8.46761 -0.112996 8.01582 0.338787C7.56404 0.79057 7.56404 1.52306 8.01582 1.97484L14.56 8.51904L8.01582 15.0632C7.56404 15.515 7.56404 16.2475 8.01582 16.6993C8.46761 17.1511 9.20009 17.1511 9.65187 16.6993L17.0141 9.33707ZM0 8.51904V9.67591H16.1961V8.51904V7.36218H0V8.51904Z" fill="#53C295"/>
                     </svg>
                   </button>
                 </div>
