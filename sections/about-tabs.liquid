@@ -1507,19 +1507,36 @@
       }
     }
 
+    @media (max-width: 1366px){
+      .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
+        padding: 18px 20px;
+        font-size: 15px;
+      }
+    }
+
+
+    @media (max-width: 1280px){
+      .about-tabs[data-section-id="{{ section.id }}"] .tabs-nav {
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: auto;
+      }
+    }
+
     @media (max-width: 1200px){
-    .about-tabs[data-section-id="{{ section.id }}"] .tabs-nav {
+    {% comment %} .about-tabs[data-section-id="{{ section.id }}"] .tabs-nav {
       display: block;
       text-align: center;
       white-space: nowrap;
       overflow-x: auto;
-      }
-      .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
-        gap: 50px;
-      }
-      .about-tabs[data-section-id="{{ section.id }}"] .culture-content{
-        padding:50px 40px;
-      }
+    } {% endcomment %}
+    .about-tabs[data-section-id="{{ section.id }}"] .who-grid {
+      gap: 50px;
+    }
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content{
+      padding:50px 40px;
+    }
      
     }
 
@@ -1819,6 +1836,13 @@
       {% comment %} .about-tabs[data-section-id="{{ section.id }}"] .careers-hero-image {
         aspect-ratio:auto;
       } {% endcomment %}
+
+      .about-tabs[data-section-id="{{ section.id }}"] .tab-btn {
+        padding: 14px 30px;
+        font-size: 14px;
+        border-radius: 999px;
+      }
+
       .about-tabs[data-section-id="{{ section.id }}"] .career-card-location {
         font-size: 16px;
       }
@@ -2507,11 +2531,11 @@
                 {% if section.settings.careers_image != blank %}
                   {{
                     section.settings.careers_image
-                    | image_url: width: 1600
+                    | image_url: width: 2400
                     | image_tag:
                       loading: 'lazy',
-                      widths: '600, 900, 1200, 1600',
-                      sizes: '(min-width: 992px) 900px, 92vw',
+                      widths: '800, 1200, 1600, 2000, 2400, 2800',
+                      sizes: '100vw',
                       alt: section.settings.careers_why_heading
                   }}
                 {% else %}
@@ -3122,55 +3146,169 @@
         }
       }
 
-      function initTimeline() {
-        if (!imageSliderEl || !contentSliderEl || !window.Swiper) return;
+     function initTimeline() {
+  if (!imageSliderEl || !contentSliderEl || !window.Swiper) return;
 
-        if (imageSliderEl.swiper) {
-          imageSliderEl.swiper.destroy(true, true);
+  /* =====================================
+     DESTROY EXISTING INSTANCES
+     ===================================== */
+
+  if (imageSliderEl.swiper) {
+    imageSliderEl.swiper.destroy(true, true);
+  }
+
+  if (contentSliderEl.swiper) {
+    contentSliderEl.swiper.destroy(true, true);
+  }
+
+  var isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+
+  /* =====================================
+     IMAGE SLIDER
+     ===================================== */
+
+  timelineImage = new window.Swiper(imageSliderEl, {
+    slidesPerView: 1,
+    speed: 800,
+
+    /* Touch / drag only on mobile */
+    allowTouchMove: isMobile,
+    simulateTouch: isMobile,
+    grabCursor: isMobile,
+    touchRatio: 1,
+    threshold: 5,
+
+    /* Autoplay only on mobile */
+    autoplay: isMobile
+      ? {
+          delay: 4000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: false
         }
-        if (contentSliderEl.swiper) {
-          contentSliderEl.swiper.destroy(true, true);
-        }
+      : false
+  });
 
-        timelineImage = new window.Swiper(imageSliderEl, {
-          slidesPerView: 1,
-          speed: 800,
-          allowTouchMove: false
-        });
 
-        timelineContent = new window.Swiper(contentSliderEl, {
-          slidesPerView: 1,
-          speed: 800,
-          allowTouchMove: false
-        });
+  /* =====================================
+     CONTENT SLIDER
+     ===================================== */
 
-        timelineImage.controller.control = timelineContent;
-        timelineContent.controller.control = timelineImage;
+  timelineContent = new window.Swiper(contentSliderEl, {
+    slidesPerView: 1,
+    speed: 800,
 
-        timelineImage.on('slideChange', function () {
-          updateTimeline(this.activeIndex);
-        });
+    /* Auto height on ALL screens */
+    autoHeight: true,
 
-        updateTimeline(0);
+    /* Touch / drag only on mobile */
+    allowTouchMove: isMobile,
+    simulateTouch: isMobile,
+    grabCursor: isMobile,
+    touchRatio: 1,
+    threshold: 5
+  });
 
-        if (prevBtn) {
-          prevBtn.onclick = function () {
-            timelineImage.slidePrev();
-          };
-        }
 
-        if (nextBtn) {
-          nextBtn.onclick = function () {
-            timelineImage.slideNext();
-          };
-        }
+  /* =====================================
+     SYNC IMAGE + CONTENT
+     ===================================== */
 
-        yearBtns.forEach(function (btn, index) {
-          btn.onclick = function () {
-            timelineImage.slideTo(index);
-          };
-        });
-      }
+  timelineImage.controller.control = timelineContent;
+  timelineContent.controller.control = timelineImage;
+
+
+  /* =====================================
+     UPDATE CONTENT HEIGHT
+     ===================================== */
+
+  function updateTimelineHeight(speed) {
+    if (!timelineContent) return;
+
+    window.requestAnimationFrame(function () {
+      timelineContent.updateAutoHeight(
+        typeof speed === 'number' ? speed : 300
+      );
+    });
+  }
+
+
+  /* =====================================
+     IMAGE SLIDE CHANGE
+     ===================================== */
+
+  timelineImage.on('slideChange', function () {
+    updateTimeline(this.activeIndex);
+
+    /* Recalculate content height */
+    updateTimelineHeight(300);
+  });
+
+
+  /* =====================================
+     CONTENT SLIDE CHANGE
+     ===================================== */
+
+  timelineContent.on('slideChange', function () {
+    updateTimeline(this.activeIndex);
+
+    /* Recalculate content height */
+    updateTimelineHeight(300);
+  });
+
+
+  /* =====================================
+     INITIAL STATE
+     ===================================== */
+
+  updateTimeline(0);
+
+  updateTimelineHeight(0);
+
+
+  /* Images/fonts load hone ke baad
+     height dobara calculate karo */
+  window.addEventListener(
+    'load',
+    function () {
+      updateTimelineHeight(0);
+    },
+    { once: true }
+  );
+
+
+  /* =====================================
+     PREVIOUS BUTTON
+     ===================================== */
+
+  if (prevBtn) {
+    prevBtn.onclick = function () {
+      timelineImage.slidePrev();
+    };
+  }
+
+
+  /* =====================================
+     NEXT BUTTON
+     ===================================== */
+
+  if (nextBtn) {
+    nextBtn.onclick = function () {
+      timelineImage.slideNext();
+    };
+  }
+
+
+  /* =====================================
+     YEAR NAVIGATION
+     ===================================== */
+
+  yearBtns.forEach(function (btn, index) {
+    btn.onclick = function () {
+      timelineImage.slideTo(index);
+    };
+  });
+}
 
       function initLeadershipSliders() {
         if (!window.Swiper) return;
