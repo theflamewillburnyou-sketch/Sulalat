@@ -372,6 +372,13 @@
         assign body_classes = 'template-index'
       endif
     endif
+    if request.page_type == 'captcha'
+      if body_classes != blank
+        assign body_classes = body_classes | append: ' template-captcha'
+      else
+        assign body_classes = 'template-captcha'
+      endif
+    endif
   -%}
 <body{% if body_classes != blank %} class="{{ body_classes }}"{% endif %}>
   <a class="skip-link btn btn--primary visually-hidden" href="#main-content" data-ce-role="skip">

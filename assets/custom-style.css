@@ -941,3 +941,39 @@ h1.page-banner-heading:empty {
 
    
 }
+
+/* Shopify hCaptcha /challenge page — keep header clear of the widget */
+body.template-captcha #main-content,
+body:has(.shopify-challenge__container) #main-content {
+  padding-top: clamp(96px, 14vw, 140px);
+  min-height: 50vh;
+}
+
+body.template-captcha .shopify-challenge__container,
+body:has(.shopify-challenge__container) .shopify-challenge__container {
+  margin-top: 24px !important;
+  margin-bottom: 48px !important;
+  padding-top: 24px !important;
+  padding-bottom: 48px !important;
+}
+
+body.template-captcha .shopify-section.cc-header,
+body:has(.shopify-challenge__container) .shopify-section.cc-header {
+  position: relative;
+  z-index: 50;
+}
+
+body:has(.shopify-challenge__container) store-header.header.header--overlay {
+  background: #fff !important;
+  color: #141211 !important;
+}
+
+body:has(.shopify-challenge__container) store-header.header.header--overlay .logo__text,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .logo__link,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .header__icon,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .header__icon .icon,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .header-language-toggle__btn,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .main-nav__item--primary,
+body:has(.shopify-challenge__container) store-header.header.header--overlay .main-menu__toggle {
+  color: #141211 !important;
+}
