@@ -238,7 +238,8 @@
             "image": "shopify://shop_images/e9863e90979261afdace87db9b8abd9a8547fd5f.jpg",
             "name": "Wayel Al-Wohaibi",
             "role": "Roasting Lead, Co-Founder & Chair of the Board ",
-            "linkedin_url": "",
+            "linkedin_url": "#",
+            "linkedin_image": "shopify://shop_images/Frame_73.png",
             "button_label": "Read Story →",
             "button_link": ""
           }
@@ -249,7 +250,8 @@
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Rashid Al-Jarwa",
             "role": "Chairman",
-            "linkedin_url": "",
+            "linkedin_url": "#",
+            "linkedin_image": "shopify://shop_images/Frame_73.png",
             "button_label": "Explore More",
             "button_link": ""
           }
@@ -260,7 +262,8 @@
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Sara Al-Mutawa",
             "role": "Marketing Lead, Co-Founder & Board Member",
-            "linkedin_url": "",
+            "linkedin_url": "#",
+            "linkedin_image": "shopify://shop_images/Frame_73.png",
             "button_label": "Read Story →",
             "button_link": ""
           }
@@ -271,6 +274,7 @@
             "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
             "name": "Naser Al-Wohaibi",
             "role": "Chief Executive Officer",
+            "linkedin_url": "",
             "button_label": "Explore More",
             "button_link": ""
           }
@@ -281,6 +285,7 @@
             "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
             "name": "Abdallah Al-Manea",
             "role": "Founder of Salve & Senmar ",
+            "linkedin_url": "",
             "button_label": "Explore More",
             "button_link": ""
           }
@@ -291,6 +296,7 @@
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Ammar Al-Naser",
             "role": "F&B Products Lead",
+            "linkedin_url": "",
             "button_label": "Explore More",
             "button_link": ""
           }
@@ -301,6 +307,7 @@
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Abdulaziz Al-Manea",
             "role": "Coffee Quality and Training Lead",
+            "linkedin_url": "",
             "button_label": "Explore More",
             "button_link": ""
           }
@@ -312,6 +319,7 @@
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Omar Al-Yousef",
             "role": "Chief Operating Officer",
+            "linkedin_url": "",
             "button_label": "Explore More",
             "button_link": ""
           }

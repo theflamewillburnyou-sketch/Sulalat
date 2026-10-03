@@ -770,11 +770,9 @@
       position: absolute;
       top: 18px;
       left: 18px;
-      width: 42px;
-      height: 42px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: var(--brand-primary, #53c295);
-      color: #fff;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -783,6 +781,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       z-index: 2;
+      overflow: hidden;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-linkedin {
@@ -790,10 +789,11 @@
       pointer-events: auto;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .leadership-linkedin svg {
-      width: 18px;
-      height: 18px;
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-linkedin img {
+      width: 100%;
+      height: 100%;
       display: block;
+      object-fit: contain;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-meta {
@@ -2369,9 +2369,28 @@
                             rel="noopener noreferrer"
                             aria-label="{{ block.settings.name | escape }} on LinkedIn"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
-                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
+                            {% if block.settings.linkedin_image != blank %}
+                              {{
+                                block.settings.linkedin_image
+                                | image_url: width: 96
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '48, 96',
+                                  sizes: '48px',
+                                  width: 48,
+                                  height: 48,
+                                  alt: ''
+                              }}
+                            {% else %}
+                              <img
+                                src="{{ 'linkedin-icon.png' | asset_url }}"
+                                alt=""
+                                width="48"
+                                height="48"
+                                loading="lazy"
+                                decoding="async"
+                              >
+                            {% endif %}
                           </a>
                         {% endif %}
                       </div>
@@ -2450,6 +2469,38 @@
                           }}
                         {% else %}
                           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                        {% if block.settings.linkedin_url != blank %}
+                          <a
+                            class="leadership-linkedin"
+                            href="{{ block.settings.linkedin_url }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="{{ block.settings.name | escape }} on LinkedIn"
+                          >
+                            {% if block.settings.linkedin_image != blank %}
+                              {{
+                                block.settings.linkedin_image
+                                | image_url: width: 96
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '48, 96',
+                                  sizes: '48px',
+                                  width: 48,
+                                  height: 48,
+                                  alt: ''
+                              }}
+                            {% else %}
+                              <img
+                                src="{{ 'linkedin-icon.png' | asset_url }}"
+                                alt=""
+                                width="48"
+                                height="48"
+                                loading="lazy"
+                                decoding="async"
+                              >
+                            {% endif %}
+                          </a>
                         {% endif %}
                       </div>
                     </div>
@@ -4529,7 +4580,14 @@ function syncTimelineHeight() {
         {
           "type": "url",
           "id": "linkedin_url",
-          "label": "LinkedIn URL"
+          "label": "LinkedIn URL",
+          "info": "Shown on the active slide photo only"
+        },
+        {
+          "type": "image_picker",
+          "id": "linkedin_image",
+          "label": "LinkedIn icon image",
+          "info": "Optional. Defaults to the theme LinkedIn icon if empty"
         },
         {
           "type": "text",
@@ -4564,6 +4622,18 @@ function syncTimelineHeight() {
           "id": "role",
           "label": "Role",
           "default": "Company Advisor"
+        },
+        {
+          "type": "url",
+          "id": "linkedin_url",
+          "label": "LinkedIn URL",
+          "info": "Shown on the active slide photo only"
+        },
+        {
+          "type": "image_picker",
+          "id": "linkedin_image",
+          "label": "LinkedIn icon image",
+          "info": "Optional. Defaults to the theme LinkedIn icon if empty"
         },
         {
           "type": "text",
