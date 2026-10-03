@@ -232,8 +232,9 @@
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .input,
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form input,
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
-        height: 40px;
-        font-size:14px;
+        height: 44px;
+        /* iOS Safari zooms focused inputs when font-size is below 16px */
+        font-size: 16px;
       }
 
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
