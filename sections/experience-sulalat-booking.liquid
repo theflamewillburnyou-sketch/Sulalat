@@ -4,12 +4,17 @@
   assign form_id = 'ExperienceBooking-' | append: section.id
 -%}
 
-<section class="experience-sulalat-booking" data-section-id="{{ section.id }}">
+<section
+  id="experience-sulalat-booking"
+  class="experience-sulalat-booking"
+  data-section-id="{{ section.id }}"
+>
   <style>
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] {
       padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
       background: {{ section.settings.background_color }};
       font-family: var(--body-font-family);
+      scroll-margin-top: 100px;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .container {
@@ -398,6 +403,49 @@
 
       var timeWrap = section.querySelector('[data-booking-times]');
       var timeInput = section.querySelector('[data-booking-time-input]');
+      var dateInput = section.querySelector('[data-booking-date]');
+      var form = section.querySelector('.experience-sulalat-booking__form');
+
+      function getTodayISODate() {
+        var now = new Date();
+        var year = now.getFullYear();
+        var month = String(now.getMonth() + 1).padStart(2, '0');
+        var day = String(now.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+      }
+
+      if (dateInput) {
+        var today = getTodayISODate();
+        dateInput.setAttribute('min', today);
+
+        if (dateInput.value && dateInput.value < today) {
+          dateInput.value = '';
+        }
+
+        dateInput.addEventListener('change', function () {
+          if (dateInput.value && dateInput.value < dateInput.min) {
+            dateInput.value = '';
+            dateInput.setCustomValidity('Please choose today or a future date.');
+            dateInput.reportValidity();
+            return;
+          }
+          dateInput.setCustomValidity('');
+        });
+      }
+
+      if (form && dateInput) {
+        form.addEventListener('submit', function (event) {
+          var minDate = dateInput.getAttribute('min') || getTodayISODate();
+          if (!dateInput.value || dateInput.value < minDate) {
+            event.preventDefault();
+            dateInput.setCustomValidity('Please choose today or a future date.');
+            dateInput.reportValidity();
+          } else {
+            dateInput.setCustomValidity('');
+          }
+        });
+      }
+
       if (!timeWrap || !timeInput) return;
 
       timeWrap.addEventListener('click', function (event) {

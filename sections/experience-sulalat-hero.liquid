@@ -157,7 +157,7 @@
           {% if section.settings.primary_button_label != blank %}
             <a
               class="experience-sulalat-hero__btn primary-btn"
-              href="{{ section.settings.primary_button_link | default: '#' }}"
+              href="#experience-sulalat-booking"
             >
               {{ section.settings.primary_button_label | escape }}
             </a>
@@ -165,7 +165,7 @@
           {% if section.settings.secondary_button_label != blank %}
             <a
               class="experience-sulalat-hero__btn secondary-btn"
-              href="{{ section.settings.secondary_button_link | default: '#' }}"
+              href="#experience-sulalat-gallery"
             >
               {{ section.settings.secondary_button_label | escape }}
             </a>
@@ -214,7 +214,8 @@
     {
       "type": "url",
       "id": "primary_button_link",
-      "label": "Primary button link"
+      "label": "Primary button link",
+      "info": "Not used — the primary button always scrolls to the Experience booking form"
     },
     {
       "type": "text",
@@ -225,7 +226,8 @@
     {
       "type": "url",
       "id": "secondary_button_link",
-      "label": "Secondary button link"
+      "label": "Secondary button link",
+      "info": "Not used — the secondary button always scrolls to the Experience gallery"
     },
     {
       "type": "range",

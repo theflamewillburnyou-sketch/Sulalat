@@ -151,7 +151,7 @@
                   {% if block.settings.image != blank %}
                     <a
                       class="experience-sulalat-card__media"
-                      href="{{ block.settings.button_link | default: '#' }}"
+                      href="#experience-sulalat-booking"
                       aria-label="{{ block.settings.title | default: 'View experience' | escape }}"
                     >
                       {{
@@ -179,7 +179,7 @@
                   {% endif %}
 
                   {% if block.settings.button_label != blank %}
-                    <a class="experience-sulalat-card__btn primary-btn" href="{{ block.settings.button_link | default: '#' }}">
+                    <a class="experience-sulalat-card__btn primary-btn" href="#experience-sulalat-booking">
                       {{ block.settings.button_label | escape }}
                     </a>
                   {% endif %}
@@ -215,6 +215,9 @@
       var slidesTablet = {{ section.settings.slides_per_view_tablet | default: 2.2 }};
       var slidesMobile = {{ section.settings.slides_per_view_mobile | default: 1.2 }};
       var showNavigation = {{ section.settings.show_navigation | json }};
+      var enableAutoplay = {{ section.settings.enable_autoplay | json }};
+      var autoplayDelay = {{ section.settings.autoplay_delay | default: 3500 }};
+      var autoplayPauseOnHover = {{ section.settings.autoplay_pause_on_hover | json }};
 
       function getSection() {
         return document.querySelector('.experience-sulalat-grid[data-section-id="' + sectionId + '"]');
@@ -251,8 +254,50 @@
         var nextBtn = section.querySelector('[data-experience-next]');
         if (!prevBtn || !nextBtn) return;
 
+        // Infinite loop: keep both arrows enabled.
+        if (swiper.params.loop) {
+          prevBtn.disabled = false;
+          nextBtn.disabled = false;
+          return;
+        }
+
         prevBtn.disabled = swiper.isBeginning;
         nextBtn.disabled = swiper.isEnd;
+      }
+
+      function prepareLoopSlides(sliderEl) {
+        var wrapper = sliderEl.querySelector('.swiper-wrapper');
+        if (!wrapper) return 0;
+
+        if (!sliderEl.dataset.originalSlidesHtml) {
+          var initialSlides = Array.from(wrapper.children).filter(function (node) {
+            return node.classList && node.classList.contains('swiper-slide');
+          });
+          sliderEl.dataset.originalSlideCount = String(initialSlides.length);
+          sliderEl.dataset.originalSlidesHtml = initialSlides
+            .map(function (slide) {
+              return slide.outerHTML;
+            })
+            .join('');
+        }
+
+        var originalCount = parseInt(sliderEl.dataset.originalSlideCount, 10) || 0;
+        if (!originalCount) return 0;
+
+        // Rebuild from originals so destroy/re-init stays clean.
+        wrapper.innerHTML = sliderEl.dataset.originalSlidesHtml;
+        var slides = Array.from(wrapper.children);
+
+        // Fractional slidesPerView needs extra copies or Swiper disables loop.
+        var minNeeded = Math.ceil(Math.max(slidesDesktop, slidesTablet, slidesMobile) * 2) + 2;
+        var target = Math.max(originalCount * 2, minNeeded);
+        var i = 0;
+        while (wrapper.children.length < target) {
+          wrapper.insertAdjacentHTML('beforeend', slides[i % originalCount].outerHTML);
+          i += 1;
+        }
+
+        return originalCount;
       }
 
       function initSlider() {
@@ -266,12 +311,18 @@
           sliderEl.swiper.destroy(true, true);
         }
 
-        var swiper = new window.Swiper(sliderEl, {
+        var slideCount = prepareLoopSlides(sliderEl);
+        var canLoop = slideCount > 1;
+
+        var swiperOptions = {
           slidesPerView: slidesMobile,
           spaceBetween: cardGap,
           speed: 600,
           grabCursor: true,
-          watchOverflow: true,
+          watchOverflow: false,
+          loop: canLoop,
+          loopAdditionalSlides: Math.max(2, slideCount),
+          loopedSlides: canLoop ? Math.max(slideCount, Math.ceil(slidesDesktop) + 1) : undefined,
           rtl: document.documentElement.dir === 'rtl',
           breakpoints: {
             768: {
@@ -294,7 +345,21 @@
               updateNavState(this, section);
             }
           }
-        });
+        };
+
+        if (enableAutoplay && canLoop) {
+          swiperOptions.autoplay = {
+            delay: autoplayDelay,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: !!autoplayPauseOnHover
+          };
+        }
+
+        var swiper = new window.Swiper(sliderEl, swiperOptions);
+
+        if (enableAutoplay && swiper.autoplay && typeof swiper.autoplay.start === 'function') {
+          swiper.autoplay.start();
+        }
 
         if (showNavigation) {
           var prevBtn = section.querySelector('[data-experience-prev]');
@@ -411,6 +476,32 @@
       "id": "show_navigation",
       "label": "Show navigation arrows",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 1500,
+      "max": 8000,
+      "step": 500,
+      "unit": "ms",
+      "default": 3500
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_pause_on_hover",
+      "label": "Pause autoplay on hover",
+      "default": true
     }
   ],
   "blocks": [
@@ -444,7 +535,8 @@
         {
           "type": "url",
           "id": "button_link",
-          "label": "Button link"
+          "label": "Button link",
+          "info": "Not used — the button always scrolls to the Experience booking form"
         }
       ]
     }
