@@ -85,7 +85,7 @@
       display: block;
       border-radius: var(--brand-radius-lg, 20px);
       overflow: hidden;
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 6;
       background: #f3f3f3;
     }
 
@@ -111,11 +111,11 @@
     .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__progress {
       position: relative;
       flex: 1;
-      height: 3px;
+      height: 2px;
       background: #e5e5e5;
       border-radius: 999px;
       overflow: hidden;
-      max-width: 420px;
+      max-width: 552px;
     }
 
     .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__progress-bar {
@@ -151,6 +151,21 @@
       justify-content: center;
       padding: 0;
       transition: 0.3s ease;
+    }
+
+    .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__nav-btn svg {
+      width:16px;
+      height:16px;
+    }
+
+    .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__nav-btn svg path {
+      transition: 0.3s ease;
+    }
+
+
+    .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__nav-btn:hover svg path {
+      fill:#fff;
+      color:#fff;
     }
 
     .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__nav-btn:hover:not(:disabled) {
@@ -238,13 +253,13 @@
         </div>
         <div class="experience-sulalat-gallery__nav">
           <button type="button" class="experience-sulalat-gallery__nav-btn" data-gallery-prev aria-label="Previous slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                <path d="M0.338923 9.33707C-0.11286 8.88529 -0.11286 8.1528 0.338923 7.70102L7.70115 0.338787C8.15294 -0.112996 8.88542 -0.112996 9.3372 0.338787C9.78899 0.79057 9.78899 1.52306 9.3372 1.97484L2.793 8.51904L9.3372 15.0632C9.78899 15.515 9.78899 16.2475 9.3372 16.6993C8.88542 17.1511 8.15294 17.1511 7.70115 16.6993L0.338923 9.33707ZM17.353 8.51904V9.67591H1.15695V8.51904V7.36218H17.353V8.51904Z" fill="#53C295"></path>
             </svg>
           </button>
           <button type="button" class="experience-sulalat-gallery__nav-btn" data-gallery-next aria-label="Next slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+              <path d="M17.0141 9.33707C17.4659 8.88529 17.4659 8.1528 17.0141 7.70102L9.65187 0.338787C9.20009 -0.112996 8.46761 -0.112996 8.01582 0.338787C7.56404 0.79057 7.56404 1.52306 8.01582 1.97484L14.56 8.51904L8.01582 15.0632C7.56404 15.515 7.56404 16.2475 8.01582 16.6993C8.46761 17.1511 9.20009 17.1511 9.65187 16.6993L17.0141 9.33707ZM0 8.51904V9.67591H16.1961V8.51904V7.36218H0V8.51904Z" fill="#53C295"></path>
             </svg>
           </button>
         </div>

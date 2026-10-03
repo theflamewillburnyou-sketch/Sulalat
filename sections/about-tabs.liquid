@@ -250,6 +250,7 @@
       object-fit: cover;
       border-radius: 20px;
       display: block;
+      transition: all 0.2s linear;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-footer {
@@ -1667,6 +1668,7 @@
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
         flex-direction: column;
         margin-top: 40px;
+        margin-bottom: 0;
       }
       .about-tabs[data-section-id="{{ section.id }}"] .who-content p {
         max-width:100%;
@@ -1693,6 +1695,7 @@
       .about-tabs[data-section-id="{{ section.id }}"] .vision-image,
       .about-tabs[data-section-id="{{ section.id }}"] .vision-card {
         width: 100%;
+        border-radius: 12px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .vision-card:nth-child(1) {
@@ -1823,11 +1826,51 @@
         width: 46px;
         height: 46px;
       }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
+      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
+        aspect-ratio: 16 / 9;
+        border-radius:12px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .who-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .who-image svg.placeholder-svg {
+        border-radius: 12px;
+        aspect-ratio: 16 / 9;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-image svg.placeholder-svg {
+        height: auto;
+        border-radius: 12px;
+        aspect-ratio: 16 / 9;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-wrapper {
+        border-radius: 12px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .culture-image svg.placeholder-svg {
+        aspect-ratio: 16 / 9;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image {
+        border-radius: 12px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image img,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-image svg.placeholder-svg {
+        border-radius: 12px;
+        aspect-ratio: 16 / 9;
+      }
+      
     }
 
     @media (max-width: 575px){
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider .swiper-slide {
         padding: 25px;
+        border-radius:12px;
       }
       .about-tabs[data-section-id="{{ section.id }}"] .certificate-grid {
         grid-template-columns:100%;
@@ -1880,10 +1923,7 @@
         display:none;
       }
 
-      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider img,
-      .about-tabs[data-section-id="{{ section.id }}"] .timeline-image-slider svg.placeholder-svg {
-        aspect-ratio: 16 / 9;
-      }
+      
 
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-year{
         font-size:18px;
@@ -1891,6 +1931,15 @@
 
       .about-tabs[data-section-id="{{ section.id }}"] .timeline-buttons {
         display: none;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-form-status--success {
+        text-align:center;
+      }
+      .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content .primary-btn {
+        padding-inline: 30px;
+        width: 100%;
+        max-width: 200px;
       }
     }
 
@@ -3146,7 +3195,7 @@
         }
       }
 
-     function initTimeline() {
+function initTimeline() {
   if (!imageSliderEl || !contentSliderEl || !window.Swiper) return;
 
   /* =====================================
@@ -3162,6 +3211,7 @@
   }
 
   var isMobile = window.matchMedia('(max-width: 767px)').matches;
+  var resizeTimer = null;
 
 
   /* =====================================
@@ -3172,7 +3222,7 @@
     slidesPerView: 1,
     speed: 800,
 
-    /* Touch / drag only on mobile */
+    /* Mobile only */
     allowTouchMove: isMobile,
     simulateTouch: isMobile,
     grabCursor: isMobile,
@@ -3198,10 +3248,13 @@
     slidesPerView: 1,
     speed: 800,
 
-    /* Auto height on ALL screens */
+    /*
+     * Content slider active CARD ke according
+     * apni natural height lega.
+     */
     autoHeight: true,
 
-    /* Touch / drag only on mobile */
+    /* Mobile only */
     allowTouchMove: isMobile,
     simulateTouch: isMobile,
     grabCursor: isMobile,
@@ -3211,7 +3264,7 @@
 
 
   /* =====================================
-     SYNC IMAGE + CONTENT
+     SYNC BOTH SLIDERS
      ===================================== */
 
   timelineImage.controller.control = timelineContent;
@@ -3219,16 +3272,244 @@
 
 
   /* =====================================
-     UPDATE CONTENT HEIGHT
+     MATCH IMAGE WITH COMPLETE CARD HEIGHT
+     Tablet + Desktop only
      ===================================== */
 
-  function updateTimelineHeight(speed) {
-    if (!timelineContent) return;
+function syncTimelineHeight() {
 
-    window.requestAnimationFrame(function () {
-      timelineContent.updateAutoHeight(
-        typeof speed === 'number' ? speed : 300
+  /* =====================================
+     MOBILE
+     Mobile stacked hai, equal height nahi
+     ===================================== */
+
+  if (window.innerWidth < 768) {
+
+    imageSliderEl.style.removeProperty('height');
+    imageSliderEl.style.removeProperty('min-height');
+    imageSliderEl.style.removeProperty('max-height');
+
+    var mobileWrapper =
+      imageSliderEl.querySelector('.swiper-wrapper');
+
+    if (mobileWrapper) {
+      mobileWrapper.style.removeProperty('height');
+      mobileWrapper.style.removeProperty('min-height');
+    }
+
+    imageSliderEl
+      .querySelectorAll('.swiper-slide')
+      .forEach(function (slide) {
+
+        slide.style.removeProperty('height');
+        slide.style.removeProperty('min-height');
+        slide.style.removeProperty('max-height');
+
+      });
+
+    imageSliderEl
+      .querySelectorAll('.swiper-slide img')
+      .forEach(function (img) {
+
+        img.style.removeProperty('height');
+        img.style.removeProperty('min-height');
+        img.style.removeProperty('max-height');
+        img.style.removeProperty('aspect-ratio');
+
+      });
+
+    return;
+  }
+
+
+  /* =====================================
+     ACTIVE CONTENT SLIDE
+     ===================================== */
+
+  var activeContentSlide =
+    contentSliderEl.querySelector('.swiper-slide-active');
+
+  if (!activeContentSlide) return;
+
+
+  /*
+   * IMPORTANT:
+   *
+   * Ab .timeline-card ki height nahi.
+   * Complete active swiper-slide ki
+   * rendered height lenge.
+   */
+  var activeSlideHeight = Math.ceil(
+    activeContentSlide.getBoundingClientRect().height
+  );
+
+  if (!activeSlideHeight) return;
+
+
+  /* =====================================
+     IMAGE SLIDER
+     ===================================== */
+
+  imageSliderEl.style.setProperty(
+    'height',
+    activeSlideHeight + 'px',
+    'important'
+  );
+
+  imageSliderEl.style.setProperty(
+    'min-height',
+    activeSlideHeight + 'px',
+    'important'
+  );
+
+  imageSliderEl.style.setProperty(
+    'max-height',
+    'none',
+    'important'
+  );
+
+
+  /* =====================================
+     IMAGE SWIPER WRAPPER
+     ===================================== */
+
+  var imageWrapper =
+    imageSliderEl.querySelector('.swiper-wrapper');
+
+  if (imageWrapper) {
+
+    imageWrapper.style.setProperty(
+      'height',
+      activeSlideHeight + 'px',
+      'important'
+    );
+
+    imageWrapper.style.setProperty(
+      'min-height',
+      activeSlideHeight + 'px',
+      'important'
+    );
+
+  }
+
+
+  /* =====================================
+     IMAGE SLIDES
+     ===================================== */
+
+  imageSliderEl
+    .querySelectorAll('.swiper-slide')
+    .forEach(function (slide) {
+
+      slide.style.setProperty(
+        'height',
+        activeSlideHeight + 'px',
+        'important'
       );
+
+      slide.style.setProperty(
+        'min-height',
+        activeSlideHeight + 'px',
+        'important'
+      );
+
+      slide.style.setProperty(
+        'max-height',
+        'none',
+        'important'
+      );
+
+    });
+
+
+  /* =====================================
+     IMAGES
+     ===================================== */
+
+  imageSliderEl
+    .querySelectorAll('.swiper-slide img')
+    .forEach(function (img) {
+
+      img.style.setProperty(
+        'width',
+        '100%',
+        'important'
+      );
+
+      img.style.setProperty(
+        'height',
+        activeSlideHeight + 'px',
+        'important'
+      );
+
+      img.style.setProperty(
+        'min-height',
+        activeSlideHeight + 'px',
+        'important'
+      );
+
+      img.style.setProperty(
+        'max-height',
+        'none',
+        'important'
+      );
+
+      img.style.setProperty(
+        'aspect-ratio',
+        'auto',
+        'important'
+      );
+
+      img.style.setProperty(
+        'object-fit',
+        'cover',
+        'important'
+      );
+
+      img.style.setProperty(
+        'display',
+        'block',
+        'important'
+      );
+
+    });
+}
+
+
+  /* =====================================
+     UPDATE CURRENT SLIDE
+     ===================================== */
+
+  function updateTimelineLayout(index) {
+
+    updateTimeline(index);
+
+
+    /*
+     * First Swiper calculates the complete
+     * active content slide/card height.
+     */
+    if (timelineContent) {
+      timelineContent.updateAutoHeight(0);
+    }
+
+
+    /*
+     * First frame:
+     * Swiper styles apply.
+     */
+    window.requestAnimationFrame(function () {
+
+      /*
+       * Second frame:
+       * Browser layout complete.
+       */
+      window.requestAnimationFrame(function () {
+
+        syncTimelineHeight();
+
+      });
+
     });
   }
 
@@ -3238,43 +3519,120 @@
      ===================================== */
 
   timelineImage.on('slideChange', function () {
+
     updateTimeline(this.activeIndex);
 
-    /* Recalculate content height */
-    updateTimelineHeight(300);
   });
+
+
+  timelineImage.on(
+    'slideChangeTransitionEnd',
+    function () {
+
+      updateTimelineLayout(this.activeIndex);
+
+    }
+  );
 
 
   /* =====================================
      CONTENT SLIDE CHANGE
      ===================================== */
 
-  timelineContent.on('slideChange', function () {
-    updateTimeline(this.activeIndex);
+  timelineContent.on(
+    'slideChangeTransitionEnd',
+    function () {
 
-    /* Recalculate content height */
-    updateTimelineHeight(300);
-  });
+      updateTimelineLayout(this.activeIndex);
+
+    }
+  );
 
 
   /* =====================================
-     INITIAL STATE
+     INITIAL LOAD
      ===================================== */
 
   updateTimeline(0);
 
-  updateTimelineHeight(0);
+
+  window.requestAnimationFrame(function () {
+
+    if (timelineContent) {
+      timelineContent.updateAutoHeight(0);
+    }
+
+    window.requestAnimationFrame(function () {
+
+      syncTimelineHeight();
+
+    });
+
+  });
 
 
-  /* Images/fonts load hone ke baad
-     height dobara calculate karo */
-  window.addEventListener(
-    'load',
-    function () {
-      updateTimelineHeight(0);
-    },
-    { once: true }
-  );
+  /* =====================================
+     FONTS READY
+     ===================================== */
+
+  if (document.fonts && document.fonts.ready) {
+
+    document.fonts.ready.then(function () {
+
+      if (timelineContent) {
+        timelineContent.updateAutoHeight(0);
+      }
+
+      window.requestAnimationFrame(function () {
+        syncTimelineHeight();
+      });
+
+    });
+
+  }
+
+
+  /* =====================================
+     WINDOW RESIZE
+     ===================================== */
+
+  window.addEventListener('resize', function () {
+
+    clearTimeout(resizeTimer);
+
+    resizeTimer = setTimeout(function () {
+
+      /*
+       * Screen width change hone par
+       * text wrapping bhi change ho sakti hai.
+       */
+      if (timelineContent) {
+
+        timelineContent.update();
+
+        timelineContent.updateAutoHeight(0);
+
+      }
+
+
+      if (timelineImage) {
+        timelineImage.update();
+      }
+
+
+      window.requestAnimationFrame(function () {
+
+        window.requestAnimationFrame(function () {
+
+          syncTimelineHeight();
+
+        });
+
+      });
+
+    }, 150);
+
+  });
 
 
   /* =====================================
@@ -3282,9 +3640,13 @@
      ===================================== */
 
   if (prevBtn) {
+
     prevBtn.onclick = function () {
+
       timelineImage.slidePrev();
+
     };
+
   }
 
 
@@ -3293,20 +3655,28 @@
      ===================================== */
 
   if (nextBtn) {
+
     nextBtn.onclick = function () {
+
       timelineImage.slideNext();
+
     };
+
   }
 
 
   /* =====================================
-     YEAR NAVIGATION
+     YEAR BUTTONS
      ===================================== */
 
   yearBtns.forEach(function (btn, index) {
+
     btn.onclick = function () {
+
       timelineImage.slideTo(index);
+
     };
+
   });
 }
 

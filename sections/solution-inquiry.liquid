@@ -26,7 +26,6 @@
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media {
-      min-height: 640px;
       background: #f3f3f3;
     }
 
@@ -179,6 +178,7 @@
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status--success {
       color: var(--brand-primary, #53c295);
+      order: 99;
     }
 
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status--error {
@@ -211,7 +211,7 @@
       }
 
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-media {
-        min-height: 320px;
+        min-height:0;
       }
 
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
@@ -238,6 +238,16 @@
 
       .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-content {
         padding: 24px 15px;
+      }
+
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form .primary-btn {
+        min-width:0;
+        width:100%;
+        text-align:center;
+      }
+
+      .solution-inquiry[data-section-id="{{ section.id }}"] .solution-form-status--success {
+        text-align:center;
       }
     
     }

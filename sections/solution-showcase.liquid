@@ -62,7 +62,7 @@
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-slider {
       position: relative;
       overflow: hidden;
-      min-height: 420px;
+      min-height: 495px;
     }
 
     /* ==================================================================
@@ -237,9 +237,24 @@
       transition: 0.3s;
     }
 
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button svg{
+      width:16px;
+      height:16px;
+    }
+
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button svg path{
+      transition:all 0.2s linear;
+    }
+
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button:hover {
       background: var(--brand-primary, #53c295);
       color: #fff;
+      fill: #fff;
+    }
+
+    .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button:hover svg path {
+      color:#fff;
+      fill: #fff;
     }
 
     .solution-showcase[data-section-id="{{ section.id }}"] .solution-nav button:disabled {
@@ -305,11 +320,17 @@
       .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content-inner {
         padding: 32px 28px;
         min-height: 0;
+        border-radius: 12px;
       }
 
       .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-media-inner {
-        min-height: 280px;
-        height: 280px;
+        min-height:0;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        border-radius: 12px;
+      }
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content h3 {
+        margin: 0 0 24px;
       }
     }
 
@@ -323,7 +344,7 @@
       }
 
       .solution-showcase[data-section-id="{{ section.id }}"] .solution-footer {
-        flex-wrap: wrap;
+        flex-direction: row-reverse;
         margin-top: 24px;
       }
 
@@ -338,6 +359,18 @@
         height: 44px;
       }
     }
+
+
+    @media (max-width: 575px){
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-intro {
+         text-align:left;
+      }
+
+      .solution-showcase[data-section-id="{{ section.id }}"] .solution-slide-content .primary-btn {
+        padding-inline: 30px;
+      }
+    }
+
   </style>
 
   <div class="container">
@@ -446,13 +479,13 @@
         </div>
         <div class="solution-nav{% if slide_blocks.size < 2 %} is-hidden{% endif %}">
           <button type="button" class="solution-prev" aria-label="Previous slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+                    <path d="M0.338923 9.33707C-0.11286 8.88529 -0.11286 8.1528 0.338923 7.70102L7.70115 0.338787C8.15294 -0.112996 8.88542 -0.112996 9.3372 0.338787C9.78899 0.79057 9.78899 1.52306 9.3372 1.97484L2.793 8.51904L9.3372 15.0632C9.78899 15.515 9.78899 16.2475 9.3372 16.6993C8.88542 17.1511 8.15294 17.1511 7.70115 16.6993L0.338923 9.33707ZM17.353 8.51904V9.67591H1.15695V8.51904V7.36218H17.353V8.51904Z" fill="#53C295"></path>
+          </svg>
           </button>
           <button type="button" class="solution-next" aria-label="Next slide">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 18 18" fill="none">
+              <path d="M17.0141 9.33707C17.4659 8.88529 17.4659 8.1528 17.0141 7.70102L9.65187 0.338787C9.20009 -0.112996 8.46761 -0.112996 8.01582 0.338787C7.56404 0.79057 7.56404 1.52306 8.01582 1.97484L14.56 8.51904L8.01582 15.0632C7.56404 15.515 7.56404 16.2475 8.01582 16.6993C8.46761 17.1511 9.20009 17.1511 9.65187 16.6993L17.0141 9.33707ZM0 8.51904V9.67591H16.1961V8.51904V7.36218H0V8.51904Z" fill="#53C295"></path>
             </svg>
           </button>
         </div>

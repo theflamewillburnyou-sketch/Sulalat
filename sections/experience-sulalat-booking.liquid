@@ -85,6 +85,12 @@
       font-weight:400;
     }
 
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input::placeholder,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea::placeholder {
+      color:#A2A2A2;
+    }
+
     [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input,
     [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select,
     [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea {
@@ -134,11 +140,18 @@
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input {
       padding-right: 44px;
+      color: #A2A2A2;
+    }
+
+
+    input[data-booking-date]::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-icon {
       position: absolute;
-      right: 16px;
+      right: 20px;
       top: 50%;
       transform: translateY(-50%);
       color: #9a9a9a;
@@ -158,14 +171,13 @@
       border: 1px solid #e0e0e0;
       border-radius: 14px;
       background: #fff;
-      color: #000;
+      color: #A2A2A2;
       font-size: 16px;
       font-weight: 400;
       font-family: inherit;
       cursor: pointer;
       transition: 0.25s ease;
       border-radius:999px;
-      font-family: var(--secondary-font);
       text-align:center;
     }
 
@@ -191,6 +203,7 @@
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status--success {
       color: var(--brand-primary, #53c295);
+      order: 99;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status--error {
@@ -203,7 +216,7 @@
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media {
-        min-height: 320px;
+        min-height: 0;
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {

@@ -119,11 +119,14 @@
         padding: 36px 28px;
         min-height: 0;
         width:100%;
+        border-radius:12px;
       }
 
       .solution-feature[data-section-id="{{ section.id }}"] .solution-feature-media {
-        min-height: 280px;
+        min-height:0;
         width:100%;
+        aspect-ratio:16/9;
+        border-radius:12px;
       }
       
     }
@@ -131,6 +134,13 @@
     @media (max-width: 767px) {
       .solution-feature[data-section-id="{{ section.id }}"] {
         padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+      }
+    }
+    
+    @media (max-width: 575px) {
+      .solution-feature[data-section-id="{{ section.id }}"] .solution-feature-content .primary-btn {
+        align-self: flex-start;
+        padding-inline: 40px
       }
     }
   </style>

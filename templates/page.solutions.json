@@ -17,7 +17,7 @@
         "subtitle": "B2B Solutions",
         "heading": "<p>Built Around the Needs of Hospitality&nbsp;</p>",
         "text": "<p>Explore end-to-end B2B solutions across specialty coffee, craft chocolate, artisan gelato, and café operations, backed by 13 years of expertise and in-house production.&nbsp;</p>",
-        "min_height": 520,
+        "min_height": 600,
         "min_height_mobile": 420,
         "padding_top": 120,
         "padding_bottom": 80,
@@ -36,7 +36,7 @@
             "tag": "Single-Origin",
             "heading": "Auction-Grade Coffee",
             "text": "Find rare harvests and everyday favorites selected through more than 88 international auctions and global farms. Each coffee is chosen with regional tastes and hospitality environments in mind.",
-            "button_label": "Explore the Collection →",
+            "button_label": "Explore the Collection",
             "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/5de2c710cd60795627573500a6e375bb8c0b43be.jpg"
           }
@@ -47,7 +47,7 @@
             "tag": "For New Ventures",
             "heading": "A Strong Start for Every Café",
             "text": "Start with everything in place. As Saudi Arabia's trusted B2B specialty supplier, we provide coffee, equipment, training, and operational support through a single relationship.",
-            "button_label": "Plan Your Café →",
+            "button_label": "Plan Your Café",
             "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/60c1314b7b547b707a50c55c2b8ea48d7ed51946_f48b696a-2574-4f9e-90ed-95a299d9e305.png"
           }
@@ -79,7 +79,7 @@
             "tag": "Commercial Equipment",
             "heading": "Supporting the Way You Serve ",
             "text": "Shop professional espresso machines, grinders, and brewing systems chosen for performance under daily demand.",
-            "button_label": "Equip Your Café →",
+            "button_label": "Equip Your Café",
             "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/82ccd617811ae45670062fbfa2c8bdd8b55322af.jpg"
           }
@@ -90,7 +90,7 @@
             "tag": "Home Brewer Equipment",
             "heading": "Tools for Better Brewing",
             "text": "Find high-quality, easy-to-use equipment and brewing tools for specialty coffee at home.",
-            "button_label": "Find Your Setup →",
+            "button_label": "Find Your Setup",
             "button_link": "shopify://pages/shop",
             "image": "shopify://shop_images/443b76ba015bd140c907fe7eb560afe6fe4743f5_d2d8781f-621e-442a-8b21-872c4def8803.png"
           }
@@ -119,7 +119,7 @@
         "tag": "Craft Chocolate Maker",
         "heading": "SENMAR’s Chocolate Collection",
         "text": "Elevate every menu with our chocolate portfolio. Developed for pastry chefs, cafés, and hospitality businesses, SENMAR offers versatile formats for desserts, beverages, baking, and menu innovation.",
-        "button_label": "Discover SENMAR →",
+        "button_label": "Discover SENMAR",
         "button_link": "shopify://pages/chocolate",
         "image": "shopify://shop_images/8c0965ac2338300fbec63cd1367828de85892fc9.png",
         "media_position": "right",
@@ -137,7 +137,7 @@
         "tag": "Artisan Gelato",
         "heading": "Salve’s Premium Gelato",
         "text": "Expand your menu with artisan gelato developed for cafés, bakeries, and hospitality venues looking to offer a memorable experience.",
-        "button_label": "Explore Salve →",
+        "button_label": "Explore Salve",
         "button_link": "shopify://pages/bakery-gelato",
         "image": "shopify://shop_images/37f237507ad2cc5bce0e6919cc042a0dfefe5315.jpg",
         "media_position": "left",
@@ -155,7 +155,7 @@
         "tag": "Café & Consultancy ",
         "heading": "Training, Tools, and Guidance",
         "text": "Access all you need to serve well, every day. Our team works alongside yours, training baristas, setting up workflows, calibrating equipment, and supporting product development for as long as you need us.",
-        "button_label": "Support Your Team →",
+        "button_label": "Support Your Team",
         "button_link": "shopify://pages/cafe-consultancy",
         "image": "shopify://shop_images/7689e70e0aa769f4e6bd8610d986c69925f3f5bc.jpg",
         "media_position": "right",
