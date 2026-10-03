@@ -184,6 +184,18 @@
       margin-inline: auto;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .section-title h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .who-content h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .vision-content h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .culture-content h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-intro h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .partners-intro h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .carrers-why-content h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-positions-intro h2 .word,
+    .about-tabs[data-section-id="{{ section.id }}"] .social-farm-content h3 .word {
+      display: inline-block;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-wrapper {
       display: flex;
       gap: 30px;
@@ -649,7 +661,7 @@
     /* Leadership & Team */
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-team {
       padding: 100px 0 80px;
-      overflow:hidden;
+      overflow: visible;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
@@ -680,7 +692,8 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider {
       overflow: visible;
-      margin: 0 auto;
+      margin: 0 calc(-1 * var(--gutter, 20px));
+      width: auto;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-wrapper {
@@ -689,12 +702,10 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide {
       height: auto;
-      transition: transform 0.45s ease, opacity 0.45s ease;
-      {% comment %} opacity: 0.55; {% endcomment %}
+      z-index: 1;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide-active {
-      opacity: 1;
       z-index: 2;
     }
 
@@ -712,6 +723,31 @@
       border-radius: 20px;
       background: #f3f3f3;
       aspect-ratio: 1;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.55);
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+      z-index: 1;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-card-image::after {
+      opacity: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide .leadership-card-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide .leadership-card-image svg.placeholder-svg {
+      filter: grayscale(0.35) contrast(0.92);
+      transition: filter 0.45s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-card-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-card-image svg.placeholder-svg {
+      filter: none;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .executive-slider .leadership-card-image {
@@ -802,8 +838,8 @@
       min-height: 72px;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn{
-      margin-top:20px;
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn {
+      margin-top: 20px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta h3 {
@@ -865,9 +901,9 @@
       gap: 12px;
       flex-shrink: 0;
     }
-    
+
     [dir="rtl"] .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons {
-      flex-direction:row-reverse;
+      flex-direction: row-reverse;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button {
@@ -2863,14 +2899,150 @@
       var peopleSwiper = null;
 
       function refreshLeadershipSliders() {
-        if (executiveSwiper) {
-          executiveSwiper.update();
-          syncExecutiveMeta(executiveSwiper.slides[executiveSwiper.activeIndex]);
+        // Must init/rebuild while the tab is visible — loop peeks break if built at display:none.
+        initLeadershipSliders();
+      }
+
+      function syncExecutiveMeta(slide) {
+        if (!slide) return;
+        var nameEl = section.querySelector('[data-executive-name]');
+        var roleEl = section.querySelector('[data-executive-role]');
+        var buttonEl = section.querySelector('[data-executive-button]');
+        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
+        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
+        if (buttonEl) {
+          var label = slide.getAttribute('data-button-label') || '';
+          var link = slide.getAttribute('data-button-link') || '';
+          if (label) {
+            buttonEl.textContent = label;
+            buttonEl.href = link || '#';
+            buttonEl.classList.remove('is-hidden');
+          } else {
+            buttonEl.classList.add('is-hidden');
+          }
         }
-        if (peopleSwiper) {
-          peopleSwiper.update();
-          syncPeopleMeta(peopleSwiper.slides[peopleSwiper.activeIndex]);
+      }
+
+      function syncPeopleMeta(slide) {
+        if (!slide) return;
+        var nameEl = section.querySelector('[data-people-name]');
+        var roleEl = section.querySelector('[data-people-role]');
+        var buttonEl = section.querySelector('[data-people-button]');
+        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
+        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
+        if (buttonEl) {
+          var label = slide.getAttribute('data-button-label') || '';
+          var link = slide.getAttribute('data-button-link') || '';
+          if (label) {
+            buttonEl.textContent = label;
+            buttonEl.href = link || '#';
+            buttonEl.classList.remove('is-hidden');
+          } else {
+            buttonEl.classList.add('is-hidden');
+          }
         }
+      }
+
+      function prefersReducedMotion() {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      }
+
+      function splitHeading(heading) {
+        if (!heading || heading.dataset.splitAnimated === 'true' || typeof SplitType === 'undefined') return null;
+        heading.dataset.splitAnimated = 'true';
+        heading.textContent = heading.textContent.replace(/\u00A0/g, ' ').replace(/\s+/g, ' ').trim();
+        var split = new SplitType(heading, { types: 'words', tagName: 'span' });
+        if (!split || !split.words || !split.words.length) return null;
+        heading.style.overflow = 'hidden';
+        split.words.forEach(function (word) {
+          word.style.display = 'inline-block';
+          if (!word.nextSibling || word.nextSibling.nodeType !== 3) {
+            word.insertAdjacentText('afterend', ' ');
+          }
+        });
+        return split;
+      }
+
+      function animatePanelText(panel) {
+        if (!panel || panel.dataset.textAnimated === 'true') return;
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+        if (prefersReducedMotion()) {
+          panel.dataset.textAnimated = 'true';
+          return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+        panel.dataset.textAnimated = 'true';
+
+        var blocks = panel.querySelectorAll(
+          '.section-title, .who-content, .vision-content, .culture-content, .leadership-intro, .partners-intro, .carrers-why-content, .careers-positions-intro, .social-farm-content'
+        );
+
+        blocks.forEach(function (block) {
+          var heading = block.querySelector('h2, h3');
+          var subtitles = block.querySelectorAll('p');
+
+          if (heading) {
+            var split = splitHeading(heading);
+            if (split && split.words && split.words.length) {
+              gsap.fromTo(
+                split.words,
+                { y: '110%' },
+                {
+                  y: '0%',
+                  duration: 1,
+                  ease: 'power4.out',
+                  stagger: 0.06,
+                  scrollTrigger: {
+                    trigger: block,
+                    start: 'top 82%',
+                    once: true
+                  }
+                }
+              );
+            }
+          }
+
+          if (subtitles.length) {
+            gsap.fromTo(
+              subtitles,
+              { opacity: 0, y: 30 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: 0.25,
+                stagger: 0.12,
+                ease: 'power3.out',
+                scrollTrigger: {
+                  trigger: block,
+                  start: 'top 82%',
+                  once: true
+                }
+              }
+            );
+          }
+        });
+
+        ScrollTrigger.refresh();
+      }
+
+      function waitForAnimateLibs(cb) {
+        var tries = 0;
+        (function check() {
+          if (window.gsap && window.ScrollTrigger && window.SplitType) {
+            cb();
+            return;
+          }
+          tries += 1;
+          if (tries < 80) setTimeout(check, 50);
+        })();
+      }
+
+      function initTextAnimations() {
+        waitForAnimateLibs(function () {
+          animatePanelText(section.querySelector('.tab-panel.active'));
+        });
       }
 
       function initTabs() {
@@ -2897,11 +3069,21 @@
           if (target) target.classList.add('active');
 
           if (tab === 'leadership') {
-            window.requestAnimationFrame(refreshLeadershipSliders);
+            window.requestAnimationFrame(function () {
+              window.requestAnimationFrame(refreshLeadershipSliders);
+            });
           }
 
           if (tab !== 'careers') {
             closeCareerDetail();
+          }
+
+          if (target) {
+            window.requestAnimationFrame(function () {
+              waitForAnimateLibs(function () {
+                animatePanelText(target);
+              });
+            });
           }
         });
       }
@@ -3155,45 +3337,6 @@
         bar.style.width = (((index + 1) / total) * 100) + '%';
       }
 
-      function syncExecutiveMeta(slide) {
-        if (!slide) return;
-        var nameEl = section.querySelector('[data-executive-name]');
-        var roleEl = section.querySelector('[data-executive-role]');
-        var buttonEl = section.querySelector('[data-executive-button]');
-        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
-        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
-        if (buttonEl) {
-          var label = slide.getAttribute('data-button-label') || '';
-          var link = slide.getAttribute('data-button-link') || '';
-          if (label) {
-            buttonEl.textContent = label;
-            buttonEl.href = link || '#';
-            buttonEl.classList.remove('is-hidden');
-          } else {
-            buttonEl.classList.add('is-hidden');
-          }
-        }
-      }
-
-      function syncPeopleMeta(slide) {
-        if (!slide) return;
-        var nameEl = section.querySelector('[data-people-name]');
-        var roleEl = section.querySelector('[data-people-role]');
-        var buttonEl = section.querySelector('[data-people-button]');
-        if (nameEl) nameEl.textContent = slide.getAttribute('data-name') || '';
-        if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
-        if (buttonEl) {
-          var label = slide.getAttribute('data-button-label') || '';
-          var link = slide.getAttribute('data-button-link') || '';
-          if (label) {
-            buttonEl.textContent = label;
-            buttonEl.href = link || '#';
-            buttonEl.classList.remove('is-hidden');
-          } else {
-            buttonEl.classList.add('is-hidden');
-          }
-        }
-      }
 
 function initTimeline() {
   if (!imageSliderEl || !contentSliderEl || !window.Swiper) return;
@@ -3680,6 +3823,70 @@ function syncTimelineHeight() {
   });
 }
 
+      function prepareLeadershipLoop(el) {
+        if (!el) return 0;
+
+        var wrapper = el.querySelector('.swiper-wrapper');
+        if (!wrapper) return 0;
+
+        if (!el.dataset.originalSlidesHtml) {
+          var initialSlides = Array.from(wrapper.children).filter(function (node) {
+            return node.classList && node.classList.contains('swiper-slide');
+          });
+          el.dataset.originalSlideCount = String(initialSlides.length);
+          el.dataset.originalSlidesHtml = initialSlides.map(function (slide) {
+            return slide.outerHTML;
+          }).join('');
+        }
+
+        var originalCount = parseInt(el.dataset.originalSlideCount, 10) || 0;
+        if (!originalCount) return 0;
+
+        // Rebuild from originals so destroy/re-init always has clean slides for loop peeks.
+        wrapper.innerHTML = el.dataset.originalSlidesHtml;
+        var slides = Array.from(wrapper.children);
+
+        if (originalCount >= 2) {
+          // Narrower people slides fit more per view, so keep extra copies for loop.
+          var target = Math.max(originalCount * 4, 12);
+          var i = 0;
+          while (wrapper.children.length < target) {
+            wrapper.insertAdjacentHTML('beforeend', slides[i % originalCount].outerHTML);
+            i += 1;
+          }
+        }
+
+        return originalCount;
+      }
+
+      function leadershipProgressIndex(swiper, originalCount) {
+        if (!originalCount) return swiper.realIndex;
+        return swiper.realIndex % originalCount;
+      }
+
+      function settleLeadershipSwiper(swiper, originalCount, syncFn, progressEl) {
+        if (!swiper) return;
+        swiper.update();
+        if (originalCount > 1 && typeof swiper.slideToLoop === 'function') {
+          swiper.slideToLoop(0, 0, false);
+        }
+        syncFn(swiper.slides[swiper.activeIndex]);
+        setProgress(progressEl, leadershipProgressIndex(swiper, originalCount), originalCount);
+      }
+
+      function bindLeadershipNav(prevBtn, nextBtn, swiper) {
+        if (prevBtn) {
+          prevBtn.onclick = function () {
+            swiper.slidePrev();
+          };
+        }
+        if (nextBtn) {
+          nextBtn.onclick = function () {
+            swiper.slideNext();
+          };
+        }
+      }
+
       function initLeadershipSliders() {
         if (!window.Swiper) return;
 
@@ -3691,9 +3898,16 @@ function syncTimelineHeight() {
         var executiveNext = section.querySelector('.executive-next');
         var peoplePrev = section.querySelector('.people-prev');
         var peopleNext = section.querySelector('.people-next');
+        var executiveCount = 0;
+        var peopleCount = 0;
+
+        executiveSwiper = null;
+        peopleSwiper = null;
 
         if (executiveEl) {
           if (executiveEl.swiper) executiveEl.swiper.destroy(true, true);
+
+          executiveCount = prepareLeadershipLoop(executiveEl);
 
           executiveSwiper = new window.Swiper(executiveEl, {
             slidesPerView: 'auto',
@@ -3701,6 +3915,9 @@ function syncTimelineHeight() {
             spaceBetween: 28,
             speed: 700,
             grabCursor: true,
+            loop: executiveCount > 1,
+            loopAdditionalSlides: Math.max(4, executiveCount),
+            watchSlidesProgress: true,
             breakpoints: {
               0: { spaceBetween: 16 },
               768: { spaceBetween: 24 },
@@ -3709,32 +3926,23 @@ function syncTimelineHeight() {
             on: {
               init: function () {
                 syncExecutiveMeta(this.slides[this.activeIndex]);
-                setProgress(executiveProgress, this.activeIndex, this.slides.length);
+                setProgress(executiveProgress, leadershipProgressIndex(this, executiveCount), executiveCount);
               },
               slideChange: function () {
                 syncExecutiveMeta(this.slides[this.activeIndex]);
-                setProgress(executiveProgress, this.activeIndex, this.slides.length);
+                setProgress(executiveProgress, leadershipProgressIndex(this, executiveCount), executiveCount);
               }
             }
           });
 
-          syncExecutiveMeta(executiveSwiper.slides[executiveSwiper.activeIndex]);
-          setProgress(executiveProgress, executiveSwiper.activeIndex, executiveSwiper.slides.length);
-
-          if (executivePrev) {
-            executivePrev.onclick = function () {
-              executiveSwiper.slidePrev();
-            };
-          }
-          if (executiveNext) {
-            executiveNext.onclick = function () {
-              executiveSwiper.slideNext();
-            };
-          }
+          settleLeadershipSwiper(executiveSwiper, executiveCount, syncExecutiveMeta, executiveProgress);
+          bindLeadershipNav(executivePrev, executiveNext, executiveSwiper);
         }
 
         if (peopleEl) {
           if (peopleEl.swiper) peopleEl.swiper.destroy(true, true);
+
+          peopleCount = prepareLeadershipLoop(peopleEl);
 
           peopleSwiper = new window.Swiper(peopleEl, {
             slidesPerView: 'auto',
@@ -3742,6 +3950,9 @@ function syncTimelineHeight() {
             spaceBetween: 20,
             speed: 650,
             grabCursor: true,
+            loop: peopleCount > 1,
+            loopAdditionalSlides: Math.max(4, peopleCount),
+            watchSlidesProgress: true,
             breakpoints: {
               0: { spaceBetween: 12 },
               768: { spaceBetween: 16 },
@@ -3750,37 +3961,36 @@ function syncTimelineHeight() {
             on: {
               init: function () {
                 syncPeopleMeta(this.slides[this.activeIndex]);
-                setProgress(peopleProgress, this.activeIndex, this.slides.length);
+                setProgress(peopleProgress, leadershipProgressIndex(this, peopleCount), peopleCount);
               },
               slideChange: function () {
                 syncPeopleMeta(this.slides[this.activeIndex]);
-                setProgress(peopleProgress, this.activeIndex, this.slides.length);
+                setProgress(peopleProgress, leadershipProgressIndex(this, peopleCount), peopleCount);
               }
             }
           });
 
-          syncPeopleMeta(peopleSwiper.slides[peopleSwiper.activeIndex]);
-          setProgress(peopleProgress, peopleSwiper.activeIndex, peopleSwiper.slides.length);
-
-          if (peoplePrev) {
-            peoplePrev.onclick = function () {
-              peopleSwiper.slidePrev();
-            };
-          }
-          if (peopleNext) {
-            peopleNext.onclick = function () {
-              peopleSwiper.slideNext();
-            };
-          }
+          settleLeadershipSwiper(peopleSwiper, peopleCount, syncPeopleMeta, peopleProgress);
+          bindLeadershipNav(peoplePrev, peopleNext, peopleSwiper);
         }
+
+        // Second settle after layout so both peeks render on first paint.
+        window.requestAnimationFrame(function () {
+          settleLeadershipSwiper(executiveSwiper, executiveCount, syncExecutiveMeta, executiveProgress);
+          settleLeadershipSwiper(peopleSwiper, peopleCount, syncPeopleMeta, peopleProgress);
+        });
       }
 
       function initAllSliders() {
         initTimeline();
-        initLeadershipSliders();
+        // Leadership loop needs real width; init only if that tab is already open.
+        if (section.querySelector('#leadership-' + sectionId + '.tab-panel.active')) {
+          initLeadershipSliders();
+        }
       }
 
       initTabs();
+      initTextAnimations();
       initPartnersFilter();
       initCareersDetail();
       loadSwiper(initAllSliders);
@@ -3795,11 +4005,14 @@ function syncTimelineHeight() {
           prevBtn = section.querySelector('.timeline-prev');
           nextBtn = section.querySelector('.timeline-next');
           section.dataset.tabsBound = 'false';
+          executiveSwiper = null;
+          peopleSwiper = null;
           var partnersRoot = section.querySelector('[data-partners]');
           if (partnersRoot) partnersRoot.dataset.bound = 'false';
           var careersRoot = section.querySelector('[data-careers]');
           if (careersRoot) careersRoot.dataset.bound = 'false';
           initTabs();
+          initTextAnimations();
           initPartnersFilter();
           initCareersDetail();
           loadSwiper(initAllSliders);
