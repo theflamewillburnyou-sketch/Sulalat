@@ -758,6 +758,15 @@
       aspect-ratio: 3 / 4;
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .people-slider .leadership-card-image::after {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-slider .swiper-slide .leadership-card-image img,
+    .about-tabs[data-section-id="{{ section.id }}"] .people-slider .swiper-slide .leadership-card-image svg.placeholder-svg {
+      filter: none;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image img,
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image svg.placeholder-svg {
       width: 100%;
@@ -821,13 +830,20 @@
       line-height: 1.4;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn {
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn,
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn {
       flex-shrink: 0;
       padding: 12px 60px;
       white-space: nowrap;
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid var(--brand-primary, #53c295);
+      font: inherit;
+      cursor: pointer;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn.is-hidden {
+    .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn.is-hidden,
+    .about-tabs[data-section-id="{{ section.id }}"] .people-meta .primary-btn.is-hidden {
       display: none;
     }
 
@@ -862,6 +878,161 @@
       height: 2px;
       background: #53C295;
       margin: 16px auto 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slide-bio {
+      display: none !important;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup.is-open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 18, 17, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-dialog {
+      position: relative;
+      width: min(1040px, 100%);
+      max-height: min(720px, calc(100vh - 64px));
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-close {
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: #fff;
+      color: #141211;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      z-index: 2;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-close svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: min(620px, calc(100vh - 80px));
+      max-height: min(720px, calc(100vh - 64px));
+      border-radius: 28px;
+      overflow: hidden;
+      background: #eefaf5;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 32px;
+      padding: clamp(32px, 4vw, 56px);
+      background: #eefaf5;
+      overflow: auto;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-content h3 {
+      margin: 0 0 8px;
+      color: #141211;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.15;
+      font-weight: 600;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-content [data-popup-role] {
+      margin: 0 0 28px;
+      color: #141211;
+      font-size: 18px;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-bio {
+      color: #141211;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-bio p {
+      margin: 0 0 1em;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-bio p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-linkedin {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #53c295;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-linkedin.is-hidden {
+      display: none;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-linkedin svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-media {
+      position: relative;
+      min-height: 280px;
+      background: #dfece6;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-media img,
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-media svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-media img.is-loading {
+      opacity: 0;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
@@ -1813,6 +1984,23 @@
         font-size: 22px;
       }
 
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-panel {
+        grid-template-columns: 1fr;
+        max-height: calc(100vh - 48px);
+        min-height: 0;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-media {
+        order: -1;
+        min-height: 240px;
+        max-height: 280px;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-close {
+        top: 12px;
+        right: 12px;
+      }
+
       .about-tabs[data-section-id="{{ section.id }}"] .team-nav-buttons button {
         width: 44px;
         height: 44px;
@@ -2344,7 +2532,10 @@
                       data-name="{{ block.settings.name | escape }}"
                       data-role="{{ block.settings.role | escape }}"
                       data-button-label="{{ block.settings.button_label | escape }}"
-                      data-button-link="{{ block.settings.button_link | escape }}"
+                      data-linkedin-url="{{ block.settings.linkedin_url | escape }}"
+                      {% if block.settings.image != blank %}
+                        data-image="{{ block.settings.image | image_url: width: 1600 }}"
+                      {% endif %}
                       {{ block.shopify_attributes }}
                     >
                       <div class="leadership-card-image">
@@ -2394,6 +2585,9 @@
                           </a>
                         {% endif %}
                       </div>
+                      <div class="leadership-slide-bio" data-member-bio>
+                        {{ block.settings.bio }}
+                      </div>
                     </div>
                   {% endfor %}
                 </div>
@@ -2405,13 +2599,14 @@
                   <h3 data-executive-name>{{ first_executive.settings.name | escape }}</h3>
                   <p data-executive-role>{{ first_executive.settings.role | escape }}</p>
                 </div>
-                <a
+                <button
+                  type="button"
                   class="primary-btn{% if first_executive.settings.button_label == blank %} is-hidden{% endif %}"
                   data-executive-button
-                  href="{{ first_executive.settings.button_link | default: '#' }}"
+                  data-leadership-popup-open
                 >
                   {{ first_executive.settings.button_label | default: 'Explore More' | escape }}
-                </a>
+                </button>
               </div>
 
               <div class="team-slider-footer">
@@ -2453,7 +2648,10 @@
                       data-name="{{ block.settings.name | escape }}"
                       data-role="{{ block.settings.role | escape }}"
                       data-button-label="{{ block.settings.button_label | escape }}"
-                      data-button-link="{{ block.settings.button_link | escape }}"
+                      data-linkedin-url="{{ block.settings.linkedin_url | escape }}"
+                      {% if block.settings.image != blank %}
+                        data-image="{{ block.settings.image | image_url: width: 1600 }}"
+                      {% endif %}
                       {{ block.shopify_attributes }}
                     >
                       <div class="leadership-card-image">
@@ -2503,6 +2701,9 @@
                           </a>
                         {% endif %}
                       </div>
+                      <div class="leadership-slide-bio" data-member-bio>
+                        {{ block.settings.bio }}
+                      </div>
                     </div>
                   {% endfor %}
                 </div>
@@ -2512,13 +2713,14 @@
               <div class="people-meta" data-people-meta>
                 <h3 data-people-name>{{ first_person.settings.name | escape }}</h3>
                 <p data-people-role>{{ first_person.settings.role | escape }}</p>
-                <a
+                <button
+                  type="button"
                   class="primary-btn{% if first_person.settings.button_label == blank %} is-hidden{% endif %}"
                   data-people-button
-                  href="{{ first_person.settings.button_link | default: '#' }}"
+                  data-leadership-popup-open
                 >
-                  {{ first_person.settings.button_label | default: 'Explore More' | escape }}
-                </a>
+                  {{ first_person.settings.button_label | escape }}
+                </button>
                 <div class="people-meta-line" aria-hidden="true"></div>
               </div>
 
@@ -2932,6 +3134,51 @@
     </div>
   </div>
 
+  <div class="leadership-popup" data-leadership-popup aria-hidden="true">
+    <div class="leadership-popup-backdrop" data-leadership-popup-close tabindex="-1"></div>
+    <div
+      class="leadership-popup-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="leadership-popup-title-{{ section.id }}"
+    >
+      <button
+        type="button"
+        class="leadership-popup-close"
+        data-leadership-popup-close
+        aria-label="Close profile"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" fill="none" aria-hidden="true" focusable="false">
+          <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="leadership-popup-panel">
+        <div class="leadership-popup-content">
+          <div>
+            <h3 id="leadership-popup-title-{{ section.id }}" data-popup-name></h3>
+            <p data-popup-role></p>
+            <div class="leadership-popup-bio" data-popup-bio></div>
+          </div>
+          <a
+            class="leadership-popup-linkedin is-hidden"
+            data-popup-linkedin
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn profile"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>
+            </svg>
+          </a>
+        </div>
+        <div class="leadership-popup-media">
+          <img data-popup-image src="" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     (function () {
       var sectionId = '{{ section.id }}';
@@ -2963,14 +3210,8 @@
         if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
         if (buttonEl) {
           var label = slide.getAttribute('data-button-label') || '';
-          var link = slide.getAttribute('data-button-link') || '';
-          if (label) {
-            buttonEl.textContent = label;
-            buttonEl.href = link || '#';
-            buttonEl.classList.remove('is-hidden');
-          } else {
-            buttonEl.classList.add('is-hidden');
-          }
+          buttonEl.textContent = label || 'Explore More';
+          buttonEl.classList.toggle('is-hidden', !label);
         }
       }
 
@@ -2983,15 +3224,129 @@
         if (roleEl) roleEl.textContent = slide.getAttribute('data-role') || '';
         if (buttonEl) {
           var label = slide.getAttribute('data-button-label') || '';
-          var link = slide.getAttribute('data-button-link') || '';
-          if (label) {
-            buttonEl.textContent = label;
-            buttonEl.href = link || '#';
-            buttonEl.classList.remove('is-hidden');
+          buttonEl.textContent = label;
+          buttonEl.classList.toggle('is-hidden', !label);
+        }
+      }
+
+      function getActiveLeadershipSlide(trigger) {
+        if (trigger && trigger.hasAttribute('data-executive-button') && executiveSwiper) {
+          return executiveSwiper.slides[executiveSwiper.activeIndex] || null;
+        }
+        if (trigger && trigger.hasAttribute('data-people-button') && peopleSwiper) {
+          return peopleSwiper.slides[peopleSwiper.activeIndex] || null;
+        }
+        return null;
+      }
+
+      var popupImageToken = 0;
+
+      function setLeadershipPopupImage(imageEl, src, alt) {
+        if (!imageEl) return;
+
+        var token = ++popupImageToken;
+        imageEl.classList.add('is-loading');
+        imageEl.removeAttribute('src');
+        imageEl.alt = alt || '';
+
+        if (!src) {
+          imageEl.style.display = 'none';
+          imageEl.classList.remove('is-loading');
+          return;
+        }
+
+        imageEl.style.display = '';
+
+        var loader = new Image();
+        loader.onload = function () {
+          if (token !== popupImageToken) return;
+          imageEl.src = src;
+          imageEl.classList.remove('is-loading');
+        };
+        loader.onerror = function () {
+          if (token !== popupImageToken) return;
+          imageEl.src = src;
+          imageEl.classList.remove('is-loading');
+        };
+        loader.src = src;
+      }
+
+      function openLeadershipPopup(slide) {
+        var popup = section.querySelector('[data-leadership-popup]');
+        if (!popup || !slide) return;
+
+        var name = slide.getAttribute('data-name') || '';
+        var role = slide.getAttribute('data-role') || '';
+        var image = slide.getAttribute('data-image') || '';
+        var linkedin = slide.getAttribute('data-linkedin-url') || '';
+        var bioEl = slide.querySelector('[data-member-bio]');
+
+        var nameEl = popup.querySelector('[data-popup-name]');
+        var roleEl = popup.querySelector('[data-popup-role]');
+        var bioTarget = popup.querySelector('[data-popup-bio]');
+        var imageEl = popup.querySelector('[data-popup-image]');
+        var linkedinEl = popup.querySelector('[data-popup-linkedin]');
+
+        if (nameEl) nameEl.textContent = name;
+        if (roleEl) roleEl.textContent = role;
+        if (bioTarget) bioTarget.innerHTML = bioEl ? bioEl.innerHTML : '';
+        setLeadershipPopupImage(imageEl, image, name);
+        if (linkedinEl) {
+          if (linkedin) {
+            linkedinEl.href = linkedin;
+            linkedinEl.classList.remove('is-hidden');
           } else {
-            buttonEl.classList.add('is-hidden');
+            linkedinEl.removeAttribute('href');
+            linkedinEl.classList.add('is-hidden');
           }
         }
+
+        popup.classList.add('is-open');
+        popup.setAttribute('aria-hidden', 'false');
+        document.documentElement.style.overflow = 'hidden';
+
+        var closeBtn = popup.querySelector('.leadership-popup-close');
+        if (closeBtn) closeBtn.focus();
+      }
+
+      function closeLeadershipPopup() {
+        var popup = section.querySelector('[data-leadership-popup]');
+        if (!popup || !popup.classList.contains('is-open')) return;
+        popup.classList.remove('is-open');
+        popup.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+
+        var imageEl = popup.querySelector('[data-popup-image]');
+        if (imageEl) {
+          popupImageToken += 1;
+          imageEl.classList.add('is-loading');
+          imageEl.removeAttribute('src');
+          imageEl.alt = '';
+        }
+      }
+
+      function initLeadershipPopup() {
+        if (section.dataset.leadershipPopupBound === 'true') return;
+        section.dataset.leadershipPopupBound = 'true';
+
+        section.addEventListener('click', function (event) {
+          var openBtn = event.target.closest('[data-leadership-popup-open]');
+          if (openBtn && section.contains(openBtn)) {
+            event.preventDefault();
+            openLeadershipPopup(getActiveLeadershipSlide(openBtn));
+            return;
+          }
+
+          var closeEl = event.target.closest('[data-leadership-popup-close]');
+          if (closeEl && section.contains(closeEl)) {
+            event.preventDefault();
+            closeLeadershipPopup();
+          }
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') closeLeadershipPopup();
+        });
       }
 
       function prefersReducedMotion() {
@@ -3123,6 +3478,8 @@
             window.requestAnimationFrame(function () {
               window.requestAnimationFrame(refreshLeadershipSliders);
             });
+          } else {
+            closeLeadershipPopup();
           }
 
           if (tab !== 'careers') {
@@ -4044,6 +4401,7 @@ function syncTimelineHeight() {
       initTextAnimations();
       initPartnersFilter();
       initCareersDetail();
+      initLeadershipPopup();
       loadSwiper(initAllSliders);
 
       document.addEventListener('shopify:section:load', function (e) {
@@ -4056,6 +4414,7 @@ function syncTimelineHeight() {
           prevBtn = section.querySelector('.timeline-prev');
           nextBtn = section.querySelector('.timeline-next');
           section.dataset.tabsBound = 'false';
+          section.dataset.leadershipPopupBound = 'false';
           executiveSwiper = null;
           peopleSwiper = null;
           var partnersRoot = section.querySelector('[data-partners]');
@@ -4066,6 +4425,7 @@ function syncTimelineHeight() {
           initTextAnimations();
           initPartnersFilter();
           initCareersDetail();
+          initLeadershipPopup();
           loadSwiper(initAllSliders);
         }
       });
@@ -4086,6 +4446,7 @@ function syncTimelineHeight() {
             peopleSwiper.destroy(true, true);
             peopleSwiper = null;
           }
+          closeLeadershipPopup();
         }
       });
     })();
@@ -4578,10 +4939,16 @@ function syncTimelineHeight() {
           "default": "Chairman"
         },
         {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Popup biography",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+        },
+        {
           "type": "url",
           "id": "linkedin_url",
           "label": "LinkedIn URL",
-          "info": "Shown on the active slide photo only"
+          "info": "Shown on the active slide and inside the profile popup"
         },
         {
           "type": "image_picker",
@@ -4593,12 +4960,8 @@ function syncTimelineHeight() {
           "type": "text",
           "id": "button_label",
           "label": "Button label",
-          "default": "Explore More"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
+          "default": "Explore More",
+          "info": "Opens the profile popup for this member"
         }
       ]
     },
@@ -4624,10 +4987,16 @@ function syncTimelineHeight() {
           "default": "Company Advisor"
         },
         {
+          "type": "richtext",
+          "id": "bio",
+          "label": "Popup biography",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+        },
+        {
           "type": "url",
           "id": "linkedin_url",
           "label": "LinkedIn URL",
-          "info": "Shown on the active slide photo only"
+          "info": "Shown on the active slide and inside the profile popup"
         },
         {
           "type": "image_picker",
@@ -4639,12 +5008,8 @@ function syncTimelineHeight() {
           "type": "text",
           "id": "button_label",
           "label": "Button label",
-          "default": "Explore More"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
+          "default": "Explore More",
+          "info": "Opens the profile popup for this member"
         }
       ]
     },

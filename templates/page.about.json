@@ -238,10 +238,10 @@
             "image": "shopify://shop_images/e9863e90979261afdace87db9b8abd9a8547fd5f.jpg",
             "name": "Wayel Al-Wohaibi",
             "role": "Roasting Lead, Co-Founder & Chair of the Board ",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "#",
             "linkedin_image": "shopify://shop_images/Frame_73.png",
-            "button_label": "Read Story →",
-            "button_link": ""
+            "button_label": "Read Story →"
           }
         },
         "executive_member_q67WrT": {
@@ -250,10 +250,10 @@
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Rashid Al-Jarwa",
             "role": "Chairman",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "#",
             "linkedin_image": "shopify://shop_images/Frame_73.png",
-            "button_label": "Explore More",
-            "button_link": ""
+            "button_label": "Explore More"
           }
         },
         "exec_2": {
@@ -262,10 +262,10 @@
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Sara Al-Mutawa",
             "role": "Marketing Lead, Co-Founder & Board Member",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "#",
             "linkedin_image": "shopify://shop_images/Frame_73.png",
-            "button_label": "Read Story →",
-            "button_link": ""
+            "button_label": "Read Story →"
           }
         },
         "team_1": {
@@ -274,9 +274,9 @@
             "image": "shopify://shop_images/3a610805abef2ba498b7e5933eea99203d903dc5.jpg",
             "name": "Naser Al-Wohaibi",
             "role": "Chief Executive Officer",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
+            "button_label": ""
           }
         },
         "team_2": {
@@ -285,9 +285,9 @@
             "image": "shopify://shop_images/882f33a99ffba7dbc4af7f1554230947e303d60a.png",
             "name": "Abdallah Al-Manea",
             "role": "Founder of Salve & Senmar ",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
+            "button_label": ""
           }
         },
         "team_3": {
@@ -296,9 +296,9 @@
             "image": "shopify://shop_images/6e7737e1e545ad9850fbf41c850247804deb16b4.jpg",
             "name": "Ammar Al-Naser",
             "role": "F&B Products Lead",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
+            "button_label": ""
           }
         },
         "team_4": {
@@ -307,21 +307,9 @@
             "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
             "name": "Abdulaziz Al-Manea",
             "role": "Coffee Quality and Training Lead",
+            "bio": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p><p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
             "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
-          }
-        },
-        "team_member_nqQMXe": {
-          "type": "team_member",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/ee977b50d4051c53b3133f940e5265f4c75b3de3.jpg",
-            "name": "Omar Al-Yousef",
-            "role": "Chief Operating Officer",
-            "linkedin_url": "",
-            "button_label": "Explore More",
-            "button_link": ""
+            "button_label": ""
           }
         },
         "partner_bialetti_1": {
@@ -572,7 +560,6 @@
         "team_2",
         "team_3",
         "team_4",
-        "team_member_nqQMXe",
         "partner_bialetti_1",
         "partner_acaia_1",
         "partner_flair_1",
