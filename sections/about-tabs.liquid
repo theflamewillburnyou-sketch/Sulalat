@@ -662,7 +662,7 @@
     /* Leadership & Team */
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-team {
       padding: 100px 0 80px;
-      overflow: visible;
+      overflow:hidden;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-block + .leadership-block {
@@ -724,9 +724,20 @@
       border-radius: 20px;
       background: #f3f3f3;
       aspect-ratio: 1;
+      transition:all 0.3s linear;
+      opacity:0.6;
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image::after {
+    .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide-active .leadership-card-image {
+      opacity:1;
+    }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .people-team .leadership-card-image {
+      opacity:1;
+    }
+
+
+    {% comment %} .about-tabs[data-section-id="{{ section.id }}"] .leadership-card-image::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -738,11 +749,11 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .swiper-slide-active .leadership-card-image::after {
       opacity: 0;
-    }
+    } {% endcomment %}
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide .leadership-card-image img,
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-slider .swiper-slide .leadership-card-image svg.placeholder-svg {
-      filter: grayscale(0.35) contrast(0.92);
+      {% comment %} filter: grayscale(0.35) contrast(0.92); {% endcomment %}
       transition: filter 0.45s ease;
     }
 
@@ -869,8 +880,8 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .people-meta p {
       margin: 0;
-      color: var(--brand-body-text, #535353);
-      font-size: 15px;
+      color: #000;
+      font-size: 16px;
       line-height: 1.4;
     }
 
@@ -1816,8 +1827,9 @@
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
-        flex-wrap: wrap;
+        {% comment %} flex-wrap: wrap; {% endcomment %}
         gap: 20px;
+        flex-direction: row-reverse;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .team-progress {
@@ -2135,11 +2147,14 @@
 
       .about-tabs[data-section-id="{{ section.id }}"] .executive-meta {
         text-align:center;
+        align-items: center;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .executive-meta .primary-btn{
         white-space: normal;
         margin: 0 auto;
+        padding: 8px 40px;
+        font-size: 14px;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .careers-apply-form {

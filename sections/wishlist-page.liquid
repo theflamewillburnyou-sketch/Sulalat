@@ -18,6 +18,7 @@
 <section
   class="sulalat-wishlist-page"
   data-section-id="{{ section.id }}"
+  data-wishlist-account-page
   style="
     --wl-pad-top: {{ section.settings.padding_top }}px;
     --wl-pad-bottom: {{ section.settings.padding_bottom }}px;
@@ -25,24 +26,21 @@
     --wl-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
   "
 >
-  {{ 'account-sidebar.css' | asset_url | stylesheet_tag }}
-  <div class="container">
-    <div class="sulalat-dashboard__layout">
-      {% render 'account-sidebar',
-        active: 'wishlist',
-        mode: 'links',
-        customer_level: customer_level,
-        dashboard_url: dashboard_url,
-        wishlist_url: wishlist_url,
-        subscriptions_url: subscriptions_url
-      %}
+  <div class="container sulalat-wishlist-page__container">
+    <div class="sulalat-wishlist-page__layout" data-wishlist-layout>
+      <div class="sulalat-wishlist-page__sidebar-slot" data-wishlist-sidebar-slot>
+        {% render 'account-sidebar',
+          active: 'wishlist',
+          mode: 'links',
+          customer_level: customer_level,
+          dashboard_url: dashboard_url,
+          wishlist_url: wishlist_url,
+          subscriptions_url: subscriptions_url
+        %}
+      </div>
 
-      <div class="sulalat-dashboard__main">
+      <div class="sulalat-wishlist-page__main" data-wishlist-main>
         <div class="sulalat-wishlist-page__inner">
-          {%- comment -%}
-            When WishlistSuite (or another app block) is present it already renders its own
-            page title — skip our duplicate heading so content sits cleanly under the header.
-          {%- endcomment -%}
           {%- if section.blocks.size == 0 -%}
             <div class="sulalat-wishlist-page__header">
               <h1 class="sulalat-wishlist-page__title">{{ heading | escape }}</h1>
@@ -94,28 +92,174 @@
   </div>
 
   <style>
-/* =========================
-   Undo WishlistSuite reset:
-   .shopify-section:has(#wls-list-root) *:not(#wls-list-root):not(#wls-list-root *)
-   Match that ID-level specificity so sidebar chrome can style again.
-   ========================= */
+/* =========================================================
+   Wishlist account shell
+   Sidebar is moved OUTSIDE .shopify-section:has(#wls-list-root)
+   so WishlistSuite's section-wide reset cannot break the layout.
+   ========================================================= */
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__layout:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__sidebar:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__sidebar *:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__main:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__inner:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .cst-wishlist-header:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .cst-wishlist-header *:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .wishlist-header-wrap:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .wishlist-header-wrap *:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__wishlist-actions:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__wishlist-actions *:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__app:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page:not(#wls-list-root):not(#wls-list-root *) {
-  all: revert !important;
+.sulalat-wishlist-account {
+  padding: var(--wl-pad-top, 48px) 0 var(--wl-pad-bottom, 80px);
+  background: #fff;
 }
 
+.sulalat-wishlist-account > .container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 100px;
+  box-sizing: border-box;
+}
+
+.sulalat-wishlist-account__layout {
+  display: grid;
+  grid-template-columns: 313px minmax(0, 1fr);
+  gap: 50px;
+  align-items: start;
+  width: 100%;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar {
+  width: 313px;
+  max-width: 313px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1 1 auto;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__nav > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 16px 15px;
+  border: 0;
+  background: transparent;
+  color: #808080;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.3;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  box-sizing: border-box;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__link.is-active {
+  background: #e8f6ef;
+  color: var(--brand-primary, #53c295);
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__link.is-active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  border-radius: 0 3px 3px 0;
+  background: var(--brand-primary, #53c295);
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__link:hover {
+  color: var(--brand-primary, #53c295);
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__level {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 10px 10px;
+  padding: 14px 20px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0px 1px 4px 0px rgba(25, 33, 61, 0.08);
+  box-sizing: border-box;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__level-label {
+  margin: 0;
+  color: #000;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar .sulalat-dashboard__level-value {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section .sulalat-wishlist-page {
+  padding: 0 !important;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section .sulalat-wishlist-page__container {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section .sulalat-wishlist-page__layout {
+  display: block !important;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section .sulalat-wishlist-page__sidebar-slot {
+  display: none !important;
+}
+
+.sulalat-wishlist-account__layout > .shopify-section .sulalat-wishlist-page__main {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Fallback before JS runs */
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"] {
   position: relative;
   padding: var(--wl-pad-top) 0 var(--wl-pad-bottom);
@@ -124,223 +268,131 @@
   color: #1a1a1a;
 }
 
-/* Keep page inside the site container (do not revert .container) */
-.shopify-section:has(#wls-list-root) .sulalat-wishlist-page > .container:not(#wls-list-root):not(#wls-list-root *) {
-  width: 100% !important;
-  max-width: 1600px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 100px !important;
-  padding-right: 100px !important;
-  box-sizing: border-box !important;
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] > .sulalat-wishlist-page__container {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 100px;
+  box-sizing: border-box;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__layout:not(#wls-list-root):not(#wls-list-root *) {
-  display: grid !important;
-  grid-template-columns: 313px minmax(0, 1fr) !important;
-  grid-template-rows: auto !important;
-  gap: 50px !important;
-  align-items: start !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__layout {
+  display: grid;
+  grid-template-columns: 313px minmax(0, 1fr);
+  gap: 50px;
+  align-items: start;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__sidebar:not(#wls-list-root):not(#wls-list-root *) {
-  width: 313px !important;
-  min-width: 313px !important;
-  max-width: 313px !important;
-  flex: 0 0 313px !important;
-  background: #fff !important;
-  border: 1px solid #e6e6e6 !important;
-  border-radius: 0 12px 12px 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__main {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Undo WishlistSuite reset on header chrome still inside the section */
+.shopify-section:has(#wls-list-root) .cst-wishlist-header:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .cst-wishlist-header *:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .wishlist-header-wrap:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .wishlist-header-wrap *:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__wishlist-actions:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__wishlist-actions *:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__app:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__inner:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__main:not(#wls-list-root):not(#wls-list-root *) {
+  all: revert !important;
+}
+
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__main:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__app:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__inner:not(#wls-list-root):not(#wls-list-root *) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__nav:not(#wls-list-root):not(#wls-list-root *) {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 2px !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  list-style: none !important;
-  flex: 1 1 auto !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__nav > li:not(#wls-list-root):not(#wls-list-root *) {
-  margin: 0 !important;
-  padding: 0 !important;
-  list-style: none !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__link:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) a.sulalat-dashboard__link:not(#wls-list-root):not(#wls-list-root *) {
   position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
+}
+
+.shopify-section:has(#wls-list-root) #wls-list-root {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
   width: 100% !important;
-  min-height: 48px !important;
-  padding: 16px 15px !important;
-  border: 0 !important;
-  background: transparent !important;
-  color: #808080 !important;
-  text-decoration: none !important;
-  font-size: 17px !important;
-  font-weight: 400 !important;
-  line-height: 1.3 !important;
-  font-family: inherit !important;
-  text-align: start !important;
-  cursor: pointer !important;
-  letter-spacing: 0.03em !important;
+  max-width: 100% !important;
+  margin: 0 !important;
   box-sizing: border-box !important;
-  box-shadow: none !important;
-  opacity: 1 !important;
-  transition: background 0.2s ease, color 0.2s ease !important;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__link svg:not(#wls-list-root):not(#wls-list-root *) {
-  width: 20px !important;
-  height: 20px !important;
-  flex-shrink: 0 !important;
-  display: block !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__link.is-active:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) a.sulalat-dashboard__link.is-active:not(#wls-list-root):not(#wls-list-root *) {
-  background: #e8f6ef !important;
-  color: var(--brand-primary, #53c295) !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__link.is-active:not(#wls-list-root):not(#wls-list-root *)::before,
-.shopify-section:has(#wls-list-root) a.sulalat-dashboard__link.is-active:not(#wls-list-root):not(#wls-list-root *)::before {
-  content: '' !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  width: 2.5px !important;
-  border-radius: 0 3px 3px 0 !important;
-  background: var(--brand-primary, #53c295) !important;
-  display: block !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__link:hover:not(#wls-list-root):not(#wls-list-root *),
-.shopify-section:has(#wls-list-root) a.sulalat-dashboard__link:hover:not(#wls-list-root):not(#wls-list-root *) {
-  color: var(--brand-primary, #53c295) !important;
-  text-decoration: none !important;
-  opacity: 1 !important;
-}
-
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__level:not(#wls-list-root):not(#wls-list-root *) {
+/* Header row: title left, actions right */
+.shopify-section:has(#wls-list-root) .wishlist-header-wrap:not(#wls-list-root):not(#wls-list-root *) {
   display: flex !important;
-  align-items: center !important;
+  flex-wrap: wrap !important;
   justify-content: space-between !important;
-  gap: 12px !important;
-  margin: 20px 10px 10px !important;
-  padding: 14px 20px !important;
-  border: 1px solid #e6e6e6 !important;
-  border-radius: 12px !important;
-  background: #fff !important;
-  box-shadow: 0px 1px 4px 0px rgba(25, 33, 61, 0.08) !important;
+  align-items: center !important;
+  gap: 24px !important;
+  margin: 0 0 32px !important;
+  width: 100% !important;
   box-sizing: border-box !important;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__level-label:not(#wls-list-root):not(#wls-list-root *) {
+.shopify-section:has(#wls-list-root) .wishlist-header-wrap .section-title:not(#wls-list-root):not(#wls-list-root *),
+.shopify-section:has(#wls-list-root) .wishlist-header-wrap .section-title h2:not(#wls-list-root):not(#wls-list-root *) {
   margin: 0 !important;
+  font-size: clamp(22px, 3vw, 30px) !important;
+  font-weight: 400 !important;
+  line-height: 1.1 !important;
   color: #000 !important;
-  font-size: 17px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.03em !important;
-  line-height: 1.3 !important;
+  letter-spacing: -0.02em !important;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__level-value:not(#wls-list-root):not(#wls-list-root *) {
-  margin: 0 !important;
-  color: #1a1a1a !important;
-  font-size: 25px !important;
-  font-weight: 700 !important;
-  line-height: 1 !important;
-  letter-spacing: 0.03em !important;
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__wishlist-actions:not(#wls-list-root):not(#wls-list-root *) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 12px !important;
 }
 
-.shopify-section:has(#wls-list-root) .sulalat-dashboard__main:not(#wls-list-root):not(#wls-list-root *) {
-  padding-top: 4px !important;
-  min-width: 0 !important;
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__remove-all:not(#wls-list-root):not(#wls-list-root *) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  padding: 10px 22px !important;
+  border: 1px solid #53c295 !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: #36ad7d !important;
+  font-size: 16px !important;
+  font-family: var(--secondary-font) !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
 }
 
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__inner {
-  margin-bottom: 0 !important;
-  padding: 0 !important;
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__add-all:not(#wls-list-root):not(#wls-list-root *) {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  padding: 10px 22px !important;
+  border: 1px solid #53c295 !important;
+  border-radius: 999px !important;
+  background: #53c295 !important;
+  color: #fff !important;
+  font-size: 16px !important;
+  font-family: var(--secondary-font) !important;
+  font-weight: 400 !important;
+  line-height: 1.2 !important;
+  cursor: pointer !important;
+  box-shadow: none !important;
 }
 
 /* =========================
    WishlistSuite - Figma Card
    ========================= */
 
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wishlist-header-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wishlist-header-wrap .section-title {
-  margin-right: 20px;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wishlist-header-wrap .section-title h2 {
-  margin: 0;
-  font-size: clamp(22px, 3vw, 30px);
-  font-weight: 400;
-  line-height: 1.1;
-  color: #000;
-  letter-spacing: -0.02em;
-}
-
-.sulalat-wishlist-page__remove-all {
-  margin-right: 10px;
-}
-
-.sulalat-wishlist-page__wishlist-actions button::before {
-  border-radius: inherit;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__wishlist-actions button {
-  padding: 13px 20px !important;
-  height: 40px;
-  font-size: 16px;
-  font-family: var(--secondary-font);
-  line-height: 1.5;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-variant .wls-variant-select {
-  max-width: 100%;
-  padding: 7px 10px;
-  font-size: 16px;
-  border-color: var(--brand-primary);
-  border-radius: 10px;
-  background: var(--brand-primary);
-  color: #fff;
-  appearance: none;
-  text-align: center;
-  font-family: 'Roboto';
-  font-weight: 400;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-item-menu-btn {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-header-container {
-  display: none;
-}
-
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-header-container,
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-action-bar {
   display: none !important;
 }
@@ -352,6 +404,9 @@
   padding: 0 !important;
   margin: 0 !important;
   list-style: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid-item {
@@ -418,8 +473,7 @@
   transition: transform 0.45s ease;
 }
 
-.sulalat-wishlist-page[data-section-id="{{ section.id }}"]
-.wls-card:hover .wls-card-img {
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card:hover .wls-card-img {
   transform: scale(1.025);
 }
 
@@ -441,6 +495,12 @@
   font-size: 13px !important;
   font-weight: 600 !important;
   line-height: 1;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-item-menu-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"]
@@ -491,6 +551,20 @@
   line-height: 1.55 !important;
 }
 
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-variant .wls-variant-select {
+  max-width: 100%;
+  padding: 7px 10px;
+  font-size: 16px;
+  border-color: var(--brand-primary);
+  border-radius: 10px;
+  background: var(--brand-primary);
+  color: #fff;
+  appearance: none;
+  text-align: center;
+  font-family: 'Roboto';
+  font-weight: 400;
+}
+
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-card-actions {
   margin-top: 20px !important;
 }
@@ -528,23 +602,32 @@
   box-shadow: none;
 }
 
+@media (max-width: 1199px) {
+  .sulalat-wishlist-account > .container,
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] > .sulalat-wishlist-page__container {
+    padding: 0 30px;
+  }
+}
+
 @media (max-width: 991px) {
-  .shopify-section:has(#wls-list-root) .sulalat-wishlist-page > .container:not(#wls-list-root):not(#wls-list-root *) {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+  .sulalat-wishlist-account {
+    padding: var(--wl-pad-top-m, 28px) 0 var(--wl-pad-bottom-m, 48px);
   }
 
-  .shopify-section:has(#wls-list-root) .sulalat-dashboard__layout:not(#wls-list-root):not(#wls-list-root *) {
-    grid-template-columns: 1fr !important;
-    gap: 28px !important;
+  .sulalat-wishlist-account > .container,
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] > .sulalat-wishlist-page__container {
+    padding: 0 20px;
   }
 
-  .shopify-section:has(#wls-list-root) .sulalat-dashboard__sidebar:not(#wls-list-root):not(#wls-list-root *) {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
-    flex: none !important;
-    min-height: 0 !important;
+  .sulalat-wishlist-account__layout,
+  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .sulalat-wishlist-account__layout > .sulalat-dashboard__sidebar {
+    width: 100%;
+    max-width: none;
   }
 
   .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wls-grid {
@@ -573,34 +656,62 @@
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-
-  .sulalat-wishlist-page[data-section-id="{{ section.id }}"] .wishlist-header-wrap .section-title {
-    height: auto;
-  }
 }
   </style>
 
   <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const wishlistApp = document.querySelector(
+    var page = document.querySelector(
       '.sulalat-wishlist-page[data-section-id="{{ section.id }}"]'
     );
+    if (!page) return;
 
-    if (!wishlistApp) return;
+    var sectionEl = page.closest('.shopify-section');
+    var sidebar = page.querySelector('[data-wishlist-sidebar-slot] .sulalat-dashboard__sidebar');
+
+    // Lift sidebar outside the WishlistSuite section so its reset cannot break layout.
+    if (sectionEl && sidebar && !document.querySelector('.sulalat-wishlist-account')) {
+      var padTop = getComputedStyle(page).getPropertyValue('--wl-pad-top').trim() || '48px';
+      var padBottom = getComputedStyle(page).getPropertyValue('--wl-pad-bottom').trim() || '80px';
+      var padTopM = getComputedStyle(page).getPropertyValue('--wl-pad-top-m').trim() || '28px';
+      var padBottomM = getComputedStyle(page).getPropertyValue('--wl-pad-bottom-m').trim() || '48px';
+
+      var shell = document.createElement('div');
+      shell.className = 'sulalat-wishlist-account';
+      shell.style.setProperty('--wl-pad-top', padTop);
+      shell.style.setProperty('--wl-pad-bottom', padBottom);
+      shell.style.setProperty('--wl-pad-top-m', padTopM);
+      shell.style.setProperty('--wl-pad-bottom-m', padBottomM);
+
+      var container = document.createElement('div');
+      container.className = 'container';
+
+      var layout = document.createElement('div');
+      layout.className = 'sulalat-wishlist-account__layout';
+
+      sectionEl.parentNode.insertBefore(shell, sectionEl);
+      shell.appendChild(container);
+      container.appendChild(layout);
+      layout.appendChild(sidebar);
+      layout.appendChild(sectionEl);
+
+      var slot = page.querySelector('[data-wishlist-sidebar-slot]');
+      if (slot) slot.remove();
+    }
 
     function addPrimaryBtnClass() {
-      wishlistApp.querySelectorAll('.wls-atc-btn').forEach(function (btn) {
+      page.querySelectorAll('.wls-atc-btn').forEach(function (btn) {
         btn.classList.add('sulalat-btn--outline');
       });
     }
 
     addPrimaryBtnClass();
 
-    const observer = new MutationObserver(function () {
+    var observer = new MutationObserver(function () {
       addPrimaryBtnClass();
     });
 
-    observer.observe(wishlistApp, {
+    observer.observe(page, {
       childList: true,
       subtree: true
     });
