@@ -328,6 +328,40 @@
         nextBtn.disabled = swiper.isEnd;
       }
 
+      function prepareLoopSlides(sliderEl) {
+        var wrapper = sliderEl.querySelector('.swiper-wrapper');
+        if (!wrapper) return { count: 0, initialSlide: 0 };
+
+        if (!sliderEl.dataset.originalSlidesHtml) {
+          var initialSlides = Array.from(wrapper.children).filter(function (node) {
+            return node.classList && node.classList.contains('swiper-slide');
+          });
+          sliderEl.dataset.originalSlideCount = String(initialSlides.length);
+          sliderEl.dataset.originalSlidesHtml = initialSlides
+            .map(function (slide) {
+              return slide.outerHTML;
+            })
+            .join('');
+        }
+
+        var originalCount = parseInt(sliderEl.dataset.originalSlideCount, 10) || 0;
+        if (!originalCount) return { count: 0, initialSlide: 0 };
+
+        var originalHtml = sliderEl.dataset.originalSlidesHtml;
+
+        // Build [copies][originals][copies]... so the first logical slide
+        // already has a left neighbor for the centered peek on init.
+        var minNeeded = Math.ceil(Math.max(desktopSlidesPerView, mobileSlidesPerView) * 4) + 4;
+        var sets = Math.max(4, Math.ceil(minNeeded / originalCount));
+        if (sets % 2 === 1) sets += 1;
+        wrapper.innerHTML = new Array(sets + 1).join(originalHtml);
+
+        return {
+          count: originalCount,
+          initialSlide: originalCount
+        };
+      }
+
       function initSlider() {
         var section = getSection();
         if (!section || !window.Swiper) return;
@@ -340,10 +374,12 @@
           sliderEl.swiper.destroy(true, true);
         }
 
-        var slideCount = sliderEl.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate)').length;
-        if (!slideCount) {
-          slideCount = sliderEl.querySelectorAll('.swiper-slide').length;
-        }
+        var prepared = prepareLoopSlides(sliderEl);
+        var slideCount = prepared.count;
+        var canLoop = slideCount > 1;
+        var loopedSlidesCount = canLoop
+          ? Math.max(slideCount * 2, Math.ceil(desktopSlidesPerView) + 2)
+          : undefined;
 
         var swiper = new window.Swiper(sliderEl, {
           slidesPerView: mobileSlidesPerView,
@@ -352,8 +388,11 @@
           speed: 650,
           grabCursor: true,
           watchSlidesProgress: true,
-          loop: slideCount > 1,
-          loopAdditionalSlides: slideCount,
+          watchOverflow: false,
+          initialSlide: canLoop ? prepared.initialSlide : 0,
+          loop: canLoop,
+          loopAdditionalSlides: canLoop ? Math.max(4, slideCount * 2) : 0,
+          loopedSlides: loopedSlidesCount,
           loopPreventsSliding: false,
           rtl: document.documentElement.dir === 'rtl',
           breakpoints: {
@@ -362,21 +401,32 @@
               spaceBetween: slideGap
             }
           },
-          autoplay: slideCount > 1 ? {
+          autoplay: canLoop ? {
             delay: 5000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true
           } : false,
           on: {
             init: function () {
-              setProgress(progressBar, this.realIndex, slideCount);
+              if (canLoop && typeof this.loopFix === 'function') {
+                this.loopFix();
+              }
+              // Start on the middle copy set so a left neighbor exists for the peek.
+              if (canLoop && this.activeIndex !== prepared.initialSlide) {
+                this.slideTo(prepared.initialSlide, 0);
+              }
+              this.update();
+              setProgress(progressBar, 0, slideCount);
               updateNavState(this, section);
             },
             slideChange: function () {
-              setProgress(progressBar, this.realIndex, slideCount);
+              setProgress(progressBar, this.realIndex % slideCount, slideCount);
               updateNavState(this, section);
             },
             resize: function () {
+              if (canLoop && typeof this.loopFix === 'function') {
+                this.loopFix();
+              }
               updateNavState(this, section);
             }
           }
@@ -384,8 +434,36 @@
 
         var prevBtn = section.querySelector('[data-gallery-prev]');
         var nextBtn = section.querySelector('[data-gallery-next]');
-        if (prevBtn) prevBtn.onclick = function () { swiper.slidePrev(); };
-        if (nextBtn) nextBtn.onclick = function () { swiper.slideNext(); };
+
+        if (prevBtn) {
+          prevBtn.onclick = function () {
+            // centeredSlides + fractional slidesPerView can break native loop on one side
+            if (swiper.isBeginning) {
+              if (canLoop && typeof swiper.slideToLoop === 'function') {
+                swiper.slideToLoop(slideCount - 1);
+              } else {
+                swiper.slideTo(Math.max(0, swiper.slides.length - 1));
+              }
+              return;
+            }
+            swiper.slidePrev();
+          };
+        }
+
+        if (nextBtn) {
+          nextBtn.onclick = function () {
+            // Native loop often fails on slideNext with centeredSlides; force wrap.
+            if (swiper.isEnd) {
+              if (canLoop && typeof swiper.slideToLoop === 'function') {
+                swiper.slideToLoop(0);
+              } else {
+                swiper.slideTo(0);
+              }
+              return;
+            }
+            swiper.slideNext();
+          };
+        }
       }
 
       function init() {

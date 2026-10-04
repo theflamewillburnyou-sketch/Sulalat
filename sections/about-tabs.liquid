@@ -299,6 +299,7 @@
     .about-tabs[data-section-id="{{ section.id }}"] .progress-bar {
       position: absolute;
       left: 0;
+      right: auto;
       top: 50%;
       height: 2px;
       width: 0;
@@ -307,6 +308,12 @@
       transition: 0.5s;
       z-index: 1;
       pointer-events: none;
+    }
+
+    /* In RTL the first year sits on the right, so grow the bar from the right. */
+    [dir="rtl"] .about-tabs[data-section-id="{{ section.id }}"] .progress-bar {
+      left: auto;
+      right: 0;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .year-btn {
@@ -322,11 +329,8 @@
       font-family: var(--body-font-family);
     }
 
-    .about-tabs[data-section-id="{{ section.id }}"] .year-btn.active {
-      color: var(--brand-primary, #53c295);
-    }
-
-    .about-tabs[data-section-id="{{ section.id }}"] .year-btn:has(~ .year-btn.active) {
+    .about-tabs[data-section-id="{{ section.id }}"] .year-btn.active,
+    .about-tabs[data-section-id="{{ section.id }}"] .year-btn.is-passed {
       color: var(--brand-primary, #53c295);
     }
 
@@ -3890,18 +3894,28 @@
       function updateTimeline(index) {
         if (!yearBtns.length) return;
 
-        yearBtns.forEach(function (btn) {
-          btn.classList.remove('active');
+        yearBtns.forEach(function (btn, i) {
+          btn.classList.toggle('active', i === index);
+          /* Years before the active index are "passed" in DOM order.
+             In LTR those sit left of active; in RTL they sit right of active. */
+          btn.classList.toggle('is-passed', i < index);
         });
-
-        if (yearBtns[index]) {
-          yearBtns[index].classList.add('active');
-        }
 
         if (progressBar) {
           var total = yearBtns.length - 1;
           var percentage = total > 0 ? (index / total) * 100 : 0;
+          var isRtl =
+            document.documentElement.getAttribute('dir') === 'rtl' ||
+            (section.closest('[dir="rtl"]') != null);
+
           progressBar.style.width = percentage + '%';
+          if (isRtl) {
+            progressBar.style.left = 'auto';
+            progressBar.style.right = '0';
+          } else {
+            progressBar.style.left = '0';
+            progressBar.style.right = 'auto';
+          }
         }
       }
 
