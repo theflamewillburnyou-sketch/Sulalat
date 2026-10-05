@@ -134,13 +134,14 @@
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__schedule {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
+      display: flex;
+      flex-wrap: wrap;
       gap: 14px;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap {
       position: relative;
+      flex-grow: 1
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input {
@@ -165,8 +166,9 @@
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__times {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      flex-grow: 1;
       gap: 8px;
     }
 
@@ -184,6 +186,7 @@
       transition: 0.25s ease;
       border-radius:999px;
       text-align:center;
+      flex-grow: 1;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__time-btn.is-active {
@@ -195,9 +198,11 @@
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form .primary-btn {
       align-self: flex-start;
       margin-top: 8px;
-      min-width: 160px;
+      min-width: 0;
       border: none;
       cursor: pointer;
+      line-height: 1;
+      padding: 14px 40px;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__status {
@@ -215,6 +220,13 @@
       color: #b42318;
     }
 
+    @media (max-width: 1400px){
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__schedule {
+        gap: 8px;
+      }
+    }
+
+
     @media (max-width: 991px) {
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__panel {
         grid-template-columns: 1fr;
@@ -222,6 +234,7 @@
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media {
         min-height: 0;
+        aspect-ratio: 16 / 9;
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {

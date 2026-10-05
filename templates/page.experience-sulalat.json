@@ -12,7 +12,7 @@
     "experience_hero": {
       "type": "experience-sulalat-hero",
       "settings": {
-        "background_image": "shopify://shop_images/0cd0a72b369fa1411b00b9a3eb63eb785f3516c6.jpg",
+        "background_image": "shopify://shop_images/Centered_AeroPress_Brewing_in_a_Modern_Cafe.png",
         "overlay_color": "#00000073",
         "heading": "<p>The Sulalat Experience</p>",
         "text": "<p>Experience sourcing, roasting, equipment, and training under one roof. Our 4,000 sqm B2B space offers an exclusive window into our world.</p>",
@@ -99,7 +99,10 @@
         "slides_per_view_desktop": 3.2,
         "slides_per_view_tablet": 2.2,
         "slides_per_view_mobile": 1.2,
-        "show_navigation": false
+        "show_navigation": false,
+        "enable_autoplay": true,
+        "autoplay_delay": 3500,
+        "autoplay_pause_on_hover": true
       }
     },
     "experience_gallery": {

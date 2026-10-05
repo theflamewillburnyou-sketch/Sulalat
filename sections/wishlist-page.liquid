@@ -360,7 +360,7 @@
   padding: 10px 22px !important;
   border: 1px solid #53c295 !important;
   border-radius: 999px !important;
-  background: transparent !important;
+  background: rgb(83 194 149 / 10%) !important;
   color: #36ad7d !important;
   font-size: 16px !important;
   font-family: var(--secondary-font) !important;
@@ -368,6 +368,13 @@
   line-height: 1.2 !important;
   cursor: pointer !important;
   box-shadow: none !important;
+  position:relative !important;
+  isolation: isolate !important;
+  transition: all 0.2s linear !important;
+}
+
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__remove-all:not(#wls-list-root):not(#wls-list-root *)::before{
+  border-radius: inherit;
 }
 
 .shopify-section:has(#wls-list-root) .sulalat-wishlist-page__add-all:not(#wls-list-root):not(#wls-list-root *) {
@@ -386,8 +393,19 @@
   line-height: 1.2 !important;
   cursor: pointer !important;
   box-shadow: none !important;
+  position:relative !important;
+  isolation: isolate !important;
+  transition: all 0.2s linear !important;
 }
 
+
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__add-all:not(#wls-list-root):not(#wls-list-root *)::before{
+  border-radius: inherit;
+}
+
+.shopify-section:has(#wls-list-root) .sulalat-wishlist-page__add-all:not(#wls-list-root):not(#wls-list-root *):hover{
+  color:#53c295 !important;
+}
 /* =========================
    WishlistSuite - Figma Card
    ========================= */
