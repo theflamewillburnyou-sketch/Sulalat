@@ -26,23 +26,35 @@
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__panel {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      overflow: hidden;
+      overflow: visible;
       border-radius: 24px;
       background: #fff;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media {
+      position: relative;
+      align-self: stretch;
+      height: 100%;
       min-height: 680px;
       background: #f3f3f3;
+      overflow: hidden;
+      contain: paint;
+      border-radius: 24px 0 0 24px;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media img,
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__media svg.placeholder-svg {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
-      min-height: inherit;
+      max-width: none;
+      min-height: 0;
       object-fit: cover;
+      object-position: center center;
       display: block;
+      transform: none;
+      pointer-events: none;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content {
@@ -51,6 +63,10 @@
       flex-direction: column;
       justify-content: center;
       background: {{ section.settings.form_background }};
+      border-radius: 0 24px 24px 0;
+      overflow: visible;
+      position: relative;
+      z-index: 2;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__content h2 {
@@ -141,28 +157,183 @@
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap {
       position: relative;
-      flex-grow: 1
+      flex-grow: 1;
+      z-index: 5;
+      min-width: 160px;
     }
 
-    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input {
-      padding-right: 44px;
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap.is-open {
+      z-index: 20;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input[data-booking-date] {
+      width: 100%;
+      padding-right: 48px;
       color: #A2A2A2;
+      cursor: pointer;
+      caret-color: transparent;
     }
 
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input[data-booking-date].has-value {
+      color: #000;
+    }
 
-    input[data-booking-date]::-webkit-calendar-picker-indicator {
-      display: none;
-      -webkit-appearance: none;
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap.is-open input[data-booking-date],
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input[data-booking-date]:focus {
+      border-color: var(--brand-primary, #53c295);
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-icon {
       position: absolute;
-      right: 20px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       color: #9a9a9a;
-      pointer-events: none;
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 1;
+    }
+
+    [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-wrap input[data-booking-date] {
+      padding-right: 20px;
+      padding-left: 48px;
+    }
+
+    [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__date-icon {
+      right: auto;
+      left: 12px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      width: min(100%, 320px);
+      padding: 16px;
+      border: 1px solid #e4e4e4;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 12px 40px rgba(20, 18, 17, 0.12);
+      z-index: 30;
+      display: none;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar.is-open {
+      display: block;
+    }
+
+    [dir="rtl"] .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar {
+      left: auto;
+      right: 0;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-title {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: #141211;
+      letter-spacing: 0.01em;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-nav {
+      width: 34px;
+      height: 34px;
+      border: 1px solid #e4e4e4;
+      border-radius: 999px;
+      background: #fff;
+      color: #535353;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s ease;
+      padding: 0;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-nav:hover:not(:disabled) {
+      border-color: var(--brand-primary, #53c295);
+      color: var(--brand-primary, #53c295);
+      background: var(--brand-mint, #e7f5ef);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-nav:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-weekdays,
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-weekdays {
+      margin-bottom: 6px;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-weekday {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: #a2a2a2;
+      padding: 4px 0;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day {
+      aspect-ratio: 1;
+      min-height: 36px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #141211;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 400;
+      cursor: pointer;
+      transition: 0.2s ease;
+      padding: 0;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day:hover:not(:disabled):not(.is-selected) {
+      background: var(--brand-mint, #e7f5ef);
+      color: var(--brand-primary-deep, #006c4e);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day.is-today:not(.is-selected) {
+      box-shadow: inset 0 0 0 1.5px var(--brand-primary, #53c295);
+      color: var(--brand-primary-deep, #006c4e);
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day.is-selected {
+      background: var(--brand-primary, #53c295);
+      color: #fff;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day.is-outside {
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day:disabled {
+      color: #cfcfcf;
+      cursor: not-allowed;
+      background: transparent;
     }
 
     .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__times {
@@ -261,16 +432,27 @@
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form input,
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form select {
         height: 40px;
-        font-size: 14px;
+        /* iOS Safari zooms focused inputs when font-size is below 16px */
+        font-size: 16px;
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form textarea {
-         font-size: 14px;
+         font-size: 16px;
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__time-btn {
         min-height: 40px;
-        font-size: 14px;
+        font-size: 16px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar {
+        width: min(100%, 300px);
+        padding: 14px;
+      }
+
+      .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__calendar-day {
+        min-height: 34px;
+        font-size: 13px;
       }
 
       .experience-sulalat-booking[data-section-id="{{ section.id }}"] .experience-sulalat-booking__form .primary-btn {
@@ -305,7 +487,7 @@
           <p class="experience-sulalat-booking__intro">{{ section.settings.text | escape }}</p>
         {% endif %}
 
-        {% form 'contact', id: form_id, class: 'experience-sulalat-booking__form' %}
+        {% form 'contact', id: form_id, class: 'experience-sulalat-booking__form', novalidate: 'novalidate' %}
           {% if form.posted_successfully? %}
             <p class="experience-sulalat-booking__status experience-sulalat-booking__status--success">
               {{ section.settings.success_message | escape }}
@@ -327,20 +509,53 @@
           </select>
 
           <div class="experience-sulalat-booking__schedule">
-            <div class="experience-sulalat-booking__date-wrap">
+            <div class="experience-sulalat-booking__date-wrap" data-booking-datepicker>
               <input
-                type="date"
+                type="text"
                 name="contact[Preferred date]"
                 placeholder="{{ section.settings.date_placeholder | escape }}"
                 required
+                readonly
+                autocomplete="off"
+                inputmode="none"
                 data-booking-date
               >
-              <span class="experience-sulalat-booking__date-icon" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none">
+              <button
+                type="button"
+                class="experience-sulalat-booking__date-icon"
+                data-booking-date-trigger
+                aria-label="{{ section.settings.date_placeholder | default: 'Choose date' | escape }}"
+                aria-haspopup="dialog"
+                aria-expanded="false"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20" fill="none" aria-hidden="true">
                   <path d="M4 9H6V11H4V9ZM4 13H6V15H4V13ZM8 9H10V11H8V9ZM8 13H10V15H8V13ZM12 9H14V11H12V9ZM12 13H14V15H12V13Z" fill="#717171"/>
                   <path d="M2 20H16C17.103 20 18 19.103 18 18V4C18 2.897 17.103 2 16 2H14V0H12V2H6V0H4V2H2C0.897 2 0 2.897 0 4V18C0 19.103 0.897 20 2 20ZM16 6L16.001 18H2V6H16Z" fill="#717171"/>
                 </svg>
-              </span>
+              </button>
+
+              <div
+                class="experience-sulalat-booking__calendar"
+                data-booking-calendar
+                role="dialog"
+                aria-label="{{ section.settings.date_placeholder | default: 'Choose date' | escape }}"
+              >
+                <div class="experience-sulalat-booking__calendar-header">
+                  <button type="button" class="experience-sulalat-booking__calendar-nav" data-cal-prev aria-label="Previous month">
+                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true">
+                      <path d="M7 1L2 6l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                  <p class="experience-sulalat-booking__calendar-title" data-cal-title></p>
+                  <button type="button" class="experience-sulalat-booking__calendar-nav" data-cal-next aria-label="Next month">
+                    <svg width="8" height="12" viewBox="0 0 8 12" fill="none" aria-hidden="true">
+                      <path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="experience-sulalat-booking__calendar-weekdays" data-cal-weekdays></div>
+                <div class="experience-sulalat-booking__calendar-days" data-cal-days></div>
+              </div>
             </div>
 
             <div class="experience-sulalat-booking__times" data-booking-times>
@@ -428,33 +643,266 @@
       }
 
       if (dateInput) {
-        var today = getTodayISODate();
-        dateInput.setAttribute('min', today);
+        var dateWrap = section.querySelector('[data-booking-datepicker]');
+        var dateTrigger = section.querySelector('[data-booking-date-trigger]');
+        var calendar = section.querySelector('[data-booking-calendar]');
+        var calTitle = section.querySelector('[data-cal-title]');
+        var calWeekdays = section.querySelector('[data-cal-weekdays]');
+        var calDays = section.querySelector('[data-cal-days]');
+        var calPrev = section.querySelector('[data-cal-prev]');
+        var calNext = section.querySelector('[data-cal-next]');
+        var locale = document.documentElement.lang || undefined;
+        var todayISO = getTodayISODate();
+        var viewDate = parseISODate(dateInput.dataset.iso || todayISO) || parseISODate(todayISO);
+        var weekdaysReady = false;
 
-        if (dateInput.value && dateInput.value < today) {
-          dateInput.value = '';
+        function pad(n) {
+          return String(n).padStart(2, '0');
         }
 
-        dateInput.addEventListener('change', function () {
-          if (dateInput.value && dateInput.value < dateInput.min) {
+        function toISODate(date) {
+          return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate());
+        }
+
+        function parseISODate(value) {
+          if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+          var parts = value.split('-');
+          var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+          if (Number.isNaN(date.getTime())) return null;
+          return date;
+        }
+
+        function formatDisplayDate(iso) {
+          var date = parseISODate(iso);
+          if (!date) return '';
+          try {
+            return date.toLocaleDateString(locale, {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric'
+            });
+          } catch (err) {
+            return pad(date.getDate()) + '/' + pad(date.getMonth() + 1) + '/' + date.getFullYear();
+          }
+        }
+
+        function setSelectedDate(iso) {
+          if (!iso || iso < todayISO) {
             dateInput.value = '';
-            dateInput.setCustomValidity('Please choose today or a future date.');
-            dateInput.reportValidity();
+            dateInput.dataset.iso = '';
+            dateInput.classList.remove('has-value');
+            dateInput.setCustomValidity(iso ? 'Please choose today or a future date.' : '');
             return;
           }
+
+          dateInput.dataset.iso = iso;
+          dateInput.value = formatDisplayDate(iso);
+          dateInput.classList.add('has-value');
           dateInput.setCustomValidity('');
+        }
+
+        function isOpen() {
+          return calendar && calendar.classList.contains('is-open');
+        }
+
+        function openCalendar() {
+          if (!calendar || !dateWrap) return;
+          var selected = parseISODate(dateInput.dataset.iso || '');
+          viewDate = selected ? new Date(selected.getFullYear(), selected.getMonth(), 1) : new Date(parseISODate(todayISO).getFullYear(), parseISODate(todayISO).getMonth(), 1);
+          renderCalendar();
+          calendar.classList.add('is-open');
+          dateWrap.classList.add('is-open');
+          if (dateTrigger) dateTrigger.setAttribute('aria-expanded', 'true');
+        }
+
+        function closeCalendar() {
+          if (!calendar || !dateWrap) return;
+          calendar.classList.remove('is-open');
+          dateWrap.classList.remove('is-open');
+          if (dateTrigger) dateTrigger.setAttribute('aria-expanded', 'false');
+        }
+
+        function toggleCalendar() {
+          if (isOpen()) closeCalendar();
+          else openCalendar();
+        }
+
+        function ensureWeekdays() {
+          if (!calWeekdays || weekdaysReady) return;
+          calWeekdays.innerHTML = '';
+          for (var i = 0; i < 7; i += 1) {
+            var label = document.createElement('span');
+            label.className = 'experience-sulalat-booking__calendar-weekday';
+            try {
+              label.textContent = new Date(2024, 0, 7 + i).toLocaleDateString(locale, { weekday: 'short' });
+            } catch (err) {
+              label.textContent = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'][i];
+            }
+            calWeekdays.appendChild(label);
+          }
+          weekdaysReady = true;
+        }
+
+        function renderCalendar() {
+          if (!calDays || !calTitle) return;
+          ensureWeekdays();
+
+          var year = viewDate.getFullYear();
+          var month = viewDate.getMonth();
+          var firstDay = new Date(year, month, 1);
+          var startOffset = firstDay.getDay();
+          var daysInMonth = new Date(year, month + 1, 0).getDate();
+          var selectedISO = dateInput.dataset.iso || '';
+
+          try {
+            calTitle.textContent = firstDay.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+          } catch (err) {
+            calTitle.textContent = firstDay.toLocaleString('en', { month: 'long' }) + ' ' + year;
+          }
+
+          if (calPrev) {
+            var prevMonthEnd = new Date(year, month, 0);
+            calPrev.disabled = toISODate(prevMonthEnd) < todayISO;
+          }
+
+          calDays.innerHTML = '';
+
+          for (var i = 0; i < startOffset; i += 1) {
+            var empty = document.createElement('button');
+            empty.type = 'button';
+            empty.className = 'experience-sulalat-booking__calendar-day is-outside';
+            empty.tabIndex = -1;
+            empty.disabled = true;
+            empty.setAttribute('aria-hidden', 'true');
+            calDays.appendChild(empty);
+          }
+
+          for (var day = 1; day <= daysInMonth; day += 1) {
+            var iso = year + '-' + pad(month + 1) + '-' + pad(day);
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'experience-sulalat-booking__calendar-day';
+            btn.textContent = String(day);
+            btn.dataset.date = iso;
+
+            if (iso === todayISO) btn.classList.add('is-today');
+            if (iso === selectedISO) btn.classList.add('is-selected');
+            if (iso < todayISO) btn.disabled = true;
+
+            calDays.appendChild(btn);
+          }
+        }
+
+        dateInput.addEventListener('click', function (event) {
+          event.preventDefault();
+          toggleCalendar();
         });
+
+        dateInput.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ' || event.key === 'ArrowDown') {
+            event.preventDefault();
+            openCalendar();
+          } else if (event.key === 'Escape') {
+            closeCalendar();
+          }
+        });
+
+        if (dateTrigger) {
+          dateTrigger.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleCalendar();
+          });
+        }
+
+        if (calPrev) {
+          calPrev.addEventListener('click', function () {
+            viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
+            renderCalendar();
+          });
+        }
+
+        if (calNext) {
+          calNext.addEventListener('click', function () {
+            viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1);
+            renderCalendar();
+          });
+        }
+
+        if (calDays) {
+          calDays.addEventListener('click', function (event) {
+            var dayBtn = event.target.closest('[data-date]');
+            if (!dayBtn || dayBtn.disabled) return;
+            setSelectedDate(dayBtn.getAttribute('data-date'));
+            closeCalendar();
+          });
+        }
+
+        document.addEventListener('click', function (event) {
+          if (!dateWrap || !isOpen()) return;
+          if (!dateWrap.contains(event.target)) closeCalendar();
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape' && isOpen()) closeCalendar();
+        });
+
+        if (dateInput.dataset.iso) setSelectedDate(dateInput.dataset.iso);
       }
 
-      if (form && dateInput) {
+      if (form) {
+        form.setAttribute('novalidate', 'novalidate');
+
+        var lockedScrollY = 0;
+
+        function lockScrollPosition() {
+          lockedScrollY = window.scrollY || window.pageYOffset || 0;
+        }
+
+        function restoreScrollPosition() {
+          window.scrollTo(0, lockedScrollY);
+        }
+
+        function showInvalidField(field) {
+          if (!field) return;
+          field.focus({ preventScroll: true });
+          field.reportValidity();
+          restoreScrollPosition();
+          requestAnimationFrame(restoreScrollPosition);
+          setTimeout(restoreScrollPosition, 0);
+        }
+
+        form.addEventListener(
+          'pointerdown',
+          function (event) {
+            if (event.target && event.target.closest('[type="submit"]')) {
+              lockScrollPosition();
+            }
+          },
+          true
+        );
+
         form.addEventListener('submit', function (event) {
-          var minDate = dateInput.getAttribute('min') || getTodayISODate();
-          if (!dateInput.value || dateInput.value < minDate) {
+          lockScrollPosition();
+
+          if (dateInput) {
+            var selectedISO = dateInput.dataset.iso || '';
+            var minDate = getTodayISODate();
+            if (!selectedISO) {
+              dateInput.setCustomValidity('Please choose a date.');
+            } else if (selectedISO < minDate) {
+              dateInput.setCustomValidity('Please choose today or a future date.');
+            } else {
+              dateInput.setCustomValidity('');
+              // Submit a clear ISO date in the contact email
+              dateInput.value = selectedISO;
+            }
+          }
+
+          if (!form.checkValidity()) {
             event.preventDefault();
-            dateInput.setCustomValidity('Please choose today or a future date.');
-            dateInput.reportValidity();
-          } else {
-            dateInput.setCustomValidity('');
+            showInvalidField(form.querySelector(':invalid'));
+            return;
           }
         });
       }

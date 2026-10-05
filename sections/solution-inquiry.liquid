@@ -106,6 +106,12 @@
       font-weight: 400;
     }
 
+    [dir="rtl"] .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select {
+      background-position: left 20px center;
+      padding-right: 22px;
+      padding-left: 48px;
+    }
+
     .solution-inquiry[data-section-id="{{ section.id }}"] .solution-inquiry-form select:valid {
       color: #000;
     }
@@ -286,6 +292,20 @@
             <p class="solution-form-status solution-form-status--success">
               {{ section.settings.success_message | escape }}
             </p>
+            <script>
+              (function () {
+                try {
+                  var url = new URL(window.location.href);
+                  if (!url.searchParams.has('contact_posted')) return;
+                  url.searchParams.delete('contact_posted');
+                  var clean =
+                    url.pathname +
+                    (url.searchParams.toString() ? '?' + url.searchParams.toString() : '') +
+                    url.hash;
+                  window.history.replaceState({}, '', clean);
+                } catch (e) {}
+              })();
+            </script>
           {% elsif form.errors %}
             <p class="solution-form-status solution-form-status--error">
               {{ form.errors | default_errors }}

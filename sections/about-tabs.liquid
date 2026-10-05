@@ -1051,6 +1051,30 @@
       opacity: 0;
     }
 
+    /* Keep leadership popup centered on iPad + mobile */
+    @media (max-width: 1024px) {
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup {
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-dialog {
+        margin: auto;
+        flex-shrink: 0;
+        width: min(100%, 720px);
+        max-height: min(720px, calc(100vh - 48px));
+        max-height: min(720px, calc(100dvh - 48px));
+      }
+
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-panel {
+        max-height: inherit;
+      }
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
       display: flex;
       align-items: center;
