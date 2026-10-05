@@ -33,7 +33,7 @@
           "type": "rating",
           "settings": {
             "rating_fallback": 4,
-            "rating_count_fallback": 11,
+            "rating_count_fallback": 0,
             "reviews_label": "reviews"
           }
         },
@@ -51,6 +51,20 @@
             "show_buy_now": true,
             "buy_now_label": "Buy Now",
             "add_to_cart_label": "Add to Cart"
+          }
+        },
+        "subscriptions_app_block_UFQJph": {
+          "type": "shopify://apps/subscriptions/blocks/app-block/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+          "settings": {
+            "widget_style": "toggle",
+            "widget_style_card_selector": "radio_button",
+            "subscription_policy_url": "",
+            "color_text_body": "#53c295",
+            "dividers_color": "#53c295",
+            "background_color": "#FFFFFF",
+            "border_thickness": 1,
+            "border_radius": 12,
+            "product": "{{product}}"
           }
         },
         "subscribe": {
@@ -107,6 +121,7 @@
         "rating",
         "variant_picker",
         "buy_buttons",
+        "subscriptions_app_block_UFQJph",
         "subscribe",
         "bulk_box",
         "promo_banner",
@@ -199,11 +214,136 @@
     },
     "description_tabs": {
       "type": "product-description-tabs",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Outstanding flavor",
+            "author": "Sara A.",
+            "date": "March 2026",
+            "body": "Beautiful aroma and a clean finish. One of the best specialty coffees I have tried recently."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Fresh and balanced",
+            "author": "Omar K.",
+            "date": "February 2026",
+            "body": "Arrived fresh and tasted exactly as described. Perfect for pour-over brewing."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "title": "Will buy again",
+            "author": "Layla M.",
+            "date": "January 2026",
+            "body": "Smooth cup with nice sweetness. Packaging was excellent and delivery was quick."
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Rich and aromatic",
+            "author": "Hassan R.",
+            "date": "December 2025",
+            "body": "Deep flavor with a lovely aftertaste. Great for both espresso and filter methods."
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Premium quality",
+            "author": "Noura S.",
+            "date": "December 2025",
+            "body": "You can tell this is carefully sourced. Consistent quality with every brew."
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "title": "Very enjoyable",
+            "author": "Yousef T.",
+            "date": "November 2025",
+            "body": "Nice body and clean acidity. Becomes even better a few days after opening."
+          }
+        },
+        "review_7": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect morning cup",
+            "author": "Fatima H.",
+            "date": "November 2025",
+            "body": "My go-to coffee now. Smooth, fragrant, and never bitter when brewed properly."
+          }
+        },
+        "review_8": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Excellent roast",
+            "author": "Khalid B.",
+            "date": "October 2025",
+            "body": "Roast level is spot on. Notes come through clearly and the finish is long."
+          }
+        },
+        "review_9": {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "title": "Great gift choice",
+            "author": "Reem D.",
+            "date": "October 2025",
+            "body": "Bought this as a gift and everyone loved it. Presentation and taste were both impressive."
+          }
+        },
+        "review_10": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Clean and sweet",
+            "author": "Ahmed Z.",
+            "date": "September 2025",
+            "body": "Bright sweetness with no harsh edges. Ideal for V60 and Chemex."
+          }
+        },
+        "review_11": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Highly recommend",
+            "author": "Maha N.",
+            "date": "September 2025",
+            "body": "From packaging to the last sip, everything feels premium. Definitely ordering again."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6",
+        "review_7",
+        "review_8",
+        "review_9",
+        "review_10",
+        "review_11"
+      ],
       "settings": {
         "description_label": "Description",
         "show_reviews": true,
         "reviews_label": "Reviews",
-        "reviews_count_fallback": 11,
+        "reviews_count_fallback": 0,
         "custom_reviews": "",
         "show_brand": true,
         "brand_label": "Brand",

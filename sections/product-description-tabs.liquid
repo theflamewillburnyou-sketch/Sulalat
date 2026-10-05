@@ -1,7 +1,12 @@
 {%- liquid
   assign rating_count = product.metafields.reviews.rating_count.value | default: product.metafields.reviews.rating_count | plus: 0
-  if rating_count == 0 and section.settings.reviews_count_fallback > 0
-    assign rating_count = section.settings.reviews_count_fallback
+  assign review_blocks = section.blocks | where: 'type', 'review'
+  assign review_rating_sum = 0
+  if review_blocks.size > 0
+    assign rating_count = review_blocks.size
+    for review_block in review_blocks
+      assign review_rating_sum = review_rating_sum | plus: review_block.settings.rating
+    endfor
   endif
 
   assign brand_value = product.vendor
@@ -21,12 +26,17 @@
   if section.settings.show_category and category_value != blank
     assign show_meta = true
   endif
+
+  assign has_spr_reviews = false
+  if product.metafields.spr.reviews != blank
+    assign has_spr_reviews = true
+  endif
 -%}
 
 {%- if product.description != blank or section.settings.show_reviews or request.design_mode -%}
 <script src="{{ 'tabs.js' | asset_url }}" defer="defer"></script>
 
-{%- if section.settings.show_reviews and section.settings.custom_reviews == blank -%}
+{%- if section.settings.show_reviews and section.settings.custom_reviews == blank and has_spr_reviews -%}
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (document.getElementById('shopify-product-reviews')) {
@@ -176,6 +186,62 @@
       min-height: 40px;
     }
 
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list {
+      display: grid;
+      gap: 20px;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__item {
+      padding: 20px 0;
+      border-bottom: 1px solid #ebebeb;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__item:first-child {
+      padding-top: 0;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__stars {
+      display: inline-flex;
+      gap: 2px;
+      margin-bottom: 8px;
+      color: var(--sdt-accent, #53c295);
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__stars svg.is-empty {
+      color: #d9d9d9;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__title {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #141211;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__meta {
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: #828282;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__body {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #141211;
+    }
+
+    .sulalat-desc-tabs[data-section-id="{{ section.id }}"] .sulalat-reviews-list__empty {
+      margin: 0;
+      font-size: 15px;
+      color: #828282;
+    }
+
     @media screen and (max-width: 749px) {
       .sulalat-desc-tabs[data-section-id="{{ section.id }}"] {
         padding-top: {{ section.settings.padding_top_mobile }}px;
@@ -288,10 +354,85 @@
             <div class="sulalat-desc-tabs__reviews">
               {%- if section.settings.custom_reviews != blank -%}
                 {{ section.settings.custom_reviews }}
-              {%- else -%}
+              {%- elsif has_spr_reviews -%}
                 <div class="spr-reviews" id="shopify-product-reviews" data-id="{{ product.id }}">
                   {{ product.metafields.spr.reviews }}
                 </div>
+              {%- elsif review_blocks.size > 0 -%}
+                <div
+                  class="sulalat-reviews-list"
+                  data-sulalat-reviews-source
+                  data-count="{{ review_blocks.size }}"
+                  data-rating-sum="{{ review_rating_sum }}"
+                >
+                  {%- for block in review_blocks -%}
+                    {%- liquid
+                      assign review_rating = block.settings.rating | default: 5
+                      if review_rating < 1
+                        assign review_rating = 1
+                      endif
+                      if review_rating > 5
+                        assign review_rating = 5
+                      endif
+                    -%}
+                    <article class="sulalat-reviews-list__item" data-rating="{{ review_rating }}" {{ block.shopify_attributes }}>
+                      <div class="sulalat-reviews-list__stars" aria-label="{{ review_rating }} out of 5 stars">
+                        {%- for i in (1..5) -%}
+                          <svg width="16" height="16" viewBox="0 0 24 24" class="{% if i > review_rating %}is-empty{% endif %}" fill="currentColor" aria-hidden="true">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                          </svg>
+                        {%- endfor -%}
+                      </div>
+                      {%- if block.settings.title != blank -%}
+                        <h3 class="sulalat-reviews-list__title">{{ block.settings.title | escape }}</h3>
+                      {%- endif -%}
+                      {%- if block.settings.author != blank or block.settings.date != blank -%}
+                        <p class="sulalat-reviews-list__meta">
+                          {%- if block.settings.author != blank -%}{{ block.settings.author | escape }}{%- endif -%}
+                          {%- if block.settings.author != blank and block.settings.date != blank %} · {% endif -%}
+                          {%- if block.settings.date != blank -%}{{ block.settings.date | escape }}{%- endif -%}
+                        </p>
+                      {%- endif -%}
+                      {%- if block.settings.body != blank -%}
+                        <p class="sulalat-reviews-list__body">{{ block.settings.body | escape | newline_to_br }}</p>
+                      {%- endif -%}
+                    </article>
+                  {%- endfor -%}
+                </div>
+                <script>
+                  (function () {
+                    var source = document.querySelector('[data-sulalat-reviews-source]');
+                    if (!source) return;
+
+                    var count = parseInt(source.getAttribute('data-count'), 10) || 0;
+                    var sum = parseFloat(source.getAttribute('data-rating-sum')) || 0;
+                    var avg = count > 0 ? sum / count : 0;
+
+                    document.querySelectorAll('[data-sulalat-reviews-count]').forEach(function (el) {
+                      var label = el.getAttribute('data-reviews-label') || 'reviews';
+                      if (count > 0) {
+                        el.hidden = false;
+                        el.textContent = '(' + count + ' ' + label + ')';
+                      } else {
+                        el.hidden = true;
+                        el.textContent = '';
+                      }
+                    });
+
+                    if (avg > 0) {
+                      var rounded = Math.round(avg);
+                      document.querySelectorAll('[data-sulalat-reviews-stars]').forEach(function (stars) {
+                        var scale = parseInt(stars.getAttribute('data-rating-scale'), 10) || 5;
+                        stars.querySelectorAll('svg').forEach(function (svg, index) {
+                          svg.classList.toggle('is-empty', index + 1 > rounded);
+                        });
+                        stars.setAttribute('aria-label', avg.toFixed(1) + ' out of ' + scale + ' stars');
+                      });
+                    }
+                  })();
+                </script>
+              {%- else -%}
+                <p class="sulalat-reviews-list__empty">No reviews yet for this product.</p>
               {%- endif -%}
             </div>
           </div>
@@ -452,6 +593,47 @@
       "unit": "px",
       "label": "Padding bottom (mobile)",
       "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Great coffee"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Sara"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "March 2026"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review",
+          "default": "Excellent quality and beautiful flavor profile. Will order again."
+        }
+      ]
     }
   ],
   "presets": [

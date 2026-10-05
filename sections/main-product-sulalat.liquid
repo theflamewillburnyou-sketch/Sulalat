@@ -323,7 +323,92 @@
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn {
-      width:100%;
+      width: 100%;
+      border-radius: 999px;
+    }
+
+    /* Shopify Subscriptions → Delivery Period cards */
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscriptions {
+      margin-bottom: 16px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__title {
+      margin: 0 0 12px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: #141211;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__options {
+      display: flex;
+      gap: 12px;
+      flex-wrap: nowrap;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__option {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      padding: 14px 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      background: #f5f5f5;
+      color: #999999;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.25;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__option.is-selected,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__option:has(input:checked) {
+      background: #eaf8f1;
+      border-color: var(--sulalat-pdp-accent, #53c295);
+      color: var(--sulalat-pdp-accent, #53c295);
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscriptions-app.is-visually-hidden {
+      display: none !important;
+    }
+
+    /* Hide global Subscriptions app embed on this PDP (custom Delivery Period replaces it) */
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .shopify_subscriptions_app_block_container {
+      display: none !important;
+    }
+
+    body:has(.sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period) .shopify_subscriptions_app_block_container {
+      display: none !important;
+    }
+
+    @media (max-width: 767px) {
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__options {
+        gap: 8px;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-delivery-period__option {
+        min-height: 48px;
+        padding: 12px 8px;
+        font-size: 13px;
+      }
     }
     {% comment %} .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn {
       display: inline-flex;
@@ -713,8 +798,48 @@
             {% for block in section.blocks %}
               {% case block.type %}
                 {% when '@app' %}
-                  <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
-                    {% render block %}
+                  <div class="sulalat-pdp__block sulalat-pdp__subscriptions" {{ block.shopify_attributes }}>
+                    {% if product.selling_plan_groups.size > 0 %}
+                      <div class="sulalat-delivery-period" data-delivery-period>
+                        <p class="sulalat-delivery-period__title">Delivery Period</p>
+                        <div
+                          class="sulalat-delivery-period__options"
+                          role="radiogroup"
+                          aria-label="Delivery Period"
+                        >
+                          {% assign sulalat_plan_index = 0 %}
+                          {% for group in product.selling_plan_groups %}
+                            {% for plan in group.selling_plans %}
+                              {% liquid
+                                assign plan_label = plan.name
+                                assign plan_name_down = plan.name | downcase
+                                if plan_name_down contains 'week'
+                                  assign plan_label = 'Every Week'
+                                elsif plan_name_down contains 'month'
+                                  assign plan_label = 'Every Month'
+                                endif
+                              %}
+                              <label class="sulalat-delivery-period__option{% if sulalat_plan_index == 0 %} is-selected{% endif %}">
+                                <input
+                                  type="radio"
+                                  name="sulalat-delivery-period-{{ section.id }}"
+                                  value="{{ plan.id }}"
+                                  data-selling-plan-id="{{ plan.id }}"
+                                  {% if sulalat_plan_index == 0 %}checked{% endif %}
+                                >
+                                <span class="sulalat-delivery-period__label">{{ plan_label | escape }}</span>
+                              </label>
+                              {% assign sulalat_plan_index = sulalat_plan_index | plus: 1 %}
+                            {% endfor %}
+                          {% endfor %}
+                        </div>
+                      </div>
+                      <div class="sulalat-pdp__subscriptions-app is-visually-hidden" aria-hidden="true">
+                        {% render block %}
+                      </div>
+                    {% else %}
+                      {% render block %}
+                    {% endif %}
                   </div>
 
                 {% when 'title' %}
@@ -756,20 +881,26 @@
                 {% when 'rating' %}
                   {% liquid
                     assign rating_value = metafield_rating | default: block.settings.rating_fallback
-                    assign rating_count = metafield_rating_count | default: block.settings.rating_count_fallback
+                    assign rating_count = metafield_rating_count | default: 0 | plus: 0
                     assign rating_scale = metafield_rating_scale
                     assign rating_rounded = rating_value | plus: 0 | round
                   %}
                   <div class="sulalat-pdp__block" {{ block.shopify_attributes }}>
-                    <div class="sulalat-pdp__rating">
-                      <span class="sulalat-pdp__stars" aria-hidden="true">
+                    <div class="sulalat-pdp__rating" data-sulalat-pdp-rating>
+                      <span class="sulalat-pdp__stars" aria-hidden="true" data-sulalat-reviews-stars data-rating-scale="{{ rating_scale }}">
                         {% for i in (1..rating_scale) %}
                           <svg width="18" height="18" viewBox="0 0 24 24" class="{% if i > rating_rounded %}is-empty{% endif %}" fill="currentColor">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                           </svg>
                         {% endfor %}
                       </span>
-                      <span>({{ rating_count }} {{ block.settings.reviews_label | escape }})</span>
+                      <span
+                        data-sulalat-reviews-count
+                        data-reviews-label="{{ block.settings.reviews_label | escape }}"
+                        {% if rating_count == 0 %}hidden{% endif %}
+                      >
+                        {%- if rating_count > 0 -%}({{ rating_count }} {{ block.settings.reviews_label | escape }}){%- endif -%}
+                      </span>
                     </div>
                   </div>
 
@@ -1322,11 +1453,94 @@
         });
       }
 
+      var formEl = root.querySelector('.js-product-form');
+      var deliveryPeriod = root.querySelector('[data-delivery-period]');
+      var subscribeIntent = false;
+
+      function getSellingPlanInput() {
+        if (!formEl) return null;
+        var input = formEl.querySelector('input[name="selling_plan"]');
+        if (!input) {
+          input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'selling_plan';
+          formEl.appendChild(input);
+        }
+        return input;
+      }
+
+      function getSelectedDeliveryPlanId() {
+        if (!deliveryPeriod) return '';
+        var checked = deliveryPeriod.querySelector('input[type="radio"]:checked');
+        return checked ? (checked.getAttribute('data-selling-plan-id') || checked.value || '') : '';
+      }
+
+      function setSellingPlanValue(planId) {
+        var input = getSellingPlanInput();
+        if (!input) return;
+        input.value = planId || '';
+
+        if (!planId) return;
+        var appRadio = root.querySelector(
+          'input[data-radio-type="selling_plan"][data-selling-plan-id="' + planId + '"]'
+        );
+        if (appRadio && !appRadio.checked) {
+          appRadio.checked = true;
+          appRadio.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      function clearSellingPlanValue() {
+        var input = getSellingPlanInput();
+        if (input) input.value = '';
+        var oneTime = root.querySelector('input[data-radio-type="one_time_purchase"]');
+        if (oneTime && !oneTime.checked) {
+          oneTime.checked = true;
+          oneTime.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      if (deliveryPeriod) {
+        deliveryPeriod.querySelectorAll('.sulalat-delivery-period__option').forEach(function (option) {
+          var radio = option.querySelector('input[type="radio"]');
+          if (!radio) return;
+          radio.addEventListener('change', function () {
+            deliveryPeriod.querySelectorAll('.sulalat-delivery-period__option').forEach(function (opt) {
+              opt.classList.toggle('is-selected', opt.querySelector('input') === radio && radio.checked);
+            });
+            setSellingPlanValue(radio.getAttribute('data-selling-plan-id') || radio.value || '');
+          });
+        });
+        setSellingPlanValue(getSelectedDeliveryPlanId());
+      }
+
+      if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', function () {
+          subscribeIntent = false;
+          clearSellingPlanValue();
+        }, true);
+      }
+
+      var addToCartBtn = root.querySelector('[name="add"]');
+      if (addToCartBtn) {
+        addToCartBtn.addEventListener('click', function () {
+          if (subscribeIntent) {
+            setSellingPlanValue(getSelectedDeliveryPlanId());
+            subscribeIntent = false;
+            return;
+          }
+          clearSellingPlanValue();
+        }, true);
+      }
+
       var subscribeBtn = root.querySelector('[data-subscribe-btn]');
       if (subscribeBtn) {
         subscribeBtn.addEventListener('click', function () {
+          subscribeIntent = true;
+          setSellingPlanValue(getSelectedDeliveryPlanId());
           var target = root.querySelector('[name="add"]');
           if (target && !target.disabled) target.click();
+          else subscribeIntent = false;
         });
       }
 
