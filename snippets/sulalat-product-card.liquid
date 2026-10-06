@@ -122,18 +122,121 @@
     <div class="sulalat-product-card__actions">
       <a class="sulalat-btn primary-btn" href="{{ product_url }}">{{ details_btn_label | escape }}</a>
 
-      {%- if product.has_only_default_variant and current_variant.available -%}
-        {% form 'product', product, id: form_id, class: 'sulalat-product-card__form' %}
-          <input type="hidden" name="id" value="{{ current_variant.id }}">
-          <button type="submit" name="add" class="sulalat-btn sulalat-btn--outline">
-            Add to Cart
-          </button>
-        {% endform %}
-      {%- elsif current_variant.available -%}
-        <a class="sulalat-btn sulalat-btn--outline" href="{{ product_url }}">Add to Cart</a>
+      {%- if current_variant.available -%}
+        <button
+          type="button"
+          class="sulalat-btn sulalat-btn--outline"
+          data-sulalat-card-atc
+          data-variant-id="{{ current_variant.id }}"
+          data-add-label="Add to Cart"
+          data-added-label="Added"
+        >
+          Add to Cart
+        </button>
       {%- else -%}
         <span class="sulalat-btn sulalat-btn--outline is-disabled" aria-disabled="true">Sold out</span>
       {%- endif -%}
     </div>
   </div>
 </article>
+
+<style>
+  .sulalat-btn[data-sulalat-card-atc].is-loading {
+    pointer-events: none;
+    opacity: 0.85;
+    color: transparent !important;
+    position: relative;
+  }
+
+  .sulalat-btn[data-sulalat-card-atc].is-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid var(--brand-primary, #53c295);
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: sulalat-card-atc-spin 0.6s linear infinite;
+  }
+
+  @keyframes sulalat-card-atc-spin {
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  (function () {
+    if (window.__sulalatProductCardAtc) return;
+    window.__sulalatProductCardAtc = true;
+
+    var cartAddUrl = (window.theme && theme.routes && theme.routes.cartAdd) || (window.routes && window.routes.cart_add_url) || '/cart/add.js';
+
+    document.addEventListener('click', function (event) {
+      var btn = event.target.closest('[data-sulalat-card-atc]');
+      if (!btn || btn.disabled) return;
+
+      var variantId = btn.getAttribute('data-variant-id');
+      if (!variantId) return;
+
+      var addLabel = btn.getAttribute('data-add-label') || 'Add to Cart';
+      var addedLabel = btn.getAttribute('data-added-label') || 'Added';
+
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      btn.classList.remove('is-added');
+      btn.classList.add('is-loading');
+
+      var formData = new FormData();
+      formData.append('id', variantId);
+      formData.append('quantity', '1');
+      formData.append('sections', 'cart-icon-bubble');
+      formData.append('sections_url', window.location.pathname);
+
+      fetch(cartAddUrl, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/javascript',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: formData
+      })
+        .then(function (response) {
+          return response.json().then(function (data) {
+            return { ok: response.ok, data: data };
+          });
+        })
+        .then(function (result) {
+          if (!result.ok || result.data.status) {
+            throw new Error(result.data.description || result.data.message || 'Unable to add to cart');
+          }
+
+          if (result.data.sections && result.data.sections['cart-icon-bubble']) {
+            var bubble = document.getElementById('cart-icon-bubble');
+            if (bubble) bubble.innerHTML = result.data.sections['cart-icon-bubble'];
+          }
+
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+
+          btn.classList.remove('is-loading');
+          btn.classList.add('is-added');
+          btn.textContent = addedLabel;
+
+          setTimeout(function () {
+            btn.textContent = addLabel;
+            btn.classList.remove('is-added');
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+          }, 1600);
+        })
+        .catch(function () {
+          btn.textContent = addLabel;
+          btn.classList.remove('is-loading', 'is-added');
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+        });
+    });
+  })();
+</script>

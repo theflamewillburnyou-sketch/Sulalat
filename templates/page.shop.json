@@ -35,7 +35,7 @@
           "settings": {
             "image": "shopify://shop_images/1ed1631ca9f93eb152bd453db3a1382d5438a60c.png",
             "title": "Specialty Coffee",
-            "link": ""
+            "link": "/collections/able?view=product-category-collection"
           }
         },
         "category_chocolate": {
@@ -43,7 +43,7 @@
           "settings": {
             "image": "shopify://shop_images/3c32bacea465482c97a776289ff5b0658b498bf3_a45960ee-d11f-4531-b52c-60962eec458c.png",
             "title": "Craft Chocolate",
-            "link": ""
+            "link": "/collections/acaia?view=product-category-collection"
           }
         },
         "category_capsules": {
@@ -51,7 +51,7 @@
           "settings": {
             "image": "shopify://shop_images/category-3.png",
             "title": "Artisan Gelato",
-            "link": ""
+            "link": "/collections/brewing-tools-coffee-accessories?view=product-category-collection"
           }
         },
         "category_brewing": {
@@ -59,7 +59,7 @@
           "settings": {
             "image": "shopify://shop_images/category-4.png",
             "title": "Tools & Equipment",
-            "link": ""
+            "link": "/collections/brewing-tools?view=product-category-collection"
           }
         },
         "category_spare": {
@@ -67,7 +67,7 @@
           "settings": {
             "image": "shopify://shop_images/4ccf726f89ed8abc65b03363f0be91cf3519b7fd.png",
             "title": "Spare Essentials",
-            "link": ""
+            "link": "/collections/spare-parts?view=product-category-collection"
           }
         }
       },
@@ -95,13 +95,13 @@
         "banner_image": "shopify://shop_images/503f4c4106f4976812b99f3f15ff5a4db46bc773.jpg",
         "banner_heading": "Specialty Coffee",
         "banner_button_label": "Explore Coffee Crops",
-        "banner_button_link": "",
+        "banner_button_link": "/collections/able?view=product-category-collection",
         "banner_overlay": "#00000000",
         "banner_height": 615,
         "banner_height_mobile": 240,
         "heading": "Our Coffee Portfolio",
         "view_products_label": "View All Products",
-        "view_products_link": "",
+        "view_products_link": "/collections/able?view=product-category-collection",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",
         "padding_top": 0,
@@ -118,13 +118,13 @@
         "banner_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b_1.jpg",
         "banner_heading": "Equipment for Cafés & Roasteries ",
         "banner_button_label": "Explore Equipment",
-        "banner_button_link": "",
+        "banner_button_link": "/collections/brewing-tools?view=product-category-collection",
         "banner_overlay": "#00000066",
         "banner_height": 615,
         "banner_height_mobile": 240,
         "heading": "Professional Tools & Equipment",
         "view_products_label": "View All Tools",
-        "view_products_link": "",
+        "view_products_link": "/collections/brewing-tools?view=product-category-collection",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",
         "padding_top": 0,
@@ -141,13 +141,13 @@
         "banner_image": "shopify://shop_images/288fafea62090ec19723df6084eb918683136c13.jpg",
         "banner_heading": "Service & Replacement Parts",
         "banner_button_label": "Explore Spare Parts",
-        "banner_button_link": "",
+        "banner_button_link": "/collections/spare-parts?view=product-category-collection",
         "banner_overlay": "#00000066",
         "banner_height": 615,
         "banner_height_mobile": 240,
         "heading": "Find Spare Essentials",
         "view_products_label": "View Spare Parts",
-        "view_products_link": "",
+        "view_products_link": "/collections/spare-parts?view=product-category-collection",
         "empty_text": "Select a collection to show products here.",
         "background_color": "#ffffff",
         "padding_top": 0,
