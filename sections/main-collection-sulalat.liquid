@@ -315,14 +315,36 @@
     }
 
     .sulalat-btn--outline {
-      background: #fff;
+      background: rgb(83 194 149 / 10%);
       border: 1px solid var(--brand-primary, #53c295);
       color: var(--brand-primary, #53c295);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .sulalat-btn--outline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 100%;
+      background: #fff;
+      transition: width 0.5s ease-in-out;
+      z-index: -1;
+    }
+
+    .sulalat-btn--outline:hover::before {
+      right: auto;
+      left: 0;
+      width: 100%;
     }
 
     .sulalat-btn--outline:hover {
-      background: var(--brand-primary, #53c295);
-      color: #fff;
+      color: var(--brand-primary, #53c295);
+      background: rgb(83 194 149 / 10%);
     }
 
     .sulalat-btn.is-disabled {

@@ -26,7 +26,15 @@
   if short_mf == blank
     assign short_mf = product.metafields.descriptors.subtitle
   endif
-  assign short_desc = short_mf.value | default: short_mf | strip_html | strip
+
+  assign short_desc = ''
+  if short_mf != blank
+    if short_mf.type == 'rich_text_field'
+      assign short_desc = short_mf | metafield_text | strip
+    else
+      assign short_desc = short_mf.value | default: short_mf | strip_html | strip
+    endif
+  endif
   if short_desc == blank and product.description != blank
     assign short_desc = product.description | strip_html | truncate: 80
   endif
