@@ -55,6 +55,8 @@
       width: min(120px, 12vw);
       z-index: 2;
       pointer-events: none;
+      opacity:0;
+      visibility:hidden;
     }
 
     .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__track::before {
@@ -85,9 +87,9 @@
 
     .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__media {
       display: block;
-      border-radius: var(--brand-radius-lg, 20px);
+      border-radius: 12px;
       overflow: hidden;
-      aspect-ratio: 16 / 6;
+      aspect-ratio: 16 / 7;
       background: #f3f3f3;
     }
 
@@ -203,6 +205,17 @@
         height: 44px;
       }
     }
+
+    @media (max-width: 575px){
+      .experience-sulalat-gallery[data-section-id="{{ section.id }}"] .experience-sulalat-gallery__heading {
+        text-align:left;
+      }
+    
+    }
+
+
+
+
   </style>
 
   <div class="container">

@@ -20,7 +20,7 @@
         "primary_button_link": "",
         "secondary_button_label": "Explore the Space",
         "secondary_button_link": "",
-        "min_height": 720,
+        "min_height": 900,
         "min_height_mobile": 520,
         "padding_top": 140,
         "padding_bottom": 100,
@@ -141,7 +141,7 @@
         "padding_top": 0,
         "padding_bottom": 100,
         "slide_gap": 24,
-        "slide_width": 78
+        "slide_width": 60
       }
     },
     "experience_sulalat_offering_XnEtNn": {

@@ -961,9 +961,9 @@
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-panel {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: min(620px, calc(100vh - 80px));
+      {% comment %} min-height: min(620px, calc(100vh - 80px)); {% endcomment %}
       max-height: min(720px, calc(100vh - 64px));
-      border-radius: 28px;
+      border-radius: 20px;
       overflow: hidden;
       background: #eefaf5;
     }
@@ -972,18 +972,18 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 32px;
-      padding: clamp(32px, 4vw, 56px);
+      gap: 28px;
+      padding: clamp(32px, 3vw, 40px);
       background: #eefaf5;
       overflow: auto;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-content h3 {
-      margin: 0 0 8px;
+      margin: 0 0 20px;
       color: #141211;
-      font-size: clamp(28px, 3vw, 40px);
+      font-size: clamp(24px, 2vw, 36px);
       line-height: 1.15;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-content [data-popup-role] {
@@ -1002,6 +1002,7 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-bio p {
       margin: 0 0 1em;
+      color: #535353;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-bio p:last-child {
@@ -1074,6 +1075,25 @@
         max-height: inherit;
       }
     }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+  .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+  }
+
+  .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-dialog {
+    width: min(720px, 100%);
+    max-height: calc(100dvh - 48px);
+    margin: 0;
+  }
+
+  .about-tabs[data-section-id="{{ section.id }}"] .leadership-popup-panel {
+    max-height: calc(100dvh - 48px);
+  }
+}
 
     .about-tabs[data-section-id="{{ section.id }}"] .team-slider-footer {
       display: flex;
@@ -1523,6 +1543,10 @@
       transform: rotate(45deg);
     }
 
+    .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-sep:has( + .careers-breadcrumb-current) {
+      color: #53c295;
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-current {
       color: var(--brand-primary, #53c295);
       font-weight: 500;
@@ -1530,8 +1554,8 @@
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-home svg {
       display: block;
-      width: 18px;
-      height: 18px;
+      width: 23px;
+      height: 20px;
     }
 
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-home svg path{
@@ -1800,6 +1824,16 @@
     .about-tabs[data-section-id="{{ section.id }}"] .timeline-content-slider .swiper-slide {
       min-height: 355px;
     }
+
+    .about-tabs[data-section-id="{{ section.id }}"] .who-we-are,
+      .about-tabs[data-section-id="{{ section.id }}"] .vision-mission,
+      .about-tabs[data-section-id="{{ section.id }}"] .certificates,
+      .about-tabs[data-section-id="{{ section.id }}"] .social-responsibility,
+      .about-tabs[data-section-id="{{ section.id }}"] .leadership-team,
+      .about-tabs[data-section-id="{{ section.id }}"] .partners-section,
+      .about-tabs[data-section-id="{{ section.id }}"] .careers-section {
+        padding: 70px 0;
+    }
      
     }
 
@@ -1921,6 +1955,10 @@
         width: 20px;
         height: 20px;
       }
+      .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow {
+        grid-column: 2;
+        justify-self: end;
+      }
     }
 
     @media (max-width: 767px) {
@@ -2015,11 +2053,6 @@
 
       .about-tabs[data-section-id="{{ section.id }}"] .career-card {
         grid-template-columns: auto 1fr;
-      }
-
-      .about-tabs[data-section-id="{{ section.id }}"] .career-card-arrow {
-        grid-column: 2;
-        justify-self: end;
       }
 
       .about-tabs[data-section-id="{{ section.id }}"] .career-card-text {
@@ -3006,9 +3039,9 @@
             <div class="careers-detail" data-careers-detail>
               <nav class="careers-breadcrumb" aria-label="Breadcrumb">
                 <a class="careers-breadcrumb-home" href="{{ routes.root_url }}" aria-label="Home">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-                    <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
-                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none">
+<path d="M12.0095 0.164212C11.873 0.0577932 11.7049 0 11.5318 0C11.3587 0 11.1906 0.0577932 11.0541 0.164212L0 8.78362L0.956173 9.99287L2.30774 8.93901V18.4615C2.30855 18.8693 2.4709 19.2601 2.75925 19.5485C3.0476 19.8368 3.43845 19.9992 3.84623 20H19.2312C19.6389 19.9992 20.0298 19.8368 20.3181 19.5485C20.6065 19.2601 20.7688 18.8693 20.7697 18.4615V8.94593L22.1212 9.9998L23.0774 8.79054L12.0095 0.164212ZM13.0772 18.4615H10.0002V12.3075H13.0772V18.4615ZM14.6157 18.4615V12.3075C14.6157 11.8995 14.4536 11.5082 14.1651 11.2197C13.8765 10.9311 13.4852 10.769 13.0772 10.769H10.0002C9.59217 10.769 9.20085 10.9311 8.91233 11.2197C8.6238 11.5082 8.46171 11.8995 8.46171 12.3075V18.4615H3.84623V7.73975L11.5387 1.74732L19.2312 7.74744V18.4615H14.6157Z" fill="#797979"/>
+</svg>
                 </a>
                 <span class="careers-breadcrumb-sep" aria-hidden="true"></span>
                 <button type="button" data-careers-back>

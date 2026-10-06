@@ -72,6 +72,7 @@
         width: 100%;
         max-width: 214px;
         padding: 11px 20px;
+        font-weight: 500;
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .shop-category-products__header {
@@ -115,21 +116,21 @@
       overflow: hidden;
       aspect-ratio: 4 / 5;
       text-decoration: none;
-      background: #53c295;
+      {% comment %} background: #53c295; {% endcomment %}
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-product-card--magenta .sulalat-product-card__media {
-      background: #c44d8a;
+      {% comment %} background: #c44d8a; {% endcomment %}
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-product-card--beige .sulalat-product-card__media {
-      background: #cbb79a;
+      {% comment %} background: #cbb79a; {% endcomment %}
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-product-card__image {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      {% comment %} object-fit: cover; {% endcomment %}
       display: block;
     }
 
@@ -240,6 +241,7 @@
       box-sizing: border-box;
       border-radius: 999px;
       border: 1px solid;
+      font-weight: 500;
     }
 
     .shop-category-products[data-section-id="{{ section.id }}"] .sulalat-btn--outline::before {
