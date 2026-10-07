@@ -15,7 +15,7 @@
   endif
 -%}
 
-{%- if use_metafields or section.blocks.size > 0 or request.design_mode -%}
+{%- if use_metafields or request.design_mode or section.settings.image_1 != blank or section.settings.image_2 != blank or section.settings.video_1_poster != blank or section.settings.video_2_poster != blank or section.settings.video_1 != blank or section.settings.video_2 != blank or section.settings.video_1_url != blank or section.settings.video_2_url != blank -%}
 <section
   class="sulalat-prep"
   data-section-id="{{ section.id }}"
@@ -470,88 +470,58 @@
       </div>
     {%- endif -%}
 
-    {%- if use_metafields -%}
-      <div class="sulalat-prep__grid">
-        {%- if prep_is_list -%}
-          {%- for item in prep_items -%}
-            {% render 'sulalat-prep-item', item: item, index: forloop.index, heading: prep_heading %}
-          {%- endfor -%}
-        {%- else -%}
-          {% render 'sulalat-prep-item', item: prep_items, index: 1, heading: prep_heading %}
-        {%- endif -%}
-      </div>
-    {%- elsif section.blocks.size > 0 -%}
-      <div class="sulalat-prep__grid">
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign pos_class = 'sulalat-prep__item--pos-n'
+    {%- liquid
+      # Exactly 4 slots: image, video, video, image
+      assign slot_1_image = section.settings.image_1
+      assign slot_2_image = section.settings.video_1_poster
+      assign slot_2_video = section.settings.video_1
+      assign slot_2_url = section.settings.video_1_url
+      assign slot_3_image = section.settings.video_2_poster
+      assign slot_3_video = section.settings.video_2
+      assign slot_3_url = section.settings.video_2_url
+      assign slot_4_image = section.settings.image_2
+
+      if use_metafields
+        if prep_is_list
+          for item in prep_items
+            assign mo_image = item.image.value | default: item.image
+            assign mo_video = item.video.value | default: item.video
+            assign mo_url = item.video_url.value | default: item.video_url
             if forloop.index == 1
-              assign pos_class = 'sulalat-prep__item--pos-1'
+              assign slot_1_image = mo_image
             elsif forloop.index == 2
-              assign pos_class = 'sulalat-prep__item--pos-2'
+              assign slot_2_image = mo_image
+              assign slot_2_video = mo_video
+              assign slot_2_url = mo_url
             elsif forloop.index == 3
-              assign pos_class = 'sulalat-prep__item--pos-3'
+              assign slot_3_image = mo_image
+              assign slot_3_video = mo_video
+              assign slot_3_url = mo_url
             elsif forloop.index == 4
-              assign pos_class = 'sulalat-prep__item--pos-4'
+              assign slot_4_image = mo_image
             endif
-            assign item_class = 'sulalat-prep__item ' | append: pos_class
-            assign is_video = false
-            if block.settings.video != blank or block.settings.video_url != blank
-              assign is_video = true
-            endif
-            assign item_href = block.settings.link
-            if item_href == blank and block.settings.video_url != blank
-              assign item_href = block.settings.video_url
-            endif
-            assign show_play = block.settings.show_play
-            if is_video
-              assign show_play = true
-            endif
-          -%}
+          endfor
+        else
+          assign slot_1_image = prep_items.image.value | default: prep_items.image | default: slot_1_image
+        endif
+      endif
 
-          {%- if item_href != blank -%}
-            <a class="{{ item_class }}" href="{{ item_href }}" {% if is_video %}target="_blank" rel="noopener"{% endif %} {{ block.shopify_attributes }}>
-          {%- else -%}
-            <div class="{{ item_class }}" {{ block.shopify_attributes }}>
-          {%- endif -%}
+      assign has_slots = false
+      if slot_1_image != blank or slot_2_image != blank or slot_2_video != blank or slot_2_url != blank or slot_3_image != blank or slot_3_video != blank or slot_3_url != blank or slot_4_image != blank
+        assign has_slots = true
+      endif
+    -%}
 
-            {%- if block.settings.video != blank -%}
-              {{ block.settings.video | video_tag: autoplay: false, loop: false, muted: true, controls: false, image_size: '1200x' }}
-            {%- elsif block.settings.image != blank -%}
-              {%- assign prep_alt = block.settings.image.alt | default: block.settings.label | default: prep_heading -%}
-              {{
-                block.settings.image
-                | image_url: width: 1400
-                | image_tag:
-                  loading: 'lazy',
-                  widths: '480, 720, 960, 1200, 1400',
-                  sizes: '(min-width: 992px) 40vw, 100vw',
-                  alt: prep_alt
-              }}
-            {%- else -%}
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-            {%- endif -%}
-
-            {%- if show_play -%}
-              <span class="sulalat-prep__play" aria-hidden="true">
-                <span>
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M8 5v14l11-7L8 5z"/>
-                  </svg>
-                </span>
-              </span>
-            {%- endif -%}
-
-          {%- if item_href != blank -%}
-            </a>
-          {%- else -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+    {%- if has_slots or request.design_mode -%}
+      <div class="sulalat-prep__grid">
+        {% render 'sulalat-prep-item', mode: 'image', index: 1, image: slot_1_image, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: 'video', index: 2, image: slot_2_image, video: slot_2_video, video_url: slot_2_url, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: 'video', index: 3, image: slot_3_image, video: slot_3_video, video_url: slot_3_url, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: 'image', index: 4, image: slot_4_image, heading: prep_heading %}
       </div>
     {%- elsif request.design_mode -%}
       <p class="sulalat-prep__empty">
-        Add product metafield <strong>custom.coffee_preparation</strong> (list of Coffee preparation item metaobjects), or use section blocks as fallback.
+        Add product metafield <strong>custom.coffee_preparation</strong> (4 items: image, video, video, image), or set the 4 slots below.
       </p>
     {%- endif -%}
   </div>
@@ -566,14 +536,76 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Reads product metafields custom.coffee_preparation (list of metaobjects) and optional custom.coffee_preparation_heading. Section blocks are used only as fallback."
+      "content": "Exactly 4 slots: Image 1, Video 1, Video 2, Image 2. Product metafield custom.coffee_preparation (list of coffee_preparation_item) overrides these when set. Video slots need a poster image plus a Shopify video or video link."
     },
     {
       "type": "text",
       "id": "heading",
-      "label": "Fallback heading",
+      "label": "Heading",
       "default": "Coffee Preparation",
       "info": "Used when custom.coffee_preparation_heading is empty."
+    },
+    {
+      "type": "header",
+      "content": "Image 1 (top left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Video 1 (top right)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_1_poster",
+      "label": "Poster image"
+    },
+    {
+      "type": "video",
+      "id": "video_1",
+      "label": "Shopify video"
+    },
+    {
+      "type": "url",
+      "id": "video_1_url",
+      "label": "Video link",
+      "info": "Use this if you are not using a Shopify-hosted video."
+    },
+    {
+      "type": "header",
+      "content": "Video 2 (bottom left)"
+    },
+    {
+      "type": "image_picker",
+      "id": "video_2_poster",
+      "label": "Poster image"
+    },
+    {
+      "type": "video",
+      "id": "video_2",
+      "label": "Shopify video"
+    },
+    {
+      "type": "url",
+      "id": "video_2_url",
+      "label": "Video link",
+      "info": "Use this if you are not using a Shopify-hosted video."
+    },
+    {
+      "type": "header",
+      "content": "Image 2 (bottom right)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Style"
     },
     {
       "type": "color",
@@ -626,45 +658,6 @@
       "unit": "px",
       "label": "Padding bottom (mobile)",
       "default": 48
-    }
-  ],
-  "blocks": [
-    {
-      "type": "media",
-      "name": "Fallback media",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image"
-        },
-        {
-          "type": "video",
-          "id": "video",
-          "label": "Shopify-hosted video"
-        },
-        {
-          "type": "url",
-          "id": "video_url",
-          "label": "External video URL"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_play",
-          "label": "Show play icon",
-          "default": false
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Link"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Accessibility label"
-        }
-      ]
     }
   ],
   "presets": [

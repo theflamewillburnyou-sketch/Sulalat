@@ -158,50 +158,6 @@
     },
     "coffee_preparation": {
       "type": "product-coffee-preparation",
-      "blocks": {
-        "prep_1": {
-          "type": "media",
-          "settings": {
-            "video_url": "",
-            "show_play": false,
-            "link": "",
-            "label": ""
-          }
-        },
-        "prep_2": {
-          "type": "media",
-          "settings": {
-            "video_url": "",
-            "show_play": true,
-            "link": "",
-            "label": ""
-          }
-        },
-        "prep_3": {
-          "type": "media",
-          "settings": {
-            "video_url": "",
-            "show_play": true,
-            "link": "",
-            "label": ""
-          }
-        },
-        "prep_4": {
-          "type": "media",
-          "settings": {
-            "video_url": "",
-            "show_play": false,
-            "link": "",
-            "label": ""
-          }
-        }
-      },
-      "block_order": [
-        "prep_1",
-        "prep_2",
-        "prep_3",
-        "prep_4"
-      ],
       "settings": {
         "heading": "Coffee Preparation",
         "background_color": "#ffffff",
