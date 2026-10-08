@@ -55,6 +55,10 @@
       top: 170px;
     }
 
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery--single {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumbs {
       display: flex;
       flex-direction: column;
@@ -449,9 +453,11 @@
       background: color-mix(in srgb, var(--sulalat-pdp-accent, #53c295) 8%, white);
     } {% endcomment %}
 
-    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn:disabled {
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn:disabled,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__btn.is-disabled {
       opacity: 0.45;
       cursor: not-allowed;
+      pointer-events: none;
     }
 
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe {
@@ -661,6 +667,10 @@
         top:0;
       }
 
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery--single {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main {
         aspect-ratio: 1;
       }
@@ -696,8 +706,8 @@
   <div class="container">
     <div class="sulalat-pdp__layout">
       {%- comment -%} Gallery {%- endcomment -%}
-      <div class="sulalat-pdp__gallery" data-sulalat-gallery>
-        {% if media_list.size > 1 %}
+      <div class="sulalat-pdp__gallery{% if media_list.size == 0 %} sulalat-pdp__gallery--single{% endif %}" data-sulalat-gallery>
+        {% if media_list.size > 0 %}
           <div class="sulalat-pdp__thumbs" role="tablist" aria-label="Product images">
             {% for media in media_list %}
               <button
@@ -997,11 +1007,21 @@
                   {% if block.settings.label != blank %}
                     <div class="sulalat-pdp__block sulalat-pdp__subscribe" {{ block.shopify_attributes }}>
                       {% if block.settings.link != blank %}
-                        <a class="sulalat-pdp__btn primary-btn" href="{{ block.settings.link }}">
+                        <a
+                          class="sulalat-pdp__btn primary-btn"
+                          href="{{ block.settings.link }}"
+                          data-subscribe-btn
+                          {% unless current_variant.available %}aria-disabled="true" tabindex="-1"{% endunless %}
+                        >
                           {{ block.settings.label | escape }}
                         </a>
                       {% else %}
-                        <button type="button" class="sulalat-pdp__btn primary-btn" data-subscribe-btn>
+                        <button
+                          type="button"
+                          class="sulalat-pdp__btn primary-btn"
+                          data-subscribe-btn
+                          {% unless current_variant.available %}disabled{% endunless %}
+                        >
                           {{ block.settings.label | escape }}
                         </button>
                       {% endif %}
@@ -1216,6 +1236,7 @@
       var bnplParts = bnplWrap ? parseInt(bnplWrap.getAttribute('data-installments'), 10) || 4 : 4;
       var addBtn = root.querySelector('[name="add"]');
       var buyNowBtn = root.querySelector('[data-buy-now]');
+      var subscribeBtn = root.querySelector('[data-subscribe-btn]');
       var gallerySliderEl = root.querySelector('[data-sulalat-gallery-slider]');
       var gallerySwiper = null;
       var galleryIndex = 0;
@@ -1315,6 +1336,21 @@
             : 'Sold out';
         }
         if (buyNowBtn) buyNowBtn.disabled = !variant.available;
+        if (subscribeBtn) {
+          if (subscribeBtn.tagName === 'A') {
+            if (variant.available) {
+              subscribeBtn.removeAttribute('aria-disabled');
+              subscribeBtn.removeAttribute('tabindex');
+              subscribeBtn.classList.remove('is-disabled');
+            } else {
+              subscribeBtn.setAttribute('aria-disabled', 'true');
+              subscribeBtn.setAttribute('tabindex', '-1');
+              subscribeBtn.classList.add('is-disabled');
+            }
+          } else {
+            subscribeBtn.disabled = !variant.available;
+          }
+        }
         showVariantMedia(variant);
         if (window.history && window.history.replaceState) {
           var url = new URL(window.location.href);
@@ -1533,9 +1569,12 @@
         }, true);
       }
 
-      var subscribeBtn = root.querySelector('[data-subscribe-btn]');
       if (subscribeBtn) {
-        subscribeBtn.addEventListener('click', function () {
+        subscribeBtn.addEventListener('click', function (event) {
+          if (subscribeBtn.disabled || subscribeBtn.getAttribute('aria-disabled') === 'true') {
+            event.preventDefault();
+            return;
+          }
           subscribeIntent = true;
           setSellingPlanValue(getSelectedDeliveryPlanId());
           var target = root.querySelector('[name="add"]');

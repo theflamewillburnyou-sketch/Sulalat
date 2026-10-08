@@ -199,6 +199,8 @@
 
   .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item img,
   .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item video,
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item iframe,
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item .sulalat-prep__embed,
   .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item svg.placeholder-svg {
     position: absolute;
     inset: 0;
@@ -209,6 +211,29 @@
     height: 100%;
 
     object-fit: cover;
+    border: 0;
+  }
+
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__media-video,
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__embed {
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item.is-playing .sulalat-prep__poster {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item.is-playing .sulalat-prep__media-video,
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item.is-playing .sulalat-prep__embed {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__item.is-playing .sulalat-prep__play {
+    display: none;
   }
 
 
@@ -219,14 +244,22 @@
   .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play {
     position: absolute;
     inset: 0;
+    z-index: 2;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    margin: 0;
+    padding: 0;
+    border: 0;
     background: rgba(0, 0, 0, 0.22);
+    cursor: pointer;
+  }
 
-    pointer-events: none;
+  .sulalat-prep[data-section-id="{{ section.id }}"] .sulalat-prep__play:focus-visible {
+    outline: 2px solid {{ section.settings.accent_color }};
+    outline-offset: -4px;
   }
 
 
@@ -471,8 +504,10 @@
     {%- endif -%}
 
     {%- liquid
-      # Exactly 4 slots: image, video, video, image
+      # 4 slots: image only, or video mode when video / video_url is present (image = poster).
       assign slot_1_image = section.settings.image_1
+      assign slot_1_video = blank
+      assign slot_1_url = blank
       assign slot_2_image = section.settings.video_1_poster
       assign slot_2_video = section.settings.video_1
       assign slot_2_url = section.settings.video_1_url
@@ -480,6 +515,8 @@
       assign slot_3_video = section.settings.video_2
       assign slot_3_url = section.settings.video_2_url
       assign slot_4_image = section.settings.image_2
+      assign slot_4_video = blank
+      assign slot_4_url = blank
 
       if use_metafields
         if prep_is_list
@@ -489,6 +526,8 @@
             assign mo_url = item.video_url.value | default: item.video_url
             if forloop.index == 1
               assign slot_1_image = mo_image
+              assign slot_1_video = mo_video
+              assign slot_1_url = mo_url
             elsif forloop.index == 2
               assign slot_2_image = mo_image
               assign slot_2_video = mo_video
@@ -499,33 +538,104 @@
               assign slot_3_url = mo_url
             elsif forloop.index == 4
               assign slot_4_image = mo_image
+              assign slot_4_video = mo_video
+              assign slot_4_url = mo_url
             endif
           endfor
         else
           assign slot_1_image = prep_items.image.value | default: prep_items.image | default: slot_1_image
+          assign slot_1_video = prep_items.video.value | default: prep_items.video
+          assign slot_1_url = prep_items.video_url.value | default: prep_items.video_url
         endif
       endif
 
+      assign slot_1_mode = 'image'
+      if slot_1_video != blank or slot_1_url != blank
+        assign slot_1_mode = 'video'
+      endif
+      assign slot_2_mode = 'image'
+      if slot_2_video != blank or slot_2_url != blank
+        assign slot_2_mode = 'video'
+      endif
+      assign slot_3_mode = 'image'
+      if slot_3_video != blank or slot_3_url != blank
+        assign slot_3_mode = 'video'
+      endif
+      assign slot_4_mode = 'image'
+      if slot_4_video != blank or slot_4_url != blank
+        assign slot_4_mode = 'video'
+      endif
+
       assign has_slots = false
-      if slot_1_image != blank or slot_2_image != blank or slot_2_video != blank or slot_2_url != blank or slot_3_image != blank or slot_3_video != blank or slot_3_url != blank or slot_4_image != blank
+      if slot_1_image != blank or slot_1_video != blank or slot_1_url != blank or slot_2_image != blank or slot_2_video != blank or slot_2_url != blank or slot_3_image != blank or slot_3_video != blank or slot_3_url != blank or slot_4_image != blank or slot_4_video != blank or slot_4_url != blank
         assign has_slots = true
       endif
     -%}
 
     {%- if has_slots or request.design_mode -%}
       <div class="sulalat-prep__grid">
-        {% render 'sulalat-prep-item', mode: 'image', index: 1, image: slot_1_image, heading: prep_heading %}
-        {% render 'sulalat-prep-item', mode: 'video', index: 2, image: slot_2_image, video: slot_2_video, video_url: slot_2_url, heading: prep_heading %}
-        {% render 'sulalat-prep-item', mode: 'video', index: 3, image: slot_3_image, video: slot_3_video, video_url: slot_3_url, heading: prep_heading %}
-        {% render 'sulalat-prep-item', mode: 'image', index: 4, image: slot_4_image, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: slot_1_mode, index: 1, image: slot_1_image, video: slot_1_video, video_url: slot_1_url, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: slot_2_mode, index: 2, image: slot_2_image, video: slot_2_video, video_url: slot_2_url, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: slot_3_mode, index: 3, image: slot_3_image, video: slot_3_video, video_url: slot_3_url, heading: prep_heading %}
+        {% render 'sulalat-prep-item', mode: slot_4_mode, index: 4, image: slot_4_image, video: slot_4_video, video_url: slot_4_url, heading: prep_heading %}
       </div>
     {%- elsif request.design_mode -%}
       <p class="sulalat-prep__empty">
-        Add product metafield <strong>custom.coffee_preparation</strong> (4 items: image, video, video, image), or set the 4 slots below.
+        Add product metafield <strong>custom.coffee_preparation</strong> (up to 4 items: image required; optional video / video_url uses image as poster), or set the slots below.
       </p>
     {%- endif -%}
   </div>
 </section>
+
+<script>
+  (function () {
+    var root = document.querySelector('.sulalat-prep[data-section-id="{{ section.id }}"]');
+    if (!root) return;
+
+    function playItem(item) {
+      if (!item || item.classList.contains('is-playing')) return;
+      item.classList.add('is-playing');
+
+      var video = item.querySelector('.sulalat-prep__media-video');
+      if (video) {
+        video.controls = true;
+        var playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') {
+          playPromise.catch(function () {});
+        }
+        return;
+      }
+
+      var embed = item.querySelector('.sulalat-prep__embed[data-embed-type]');
+      if (!embed || embed.querySelector('iframe')) return;
+
+      var type = embed.getAttribute('data-embed-type');
+      var id = embed.getAttribute('data-embed-id');
+      if (!type || !id) return;
+
+      var iframe = document.createElement('iframe');
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+      iframe.setAttribute('title', 'Coffee preparation video');
+      if (type === 'youtube') {
+        iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(id) + '?autoplay=1&rel=0';
+      } else if (type === 'vimeo') {
+        iframe.src = 'https://player.vimeo.com/video/' + encodeURIComponent(id) + '?autoplay=1';
+      } else {
+        return;
+      }
+      embed.hidden = false;
+      embed.appendChild(iframe);
+    }
+
+    root.addEventListener('click', function (event) {
+      var button = event.target.closest('.sulalat-prep__play');
+      if (!button || !root.contains(button)) return;
+      event.preventDefault();
+      playItem(button.closest('[data-prep-video]'));
+    });
+  })();
+</script>
 {%- endif -%}
 
 {% schema %}

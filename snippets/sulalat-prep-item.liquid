@@ -1,14 +1,14 @@
 {%- comment -%}
   Coffee Preparation item — only 2 modes:
   - image: image only
-  - video: poster image + Shopify video OR video link
+  - video: poster image + Shopify video OR video link (plays inline)
 
   Params:
   - mode: 'image' | 'video'
   - index: 1–4 (grid position)
   - image: poster / image
   - video: Shopify-hosted video (optional, video mode)
-  - video_url: external video URL (optional, video mode)
+  - video_url: external / CDN video URL (optional, video mode)
   - heading: alt fallback
 {%- endcomment -%}
 {%- liquid
@@ -34,54 +34,103 @@
     assign item_image = video.preview_image
   endif
 
-  assign item_href = blank
-  if is_video_mode and video_url != blank
-    assign item_href = video_url
-  endif
-
   assign prep_alt = item_image.alt | default: heading | default: 'Coffee preparation'
   assign has_content = false
-  if item_image != blank or video != blank
+  if item_image != blank or video != blank or video_url != blank
     assign has_content = true
+  endif
+
+  assign external_url = video_url | strip
+  assign is_youtube = false
+  assign is_vimeo = false
+  assign is_direct_video = false
+  assign youtube_id = blank
+  assign vimeo_id = blank
+
+  if is_video_mode and external_url != blank
+    if external_url contains 'youtube.com' or external_url contains 'youtu.be'
+      assign is_youtube = true
+      if external_url contains 'youtu.be/'
+        assign youtube_id = external_url | split: 'youtu.be/' | last | split: '?' | first | split: '/' | first
+      elsif external_url contains 'v='
+        assign youtube_id = external_url | split: 'v=' | last | split: '&' | first
+      elsif external_url contains '/embed/'
+        assign youtube_id = external_url | split: '/embed/' | last | split: '?' | first | split: '/' | first
+      endif
+    elsif external_url contains 'vimeo.com'
+      assign is_vimeo = true
+      assign vimeo_id = external_url | split: 'vimeo.com/' | last | split: '?' | first | split: '/' | last
+    elsif external_url contains '.mp4' or external_url contains '.webm' or external_url contains '.mov' or external_url contains 'cdn.shopify.com/videos'
+      assign is_direct_video = true
+    else
+      assign is_direct_video = true
+    endif
   endif
 -%}
 
 {%- if has_content or request.design_mode -%}
-  {%- if item_href != blank -%}
-    <a class="{{ item_class }}" href="{{ item_href }}" target="_blank" rel="noopener">
-  {%- else -%}
-    <div class="{{ item_class }}">
-  {%- endif -%}
-
+  <div
+    class="{{ item_class }}{% if is_video_mode %} sulalat-prep__item--video{% endif %}"
+    {% if is_video_mode %}data-prep-video{% endif %}
+  >
     {%- if item_image != blank -%}
       {{
         item_image
         | image_url: width: 1400
         | image_tag:
           loading: 'lazy',
+          class: 'sulalat-prep__poster',
           widths: '480, 720, 960, 1200, 1400',
           sizes: '(min-width: 992px) 40vw, 100vw',
           alt: prep_alt
       }}
-    {%- elsif is_video_mode and video != blank -%}
-      {{ video | video_tag: autoplay: false, loop: false, muted: true, controls: false, image_size: '1200x' }}
-    {%- else -%}
-      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {%- elsif request.design_mode -%}
+      {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg sulalat-prep__poster' }}
     {%- endif -%}
 
     {%- if is_video_mode -%}
-      <span class="sulalat-prep__play" aria-hidden="true">
+      {%- if video != blank -%}
+        {{
+          video
+          | video_tag:
+            class: 'sulalat-prep__media-video',
+            autoplay: false,
+            loop: false,
+            muted: false,
+            controls: true,
+            image_size: '1200x'
+        }}
+      {%- elsif is_direct_video -%}
+        <video
+          class="sulalat-prep__media-video"
+          src="{{ external_url | escape }}"
+          playsinline
+          preload="metadata"
+          controls
+        ></video>
+      {%- elsif is_youtube and youtube_id != blank -%}
+        <div
+          class="sulalat-prep__embed"
+          data-embed-type="youtube"
+          data-embed-id="{{ youtube_id | escape }}"
+          hidden
+        ></div>
+      {%- elsif is_vimeo and vimeo_id != blank -%}
+        <div
+          class="sulalat-prep__embed"
+          data-embed-type="vimeo"
+          data-embed-id="{{ vimeo_id | escape }}"
+          hidden
+        ></div>
+      {%- endif -%}
+
+      <button type="button" class="sulalat-prep__play" aria-label="Play video">
         <span>
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M8 5v14l11-7L8 5z"/>
           </svg>
         </span>
-      </span>
+      </button>
     {%- endif -%}
-
-  {%- if item_href != blank -%}
-    </a>
-  {%- else -%}
-    </div>
-  {%- endif -%}
+  </div>
 {%- endif -%}
