@@ -56,6 +56,7 @@
   <style>
     .sulalat-dashboard[data-section-id="{{ section.id }}"] {
       padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+      padding:100px 0;
       background: {{ section.settings.background_color }};
       font-family: var(--body-font-family);
       color: #1a1a1a;
@@ -527,7 +528,7 @@
     }
 
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__detail-grid > .sulalat-dashboard__detail-box {
-      min-height:219px;
+      min-height: calc(100% - 248px);
     }
 
     .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__detail-box {
@@ -1353,6 +1354,7 @@
     @media (max-width: 749px) {
       .sulalat-dashboard[data-section-id="{{ section.id }}"] {
         padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+        padding: 70px 0;
       }
 
       .sulalat-dashboard[data-section-id="{{ section.id }}"] .sulalat-dashboard__wishlist-grid {

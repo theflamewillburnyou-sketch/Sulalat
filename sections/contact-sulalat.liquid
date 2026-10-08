@@ -218,8 +218,8 @@
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__social-link svg {
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       display: block;
     }
 
@@ -257,7 +257,7 @@
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-body {
       position: relative;
       z-index: 2;
-      padding: 36px 32px;
+      padding: 45px;
       display: flex;
       flex-direction: column;
       gap: 22px;
@@ -275,9 +275,9 @@
     }
 
     .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__info svg {
-      flex: 0 0 22px;
-      width: 22px;
-      height: 22px;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
       margin-top: 2px;
     }
 
@@ -303,6 +303,9 @@
       .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card {
         min-height: 350px;
         order: -1;
+      }
+      .sulalat-contact[data-section-id="{{ section.id }}"] .sulalat-contact__card-body {
+        padding: 30px;
       }
     }
 
@@ -388,7 +391,7 @@
               class="input"
               type="text"
               name="contact[First name]"
-              placeholder="{{ 'contact_sulalat.form.first_name' | t }}"
+              placeholder="{{ 'contact_sulalat.form.first_name' | t | append: ' *' }}"
               required
               autocomplete="given-name"
             >
@@ -396,7 +399,7 @@
               class="input"
               type="email"
               name="contact[email]"
-              placeholder="{{ 'contact_sulalat.form.email' | t }}"
+              placeholder="{{ 'contact_sulalat.form.email' | t | append: ' *'}}"
               required
               autocomplete="email"
             >
@@ -407,7 +410,7 @@
               class="input"
               type="tel"
               name="contact[Contact number]"
-              placeholder="{{ 'contact_sulalat.form.contact' | t }}"
+              placeholder="{{ 'contact_sulalat.form.contact' | t | append: ' *'}}"
               required
               autocomplete="tel"
             >
@@ -415,7 +418,7 @@
               class="input"
               type="text"
               name="contact[City]"
-              placeholder="{{ 'contact_sulalat.form.city' | t }}"
+              placeholder="{{ 'contact_sulalat.form.city' | t | append: ' *'}}"
               required
               autocomplete="address-level2"
             >
