@@ -1,6 +1,5 @@
 {%- liquid
   assign active_item = active | default: 'dashboard'
-  assign level_value = customer_level | default: '2'
   assign nav_mode = mode | default: 'links'
 
   assign dash_url = dashboard_url | default: '/pages/dashboard'
@@ -16,6 +15,25 @@
   assign subs_url = subscriptions_url | default: '/pages/subscription'
   if pages.subscription != blank and subscriptions_url == blank
     assign subs_url = pages.subscription.url
+  endif
+
+  assign show_level = false
+  assign level_value = blank
+  if customer != blank
+    for tag in customer.tags
+      assign tag_lower = tag | strip | downcase
+      if tag_lower contains 'b2b-tier-'
+        assign tier_level = tag_lower | split: 'b2b-tier-' | last | strip
+        if tier_level != blank
+          assign show_level = true
+          assign level_num = tier_level | plus: 0
+          assign current_num = level_value | default: 0 | plus: 0
+          if level_value == blank or level_num > current_num
+            assign level_value = tier_level
+          endif
+        endif
+      endif
+    endfor
   endif
 -%}
 
@@ -244,8 +262,10 @@
     </ul>
   </nav>
 
-  <div class="sulalat-dashboard__level">
-    <p class="sulalat-dashboard__level-label">My Level</p>
-    <p class="sulalat-dashboard__level-value">{{ level_value | escape }}</p>
-  </div>
+  {%- if show_level -%}
+    <div class="sulalat-dashboard__level">
+      <p class="sulalat-dashboard__level-label">My Level</p>
+      <p class="sulalat-dashboard__level-value">{{ level_value | escape }}</p>
+    </div>
+  {%- endif -%}
 </div>
