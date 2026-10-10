@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "subscriptions_page": {
+      "type": "subscriptions-page",
+      "settings": {
+        "heading": "My Subscriptions",
+        "subscriptions_portal_url": "https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d",
+        "open_label": "Manage Subscriptions",
+        "redirect_text": "Manage your coffee subscriptions and delivery schedule.",
+        "dashboard_url": "/pages/dashboard",
+        "default_level": "2",
+        "background_color": "#ffffff",
+        "padding_top": 48,
+        "padding_bottom": 80,
+        "padding_top_mobile": 28,
+        "padding_bottom_mobile": 48
+      }
+    }
+  },
+  "order": [
+    "subscriptions_page"
+  ]
+}

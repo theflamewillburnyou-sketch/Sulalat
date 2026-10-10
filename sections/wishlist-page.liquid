@@ -12,7 +12,12 @@
     assign wishlist_url = pages.wishlist.url
   endif
 
-  assign subscriptions_url = section.settings.subscriptions_portal_url | default: 'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d'
+  assign subscriptions_url = '/pages/subscription'
+  if pages.subscription != blank
+    assign subscriptions_url = pages.subscription.url
+  elsif section.settings.subscriptions_portal_url != blank
+    assign subscriptions_url = section.settings.subscriptions_portal_url
+  endif
 -%}
 
 <section
@@ -26,6 +31,7 @@
     --wl-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
   "
 >
+  {{ 'account-sidebar.css' | asset_url | stylesheet_tag }}
   <div class="container sulalat-wishlist-page__container">
     <div class="sulalat-wishlist-page__layout" data-wishlist-layout>
       <div class="sulalat-wishlist-page__sidebar-slot" data-wishlist-sidebar-slot>
@@ -55,7 +61,7 @@
               <div class="section-title">
                 <h2>My Wishlist</h2>
               </div>
-              <div class="sulalat-wishlist-page__wishlist-actions">
+              <!-- <div class="sulalat-wishlist-page__wishlist-actions">
                 <button
                   type="button"
                   class="sulalat-wishlist-page__remove-all sulalat-btn--outline"
@@ -71,7 +77,7 @@
                 >
                   Add All To Cart
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -266,6 +272,20 @@
   background: #fff;
   font-family: var(--body-font-family);
   color: #1a1a1a;
+}
+
+/* Hide sidebar until lifted out of WishlistSuite reset (prevents giant SVG FOUC) */
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-wishlist-page__sidebar-slot {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-dashboard__link svg,
+.sulalat-wishlist-page[data-section-id="{{ section.id }}"] .sulalat-dashboard__link svg * {
+  width: 20px !important;
+  height: 20px !important;
+  max-width: 20px !important;
+  max-height: 20px !important;
 }
 
 .sulalat-wishlist-page[data-section-id="{{ section.id }}"] > .sulalat-wishlist-page__container {
@@ -678,43 +698,52 @@
   </style>
 
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  (function () {
     var page = document.querySelector(
       '.sulalat-wishlist-page[data-section-id="{{ section.id }}"]'
     );
     if (!page) return;
 
-    var sectionEl = page.closest('.shopify-section');
-    var sidebar = page.querySelector('[data-wishlist-sidebar-slot] .sulalat-dashboard__sidebar');
+    function liftSidebar() {
+      var sectionEl = page.closest('.shopify-section');
+      var sidebar = page.querySelector('[data-wishlist-sidebar-slot] .sulalat-dashboard__sidebar');
 
-    // Lift sidebar outside the WishlistSuite section so its reset cannot break layout.
-    if (sectionEl && sidebar && !document.querySelector('.sulalat-wishlist-account')) {
-      var padTop = getComputedStyle(page).getPropertyValue('--wl-pad-top').trim() || '48px';
-      var padBottom = getComputedStyle(page).getPropertyValue('--wl-pad-bottom').trim() || '80px';
-      var padTopM = getComputedStyle(page).getPropertyValue('--wl-pad-top-m').trim() || '28px';
-      var padBottomM = getComputedStyle(page).getPropertyValue('--wl-pad-bottom-m').trim() || '48px';
+      // Lift sidebar outside the WishlistSuite section so its reset cannot break layout.
+      if (sectionEl && sidebar && !document.querySelector('.sulalat-wishlist-account')) {
+        var padTop = getComputedStyle(page).getPropertyValue('--wl-pad-top').trim() || '48px';
+        var padBottom = getComputedStyle(page).getPropertyValue('--wl-pad-bottom').trim() || '80px';
+        var padTopM = getComputedStyle(page).getPropertyValue('--wl-pad-top-m').trim() || '28px';
+        var padBottomM = getComputedStyle(page).getPropertyValue('--wl-pad-bottom-m').trim() || '48px';
 
-      var shell = document.createElement('div');
-      shell.className = 'sulalat-wishlist-account';
-      shell.style.setProperty('--wl-pad-top', padTop);
-      shell.style.setProperty('--wl-pad-bottom', padBottom);
-      shell.style.setProperty('--wl-pad-top-m', padTopM);
-      shell.style.setProperty('--wl-pad-bottom-m', padBottomM);
+        var shell = document.createElement('div');
+        shell.className = 'sulalat-wishlist-account';
+        shell.style.setProperty('--wl-pad-top', padTop);
+        shell.style.setProperty('--wl-pad-bottom', padBottom);
+        shell.style.setProperty('--wl-pad-top-m', padTopM);
+        shell.style.setProperty('--wl-pad-bottom-m', padBottomM);
 
-      var container = document.createElement('div');
-      container.className = 'container';
+        var container = document.createElement('div');
+        container.className = 'container';
 
-      var layout = document.createElement('div');
-      layout.className = 'sulalat-wishlist-account__layout';
+        var layout = document.createElement('div');
+        layout.className = 'sulalat-wishlist-account__layout';
 
-      sectionEl.parentNode.insertBefore(shell, sectionEl);
-      shell.appendChild(container);
-      container.appendChild(layout);
-      layout.appendChild(sidebar);
-      layout.appendChild(sectionEl);
+        sectionEl.parentNode.insertBefore(shell, sectionEl);
+        shell.appendChild(container);
+        container.appendChild(layout);
+        layout.appendChild(sidebar);
+        layout.appendChild(sectionEl);
 
-      var slot = page.querySelector('[data-wishlist-sidebar-slot]');
-      if (slot) slot.remove();
+        var slot = page.querySelector('[data-wishlist-sidebar-slot]');
+        if (slot) slot.remove();
+      }
+    }
+
+    // Run ASAP to avoid unstyled sidebar flash; fallback if DOM not ready yet.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', liftSidebar);
+    } else {
+      liftSidebar();
     }
 
     function addPrimaryBtnClass() {
@@ -723,17 +752,23 @@
       });
     }
 
-    addPrimaryBtnClass();
-
-    var observer = new MutationObserver(function () {
+    function initActions() {
       addPrimaryBtnClass();
-    });
+      var observer = new MutationObserver(function () {
+        addPrimaryBtnClass();
+      });
+      observer.observe(page, {
+        childList: true,
+        subtree: true
+      });
+    }
 
-    observer.observe(page, {
-      childList: true,
-      subtree: true
-    });
-  });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initActions);
+    } else {
+      initActions();
+    }
+  })();
 </script>
 </section>
 

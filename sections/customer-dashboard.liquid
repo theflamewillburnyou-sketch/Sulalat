@@ -1478,7 +1478,12 @@
     <div class="sulalat-dashboard__layout">
       {%- liquid
         assign sidebar_wishlist_url = section.settings.wishlist_suite_url | default: '/pages/wishlist'
-        assign sidebar_subscriptions_url = section.settings.subscriptions_portal_url | default: 'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d'
+        assign sidebar_subscriptions_url = '/pages/subscription'
+        if pages.subscription != blank
+          assign sidebar_subscriptions_url = pages.subscription.url
+        elsif section.settings.subscriptions_portal_url != blank
+          assign sidebar_subscriptions_url = section.settings.subscriptions_portal_url
+        endif
       -%}
       {% render 'account-sidebar',
         active: 'dashboard',
@@ -1843,6 +1848,7 @@
           data-dashboard-panel="subscriptions"
           role="tabpanel"
           hidden
+          data-subscriptions-page-url="{% if pages.subscription != blank %}{{ pages.subscription.url | escape }}{% else %}/pages/subscription{% endif %}"
           data-subscriptions-portal-url="{{ section.settings.subscriptions_portal_url | default: 'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d' | escape }}"
         >
           <div class="sulalat-dashboard__wishlist-header">
@@ -1855,7 +1861,7 @@
             </p>
             <a
               class="sulalat-dashboard__wishlist-btn sulalat-dashboard__wishlist-btn--solid"
-              href="{{ section.settings.subscriptions_portal_url | default: 'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d' | escape }}"
+              href="{% if pages.subscription != blank %}{{ pages.subscription.url | escape }}{% else %}/pages/subscription{% endif %}"
               data-subscriptions-portal-link
             >
               {{ section.settings.subscriptions_open_label | default: 'Manage Subscriptions' | escape }}
@@ -2479,11 +2485,11 @@
 
       function getSubscriptionsPortalUrl() {
         var panel = root.querySelector('[data-dashboard-panel="subscriptions"]');
-        var link = root.querySelector('[data-subscriptions-portal-link]');
+        var link = root.querySelector('a[data-dashboard-tab="subscriptions"]');
         return (
-          (panel && panel.getAttribute('data-subscriptions-portal-url')) ||
           (link && link.getAttribute('href')) ||
-          'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d'
+          (panel && panel.getAttribute('data-subscriptions-page-url')) ||
+          '/pages/subscription'
         );
       }
 
@@ -2510,7 +2516,12 @@
 
       tabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
-          setTab(tab.getAttribute('data-dashboard-tab'));
+          var name = tab.getAttribute('data-dashboard-tab');
+          // Subscriptions: native link to Shopify Subscriptions manage portal
+          if (name === 'subscriptions' && tab.tagName === 'A' && tab.getAttribute('href')) {
+            return;
+          }
+          setTab(name);
         });
       });
 

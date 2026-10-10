@@ -1,0 +1,231 @@
+{%- liquid
+  assign heading = section.settings.heading | default: 'My Subscriptions'
+  assign portal_url = section.settings.subscriptions_portal_url | default: 'https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d'
+  assign customer_level = customer.metafields.custom.level.value | default: customer.metafields.custom.level | default: section.settings.default_level
+
+  assign dashboard_url = section.settings.dashboard_url | default: '/pages/dashboard'
+  if pages.dashboard != blank and section.settings.dashboard_url == blank
+    assign dashboard_url = pages.dashboard.url
+  endif
+
+  assign wishlist_url = '/pages/wishlist'
+  if pages.wishlist != blank
+    assign wishlist_url = pages.wishlist.url
+  endif
+
+  assign subscriptions_page_url = request.path | default: '/pages/subscription'
+  if pages.subscription != blank
+    assign subscriptions_page_url = pages.subscription.url
+  endif
+-%}
+
+{%- unless customer -%}
+  <script>
+    window.location.replace('/customer_authentication/login?return_to=' + encodeURIComponent({{ subscriptions_page_url | json }}));
+  </script>
+{%- endunless -%}
+
+<section
+  class="sulalat-subscriptions-page"
+  data-section-id="{{ section.id }}"
+  data-subscriptions-page
+  data-subscriptions-portal-url="{{ portal_url | escape }}"
+  style="
+    --sub-pad-top: {{ section.settings.padding_top }}px;
+    --sub-pad-bottom: {{ section.settings.padding_bottom }}px;
+    --sub-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sub-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sub-bg: {{ section.settings.background_color }};
+  "
+>
+  <style>
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] {
+      padding: var(--sub-pad-top) 0 var(--sub-pad-bottom);
+      background: var(--sub-bg);
+      font-family: var(--body-font-family);
+    }
+
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .container {
+      max-width: var(--brand-container-max, 1440px);
+      margin: 0 auto;
+      padding: 0 var(--brand-container-padding-x, 20px);
+    }
+
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .sulalat-subscriptions-page__layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 40px;
+      align-items: start;
+    }
+
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .sulalat-subscriptions-page__title {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: #141211;
+    }
+
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .sulalat-subscriptions-page__text {
+      margin: 0 0 24px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #535353;
+    }
+
+    .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .sulalat-subscriptions-page__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 36px;
+      border-radius: 999px;
+      background: var(--brand-primary, #53c295);
+      border: 1px solid var(--brand-primary, #53c295);
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    @media (max-width: 991px) {
+      .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] .sulalat-subscriptions-page__layout {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+    }
+
+    @media (max-width: 749px) {
+      .sulalat-subscriptions-page[data-section-id="{{ section.id }}"] {
+        padding: var(--sub-pad-top-m) 0 var(--sub-pad-bottom-m);
+      }
+    }
+  </style>
+
+  {{ 'account-sidebar.css' | asset_url | stylesheet_tag }}
+
+  <div class="container">
+    <div class="sulalat-subscriptions-page__layout">
+      {% render 'account-sidebar',
+        active: 'subscriptions',
+        mode: 'links',
+        customer_level: customer_level,
+        dashboard_url: dashboard_url,
+        wishlist_url: wishlist_url,
+        subscriptions_url: subscriptions_page_url
+      %}
+
+      <div class="sulalat-subscriptions-page__main">
+        <h1 class="sulalat-subscriptions-page__title">{{ heading | escape }}</h1>
+        <p class="sulalat-subscriptions-page__text">
+          {{ section.settings.redirect_text | default: 'Opening your subscriptions…' | escape }}
+        </p>
+        <a
+          class="sulalat-subscriptions-page__btn"
+          href="{{ portal_url | escape }}"
+          data-subscriptions-portal-link
+        >
+          {{ section.settings.open_label | default: 'Manage Subscriptions' | escape }}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Subscriptions page",
+  "tag": "section",
+  "class": "sulalat-subscriptions-page-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "My Subscriptions"
+    },
+    {
+      "type": "text",
+      "id": "subscriptions_portal_url",
+      "label": "Manage subscriptions URL",
+      "default": "https://shopify.com/69340233891/account/pages/6971b1a1-27f6-4c27-b8b0-3009fd3b921d",
+      "info": "Shopify Subscriptions customer portal URL"
+    },
+    {
+      "type": "text",
+      "id": "open_label",
+      "label": "Button label",
+      "default": "Manage Subscriptions"
+    },
+    {
+      "type": "text",
+      "id": "redirect_text",
+      "label": "Helper text",
+      "default": "Manage your coffee subscriptions and delivery schedule."
+    },
+    {
+      "type": "text",
+      "id": "dashboard_url",
+      "label": "Dashboard page URL",
+      "default": "/pages/dashboard"
+    },
+    {
+      "type": "text",
+      "id": "default_level",
+      "label": "Default customer level",
+      "default": "2"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top (mobile)",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom (mobile)",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscriptions page"
+    }
+  ]
+}
+{% endschema %}
