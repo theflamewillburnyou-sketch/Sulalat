@@ -591,9 +591,9 @@
 
             {%- if cart != empty -%}
               <div class="sulalat-cart__actions">
-                <a class="sulalat-cart__btn sulalat-cart__btn--soft" href="{{ shop_url }}">
-                  Return to shop
-                </a>
+                <button type="button" class="sulalat-cart__btn sulalat-cart__btn--soft" data-sulalat-clear-cart>
+                  Clear Cart
+                </button>
                 <button type="submit" name="update" class="sulalat-cart__btn sulalat-cart__btn--soft">
                   Update Cart
                 </button>
@@ -808,6 +808,36 @@
       </div>
     </form>
   </div>
+
+  {%- if cart != empty -%}
+    <script>
+      (function () {
+        var root = document.querySelector('.sulalat-cart[data-section-id="{{ section.id }}"]');
+        if (!root) return;
+
+        var clearButton = root.querySelector('[data-sulalat-clear-cart]');
+        if (clearButton) {
+          clearButton.addEventListener('click', function () {
+            clearButton.disabled = true;
+            fetch('{{ routes.cart_url }}/clear.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json'
+              }
+            })
+              .then(function (response) {
+                if (!response.ok) throw new Error('Failed to clear cart');
+                window.location.href = '{{ routes.cart_url }}';
+              })
+              .catch(function () {
+                clearButton.disabled = false;
+              });
+          });
+        }
+      })();
+    </script>
+  {%- endif -%}
 
   {%- if cart != empty and section.settings.show_coupon -%}
     <script>

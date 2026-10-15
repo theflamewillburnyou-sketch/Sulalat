@@ -1,12 +1,29 @@
 {%- liquid
   assign products_per_page = section.settings.products_per_page | default: 9
-  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign sort_by = collection.sort_by | default: collection.default_sort_by | default: 'best-selling'
 
   assign is_search_mode = false
   if request.page_type == 'search' and search.performed
     assign is_search_mode = true
-    assign sort_by = search.sort_by | default: search.default_sort_by
+    assign sort_by = search.sort_by | default: search.default_sort_by | default: 'best-selling'
   endif
+
+  if sort_by != 'best-selling' and sort_by != 'created-descending' and sort_by != 'price-ascending' and sort_by != 'price-descending' and sort_by != 'title-ascending'
+    assign sort_by = 'best-selling'
+  endif
+
+  case sort_by
+    when 'created-descending'
+      assign sort_label = 'Newest'
+    when 'price-ascending'
+      assign sort_label = 'Price Low To high'
+    when 'price-descending'
+      assign sort_label = 'Price High To Low'
+    when 'title-ascending'
+      assign sort_label = 'Product Name A - Z'
+    else
+      assign sort_label = 'Most Popular'
+  endcase
 
   assign matched_category_tab = false
   if collection
@@ -134,21 +151,85 @@
       position: relative;
       display: inline-flex;
       align-items: center;
+      z-index: 5;
     }
 
-    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort select {
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__trigger {
       appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      min-width: 220px;
       height: 44px;
-      padding: 0 42px 0 18px;
-      border: 1px solid #e0e0e0;
-      border-radius: 10px;
-      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5l5 5 5-5' stroke='%23535353' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+      padding: 0 18px 0 20px;
+      border: 1px solid #d8d8d8;
+      border-radius: 999px;
+      background: #fff;
       font-family: inherit;
       font-size: 14px;
-      color: #000;
+      line-height: 1.2;
+      font-weight: 400;
+      color: #1a1a1a;
       cursor: pointer;
       outline: none;
-      min-width: 220px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__trigger-label {
+      white-space: nowrap;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__chevron {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+      color: #1a1a1a;
+      transition: transform 0.2s ease;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort.is-open .sulalat-collection-sort__chevron {
+      transform: rotate(180deg);
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 100%;
+      margin: 0;
+      padding: 10px 0;
+      list-style: none;
+      background: #fff;
+      border: 1px solid #d8d8d8;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      display: none;
+      z-index: 20;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort.is-open .sulalat-collection-sort__menu {
+      display: block;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__option {
+      display: block;
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 10px 20px;
+      text-align: left;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 400;
+      color: #1a1a1a;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__option:hover,
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort__option.is-active {
+      background: #f7f7f7;
     }
 
     .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-count {
@@ -467,20 +548,39 @@
       {%- if is_search_mode -%}
         {%- paginate search.results by products_per_page -%}
           <div class="sulalat-collection-toolbar">
-            <form class="sulalat-collection-sort" action="{{ routes.search_url }}" method="get">
+            <form class="sulalat-collection-sort" action="{{ routes.search_url }}" method="get" data-sort-dropdown>
               <input type="hidden" name="q" value="{{ search.terms | escape }}">
               <input type="hidden" name="type" value="product">
-              <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
-              <select name="sort_by" id="SortBy-{{ section.id }}">
-                {% for option in search.sort_options %}
-                  <option
-                    value="{{ option.value }}"
-                    {% if option.value == sort_by %}selected{% endif %}
-                  >
-                    Sort by: {{ option.name }}
-                  </option>
-                {% endfor %}
-              </select>
+              <input type="hidden" name="sort_by" value="{{ sort_by | escape }}" data-sort-input>
+              <button
+                type="button"
+                class="sulalat-collection-sort__trigger"
+                data-sort-trigger
+                aria-expanded="false"
+                aria-haspopup="listbox"
+              >
+                <span class="sulalat-collection-sort__trigger-label" data-sort-label>Sort by: {{ sort_label | escape }}</span>
+                <svg class="sulalat-collection-sort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                  <path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul class="sulalat-collection-sort__menu" data-sort-menu role="listbox">
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'best-selling' %} is-active{% endif %}" data-sort-value="best-selling" data-sort-label-text="Most Popular" role="option">Most Popular</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'created-descending' %} is-active{% endif %}" data-sort-value="created-descending" data-sort-label-text="Newest" role="option">Newest</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-ascending' %} is-active{% endif %}" data-sort-value="price-ascending" data-sort-label-text="Price Low To high" role="option">Price Low To high</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-descending' %} is-active{% endif %}" data-sort-value="price-descending" data-sort-label-text="Price High To Low" role="option">Price High To Low</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'title-ascending' %} is-active{% endif %}" data-sort-value="title-ascending" data-sort-label-text="Product Name A - Z" role="option">Product Name A - Z</button>
+                </li>
+              </ul>
             </form>
 
             <p class="sulalat-collection-count">
@@ -530,18 +630,37 @@
       {%- else -%}
         {%- paginate collection.products by products_per_page -%}
           <div class="sulalat-collection-toolbar">
-            <form class="sulalat-collection-sort" action="{{ collection.url }}" method="get">
-              <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
-              <select name="sort_by" id="SortBy-{{ section.id }}">
-                {% for option in collection.sort_options %}
-                  <option
-                    value="{{ option.value }}"
-                    {% if option.value == sort_by %}selected{% endif %}
-                  >
-                    Sort by: {{ option.name }}
-                  </option>
-                {% endfor %}
-              </select>
+            <form class="sulalat-collection-sort" action="{{ collection.url }}" method="get" data-sort-dropdown>
+              <input type="hidden" name="sort_by" value="{{ sort_by | escape }}" data-sort-input>
+              <button
+                type="button"
+                class="sulalat-collection-sort__trigger"
+                data-sort-trigger
+                aria-expanded="false"
+                aria-haspopup="listbox"
+              >
+                <span class="sulalat-collection-sort__trigger-label" data-sort-label>Sort by: {{ sort_label | escape }}</span>
+                <svg class="sulalat-collection-sort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                  <path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <ul class="sulalat-collection-sort__menu" data-sort-menu role="listbox">
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'best-selling' %} is-active{% endif %}" data-sort-value="best-selling" data-sort-label-text="Most Popular" role="option">Most Popular</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'created-descending' %} is-active{% endif %}" data-sort-value="created-descending" data-sort-label-text="Newest" role="option">Newest</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-ascending' %} is-active{% endif %}" data-sort-value="price-ascending" data-sort-label-text="Price Low To high" role="option">Price Low To high</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-descending' %} is-active{% endif %}" data-sort-value="price-descending" data-sort-label-text="Price High To Low" role="option">Price High To Low</button>
+                </li>
+                <li>
+                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'title-ascending' %} is-active{% endif %}" data-sort-value="title-ascending" data-sort-label-text="Product Name A - Z" role="option">Product Name A - Z</button>
+                </li>
+              </ul>
             </form>
 
             <p class="sulalat-collection-count">
@@ -849,29 +968,86 @@
         });
       }
 
+      function submitSortForm(root, form) {
+        if (!form) return;
+        var formData = new FormData(form);
+        var params = new URLSearchParams(formData);
+        var action = form.getAttribute('action') || window.location.pathname;
+        var url = action + (params.toString() ? '?' + params.toString() : '');
+
+        fetchAndReplaceResults(root, url).then(function () {
+          if (root.getAttribute('data-search-mode') === 'collection') {
+            var searchInput = root.querySelector('[data-collection-search-input]');
+            applyCollectionFilter(root, searchInput ? searchInput.value : (root.getAttribute('data-active-search-query') || ''));
+          }
+        });
+      }
+
+      function closeSortDropdown(form) {
+        if (!form) return;
+        form.classList.remove('is-open');
+        var trigger = form.querySelector('[data-sort-trigger]');
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
+
       function bindSortForms(root) {
         if (root.dataset.sortBound === 'true') return;
         root.dataset.sortBound = 'true';
 
-        root.addEventListener('change', function (event) {
-          var select = event.target.closest('.sulalat-collection-sort select');
-          if (!select || !root.contains(select)) return;
+        root.addEventListener('click', function (event) {
+          var trigger = event.target.closest('[data-sort-trigger]');
+          var option = event.target.closest('[data-sort-value]');
+          var form = event.target.closest('[data-sort-dropdown]');
 
-          event.preventDefault();
+          if (trigger && root.contains(trigger)) {
+            event.preventDefault();
+            form = trigger.closest('[data-sort-dropdown]');
+            if (!form) return;
 
-          var form = select.closest('form');
-          if (!form) return;
-
-          var formData = new FormData(form);
-          var params = new URLSearchParams(formData);
-          var action = form.getAttribute('action') || window.location.pathname;
-          var url = action + (params.toString() ? '?' + params.toString() : '');
-
-          fetchAndReplaceResults(root, url).then(function () {
-            if (root.getAttribute('data-search-mode') === 'collection') {
-              var searchInput = root.querySelector('[data-collection-search-input]');
-              applyCollectionFilter(root, searchInput ? searchInput.value : (root.getAttribute('data-active-search-query') || ''));
+            var willOpen = !form.classList.contains('is-open');
+            root.querySelectorAll('[data-sort-dropdown].is-open').forEach(function (openForm) {
+              closeSortDropdown(openForm);
+            });
+            if (willOpen) {
+              form.classList.add('is-open');
+              trigger.setAttribute('aria-expanded', 'true');
             }
+            return;
+          }
+
+          if (option && root.contains(option)) {
+            event.preventDefault();
+            form = option.closest('[data-sort-dropdown]');
+            if (!form) return;
+
+            var value = option.getAttribute('data-sort-value') || '';
+            var labelText = option.getAttribute('data-sort-label-text') || option.textContent.trim();
+            var input = form.querySelector('[data-sort-input]');
+            var label = form.querySelector('[data-sort-label]');
+
+            if (input) input.value = value;
+            if (label) label.textContent = 'Sort by: ' + labelText;
+
+            form.querySelectorAll('[data-sort-value]').forEach(function (btn) {
+              btn.classList.toggle('is-active', btn === option);
+            });
+
+            closeSortDropdown(form);
+            submitSortForm(root, form);
+            return;
+          }
+
+          if (!event.target.closest('[data-sort-dropdown]')) {
+            root.querySelectorAll('[data-sort-dropdown].is-open').forEach(function (openForm) {
+              closeSortDropdown(openForm);
+            });
+          }
+        });
+
+        document.addEventListener('click', function (event) {
+          if (event.target.closest('[data-sort-dropdown]')) return;
+          root.querySelectorAll('[data-sort-dropdown].is-open').forEach(function (openForm) {
+            closeSortDropdown(openForm);
           });
         });
       }

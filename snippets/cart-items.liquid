@@ -22,6 +22,15 @@
 
 <cart-items id="cart-items" data-section="{{ section_id }}" data-empty="{% if cart == empty %}true{% else %}false{% endif %}"{% if sulalat_layout %} data-sulalat-layout="true"{% endif %}>
   {%- if cart == empty -%}
+    {%- liquid
+      if settings.cart_empty_shop_link != blank
+        assign empty_shop_url = settings.cart_empty_shop_link
+      elsif pages.shop != blank
+        assign empty_shop_url = pages.shop.url
+      else
+        assign empty_shop_url = routes.root_url
+      endif
+    -%}
     <div class="cart-empty flex flex-col justify-center items-center h-full js-cart-empty">
       {%- if settings.cart_icon == 'bag' -%}
         {%- render 'icon-bag' -%}
@@ -33,11 +42,9 @@
 
       <p>{{ 'cart.general.empty' | t }}</p>
 
-      {%- if settings.cart_empty_shop_link -%}
-        <a class="btn btn--primary" href="{{ settings.cart_empty_shop_link }}">
-          {{- 'cart.general.start_shopping' | t -}}
-        </a>
-      {%- endif -%}
+      <a class="btn btn--primary" href="{{ empty_shop_url }}">
+        {{- 'cart.general.start_shopping' | t -}}
+      </a>
     </div>
   {%- endif -%}
 

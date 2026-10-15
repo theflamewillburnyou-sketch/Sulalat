@@ -359,18 +359,78 @@ document.addEventListener("DOMContentLoaded", function () {
 // register page css through js 
 document.addEventListener("DOMContentLoaded", function () {
 
-  const BLOCK_SELECTOR =
-    "#shopify-block-AY3hpdVFSOENGeEpOW__forms_inline_XiaxHt";
+  const BLOCK_SELECTORS = [
+    "#shopify-block-AY3hpdVFSOENGeEpOW__forms_inline_XiaxHt",
+    '[id*="forms_inline_XiaxHt"]',
+    '[id*="forms_inline"]'
+  ];
 
-  function initShopifyForm() {
-    const block = document.querySelector(BLOCK_SELECTOR);
+  function findFormsEmbed() {
+    for (var i = 0; i < BLOCK_SELECTORS.length; i++) {
+      var block = document.querySelector(BLOCK_SELECTORS[i]);
+      if (!block) continue;
+      var embed = block.matches("shopify-forms-embed")
+        ? block
+        : block.querySelector("shopify-forms-embed");
+      if (embed) return embed;
+    }
+    return document.querySelector("shopify-forms-embed");
+  }
 
-    if (!block) {
-      setTimeout(initShopifyForm, 300);
-      return;
+  function isPasswordInput(input, form) {
+    if (!input) return false;
+    if (input.type === "password") return true;
+    if (input.hasAttribute("data-sulalat-password-input")) return true;
+
+    var hint =
+      (
+        (input.placeholder || "") +
+        " " +
+        (input.name || "") +
+        " " +
+        (input.id || "") +
+        " " +
+        (input.getAttribute("autocomplete") || "") +
+        " " +
+        (input.getAttribute("aria-label") || "")
+      ).toLowerCase();
+
+    if (hint.indexOf("password") !== -1) return true;
+
+    var label = null;
+    if (input.id) {
+      label = form.querySelector('label[for="' + CSS.escape(input.id) + '"]');
+    }
+    if (!label) label = input.closest("label");
+    if (!label) {
+      var parent = input.parentElement;
+      for (var i = 0; i < 4 && parent; i++) {
+        label = parent.querySelector("label");
+        if (label) break;
+        parent = parent.parentElement;
+      }
     }
 
-    const formEmbed = block.querySelector("shopify-forms-embed");
+    return !!(label && (label.textContent || "").toLowerCase().indexOf("password") !== -1);
+  }
+
+  function collectInputs(root, form, results) {
+    if (!root) return results;
+    Array.prototype.forEach.call(root.querySelectorAll("input"), function (input) {
+      if (isPasswordInput(input, form || root)) results.push(input);
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("*"), function (el) {
+      if (el.shadowRoot) collectInputs(el.shadowRoot, form || root, results);
+    });
+    return results;
+  }
+
+  function findPasswordInputs(form) {
+    return collectInputs(form, form, []);
+  }
+
+  function initShopifyForm() {
+    const formEmbed = findFormsEmbed();
 
     if (!formEmbed || !formEmbed.shadowRoot) {
       setTimeout(initShopifyForm, 300);
@@ -631,6 +691,10 @@ convertLabelsToPlaceholders();
 
 
         /* =====================================
+           PASSWORD EYE TOGGLE
+           ===================================== */
+
+        /* =====================================
            INPUT DESIGN
            SAME AS SULALAT DASHBOARD
            ===================================== */
@@ -706,6 +770,81 @@ convertLabelsToPlaceholders();
 
 
         /* =====================================
+           PASSWORD EYE TOGGLE
+           (after input styles so padding wins)
+           ===================================== */
+
+        .sulalat-password-field,
+        .sulalat-password-wrap {
+          position: relative !important;
+          width: 100% !important;
+          display: block !important;
+          overflow: visible !important;
+        }
+
+        .sulalat-password-wrap input,
+        .sulalat-password-field input[data-sulalat-password-input],
+        input[data-sulalat-password-input] {
+          padding-right: 48px !important;
+        }
+
+        .sulalat-password-toggle {
+          position: absolute !important;
+          top: 50% !important;
+          right: 16px !important;
+          left: auto !important;
+          bottom: auto !important;
+          transform: translateY(-50%) !important;
+          width: 28px !important;
+          height: 28px !important;
+          min-width: 28px !important;
+          min-height: 28px !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+          border-radius: 0 !important;
+          background: transparent !important;
+          box-shadow: none !important;
+          color: #8a8a8a !important;
+          cursor: pointer !important;
+          display: inline-flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          z-index: 5 !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
+        }
+
+        .sulalat-password-toggle:hover,
+        .sulalat-password-toggle:focus,
+        .sulalat-password-toggle:active {
+          background: transparent !important;
+          box-shadow: none !important;
+          color: #8a8a8a !important;
+        }
+
+        .sulalat-password-toggle svg {
+          width: 20px !important;
+          height: 20px !important;
+          display: block !important;
+          pointer-events: none !important;
+        }
+
+        .sulalat-password-toggle .icon-hide {
+          display: none !important;
+        }
+
+        .sulalat-password-toggle.is-visible .icon-show {
+          display: none !important;
+        }
+
+        .sulalat-password-toggle.is-visible .icon-hide {
+          display: block !important;
+        }
+
+
+        /* =====================================
            PHONE COUNTRY CODE
            ===================================== */
 
@@ -743,7 +882,12 @@ convertLabelsToPlaceholders();
         visibility: hidden !important;
       }
 
-      label:has(input:focus) {
+      /* Do not hide checkbox / terms labels */
+      label:has(input[type="text"]:focus):not(:has(input[type="checkbox"])),
+      label:has(input[type="email"]:focus):not(:has(input[type="checkbox"])),
+      label:has(input[type="tel"]:focus):not(:has(input[type="checkbox"])),
+      label:has(input[type="password"]:focus):not(:has(input[type="checkbox"])),
+      label:has(input[type="number"]:focus):not(:has(input[type="checkbox"])) {
         opacity: 0 !important;
         visibility: hidden !important;
       }
@@ -767,7 +911,7 @@ convertLabelsToPlaceholders();
           min-width: 16px !important;
           min-height: 16px !important;
 
-          margin: 0 8px 0 0 !important;
+          margin: 2px 10px 0 0 !important;
 
           padding: 0 !important;
 
@@ -779,12 +923,18 @@ convertLabelsToPlaceholders();
           box-sizing: border-box !important;
 
           cursor: pointer !important;
+
+          display: inline-block !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          clip: auto !important;
+          clip-path: none !important;
         }
 
 
         input[type="checkbox"]:checked {
           border-color: #53C295 !important;
-          background: #ffffff !important;
+          background: #53C295 !important;
         }
 
 
@@ -793,13 +943,13 @@ convertLabelsToPlaceholders();
 
           position: absolute !important;
 
-          left: 4px !important;
+          left: 4.5px !important;
           top: 1px !important;
 
           width: 4px !important;
           height: 8px !important;
 
-          border: solid #53C295 !important;
+          border: solid #ffffff !important;
 
           border-width:
             0
@@ -815,15 +965,25 @@ convertLabelsToPlaceholders();
            LINKS
            ===================================== */
 
-        a {
+        a,
+        a span,
+        [class*="Disclaimer"] a,
+        [class*="disclaimer"] a,
+        .sulalat-terms-field a,
+        label a {
           color: #53C295 !important;
           text-decoration: none !important;
+          cursor: pointer !important;
         }
 
 
-        a:hover {
+        a:hover,
+        [class*="Disclaimer"] a:hover,
+        .sulalat-terms-field a:hover,
+        label a:hover {
           color: #53C295 !important;
           text-decoration: underline !important;
+          cursor: pointer !important;
         }
 
 
@@ -917,21 +1077,106 @@ convertLabelsToPlaceholders();
            PRIVACY / TERMS
            ===================================== */
 
-        .sulalat-terms-field {
+        .sulalat-terms-field,
+        label:has(input[type="checkbox"]),
+        [class*="Disclaimer"],
+        [class*="disclaimer"],
+        [class*="Consent"],
+        [class*="consent"] {
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 0 !important;
           width: 100% !important;
-
-          margin-top: 26px !important;
-
+          max-width: 100% !important;
+          margin: 22px 0 0 !important;
+          padding: 0 !important;
+          color: #555555 !important;
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+          letter-spacing: -0.01em !important;
+          font-family: Roboto, sans-serif !important;
+          text-align: left !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          order: 90 !important;
           grid-column: 1 / -1 !important;
         }
 
-        ._formDisclaimer_jnbzb_38 {
-          color: #141211 !important;
-          font-size: 16px !important;
-          line-height: 24px !important;
-          letter-spacing: -0.01em !important;
+        .sulalat-terms-field input[type="checkbox"],
+        label:has(input[type="checkbox"]) input[type="checkbox"],
+        [class*="Disclaimer"] input[type="checkbox"],
+        [class*="consent"] input[type="checkbox"] {
+          display: inline-block !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          flex-shrink: 0 !important;
+        }
+
+        .sulalat-terms-field a,
+        label:has(input[type="checkbox"]) a,
+        [class*="Disclaimer"] a,
+        [class*="disclaimer"] a {
+          color: #53C295 !important;
           text-decoration: none !important;
-          font-family: Roboto, sans-serif;
+          font-weight: 400 !important;
+          cursor: pointer !important;
+        }
+
+        .sulalat-terms-row {
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 10px !important;
+          width: 100% !important;
+        }
+
+        .sulalat-terms-row__text {
+          flex: 1 1 auto !important;
+          min-width: 0 !important;
+          color: #555555 !important;
+          font-size: 14px !important;
+          line-height: 1.5 !important;
+        }
+
+        .sulalat-terms-row__text a {
+          color: #53C295 !important;
+          text-decoration: none !important;
+          cursor: pointer !important;
+        }
+
+        .sulalat-terms-row__text a:hover {
+          text-decoration: underline !important;
+          cursor: pointer !important;
+        }
+
+        button[type="submit"] {
+          order: 100 !important;
+        }
+
+        /* =====================================
+           VALIDATION ERRORS
+           ===================================== */
+
+        [class*="formError"],
+        [class*="FormError"],
+        output[class*="error" i] {
+          display: block !important;
+          width: 100% !important;
+          margin: 6px 0 0 !important;
+          padding: 0 !important;
+          color: #e02229 !important;
+          font-size: 13px !important;
+          line-height: 1.35 !important;
+          text-align: left !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          order: 20 !important;
+        }
+
+        [class*="withError"],
+        [class*="WithError"] {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
         }
 
 
@@ -989,6 +1234,11 @@ convertLabelsToPlaceholders();
             padding: 10px 18px !important;
 
             font-size: 15px !important;
+          }
+
+          .sulalat-password-wrap input,
+          input[data-sulalat-password-input] {
+            padding-right: 48px !important;
           }
 
 
@@ -1084,18 +1334,9 @@ convertLabelsToPlaceholders();
 
         wrappers.forEach(function (wrapper) {
 
-          const passwordInput =
-            wrapper.querySelector('input[type="password"]');
-
-
-          if (passwordInput) {
-
-            wrapper.classList.add(
-              "sulalat-password-field"
-            );
-
+          if (wrapper.querySelector("input") && isPasswordInput(wrapper.querySelector("input"), form)) {
+            wrapper.classList.add("sulalat-password-field");
           }
-
 
           grid.appendChild(wrapper);
 
@@ -1105,6 +1346,423 @@ convertLabelsToPlaceholders();
 
     }
 
+
+    /* =========================================
+       PASSWORD EYE TOGGLE
+       ========================================= */
+
+    function initPasswordToggles() {
+
+      findPasswordInputs(form).forEach(function (input) {
+
+        /* Ensure it masks by default even if Forms used type=text */
+        if (input.type !== "password" && !input.classList.contains("sulalat-password-revealed")) {
+          input.type = "password";
+        }
+
+        input.setAttribute("data-sulalat-password-input", "");
+
+        var fieldWrapper = input.closest(".sulalat-password-field") || input.closest(".sulalat-account-fields > *");
+        if (fieldWrapper) fieldWrapper.classList.add("sulalat-password-field");
+
+        var wrap = input.closest(".sulalat-password-wrap");
+        if (!wrap) {
+          wrap = document.createElement("div");
+          wrap.className = "sulalat-password-wrap";
+          input.parentNode.insertBefore(wrap, input);
+          wrap.appendChild(input);
+        }
+
+        var btn = wrap.querySelector(".sulalat-password-toggle");
+        if (btn) return;
+
+        btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "sulalat-password-toggle";
+        btn.setAttribute("aria-label", "Show password");
+        btn.innerHTML =
+          '<svg class="icon-show" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+          '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z" stroke="currentColor" stroke-width="1.6"/>' +
+          '<circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/>' +
+          "</svg>" +
+          '<svg class="icon-hide" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+          '<path d="M3 3l18 18M10.6 10.6A3 3 0 0012 15a3 3 0 002.4-4.8M9.9 5.1A10.4 10.4 0 0112 5c6.5 0 10 7 10 7a17.6 17.6 0 01-3.1 3.9M6.1 6.1A17.4 17.4 0 002 12s3.5 7 10 7c1.2 0 2.3-.2 3.4-.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+          "</svg>";
+
+        wrap.appendChild(btn);
+
+        btn.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          var show = input.type === "password";
+          input.type = show ? "text" : "password";
+          input.classList.toggle("sulalat-password-revealed", show);
+          btn.classList.toggle("is-visible", show);
+          btn.setAttribute(
+            "aria-label",
+            show ? "Hide password" : "Show password"
+          );
+        });
+
+      });
+
+    }
+
+    initPasswordToggles();
+
+
+    /* =========================================
+       TERMS / CHECKBOX ABOVE SUBMIT
+       Forms disclaimer has no checkbox and its
+       rich-text links often don't navigate.
+       We build a reliable row ourselves.
+       ========================================= */
+
+    var POLICY_URL = "/policies/privacy-policy";
+
+    function findDisclaimerElement(root) {
+      var nodes = root.querySelectorAll("div, p, span, label, section");
+      var best = null;
+      var bestLen = Infinity;
+
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        if (el.closest("[data-sulalat-terms-built]")) continue;
+
+        var text = (el.textContent || "").replace(/\s+/g, " ").trim();
+        var lower = text.toLowerCase();
+        if (text.length < 20 || text.length > 350) continue;
+        if (lower.indexOf("privacy") === -1) continue;
+        if (lower.indexOf("terms") === -1 && lower.indexOf("agree") === -1) continue;
+        if (el.querySelector('input:not([type="checkbox"]), button, select, textarea')) continue;
+
+        if (text.length < bestLen) {
+          bestLen = text.length;
+          best = el;
+        }
+      }
+
+      return best;
+    }
+
+    function hideOriginalDisclaimer() {
+      var original = findDisclaimerElement(shadow) || findDisclaimerElement(form);
+      if (!original) return;
+
+      var hideTarget = original;
+      while (
+        hideTarget.parentElement &&
+        hideTarget.parentElement !== form &&
+        hideTarget.parentElement !== shadow &&
+        (hideTarget.parentElement.textContent || "").replace(/\s+/g, " ").trim().length < 400 &&
+        !hideTarget.parentElement.querySelector('button[type="submit"], input[type="email"], input[type="text"]')
+      ) {
+        hideTarget = hideTarget.parentElement;
+      }
+
+      hideTarget.setAttribute("data-sulalat-disclaimer-original", "true");
+      hideTarget.style.setProperty("display", "none", "important");
+    }
+
+    function buildTermsRow() {
+      var existing = form.querySelector("[data-sulalat-terms-built]");
+      if (existing) return existing;
+
+      var submit = form.querySelector('button[type="submit"]');
+      if (!submit) return null;
+
+      hideOriginalDisclaimer();
+
+      var wrap = document.createElement("div");
+      wrap.className = "sulalat-terms-field";
+      wrap.setAttribute("data-sulalat-terms-built", "true");
+
+      var row = document.createElement("div");
+      row.className = "sulalat-terms-row";
+
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.required = true;
+      checkbox.setAttribute("data-sulalat-terms-checkbox", "true");
+      checkbox.setAttribute("aria-label", "Agree to Terms and Privacy Policy");
+
+      var text = document.createElement("div");
+      text.className = "sulalat-terms-row__text";
+      text.innerHTML =
+        'By creating an account means you agree to the ' +
+        '<a href="' + POLICY_URL + '" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>' +
+        ', and our ' +
+        '<a href="' + POLICY_URL + '" target="_blank" rel="noopener noreferrer">Privacy Policy</a>';
+
+      row.appendChild(checkbox);
+      row.appendChild(text);
+      wrap.appendChild(row);
+      form.insertBefore(wrap, submit);
+
+      /* Keep link clicks from being swallowed by Forms handlers */
+      wrap.addEventListener(
+        "click",
+        function (event) {
+          var link = event.target && event.target.closest ? event.target.closest("a") : null;
+          if (!link) return;
+          event.stopPropagation();
+          if (link.href) {
+            event.preventDefault();
+            window.open(link.href, "_blank", "noopener,noreferrer");
+          }
+        },
+        true
+      );
+
+      return wrap;
+    }
+
+    function styleTermsRow(terms) {
+      if (!terms) return;
+
+      var box = terms.querySelector('input[type="checkbox"]');
+      if (box) {
+        box.style.setProperty("display", "inline-block", "important");
+        box.style.setProperty("opacity", "1", "important");
+        box.style.setProperty("visibility", "visible", "important");
+        box.style.setProperty("position", "relative", "important");
+        box.style.setProperty("width", "16px", "important");
+        box.style.setProperty("height", "16px", "important");
+        box.style.setProperty("cursor", "pointer", "important");
+        box.style.setProperty("flex-shrink", "0", "important");
+        box.style.setProperty("margin", "2px 0 0 0", "important");
+      }
+
+      Array.prototype.forEach.call(terms.querySelectorAll("a"), function (link) {
+        if (!link.getAttribute("href") || link.getAttribute("href") === "#") {
+          link.setAttribute("href", POLICY_URL);
+        }
+        link.setAttribute("target", "_blank");
+        link.setAttribute("rel", "noopener noreferrer");
+        link.style.setProperty("color", "#53C295", "important");
+        link.style.setProperty("text-decoration", "none", "important");
+        link.style.setProperty("cursor", "pointer", "important");
+        link.style.setProperty("pointer-events", "auto", "important");
+      });
+    }
+
+    function positionTermsAboveSubmit() {
+      var submit = form.querySelector('button[type="submit"]');
+      if (!submit) return;
+
+      var terms = buildTermsRow();
+      styleTermsRow(terms);
+
+      if (terms && terms.nextElementSibling !== submit) {
+        form.insertBefore(terms, submit);
+      }
+
+      if (!form.dataset.sulalatTermsGuard) {
+        form.dataset.sulalatTermsGuard = "true";
+        form.addEventListener(
+          "submit",
+          function (event) {
+            var agree = form.querySelector("[data-sulalat-terms-checkbox]");
+            if (agree && !agree.checked) {
+              event.preventDefault();
+              event.stopPropagation();
+              agree.focus();
+            }
+          },
+          true
+        );
+      }
+    }
+
+    positionTermsAboveSubmit();
+
+
+    /* =========================================
+       VALIDATION MESSAGE FIX
+       Moving fields into our grid detaches Forms
+       error nodes. Re-attach under each invalid
+       field and clarify generic copy.
+       ========================================= */
+
+    function fixEmailInputType() {
+      var email = form.querySelector("#email, input[id*=\"email\" i]");
+      if (!email) return;
+      if (email.type !== "email" && !email.classList.contains("sulalat-password-revealed")) {
+        email.type = "email";
+        email.setAttribute("inputmode", "email");
+        email.setAttribute("autocomplete", "email");
+      }
+    }
+
+    function getFieldLabel(container, input) {
+      if (!container && !input) return "Field";
+      var label = container && container.querySelector("label");
+      var text = label && label.textContent ? label.textContent.trim() : "";
+      if (!text && input) {
+        text = (input.getAttribute("aria-label") || input.placeholder || input.id || "").trim();
+      }
+      text = text.replace(/\s+/g, " ").replace(/\*+$/, "").trim();
+      return text || "Field";
+    }
+
+    function resolveFieldContainer(input) {
+      if (!input) return null;
+      return (
+        input.closest('[class*="formPhoneInputContainer"]') ||
+        input.closest('[class*="formFieldContainer"]') ||
+        input.closest(".sulalat-password-field") ||
+        input.parentElement
+      );
+    }
+
+    function getInvalidFieldContainers() {
+      var containers = [];
+      var seenContainers = new Set();
+      var seenInputs = new Set();
+
+      function addItem(input, preferredContainer) {
+        if (!input || seenInputs.has(input)) return;
+        var container = preferredContainer || resolveFieldContainer(input);
+        if (!container || seenContainers.has(container)) return;
+        seenInputs.add(input);
+        seenContainers.add(container);
+        containers.push({ container: container, input: input });
+      }
+
+      Array.prototype.forEach.call(
+        form.querySelectorAll('[aria-invalid="true"]'),
+        function (input) {
+          addItem(input, resolveFieldContainer(input));
+        }
+      );
+
+      Array.prototype.forEach.call(
+        form.querySelectorAll('[class*="withError"]'),
+        function (container) {
+          var input = container.querySelector('input:not([type="checkbox"]), select, textarea');
+          if (!input) return;
+          addItem(input, resolveFieldContainer(input) || container);
+        }
+      );
+
+      return containers;
+    }
+
+    function rewriteErrorText(errorEl, label, input) {
+      var raw = (errorEl.textContent || "").trim();
+      if (!raw) return;
+
+      var lower = raw.toLowerCase();
+      var isEmail = !!(input && (input.type === "email" || /email/i.test(input.id || "") || /email/i.test(label)));
+      var isPhone = !!(input && (input.type === "tel" || /phone/i.test(input.id || "") || /phone/i.test(label)));
+
+      if (isEmail && (lower === "email is invalid" || lower === "invalid email" || lower === "email is invalid.")) {
+        errorEl.textContent = "Please enter a valid email address";
+        return;
+      }
+
+      if (lower === "field is required" || lower === "this field is required" || lower === "required") {
+        if (isPhone) {
+          errorEl.textContent = "Phone number is required";
+        } else if (isEmail) {
+          errorEl.textContent = "E-mail Address is required";
+        } else {
+          errorEl.textContent = label + " is required";
+        }
+        return;
+      }
+
+      if (isEmail && lower === "email is required") {
+        errorEl.textContent = "E-mail Address is required";
+      }
+
+      if (isPhone && (lower === "phone number is required" || lower === "phone is required")) {
+        errorEl.textContent = "Phone number is required";
+      }
+    }
+
+    function dedupeErrorsInContainer(container) {
+      var errors = Array.prototype.slice.call(
+        container.querySelectorAll('[class*="formError"], [class*="FormError"]')
+      );
+      if (errors.length < 2) return;
+
+      var seen = new Set();
+      errors.forEach(function (err, index) {
+        var key = (err.textContent || "").trim().toLowerCase().replace(/\s+/g, " ");
+        if (!key) {
+          err.remove();
+          return;
+        }
+        /* Treat "Phone Number is required" and "Phone number is required" as same */
+        if (seen.has(key) || (key.indexOf("phone") !== -1 && key.indexOf("required") !== -1 && seen.has("__phone_required__"))) {
+          err.remove();
+          return;
+        }
+        if (key.indexOf("phone") !== -1 && key.indexOf("required") !== -1) {
+          seen.add("__phone_required__");
+          err.textContent = "Phone number is required";
+        }
+        seen.add(key);
+      });
+    }
+
+    function relocateFormErrors() {
+      fixEmailInputType();
+
+      var invalid = getInvalidFieldContainers();
+      if (!invalid.length) return;
+
+      var orphanErrors = Array.prototype.filter.call(
+        form.querySelectorAll('[class*="formError"], [class*="FormError"]'),
+        function (err) {
+          return !err.closest('[class*="formFieldContainer"], [class*="formPhoneInputContainer"], .sulalat-password-field');
+        }
+      );
+
+      invalid.forEach(function (item) {
+        var container = item.container;
+        var input = item.input;
+        var label = getFieldLabel(container, input);
+        var existingErrors = container.querySelectorAll('[class*="formError"], [class*="FormError"]');
+        var errorEl = existingErrors[0] || null;
+
+        if (!errorEl && orphanErrors.length) {
+          errorEl = orphanErrors.shift();
+          container.appendChild(errorEl);
+        }
+
+        if (errorEl) {
+          rewriteErrorText(errorEl, label, input);
+          errorEl.style.setProperty("display", "block", "important");
+          errorEl.style.setProperty("color", "#e02229", "important");
+        }
+
+        dedupeErrorsInContainer(container);
+      });
+
+      /* Drop any leftover orphan duplicates */
+      orphanErrors.forEach(function (err) {
+        err.remove();
+      });
+    }
+
+    fixEmailInputType();
+    relocateFormErrors();
+
+    if (!shadow.__sulalatPasswordObserver) {
+      shadow.__sulalatPasswordObserver = new MutationObserver(function () {
+        initPasswordToggles();
+        positionTermsAboveSubmit();
+        fixEmailInputType();
+        relocateFormErrors();
+      });
+      shadow.__sulalatPasswordObserver.observe(shadow, {
+        childList: true,
+        subtree: true
+      });
+    }
 
     console.log(
       "Sulalat account form styling initialized"

@@ -1,8 +1,25 @@
 {%- assign form_id = 'InitiativeRegister-' | append: section.id -%}
-{%- assign privacy_url = section.settings.privacy_link | default: shop.privacy_policy.url -%}
-{%- assign terms_url = section.settings.terms_link | default: shop.terms_of_service.url -%}
+{%- liquid
+  assign policy_page_url = '/policies/privacy-policy'
+  assign privacy_url = section.settings.privacy_link | default: shop.privacy_policy.url | default: policy_page_url
+  assign terms_url = section.settings.terms_link | default: shop.terms_of_service.url | default: policy_page_url
+  if privacy_url == blank
+    assign privacy_url = policy_page_url
+  endif
+  if terms_url == blank
+    assign terms_url = policy_page_url
+  endif
+-%}
+{%- liquid
+  assign register_anchor = 'initiative-register-' | append: section.id
+  if request.path contains '?'
+    assign register_return_to = request.path | append: '&contact_posted=1#' | append: register_anchor
+  else
+    assign register_return_to = request.path | append: '?contact_posted=1#' | append: register_anchor
+  endif
+-%}
 
-<section class="initiative-register" data-section-id="{{ section.id }}">
+<section class="initiative-register" id="{{ register_anchor }}" data-section-id="{{ section.id }}">
   <style>
     .initiative-register[data-section-id="{{ section.id }}"] {
       padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
@@ -149,6 +166,7 @@
       color: #2f7a54;
       font-size: 13px;
       margin: 0 0 8px;
+      order: 99;
     }
 
     .initiative-register[data-section-id="{{ section.id }}"] .initiative-register__status--error {
@@ -223,17 +241,14 @@
           <p class="initiative-register__text">{{ section.settings.text | escape }}</p>
         {%- endif -%}
 
-        {% form 'contact', id: form_id, class: 'initiative-register__form' %}
-          {%- if form.posted_successfully? -%}
-            <p class="initiative-register__status initiative-register__status--success">
-              {{ section.settings.success_message | escape }}
-            </p>
-          {%- elsif form.errors -%}
+        {% form 'contact', id: form_id, class: 'initiative-register__form', return_to: register_return_to %}
+          {%- if form.errors -%}
             <p class="initiative-register__status initiative-register__status--error">
               {{ form.errors | default_errors }}
             </p>
           {%- endif -%}
 
+          <input type="hidden" name="return_to" value="{{ register_return_to | escape }}">
           <input type="hidden" name="contact[Initiative]" value="{{ page.title | default: 'Initiative' | escape }}">
 
           <input
@@ -273,24 +288,31 @@
             <input type="checkbox" name="contact[Agreed to terms]" value="Yes" required>
             <span>
               {{ section.settings.agree_prefix | escape }}
-              {%- if terms_url != blank -%}
+              {% if terms_url != blank %}
                 <a href="{{ terms_url }}">{{ section.settings.terms_label | escape }}</a>
-              {%- else -%}
+              {% else %}
                 {{ section.settings.terms_label | escape }}
-              {%- endif -%}
+              {% endif %}
               {{ section.settings.agree_middle | escape }}
-              {%- if privacy_url != blank -%}
+              {% if privacy_url != blank %}
                 <a href="{{ privacy_url }}">{{ section.settings.privacy_label | escape }}</a>
-              {%- else -%}
+              {% else %}
                 {{ section.settings.privacy_label | escape }}
-              {%- endif -%}
-              .
+              {% endif %}.
             </span>
           </label>
 
           <button type="submit" class="initiative-register__submit primary-btn">
             {{ section.settings.button_label | escape }}
           </button>
+
+          <p
+            class="initiative-register__status initiative-register__status--success"
+            data-register-success
+            hidden
+          >
+            {{ section.settings.success_message | escape }}
+          </p>
         {% endform %}
       </div>
 
@@ -312,6 +334,32 @@
       </div>
     </div>
   </div>
+
+  <script>
+    (function () {
+      var section = document.querySelector('.initiative-register[data-section-id="{{ section.id }}"]');
+      if (!section) return;
+
+      var successEl = section.querySelector('[data-register-success]');
+      if (!successEl) return;
+
+      try {
+        var params = new URLSearchParams(window.location.search || '');
+        var posted = params.get('contact_posted');
+        if (posted !== '1' && posted !== 'true') return;
+
+        successEl.hidden = false;
+
+        params.delete('contact_posted');
+        var query = params.toString();
+        var nextUrl =
+          window.location.pathname +
+          (query ? '?' + query : '') +
+          (window.location.hash || '');
+        window.history.replaceState({}, '', nextUrl);
+      } catch (error) {}
+    })();
+  </script>
 </section>
 
 {% schema %}
