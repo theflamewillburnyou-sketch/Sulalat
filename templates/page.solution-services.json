@@ -28,19 +28,6 @@
         "heading_line_height_mobile": 44
       }
     },
-    "solution_nav": {
-      "type": "solution-page-nav",
-      "settings": {
-        "crumb_1_label": "Solutions",
-        "crumb_1_link": "",
-        "crumb_2_label": "Main Stream",
-        "crumb_2_link": "",
-        "crumb_3_label": "Services",
-        "background_color": "#ffffff",
-        "padding_top": 32,
-        "padding_bottom": 8
-      }
-    },
     "maintenance_services": {
       "type": "solution-services",
       "blocks": {
@@ -118,7 +105,6 @@
   },
   "order": [
     "page_banner_pKkj4b",
-    "solution_nav",
     "maintenance_services",
     "training_services"
   ]

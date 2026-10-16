@@ -847,8 +847,36 @@ convertLabelsToPlaceholders();
 
 
         /* =====================================
-           PHONE COUNTRY CODE
+           PHONE FIELD
+           Hide Forms country flag dropdown
            ===================================== */
+
+        .phone-country-selector,
+        [class*="phone-country-selector"],
+        [class*="formPhoneInputContainer"] [class*="selectToggle"],
+        [class*="formPhoneInputContainer"] [class*="flagIcon"] {
+          display: none !important;
+          width: 0 !important;
+          min-width: 0 !important;
+          height: 0 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden !important;
+          border: 0 !important;
+          pointer-events: none !important;
+          visibility: hidden !important;
+        }
+
+        [class*="formPhoneInputContainer"] {
+          display: block !important;
+          width: 100% !important;
+          gap: 0 !important;
+        }
+
+        [class*="formPhoneInputContainer"] [class*="formFieldContainer"],
+        [class*="formPhoneInputContainer"] input[type="tel"] {
+          width: 100% !important;
+        }
 
         input[type="tel"] {
           padding-left: 20px !important;
@@ -1350,6 +1378,169 @@ convertLabelsToPlaceholders();
 
 
     /* =========================================
+       CLEAR DEFAULT PHONE COUNTRY CODE (+966)
+       Forms re-injects the dial code after we clear
+       it. Block setter + keep clearing silently
+       until the user types a real number.
+       ========================================= */
+
+    function isBareDialCode(value) {
+      var val = String(value || "").trim();
+      /* +966, +966 , +1, etc. — dial code only */
+      return /^\+\d{1,4}$/.test(val);
+    }
+
+    function stripFilledLabel(input) {
+      var label = input.parentElement
+        ? input.parentElement.querySelector("label")
+        : null;
+      if (!label || !label.className) return;
+      label.className = String(label.className)
+        .split(/\s+/)
+        .filter(function (cls) {
+          return (
+            cls &&
+            cls.indexOf("inputFilled") === -1 &&
+            cls.indexOf("InputFilled") === -1
+          );
+        })
+        .join(" ");
+    }
+
+    function lockPhoneValueSetter(input) {
+      if (!input || input.dataset.sulalatPhoneLocked === "true") return;
+      input.dataset.sulalatPhoneLocked = "true";
+
+      var protoDesc = Object.getOwnPropertyDescriptor(
+        HTMLInputElement.prototype,
+        "value"
+      );
+      if (!protoDesc || !protoDesc.get || !protoDesc.set) return;
+
+      Object.defineProperty(input, "value", {
+        configurable: true,
+        enumerable: true,
+        get: function () {
+          return protoDesc.get.call(this);
+        },
+        set: function (next) {
+          if (
+            this.dataset.sulalatPhoneUserEdited !== "true" &&
+            isBareDialCode(next)
+          ) {
+            protoDesc.set.call(this, "");
+            stripFilledLabel(this);
+            return;
+          }
+          protoDesc.set.call(this, next);
+        }
+      });
+    }
+
+    function clearDefaultPhoneCode() {
+      var phones = form.querySelectorAll(
+        'input[type="tel"], #phone_number, input[id*="phone" i]'
+      );
+
+      Array.prototype.forEach.call(phones, function (input) {
+        if (!input || input.dataset.sulalatPhoneUserEdited === "true") return;
+
+        lockPhoneValueSetter(input);
+
+        if (!isBareDialCode(input.value)) return;
+
+        /* Set via prototype to avoid loops; do NOT fire events
+           (Forms treats change as a cue to restore the dial code). */
+        try {
+          var protoDesc = Object.getOwnPropertyDescriptor(
+            HTMLInputElement.prototype,
+            "value"
+          );
+          if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
+          else input.value = "";
+        } catch (e) {
+          input.value = "";
+        }
+
+        stripFilledLabel(input);
+      });
+    }
+
+    function bindPhoneUserEditGuard() {
+      var phones = form.querySelectorAll(
+        'input[type="tel"], #phone_number, input[id*="phone" i]'
+      );
+
+      Array.prototype.forEach.call(phones, function (input) {
+        lockPhoneValueSetter(input);
+
+        if (input.dataset.sulalatPhoneGuard === "true") return;
+        input.dataset.sulalatPhoneGuard = "true";
+
+        function markEdited() {
+          var val = (input.value || "").trim();
+          if (val && !isBareDialCode(val)) {
+            input.dataset.sulalatPhoneUserEdited = "true";
+          } else if (isBareDialCode(val)) {
+            try {
+              var protoDesc = Object.getOwnPropertyDescriptor(
+                HTMLInputElement.prototype,
+                "value"
+              );
+              if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
+              else input.value = "";
+            } catch (e) {
+              input.value = "";
+            }
+            stripFilledLabel(input);
+          }
+        }
+
+        input.addEventListener("input", markEdited);
+        input.addEventListener("change", markEdited);
+        input.addEventListener("blur", markEdited);
+        input.addEventListener("focus", function () {
+          if (isBareDialCode(input.value)) {
+            try {
+              var protoDesc = Object.getOwnPropertyDescriptor(
+                HTMLInputElement.prototype,
+                "value"
+              );
+              if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
+              else input.value = "";
+            } catch (e) {
+              input.value = "";
+            }
+            stripFilledLabel(input);
+          }
+        });
+      });
+
+      if (!form.dataset.sulalatPhoneClearTimer) {
+        form.dataset.sulalatPhoneClearTimer = "true";
+        var timer = setInterval(function () {
+          clearDefaultPhoneCode();
+          var stillWatching = false;
+          Array.prototype.forEach.call(
+            form.querySelectorAll(
+              'input[type="tel"], #phone_number, input[id*="phone" i]'
+            ),
+            function (input) {
+              if (input.dataset.sulalatPhoneUserEdited !== "true") {
+                stillWatching = true;
+              }
+            }
+          );
+          if (!stillWatching) clearInterval(timer);
+        }, 200);
+      }
+    }
+
+    clearDefaultPhoneCode();
+    bindPhoneUserEditGuard();
+
+
+    /* =========================================
        PASSWORD EYE TOGGLE
        ========================================= */
 
@@ -1759,6 +1950,8 @@ convertLabelsToPlaceholders();
         positionTermsAboveSubmit();
         fixEmailInputType();
         relocateFormErrors();
+        clearDefaultPhoneCode();
+        bindPhoneUserEditGuard();
       });
       shadow.__sulalatPasswordObserver.observe(shadow, {
         childList: true,

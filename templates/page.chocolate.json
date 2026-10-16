@@ -27,6 +27,19 @@
         "heading_line_height_mobile": 44
       }
     },
+    "solution_nav": {
+      "type": "solution-page-nav",
+      "settings": {
+        "crumb_1_label": "Solutions",
+        "crumb_1_link": "shopify://pages/solutions",
+        "crumb_2_label": "",
+        "crumb_2_link": "",
+        "crumb_3_label": "Chocolate",
+        "background_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 8
+      }
+    },
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
@@ -128,6 +141,7 @@
   },
   "order": [
     "page_banner",
+    "solution_nav",
     "initiative_story",
     "initiative_objectives",
     "initiative_register"

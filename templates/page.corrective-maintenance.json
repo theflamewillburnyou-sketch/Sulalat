@@ -27,6 +27,20 @@
         "heading_line_height_mobile": 44
       }
     },
+    "solution_page_nav_NjQhrp": {
+      "type": "solution-page-nav",
+      "name": "Solution page nav",
+      "settings": {
+        "crumb_1_label": "Solutions",
+        "crumb_1_link": "shopify://pages/solution",
+        "crumb_2_label": "Solutions-MS-Services",
+        "crumb_2_link": "shopify://pages/solution-services",
+        "crumb_3_label": "Corrective Maintenance",
+        "background_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 8
+      }
+    },
     "initiative_story": {
       "type": "initiatives-intro",
       "settings": {
@@ -149,6 +163,7 @@
   },
   "order": [
     "page_banner",
+    "solution_page_nav_NjQhrp",
     "initiative_story",
     "initiative_objectives",
     "initiative_register"

@@ -15,7 +15,7 @@
         "background_image": "shopify://shop_images/21dc712a3fbf4ec57eb75fe6801124c662dda858.png",
         "overlay_color": "#00000073",
         "subtitle": "",
-        "heading": "<p>Café &amp; Consultancy</p>",
+        "heading": "<p>Café & Consultancy</p>",
         "text": "<p>End-to-end café setup and consultancy support for hospitality partners across the Kingdom.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
@@ -25,6 +25,20 @@
         "heading_line_height": 70,
         "heading_size_mobile": 40,
         "heading_line_height_mobile": 44
+      }
+    },
+    "solution_page_nav_jg9U7G": {
+      "type": "solution-page-nav",
+      "name": "Solution page nav",
+      "settings": {
+        "crumb_1_label": "Solutions",
+        "crumb_1_link": "shopify://pages/solution",
+        "crumb_2_label": "",
+        "crumb_2_link": "",
+        "crumb_3_label": "Café & Consultancy",
+        "background_color": "#ffffff",
+        "padding_top": 32,
+        "padding_bottom": 8
       }
     },
     "initiative_story": {
@@ -149,6 +163,7 @@
   },
   "order": [
     "page_banner",
+    "solution_page_nav_jg9U7G",
     "initiative_story",
     "initiative_objectives",
     "initiative_register"
