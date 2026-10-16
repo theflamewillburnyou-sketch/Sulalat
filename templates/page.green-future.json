@@ -104,13 +104,13 @@
         "objective_8"
       ],
       "settings": {
-        "background_image": "shopify://shop_images/2d33244fe6442d156351f5add78083020e70b15b_ca7cadbc-4be4-46f3-ac0d-4747cc68249a.jpg",
+        "background_image": "shopify://shop_images/image_410.png",
         "overlay_color": "#00000099",
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
         "bullet_color": "#53c295",
         "heading": "Key Objectives & Targets",
-        "min_height": 560,
+        "min_height": 790,
         "min_height_mobile": 420,
         "padding_top": 80,
         "padding_bottom": 80,

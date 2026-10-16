@@ -292,6 +292,10 @@ footer .footer__main .footer-col ul.footer-menu__links li:last-child {
     width: 18px;
 }
 
+.footer .social li a.social__link svg path {
+    fill: currentColor;
+}
+
 .footer-newsletter-bar__logo {
     display: none;
 }

@@ -68,14 +68,14 @@
 
     .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li {
       position: relative;
-      padding-left: 35px;
+      padding-inline-start: 35px;
       color: rgba(255, 255, 255, 0.92);
       font-size: 16px;
       line-height: 1.55;
     }
 
     .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li::before {
-      content: '✔';
+      content: '';
       position: absolute;
       left: 0;
       top: 2px;
@@ -86,7 +86,13 @@
       justify-content: center;
       align-items: center;
       font-size: 12px;
-      background: {{ section.settings.bullet_color }};
+      background-color: {{ section.settings.bullet_color }};
+      background-image: url('https://cdn.shopify.com/s/files/1/0693/4023/3891/files/tick_430x.svg?v=1792083697');
+    }
+
+    [dir="rtl"] .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li::before {
+      left: auto;
+      right:0;
     }
 
     @media (max-width: 749px) {

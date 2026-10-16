@@ -615,6 +615,7 @@ convertLabelsToPlaceholders();
           font-size: clamp(24px, 2vw, 36px) !important;
           font-weight: inherit !important;
           line-height: 1.2 !important;
+          text-align:left !important;
         }
 
                 /* =====================================
@@ -631,6 +632,7 @@ convertLabelsToPlaceholders();
           letter-spacing: -0.01em !important;
           margin-top: 14px !important;
           margin-bottom: 0 !important;
+          text-align:left !important;
         }
 
 
