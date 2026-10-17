@@ -1543,6 +1543,10 @@
       transform: rotate(45deg);
     }
 
+    [dir="rtl"] .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-sep {
+      transform: rotate(-135deg);
+    }
+
     .about-tabs[data-section-id="{{ section.id }}"] .careers-breadcrumb-sep:has( + .careers-breadcrumb-current) {
       color: #53c295;
     }

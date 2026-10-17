@@ -47,6 +47,10 @@
       flex-shrink: 0;
     }
 
+    [dir="rtl"] .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb-sep {
+      transform: rotate(-135deg);
+    }
+
     .solution-page-nav[data-section-id="{{ section.id }}"] .solution-breadcrumb-sep:has(+ .solution-breadcrumb-current) {
       color: #53c295;
     }
