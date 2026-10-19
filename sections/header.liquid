@@ -495,6 +495,14 @@
     margin: 0;
     padding: 0;
     width: 18px;
+    overflow: visible;
+  }
+
+  /* Keep multi-digit cart counts on one line inside the 18px icon */
+  header .header__cart-count {
+    white-space: nowrap;
+    width: max-content;
+    box-sizing: border-box;
   }
 
   .header-language-toggle__btn {

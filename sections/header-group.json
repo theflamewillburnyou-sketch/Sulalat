@@ -51,7 +51,7 @@
         "a94eb2f1-b98e-4c70-9e55-999dfdaeb047": {
           "type": "columns",
           "settings": {
-            "title": "Shop,محل",
+            "title": "Shop,محل,المتجر",
             "collection_images": "none",
             "collection_use_product_image": false,
             "collection_circle_image": false,
