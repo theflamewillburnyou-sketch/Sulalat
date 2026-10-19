@@ -1289,6 +1289,22 @@ convertLabelsToPlaceholders();
           cursor: pointer !important;
         }
 
+        .sulalat-terms-field[dir="rtl"],
+        .sulalat-terms-field[dir="rtl"] .sulalat-terms-row {
+          text-align: right !important;
+          direction: rtl !important;
+        }
+
+        .sulalat-terms-field[dir="rtl"] .sulalat-terms-row {
+          padding-left: 0 !important;
+          padding-right: 3px !important;
+        }
+
+        .sulalat-terms-field[dir="rtl"] input[type="checkbox"] {
+          margin-left: 0 !important;
+          margin-right: 2px !important;
+        }
+
         button[type="submit"] {
           order: 100 !important;
         }
@@ -1626,6 +1642,63 @@ convertLabelsToPlaceholders();
 
     var POLICY_URL = "/policies/privacy-policy";
 
+    function isArabicLocale() {
+      var html = document.documentElement;
+      var lang = (html.getAttribute("lang") || html.lang || "").toLowerCase();
+      var dir =
+        html.getAttribute("dir") ||
+        (document.body && document.body.getAttribute("dir")) ||
+        "";
+      if (dir === "rtl") return true;
+      if (lang.indexOf("ar") === 0) return true;
+      if (window.Shopify && Shopify.locale && String(Shopify.locale).toLowerCase().indexOf("ar") === 0) {
+        return true;
+      }
+      return false;
+    }
+
+    function isDisclaimerText(text) {
+      if (!text || text.length < 20 || text.length > 400) return false;
+      var lower = text.toLowerCase();
+      var hasPrivacy =
+        lower.indexOf("privacy") !== -1 ||
+        text.indexOf("الخصوصية") !== -1 ||
+        text.indexOf("خصوصية") !== -1;
+      var hasTerms =
+        lower.indexOf("terms") !== -1 ||
+        lower.indexOf("agree") !== -1 ||
+        text.indexOf("الشروط") !== -1 ||
+        text.indexOf("موافقت") !== -1 ||
+        text.indexOf("إنشاء حساب") !== -1;
+      return hasPrivacy && hasTerms;
+    }
+
+    function getTermsHtml() {
+      if (isArabicLocale()) {
+        return (
+          "إن إنشاء حساب يعني موافقتك على " +
+          '<a href="' +
+          POLICY_URL +
+          '" target="_blank" rel="noopener noreferrer">الشروط والأحكام</a>' +
+          " و" +
+          '<a href="' +
+          POLICY_URL +
+          '" target="_blank" rel="noopener noreferrer">سياسة الخصوصية</a>' +
+          " الخاصة بنا"
+        );
+      }
+      return (
+        "By creating an account means you agree to the " +
+        '<a href="' +
+        POLICY_URL +
+        '" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>' +
+        ", and our " +
+        '<a href="' +
+        POLICY_URL +
+        '" target="_blank" rel="noopener noreferrer">Privacy Policy</a>'
+      );
+    }
+
     function findDisclaimerElement(root) {
       var nodes = root.querySelectorAll("div, p, span, label, section");
       var best = null;
@@ -1636,10 +1709,7 @@ convertLabelsToPlaceholders();
         if (el.closest("[data-sulalat-terms-built]")) continue;
 
         var text = (el.textContent || "").replace(/\s+/g, " ").trim();
-        var lower = text.toLowerCase();
-        if (text.length < 20 || text.length > 350) continue;
-        if (lower.indexOf("privacy") === -1) continue;
-        if (lower.indexOf("terms") === -1 && lower.indexOf("agree") === -1) continue;
+        if (!isDisclaimerText(text)) continue;
         if (el.querySelector('input:not([type="checkbox"]), button, select, textarea')) continue;
 
         if (text.length < bestLen) {
@@ -1652,22 +1722,67 @@ convertLabelsToPlaceholders();
     }
 
     function hideOriginalDisclaimer() {
-      var original = findDisclaimerElement(shadow) || findDisclaimerElement(form);
-      if (!original) return;
+      var marked = form.querySelectorAll("[data-sulalat-disclaimer-original]");
+      Array.prototype.forEach.call(marked, function (el) {
+        el.style.setProperty("display", "none", "important");
+      });
 
-      var hideTarget = original;
-      while (
-        hideTarget.parentElement &&
-        hideTarget.parentElement !== form &&
-        hideTarget.parentElement !== shadow &&
-        (hideTarget.parentElement.textContent || "").replace(/\s+/g, " ").trim().length < 400 &&
-        !hideTarget.parentElement.querySelector('button[type="submit"], input[type="email"], input[type="text"]')
-      ) {
-        hideTarget = hideTarget.parentElement;
+      var original = findDisclaimerElement(shadow) || findDisclaimerElement(form);
+      if (original) {
+        var hideTarget = original;
+        while (
+          hideTarget.parentElement &&
+          hideTarget.parentElement !== form &&
+          hideTarget.parentElement !== shadow &&
+          (hideTarget.parentElement.textContent || "").replace(/\s+/g, " ").trim().length < 400 &&
+          !hideTarget.parentElement.querySelector(
+            'button[type="submit"], input[type="email"], input[type="text"]'
+          )
+        ) {
+          hideTarget = hideTarget.parentElement;
+        }
+
+        hideTarget.setAttribute("data-sulalat-disclaimer-original", "true");
+        hideTarget.style.setProperty("display", "none", "important");
       }
 
-      hideTarget.setAttribute("data-sulalat-disclaimer-original", "true");
-      hideTarget.style.setProperty("display", "none", "important");
+      /* Forms often places the native disclaimer after the submit button */
+      var submit = form.querySelector('button[type="submit"]');
+      if (!submit) return;
+
+      var el = submit.nextElementSibling;
+      while (el) {
+        var next = el.nextElementSibling;
+        if (!el.hasAttribute("data-sulalat-terms-built")) {
+          var t = (el.textContent || "").replace(/\s+/g, " ").trim();
+          if (isDisclaimerText(t)) {
+            el.setAttribute("data-sulalat-disclaimer-original", "true");
+            el.style.setProperty("display", "none", "important");
+          }
+        }
+        el = next;
+      }
+    }
+
+    function syncTermsLocale(terms) {
+      if (!terms) return;
+      var arabic = isArabicLocale();
+      var lang = arabic ? "ar" : "en";
+      var text = terms.querySelector(".sulalat-terms-row__text");
+      if (text && text.getAttribute("data-sulalat-terms-lang") !== lang) {
+        text.innerHTML = getTermsHtml();
+        text.setAttribute("data-sulalat-terms-lang", lang);
+      }
+      var box = terms.querySelector('input[type="checkbox"]');
+      if (box) {
+        box.setAttribute(
+          "aria-label",
+          arabic
+            ? "الموافقة على الشروط وسياسة الخصوصية"
+            : "Agree to Terms and Privacy Policy"
+        );
+      }
+      terms.setAttribute("dir", arabic ? "rtl" : "ltr");
     }
 
     function buildTermsRow() {
@@ -1682,6 +1797,7 @@ convertLabelsToPlaceholders();
       var wrap = document.createElement("div");
       wrap.className = "sulalat-terms-field";
       wrap.setAttribute("data-sulalat-terms-built", "true");
+      wrap.setAttribute("dir", isArabicLocale() ? "rtl" : "ltr");
 
       var row = document.createElement("div");
       row.className = "sulalat-terms-row";
@@ -1692,15 +1808,17 @@ convertLabelsToPlaceholders();
       checkbox.required = false;
       checkbox.removeAttribute("required");
       checkbox.setAttribute("data-sulalat-terms-checkbox", "true");
-      checkbox.setAttribute("aria-label", "Agree to Terms and Privacy Policy");
+      checkbox.setAttribute(
+        "aria-label",
+        isArabicLocale()
+          ? "الموافقة على الشروط وسياسة الخصوصية"
+          : "Agree to Terms and Privacy Policy"
+      );
 
       var text = document.createElement("div");
       text.className = "sulalat-terms-row__text";
-      text.innerHTML =
-        'By creating an account means you agree to the ' +
-        '<a href="' + POLICY_URL + '" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>' +
-        ', and our ' +
-        '<a href="' + POLICY_URL + '" target="_blank" rel="noopener noreferrer">Privacy Policy</a>';
+      text.setAttribute("data-sulalat-terms-lang", isArabicLocale() ? "ar" : "en");
+      text.innerHTML = getTermsHtml();
 
       row.appendChild(checkbox);
       row.appendChild(text);
@@ -1728,6 +1846,11 @@ convertLabelsToPlaceholders();
     function styleTermsRow(terms) {
       if (!terms) return;
 
+      var rtl = isArabicLocale();
+      terms.setAttribute("dir", rtl ? "rtl" : "ltr");
+      terms.style.setProperty("text-align", rtl ? "right" : "left", "important");
+      terms.style.setProperty("direction", rtl ? "rtl" : "ltr", "important");
+
       var box = terms.querySelector('input[type="checkbox"]');
       if (box) {
         box.style.setProperty("display", "inline-block", "important");
@@ -1738,14 +1861,20 @@ convertLabelsToPlaceholders();
         box.style.setProperty("height", "16px", "important");
         box.style.setProperty("cursor", "pointer", "important");
         box.style.setProperty("flex-shrink", "0", "important");
-        box.style.setProperty("margin", "2px 0 0 2px", "important");
+        box.style.setProperty(
+          "margin",
+          rtl ? "2px 2px 0 0" : "2px 0 0 2px",
+          "important"
+        );
       }
 
       terms.style.setProperty("overflow", "visible", "important");
       var row = terms.querySelector(".sulalat-terms-row");
       if (row) {
         row.style.setProperty("overflow", "visible", "important");
-        row.style.setProperty("padding-left", "3px", "important");
+        row.style.setProperty("direction", rtl ? "rtl" : "ltr", "important");
+        row.style.setProperty("padding-left", rtl ? "0" : "3px", "important");
+        row.style.setProperty("padding-right", rtl ? "3px" : "0", "important");
       }
 
       Array.prototype.forEach.call(terms.querySelectorAll("a"), function (link) {
@@ -1761,12 +1890,70 @@ convertLabelsToPlaceholders();
       });
     }
 
+    function setSubmitButtonText(submit, label) {
+      if (!submit || !label) return;
+
+      /* Prefer a plain text child so we don't wipe icons/spinners */
+      var textNode = null;
+      var walk = document.createTreeWalker(submit, NodeFilter.SHOW_TEXT, null);
+      var node;
+      while ((node = walk.nextNode())) {
+        if ((node.nodeValue || "").replace(/\s+/g, " ").trim()) {
+          textNode = node;
+          break;
+        }
+      }
+      if (textNode) {
+        textNode.nodeValue = label;
+        return;
+      }
+
+      var span = submit.querySelector("span");
+      if (span && !span.querySelector("*")) {
+        span.textContent = label;
+        return;
+      }
+
+      submit.textContent = label;
+    }
+
+    function syncSubmitLabel(submit) {
+      if (!submit) return;
+
+      var current = (submit.textContent || "").replace(/\s+/g, " ").trim();
+      if (!submit.getAttribute("data-sulalat-submit-original") && current) {
+        submit.setAttribute("data-sulalat-submit-original", current);
+      }
+
+      var original =
+        submit.getAttribute("data-sulalat-submit-original") || current || "Submit";
+      var arabic = isArabicLocale();
+      var lower = original.toLowerCase();
+
+      if (arabic) {
+        var arLabel = "إرسال";
+        if (lower.indexOf("sign up") !== -1 || lower.indexOf("register") !== -1) {
+          arLabel = "تسجيل";
+        } else if (lower.indexOf("create") !== -1) {
+          arLabel = "إنشاء حساب";
+        } else if (lower.indexOf("submit") !== -1) {
+          arLabel = "إرسال";
+        }
+        if (current !== arLabel) setSubmitButtonText(submit, arLabel);
+      } else if (current !== original) {
+        setSubmitButtonText(submit, original);
+      }
+    }
+
     function positionTermsAboveSubmit() {
       var submit = form.querySelector('button[type="submit"]');
       if (!submit) return;
 
+      hideOriginalDisclaimer();
       var terms = buildTermsRow();
+      syncTermsLocale(terms);
       styleTermsRow(terms);
+      syncSubmitLabel(submit);
 
       if (terms && terms.nextElementSibling !== submit) {
         form.insertBefore(terms, submit);
