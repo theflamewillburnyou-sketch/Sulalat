@@ -99,11 +99,39 @@
       .initiative-objectives[data-section-id="{{ section.id }}"] {
         min-height: {{ section.settings.min_height_mobile }}px;
         padding: {{ section.settings.padding_top_mobile }}px 0 {{ section.settings.padding_bottom_mobile }}px;
+        flex-direction: column;
+        gap: 32px;
+        background:#fff;
+      }
+
+      .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__bg {
+        position: static;
+        inset: 0;
+        width: 100%;
+      }
+      .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__shade {
+        opacity: 0;
       }
 
       .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__panel {
         max-width: none;
         border-radius: 12px;
+        background:#fff;
+        border: 1px solid rgba(0 0 0 / 20%);
+      }
+
+      .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__heading {
+        color: #000;
+      }  
+
+      .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li {
+        color: #141211;
+      }
+    }
+
+    @media (max-width: 575px){
+       .initiative-objectives[data-section-id="{{ section.id }}"] .initiative-objectives__list li {
+        font-size:14px;
       }
     }
   </style>
