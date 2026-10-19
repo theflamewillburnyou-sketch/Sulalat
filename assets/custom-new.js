@@ -445,6 +445,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    /* Prevent re-entry — body MutationObserver used to re-run
+       this entire init on every DOM change and freeze the page */
+    if (form.dataset.sulalatFormInit === "true") return;
+    form.dataset.sulalatFormInit = "true";
+
     function convertLabelsToPlaceholders() {
 
   const inputs = form.querySelectorAll(
@@ -848,39 +853,134 @@ convertLabelsToPlaceholders();
 
         /* =====================================
            PHONE FIELD
-           Hide Forms country flag dropdown
+           Keep current single-field look.
+           Click +prefix opens country dropdown.
            ===================================== */
-
-        .phone-country-selector,
-        [class*="phone-country-selector"],
-        [class*="formPhoneInputContainer"] [class*="selectToggle"],
-        [class*="formPhoneInputContainer"] [class*="flagIcon"] {
-          display: none !important;
-          width: 0 !important;
-          min-width: 0 !important;
-          height: 0 !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          overflow: hidden !important;
-          border: 0 !important;
-          pointer-events: none !important;
-          visibility: hidden !important;
-        }
 
         [class*="formPhoneInputContainer"] {
           display: block !important;
           width: 100% !important;
           gap: 0 !important;
+          position: relative !important;
+          overflow: visible !important;
+          z-index: 2 !important;
         }
 
-        [class*="formPhoneInputContainer"] [class*="formFieldContainer"],
-        [class*="formPhoneInputContainer"] input[type="tel"] {
+        [class*="formPhoneInputContainer"] [class*="formFieldContainer"] {
           width: 100% !important;
+          position: relative !important;
+          z-index: 1 !important;
+        }
+
+        [class*="formPhoneInputContainer"] input[type="tel"],
+        input[type="tel"]#phone_number,
+        input[type="tel"][name="phone_number"] {
+          width: 100% !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          pointer-events: auto !important;
         }
 
         input[type="tel"] {
           padding-left: 20px !important;
           padding-right: 20px !important;
+        }
+
+        /* Hide native flag UI — keep Forms toggle for open/close */
+        .phone-country-selector,
+        [class*="phone-country-selector"] {
+          display: block !important;
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          width: 72px !important;
+          height: 50px !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+          background: transparent !important;
+          z-index: 5 !important;
+          overflow: visible !important;
+          pointer-events: none !important;
+        }
+
+        [class*="formPhoneInputContainer"] [class*="selectContainer"] {
+          display: block !important;
+          width: 100% !important;
+          height: 100% !important;
+          position: static !important;
+          overflow: visible !important;
+          pointer-events: none !important;
+        }
+
+        [class*="formPhoneInputContainer"] [class*="selectToggle"] {
+          display: block !important;
+          width: 1px !important;
+          height: 1px !important;
+          opacity: 0 !important;
+          pointer-events: none !important;
+          border: 0 !important;
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        [class*="formPhoneInputContainer"] [class*="flagIcon"],
+        [class*="formPhoneInputContainer"] [class*="selectToggleText"],
+        [class*="formPhoneInputContainer"] [class*="arrowDownIcon"],
+        .phone-country-selector img {
+          display: none !important;
+        }
+
+        /* Our transparent hit target over +code */
+        [data-sulalat-prefix-hit] {
+          position: absolute !important;
+          left: 0 !important;
+          top: 0 !important;
+          width: 72px !important;
+          height: 50px !important;
+          z-index: 12 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: 0 !important;
+          background: transparent !important;
+          cursor: pointer !important;
+          opacity: 0 !important;
+        }
+
+        /* Make open dropdown actually visible */
+        [class*="formPhoneInputContainer"] [class*="dropdownContainer"] {
+          position: absolute !important;
+          left: 0 !important;
+          top: calc(100% + 6px) !important;
+          bottom: auto !important;
+          right: auto !important;
+          z-index: 100 !important;
+          min-width: 240px !important;
+          width: max-content !important;
+          height: auto !important;
+          min-height: 120px !important;
+          max-height: 200px !important;
+          overflow-x: hidden !important;
+          overflow-y: auto !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+          background: #ffffff !important;
+          border: 1px solid #E6E6E6 !important;
+          border-radius: 12px !important;
+          box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14) !important;
+          pointer-events: auto !important;
+        }
+
+        [class*="formPhoneInputContainer"] [class*="optionList"],
+        [class*="formPhoneInputContainer"] #country-selector-dropdown {
+          display: block !important;
+          max-height: 200px !important;
+          overflow-y: auto !important;
+          pointer-events: auto !important;
+        }
+
+        input[data-sulalat-phone-proxy] {
+          display: none !important;
         }
 
 
@@ -1128,6 +1228,7 @@ convertLabelsToPlaceholders();
           text-align: left !important;
           opacity: 1 !important;
           visibility: visible !important;
+          overflow: visible !important;
           order: 90 !important;
           grid-column: 1 / -1 !important;
         }
@@ -1140,6 +1241,13 @@ convertLabelsToPlaceholders();
           opacity: 1 !important;
           visibility: visible !important;
           flex-shrink: 0 !important;
+          margin-left: 2px !important;
+        }
+
+        .sulalat-terms-field input[type="checkbox"][data-sulalat-terms-invalid="true"] {
+          outline: 1px solid #e02229 !important;
+          outline-offset: 1px !important;
+          box-shadow: none !important;
         }
 
         .sulalat-terms-field a,
@@ -1157,6 +1265,9 @@ convertLabelsToPlaceholders();
           align-items: flex-start !important;
           gap: 10px !important;
           width: 100% !important;
+          overflow: visible !important;
+          padding-left: 2px !important;
+          box-sizing: border-box !important;
         }
 
         .sulalat-terms-row__text {
@@ -1378,166 +1489,67 @@ convertLabelsToPlaceholders();
 
 
     /* =========================================
-       CLEAR DEFAULT PHONE COUNTRY CODE (+966)
-       Forms re-injects the dial code after we clear
-       it. Block setter + keep clearing silently
-       until the user types a real number.
+       PHONE FIELD — cleanup + prefix click opens
+       country dropdown (no design change)
        ========================================= */
 
-    function isBareDialCode(value) {
-      var val = String(value || "").trim();
-      /* +966, +966 , +1, etc. — dial code only */
-      return /^\+\d{1,4}$/.test(val);
-    }
-
-    function stripFilledLabel(input) {
-      var label = input.parentElement
-        ? input.parentElement.querySelector("label")
-        : null;
-      if (!label || !label.className) return;
-      label.className = String(label.className)
-        .split(/\s+/)
-        .filter(function (cls) {
-          return (
-            cls &&
-            cls.indexOf("inputFilled") === -1 &&
-            cls.indexOf("InputFilled") === -1
-          );
-        })
-        .join(" ");
-    }
-
-    function lockPhoneValueSetter(input) {
-      if (!input || input.dataset.sulalatPhoneLocked === "true") return;
-      input.dataset.sulalatPhoneLocked = "true";
-
-      var protoDesc = Object.getOwnPropertyDescriptor(
-        HTMLInputElement.prototype,
-        "value"
-      );
-      if (!protoDesc || !protoDesc.get || !protoDesc.set) return;
-
-      Object.defineProperty(input, "value", {
-        configurable: true,
-        enumerable: true,
-        get: function () {
-          return protoDesc.get.call(this);
-        },
-        set: function (next) {
-          if (
-            this.dataset.sulalatPhoneUserEdited !== "true" &&
-            isBareDialCode(next)
-          ) {
-            protoDesc.set.call(this, "");
-            stripFilledLabel(this);
-            return;
-          }
-          protoDesc.set.call(this, next);
+    function cleanupPhoneFieldExtras() {
+      Array.prototype.forEach.call(
+        form.querySelectorAll("[data-sulalat-phone-proxy], [data-sulalat-dial-code]"),
+        function (el) {
+          el.remove();
         }
-      });
-    }
-
-    function clearDefaultPhoneCode() {
-      var phones = form.querySelectorAll(
-        'input[type="tel"], #phone_number, input[id*="phone" i]'
       );
 
-      Array.prototype.forEach.call(phones, function (input) {
-        if (!input || input.dataset.sulalatPhoneUserEdited === "true") return;
-
-        lockPhoneValueSetter(input);
-
-        if (!isBareDialCode(input.value)) return;
-
-        /* Set via prototype to avoid loops; do NOT fire events
-           (Forms treats change as a cue to restore the dial code). */
-        try {
-          var protoDesc = Object.getOwnPropertyDescriptor(
-            HTMLInputElement.prototype,
-            "value"
-          );
-          if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
-          else input.value = "";
-        } catch (e) {
-          input.value = "";
+      Array.prototype.forEach.call(
+        form.querySelectorAll('input[type="tel"], #phone_number'),
+        function (tel) {
+          tel.removeAttribute("data-sulalat-phone-proxy-source");
+          delete tel.dataset.sulalatPhoneProxySource;
+          tel.removeAttribute("aria-hidden");
+          if (tel.getAttribute("tabindex") === "-1") {
+            tel.removeAttribute("tabindex");
+          }
         }
-
-        stripFilledLabel(input);
-      });
-    }
-
-    function bindPhoneUserEditGuard() {
-      var phones = form.querySelectorAll(
-        'input[type="tel"], #phone_number, input[id*="phone" i]'
       );
 
-      Array.prototype.forEach.call(phones, function (input) {
-        lockPhoneValueSetter(input);
+      var earlyHide = shadow.querySelector("style[data-sulalat-phone-hide]");
+      if (earlyHide) earlyHide.remove();
+    }
 
-        if (input.dataset.sulalatPhoneGuard === "true") return;
-        input.dataset.sulalatPhoneGuard = "true";
+    function bindPhonePrefixClick() {
+      if (form.dataset.sulalatPhonePrefixClick === "true") return;
+      form.dataset.sulalatPhonePrefixClick = "true";
 
-        function markEdited() {
-          var val = (input.value || "").trim();
-          if (val && !isBareDialCode(val)) {
-            input.dataset.sulalatPhoneUserEdited = "true";
-          } else if (isBareDialCode(val)) {
-            try {
-              var protoDesc = Object.getOwnPropertyDescriptor(
-                HTMLInputElement.prototype,
-                "value"
-              );
-              if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
-              else input.value = "";
-            } catch (e) {
-              input.value = "";
-            }
-            stripFilledLabel(input);
-          }
+      function ensurePrefixHitArea() {
+        var wrap = form.querySelector('[class*="formPhoneInputContainer"]');
+        if (!wrap) return;
+
+        var hit = wrap.querySelector("[data-sulalat-prefix-hit]");
+        if (!hit) {
+          hit = document.createElement("button");
+          hit.type = "button";
+          hit.setAttribute("data-sulalat-prefix-hit", "true");
+          hit.setAttribute("aria-label", "Select country code");
+          hit.tabIndex = 0;
+          wrap.appendChild(hit);
+
+          hit.addEventListener("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            var toggle = wrap.querySelector('[class*="selectToggle"]');
+            if (toggle) toggle.click();
+          });
         }
-
-        input.addEventListener("input", markEdited);
-        input.addEventListener("change", markEdited);
-        input.addEventListener("blur", markEdited);
-        input.addEventListener("focus", function () {
-          if (isBareDialCode(input.value)) {
-            try {
-              var protoDesc = Object.getOwnPropertyDescriptor(
-                HTMLInputElement.prototype,
-                "value"
-              );
-              if (protoDesc && protoDesc.set) protoDesc.set.call(input, "");
-              else input.value = "";
-            } catch (e) {
-              input.value = "";
-            }
-            stripFilledLabel(input);
-          }
-        });
-      });
-
-      if (!form.dataset.sulalatPhoneClearTimer) {
-        form.dataset.sulalatPhoneClearTimer = "true";
-        var timer = setInterval(function () {
-          clearDefaultPhoneCode();
-          var stillWatching = false;
-          Array.prototype.forEach.call(
-            form.querySelectorAll(
-              'input[type="tel"], #phone_number, input[id*="phone" i]'
-            ),
-            function (input) {
-              if (input.dataset.sulalatPhoneUserEdited !== "true") {
-                stillWatching = true;
-              }
-            }
-          );
-          if (!stillWatching) clearInterval(timer);
-        }, 200);
       }
+
+      ensurePrefixHitArea();
+      setTimeout(ensurePrefixHitArea, 300);
+      setTimeout(ensurePrefixHitArea, 1000);
     }
 
-    clearDefaultPhoneCode();
-    bindPhoneUserEditGuard();
+    cleanupPhoneFieldExtras();
+    bindPhonePrefixClick();
 
 
     /* =========================================
@@ -1676,7 +1688,9 @@ convertLabelsToPlaceholders();
 
       var checkbox = document.createElement("input");
       checkbox.type = "checkbox";
-      checkbox.required = true;
+      /* Native required blocks Forms submit; custom validation handles this */
+      checkbox.required = false;
+      checkbox.removeAttribute("required");
       checkbox.setAttribute("data-sulalat-terms-checkbox", "true");
       checkbox.setAttribute("aria-label", "Agree to Terms and Privacy Policy");
 
@@ -1724,7 +1738,14 @@ convertLabelsToPlaceholders();
         box.style.setProperty("height", "16px", "important");
         box.style.setProperty("cursor", "pointer", "important");
         box.style.setProperty("flex-shrink", "0", "important");
-        box.style.setProperty("margin", "2px 0 0 0", "important");
+        box.style.setProperty("margin", "2px 0 0 2px", "important");
+      }
+
+      terms.style.setProperty("overflow", "visible", "important");
+      var row = terms.querySelector(".sulalat-terms-row");
+      if (row) {
+        row.style.setProperty("overflow", "visible", "important");
+        row.style.setProperty("padding-left", "3px", "important");
       }
 
       Array.prototype.forEach.call(terms.querySelectorAll("a"), function (link) {
@@ -1751,24 +1772,266 @@ convertLabelsToPlaceholders();
         form.insertBefore(terms, submit);
       }
 
-      if (!form.dataset.sulalatTermsGuard) {
-        form.dataset.sulalatTermsGuard = "true";
-        form.addEventListener(
-          "submit",
-          function (event) {
-            var agree = form.querySelector("[data-sulalat-terms-checkbox]");
-            if (agree && !agree.checked) {
-              event.preventDefault();
-              event.stopPropagation();
-              agree.focus();
-            }
-          },
-          true
-        );
-      }
+      /* Terms enforcement is handled in custom validation
+         so we do not block Forms submit handlers here. */
     }
 
     positionTermsAboveSubmit();
+
+
+    /* =========================================
+       CUSTOM VALIDATION MESSAGES
+       Shopify Forms field errors can be blocked
+       by our layout/terms handlers. Show our own
+       messages under empty / invalid fields.
+       ========================================= */
+
+    function resolveFieldContainer(input) {
+      if (!input) return null;
+      return (
+        input.closest('[class*="formPhoneInputContainer"]') ||
+        input.closest('[class*="formFieldContainer"]') ||
+        input.closest(".sulalat-password-field") ||
+        input.parentElement
+      );
+    }
+
+    function getFieldLabel(container, input) {
+      if (!container && !input) return "Field";
+      var label = container && container.querySelector("label");
+      var text = label && label.textContent ? label.textContent.trim() : "";
+      if (!text && input) {
+        text = (input.getAttribute("aria-label") || input.placeholder || input.id || "").trim();
+      }
+      text = text.replace(/\s+/g, " ").replace(/\*+$/, "").trim();
+      return text || "Field";
+    }
+
+    function isPhoneInput(input, label) {
+      return !!(
+        input &&
+        (input.type === "tel" ||
+          /phone/i.test(input.id || "") ||
+          /phone/i.test(label || ""))
+      );
+    }
+
+    function isEmailInput(input, label) {
+      return !!(
+        input &&
+        (input.type === "email" ||
+          /email/i.test(input.id || "") ||
+          /email/i.test(label || ""))
+      );
+    }
+
+    function isEmptyValue(input) {
+      var value = (input.value || "").trim();
+      if (!value) return true;
+      /* Dial-code-only phone values count as empty */
+      if (input.type === "tel" && /^\+\d{0,4}$/.test(value)) return true;
+      return false;
+    }
+
+    function isValidEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function clearTermsCheckboxHighlight() {
+      var agree = form.querySelector("[data-sulalat-terms-checkbox]");
+      if (!agree) return;
+      agree.removeAttribute("data-sulalat-terms-invalid");
+      agree.style.removeProperty("outline");
+      agree.style.removeProperty("outline-offset");
+      agree.style.removeProperty("box-shadow");
+      agree.style.removeProperty("accent-color");
+      agree.style.removeProperty("border");
+      agree.style.removeProperty("border-color");
+    }
+
+    function highlightTermsCheckbox(agree) {
+      if (!agree) return;
+      var row = agree.closest(".sulalat-terms-row");
+      var wrap = agree.closest("[data-sulalat-terms-built]");
+      if (row) {
+        row.style.setProperty("overflow", "visible", "important");
+        row.style.setProperty("padding-left", "3px", "important");
+      }
+      if (wrap) {
+        wrap.style.setProperty("overflow", "visible", "important");
+      }
+
+      agree.setAttribute("data-sulalat-terms-invalid", "true");
+      /* Thin 1px ring only — no box-shadow (was doubling thickness) */
+      agree.style.setProperty("outline", "1px solid #e02229", "important");
+      agree.style.setProperty("outline-offset", "1px", "important");
+      agree.style.setProperty("box-shadow", "none", "important");
+      agree.style.setProperty("margin-left", "2px", "important");
+    }
+
+    function clearCustomFieldErrors() {
+      Array.prototype.forEach.call(
+        form.querySelectorAll("[data-sulalat-custom-error]"),
+        function (err) {
+          err.remove();
+        }
+      );
+
+      Array.prototype.forEach.call(
+        form.querySelectorAll("[data-sulalat-custom-invalid]"),
+        function (input) {
+          input.removeAttribute("data-sulalat-custom-invalid");
+          input.removeAttribute("aria-invalid");
+        }
+      );
+
+      clearTermsCheckboxHighlight();
+    }
+
+    function showCustomFieldError(container, input, message) {
+      if (!container) return;
+
+      var errorEl = container.querySelector("[data-sulalat-custom-error]");
+      if (!errorEl) {
+        errorEl = document.createElement("div");
+        errorEl.setAttribute("data-sulalat-custom-error", "true");
+        errorEl.setAttribute("role", "alert");
+        container.appendChild(errorEl);
+      }
+
+      errorEl.textContent = message;
+      errorEl.style.setProperty("display", "block", "important");
+      errorEl.style.setProperty("width", "100%", "important");
+      errorEl.style.setProperty("margin", "6px 0 0", "important");
+      errorEl.style.setProperty("padding", "0", "important");
+      errorEl.style.setProperty("color", "#e02229", "important");
+      errorEl.style.setProperty("font-size", "13px", "important");
+      errorEl.style.setProperty("line-height", "1.35", "important");
+      errorEl.style.setProperty("text-align", "left", "important");
+      errorEl.style.setProperty("visibility", "visible", "important");
+      errorEl.style.setProperty("opacity", "1", "important");
+
+      if (input) {
+        input.setAttribute("data-sulalat-custom-invalid", "true");
+        input.setAttribute("aria-invalid", "true");
+      }
+    }
+
+    function getRequiredMessage(input, label) {
+      if (isPhoneInput(input, label)) return "Phone number is required";
+      if (isEmailInput(input, label)) return "E-mail Address is required";
+      return label + " is required";
+    }
+
+    function validateShopifyFormFields() {
+      clearCustomFieldErrors();
+
+      var isValid = true;
+      var firstInvalid = null;
+
+      var inputs = form.querySelectorAll(
+        'input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="number"]'
+      );
+
+      Array.prototype.forEach.call(inputs, function (input) {
+        if (input.hasAttribute("data-sulalat-terms-checkbox")) return;
+        if (input.hasAttribute("data-sulalat-phone-proxy")) return;
+        if (input.disabled || input.type === "hidden") return;
+
+        var container = resolveFieldContainer(input);
+        var label = getFieldLabel(container, input);
+        var empty = isEmptyValue(input);
+
+        if (empty) {
+          showCustomFieldError(container, input, getRequiredMessage(input, label));
+          if (!firstInvalid) firstInvalid = input;
+          isValid = false;
+          return;
+        }
+
+        if (isEmailInput(input, label) && !isValidEmail((input.value || "").trim())) {
+          showCustomFieldError(container, input, "Please enter a valid email address");
+          if (!firstInvalid) firstInvalid = input;
+          isValid = false;
+        }
+      });
+
+      var agree = form.querySelector("[data-sulalat-terms-checkbox]");
+      if (agree && !agree.checked) {
+        highlightTermsCheckbox(agree);
+        if (!firstInvalid) firstInvalid = agree;
+        isValid = false;
+      } else {
+        clearTermsCheckboxHighlight();
+      }
+
+      if (firstInvalid && typeof firstInvalid.focus === "function") {
+        firstInvalid.focus();
+      }
+
+      return isValid;
+    }
+
+    function bindCustomFormValidation() {
+      if (form.dataset.sulalatCustomValidationBound === "true") return;
+      form.dataset.sulalatCustomValidationBound = "true";
+
+      var submit = form.querySelector('button[type="submit"]');
+
+      function runValidation(event) {
+        if (validateShopifyFormFields()) return;
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      if (submit) {
+        submit.addEventListener("click", runValidation, true);
+      }
+
+      form.addEventListener("submit", runValidation, true);
+
+      form.addEventListener(
+        "input",
+        function (event) {
+          var target = event.target;
+          if (!target || !target.matches) return;
+          if (
+            !target.matches(
+              'input[type="text"], input[type="email"], input[type="tel"], input[type="password"], input[type="number"], input[type="checkbox"]'
+            )
+          ) {
+            return;
+          }
+
+          if (target.hasAttribute("data-sulalat-terms-checkbox")) {
+            if (target.checked) clearTermsCheckboxHighlight();
+            return;
+          }
+
+          var container = resolveFieldContainer(target);
+          if (!container) return;
+          var errorEl = container.querySelector("[data-sulalat-custom-error]");
+          if (errorEl) errorEl.remove();
+          target.removeAttribute("data-sulalat-custom-invalid");
+          target.removeAttribute("aria-invalid");
+        },
+        true
+      );
+
+      form.addEventListener(
+        "change",
+        function (event) {
+          var target = event.target;
+          if (!target || !target.hasAttribute || !target.hasAttribute("data-sulalat-terms-checkbox")) {
+            return;
+          }
+          if (target.checked) clearTermsCheckboxHighlight();
+        },
+        true
+      );
+    }
+
+    bindCustomFormValidation();
 
 
     /* =========================================
@@ -1786,27 +2049,6 @@ convertLabelsToPlaceholders();
         email.setAttribute("inputmode", "email");
         email.setAttribute("autocomplete", "email");
       }
-    }
-
-    function getFieldLabel(container, input) {
-      if (!container && !input) return "Field";
-      var label = container && container.querySelector("label");
-      var text = label && label.textContent ? label.textContent.trim() : "";
-      if (!text && input) {
-        text = (input.getAttribute("aria-label") || input.placeholder || input.id || "").trim();
-      }
-      text = text.replace(/\s+/g, " ").replace(/\*+$/, "").trim();
-      return text || "Field";
-    }
-
-    function resolveFieldContainer(input) {
-      if (!input) return null;
-      return (
-        input.closest('[class*="formPhoneInputContainer"]') ||
-        input.closest('[class*="formFieldContainer"]') ||
-        input.closest(".sulalat-password-field") ||
-        input.parentElement
-      );
     }
 
     function getInvalidFieldContainers() {
@@ -1945,18 +2187,28 @@ convertLabelsToPlaceholders();
     relocateFormErrors();
 
     if (!shadow.__sulalatPasswordObserver) {
+      var formUiScheduled = false;
       shadow.__sulalatPasswordObserver = new MutationObserver(function () {
-        initPasswordToggles();
-        positionTermsAboveSubmit();
-        fixEmailInputType();
-        relocateFormErrors();
-        clearDefaultPhoneCode();
-        bindPhoneUserEditGuard();
+        if (formUiScheduled) return;
+        formUiScheduled = true;
+        requestAnimationFrame(function () {
+          formUiScheduled = false;
+          initPasswordToggles();
+          positionTermsAboveSubmit();
+          fixEmailInputType();
+          relocateFormErrors();
+        });
       });
       shadow.__sulalatPasswordObserver.observe(shadow, {
         childList: true,
         subtree: true
       });
+    }
+
+    /* Stop watching the whole document once form is ready */
+    if (window.__sulalatFormsBodyObserver) {
+      window.__sulalatFormsBodyObserver.disconnect();
+      window.__sulalatFormsBodyObserver = null;
     }
 
     console.log(
@@ -1972,25 +2224,19 @@ convertLabelsToPlaceholders();
 
   initShopifyForm();
 
-  
-
 
   /* =========================================
      SHOPIFY FORMS LOAD ASYNC
+     Watch until form mounts, then disconnect
      ========================================= */
 
-  const observer = new MutationObserver(function () {
-
+  window.__sulalatFormsBodyObserver = new MutationObserver(function () {
     initShopifyForm();
-
   });
 
-
-  observer.observe(document.body, {
-
+  window.__sulalatFormsBodyObserver.observe(document.body, {
     childList: true,
     subtree: true
-
   });
 
 });
