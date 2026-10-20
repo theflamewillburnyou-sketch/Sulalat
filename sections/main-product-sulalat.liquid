@@ -154,6 +154,10 @@
       cursor: default;
     }
 
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery-pagination {
+      display: none;
+    }
+
     /* Info */
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__title {
       margin: 0 0 15px;
@@ -743,19 +747,78 @@
 
     @media (max-width: 749px) {
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
       }
 
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumbs {
-        flex-direction: row;
-        max-height: none;
-        overflow-x: auto;
-        overflow-y: hidden;
+        display: none;
       }
 
-      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__thumb {
-        width: 64px;
-        flex: 0 0 64px;
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__nav {
+        display: none;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main.swiper {
+        width: 100%;
+        max-width: 100%;
+        aspect-ratio: auto;
+        height: auto;
+        overflow: hidden;
+        border-radius: 0;
+        background: transparent;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-wrapper {
+        height: auto !important;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-slide {
+        position: relative;
+        height: auto !important;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f4f4f4;
+        box-sizing: border-box;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-slide::before {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__main .swiper-slide .sulalat-pdp__main-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery-pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        position: static;
+        width: 100%;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        margin: 0 !important;
+        border-radius: 50%;
+        background: #d0d0d0;
+        opacity: 1;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__gallery-pagination .swiper-pagination-bullet-active {
+        background: var(--sulalat-pdp-accent, var(--brand-primary, #53c295));
       }
 
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions {
@@ -869,6 +932,9 @@
             {{ 'product-1' | placeholder_svg_tag: 'sulalat-pdp__main-image' }}
           {% endif %}
         </div>
+        {% if media_list.size > 1 %}
+          <div class="sulalat-pdp__gallery-pagination" data-gallery-pagination></div>
+        {% endif %}
       </div>
 
       {%- comment -%} Product info blocks {%- endcomment -%}
@@ -1481,17 +1547,33 @@
           if (found >= 0) startIndex = found;
         }
 
+        var paginationEl = root.querySelector('[data-gallery-pagination]');
+
         gallerySwiper = new window.Swiper(gallerySliderEl, {
-          slidesPerView: 1,
-          spaceBetween: 0,
+          slidesPerView: 2.2,
+          spaceBetween: 12,
           speed: 500,
-          loop: media.length > 2,
+          loop: false,
           initialSlide: startIndex,
           grabCursor: true,
           watchOverflow: true,
+          pagination: {
+            el: paginationEl,
+            clickable: true
+          },
           navigation: {
             nextEl: root.querySelector('[data-gallery-next]'),
             prevEl: root.querySelector('[data-gallery-prev]')
+          },
+          breakpoints: {
+            750: {
+              slidesPerView: 1,
+              spaceBetween: 0,
+              loop: media.length > 2,
+              pagination: {
+                enabled: false
+              }
+            }
           },
           on: {
             init: function () {

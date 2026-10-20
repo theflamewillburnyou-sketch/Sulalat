@@ -1,8 +1,15 @@
 {%- liquid
   assign product_id = product.id
   assign limit = section.settings.products_to_show | default: 8
+  assign mobile_limit = section.settings.products_to_show_mobile | default: 4
+  if mobile_limit > limit
+    assign limit = mobile_limit
+  endif
   if limit > 10
     assign limit = 10
+  endif
+  if mobile_limit > 10
+    assign mobile_limit = 10
   endif
   assign slides_desktop = section.settings.slides_desktop | default: 3
   assign slides_tablet = section.settings.slides_tablet | default: 2
@@ -274,13 +281,120 @@
     pointer-events: none;
   }
 
+  .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__view-all {
+    display: none;
+  }
+
   @media (max-width: 749px) {
-    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions {
-      grid-template-columns: 1fr;
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__heading {
+      margin-bottom: 20px;
+      text-align: start;
     }
 
-    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__heading {
-      margin-bottom: 28px;
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__slider.swiper {
+      overflow: visible;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__slider .swiper-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px 14px;
+      transform: none !important;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__slider .swiper-slide {
+      width: 100% !important;
+      margin: 0 !important;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__slider .swiper-slide:nth-child(n + {{ mobile_limit | plus: 1 }}) {
+      display: none;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__nav {
+      display: none;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card {
+      max-width: none;
+      margin: 0;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__media {
+      aspect-ratio: 1;
+      border-radius: 12px;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__icon {
+      inset: 0 0 52px;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__icon svg {
+      width: clamp(48px, 36%, 72px);
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__band {
+      display: flex;
+      min-height: 48px;
+      padding: 8px 10px;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__band-ar,
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__band-en {
+      font-size: 11px;
+      line-height: 1.3;
+      font-weight: 400;
+      color: #555;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__body {
+      padding-top: 14px;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__title {
+      margin: 0 0 6px;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 600;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__desc {
+      display: none;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__price {
+      margin: 0 0 14px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions > a.sulalat-btn.primary-btn,
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions > a.primary-btn {
+      display: none;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions .sulalat-btn--outline,
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-product-card__actions .sulalat-btn {
+      width: 100%;
+      max-width: none;
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.2;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__view-all {
+      display: block;
+      margin-top: 28px;
+    }
+
+    .sulalat-related[data-section-id="{{ section.id }}"] .sulalat-related__view-all .primary-btn {
+      width: 100%;
     }
   }
 </style>
@@ -319,7 +433,8 @@
                   product: product,
                   color_index: forloop.index0,
                   section_id: section.id,
-                  brand_media: section.settings.brand_media
+                  brand_media: section.settings.brand_media,
+                  show_band: true
                 %}
               </div>
             {% endfor %}
@@ -341,6 +456,21 @@
           </div>
         {% endif %}
       </div>
+
+      {%- liquid
+        assign view_products_label = section.settings.view_products_label | default: 'View Products'
+        assign view_products_link = section.settings.view_products_link
+        if view_products_link == blank
+          assign view_products_link = routes.all_products_collection_url
+        endif
+      -%}
+      {% if view_products_label != blank %}
+        <div class="sulalat-related__view-all">
+          <a class="primary-btn" href="{{ view_products_link }}">
+            {{ view_products_label | escape }}
+          </a>
+        </div>
+      {% endif %}
     </div>
   {%- endif -%}
 </product-recommendations>
@@ -421,6 +551,7 @@
         speed: speed,
         grabCursor: true,
         watchOverflow: true,
+        enabled: window.matchMedia('(min-width: 750px)').matches,
         loop: enableLoop && slideCount > Math.ceil(slidesDesktop),
         autoplay: enableAutoplay && slideCount > Math.ceil(slidesDesktop) ? {
           delay: autoplayDelay,
@@ -432,11 +563,16 @@
           prevEl: prevBtn
         } : undefined,
         breakpoints: {
-          768: {
+          0: {
+            enabled: false
+          },
+          750: {
+            enabled: true,
             slidesPerView: slidesTablet,
             spaceBetween: gap
           },
           1200: {
+            enabled: true,
             slidesPerView: slidesDesktop,
             spaceBetween: gap
           }
@@ -605,6 +741,33 @@
       "id": "show_navigation",
       "label": "Show navigation arrows",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show_mobile",
+      "label": "Products in mobile grid",
+      "min": 2,
+      "max": 10,
+      "step": 2,
+      "default": 4,
+      "info": "How many products to show in the mobile 2-column grid."
+    },
+    {
+      "type": "text",
+      "id": "view_products_label",
+      "label": "View products button label",
+      "default": "View Products",
+      "info": "Shown only on mobile below the product grid."
+    },
+    {
+      "type": "url",
+      "id": "view_products_link",
+      "label": "View products button link",
+      "info": "Defaults to all products if empty."
     },
     {
       "type": "header",

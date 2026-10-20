@@ -386,6 +386,7 @@
         "transition_speed": 600,
         "enable_loop": false,
         "show_navigation": false,
+        "products_to_show_mobile": 4,
         "enable_autoplay": false,
         "autoplay_delay": 4,
         "pause_on_hover": true,
