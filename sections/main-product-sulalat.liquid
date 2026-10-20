@@ -326,6 +326,71 @@
       grid-template-columns: 1fr;
     }
 
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions--with-wishlist {
+      grid-template-columns: 1fr 1fr auto;
+      align-items: stretch;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions--single.sulalat-pdp__actions--with-wishlist {
+      grid-template-columns: 1fr auto;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      align-self: stretch;
+      min-width: 48px;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist:empty {
+      display: none;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-trigger,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist__icon,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-trigger--block,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-trigger--inline,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist button,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist a {
+      box-sizing: border-box;
+      display: inline-flex !important;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      min-width: 0;
+      height: 100%;
+      min-height: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      outline: none;
+      color: inherit;
+      cursor: pointer;
+      line-height: 1;
+      position: static !important;
+      top: auto !important;
+      right: auto !important;
+      left: auto !important;
+      float: none !important;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-title-text,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-add-text,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-added-text,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist .wishlist-count {
+      display: none !important;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__wishlist svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+    }
+
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn {
       width: 100%;
       border-radius: 999px;
@@ -697,6 +762,14 @@
         grid-template-columns: 1fr;
       }
 
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions--with-wishlist {
+        grid-template-columns: 1fr auto;
+      }
+
+      .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__actions--with-wishlist > [data-buy-now] {
+        grid-column: 1 / -1;
+      }
+
       .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__payments {
         grid-template-columns: 1fr;
       }
@@ -976,7 +1049,7 @@
                       <input type="hidden" name="quantity" value="1" data-qty-input>
                     {% endif %}
 
-                    <div class="sulalat-pdp__actions{% unless block.settings.show_buy_now %} sulalat-pdp__actions--single{% endunless %}">
+                    <div class="sulalat-pdp__actions sulalat-pdp__actions--with-wishlist{% unless block.settings.show_buy_now %} sulalat-pdp__actions--single{% endunless %}">
                       {% if block.settings.show_buy_now %}
                         <button
                           type="button"
@@ -991,6 +1064,7 @@
                         type="submit"
                         name="add"
                         class="sulalat-pdp__btn sulalat-btn--outline"
+                        data-add-to-cart
                         data-add-to-cart-text="{{ block.settings.add_to_cart_label | escape }}"
                         {% unless current_variant.available %}disabled{% endunless %}
                       >
@@ -1000,6 +1074,7 @@
                           Sold out
                         {% endif %}
                       </button>
+                      <div class="sulalat-pdp__wishlist" data-sulalat-wishlist-slot aria-hidden="false"></div>
                     </div>
                   </div>
 
@@ -1586,6 +1661,79 @@
       if (gallerySliderEl && media.length > 1) {
         loadSwiper(initGallerySlider);
       }
+
+      (function placeWishlistBesideAddToCart() {
+        var slot = root.querySelector('[data-sulalat-wishlist-slot]');
+        if (!slot) return;
+
+        var selectors = [
+          '.wishlist-trigger',
+          '.wishlist__icon',
+          '.wishlist-trigger--block',
+          '.wishlist-trigger--inline',
+          '[class*="wishlist-trigger"]',
+          'button[aria-label*="wishlist" i]',
+          'a[aria-label*="wishlist" i]',
+          'button[aria-label*="Wishlist" i]',
+          'a[aria-label*="Wishlist" i]'
+        ];
+
+        function restoreTitle() {
+          var title = root.querySelector('.sulalat-pdp__title');
+          if (!title) return;
+          var titleText = title.querySelector('.wishlist-title-text');
+          if (titleText) {
+            title.textContent = titleText.textContent || '';
+          }
+          title.querySelectorAll('.wishlist-auto-injected, .wls-scope, .wishlist-trigger').forEach(function (el) {
+            if (!slot.contains(el)) el.remove();
+          });
+          title.removeAttribute('style');
+        }
+
+        function findWishlistEl() {
+          var scope = root.querySelector('.sulalat-pdp__info') || root;
+          for (var i = 0; i < selectors.length; i++) {
+            var nodes = scope.querySelectorAll(selectors[i]);
+            for (var j = 0; j < nodes.length; j++) {
+              var el = nodes[j];
+              if (slot.contains(el)) continue;
+              if (el.closest('[data-sulalat-wishlist-slot]')) continue;
+              return el.closest('.wls-scope, .wishlist-block-root, .wishlist-auto-injected') || el;
+            }
+          }
+          return null;
+        }
+
+        function moveWishlist() {
+          var existing = slot.querySelector('.wishlist-trigger, .wls-scope, .wishlist-block-root');
+          var el = findWishlistEl();
+          if (existing) {
+            if (el && el !== existing) el.remove();
+            restoreTitle();
+            return true;
+          }
+          if (!el) return false;
+          slot.appendChild(el);
+          restoreTitle();
+          return true;
+        }
+
+        if (!moveWishlist()) {
+          var tries = 0;
+          var timer = setInterval(function () {
+            tries += 1;
+            if (moveWishlist() || tries > 40) clearInterval(timer);
+          }, 250);
+        }
+
+        if (window.MutationObserver) {
+          var observer = new MutationObserver(function () {
+            moveWishlist();
+          });
+          observer.observe(root, { childList: true, subtree: true });
+        }
+      })();
 
       syncFromSelection();
     })();

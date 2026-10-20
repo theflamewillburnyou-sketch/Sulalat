@@ -154,7 +154,8 @@ body header .header__icons {
     align-items: center;
     margin: 0 0 15px;
 }
-header .header__icons a.header__icon {
+header .header__icons a.header__icon,
+header .header__icons button.header__icon {
     margin: 0;
     padding: 0;
     width: 18px;
@@ -490,6 +491,7 @@ h1.page-banner-heading:empty {
   }
 
   .header__icons > .header__icon,
+  .header__icons > .header-account,
   .header__icons shopify-account {
     display: none !important;
   }
@@ -980,4 +982,17 @@ body:has(.shopify-challenge__container) store-header.header.header--overlay .hea
 body:has(.shopify-challenge__container) store-header.header.header--overlay .main-nav__item--primary,
 body:has(.shopify-challenge__container) store-header.header.header--overlay .main-menu__toggle {
   color: #141211 !important;
+}
+
+/* Hide WishlistSuite header heart only (keep PDP / other wishlist UI) */
+.header__icons [data-wl-slot],
+.header__icons [id^="wishlist-header-block-"],
+.header__icons .wh-trigger {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
 }

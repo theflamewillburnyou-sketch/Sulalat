@@ -61,7 +61,7 @@
             "subscription_policy_url": "",
             "color_text_body": "#53c295",
             "dividers_color": "#53c295",
-            "background_color": "#FFFFFF",
+            "background_color": "#ffffff",
             "border_thickness": 1,
             "border_radius": 12,
             "product": "{{product}}"
@@ -160,6 +160,8 @@
       "type": "product-coffee-preparation",
       "settings": {
         "heading": "Coffee Preparation",
+        "video_1_url": "",
+        "video_2_url": "",
         "background_color": "#ffffff",
         "accent_color": "#53c295",
         "padding_top": 100,

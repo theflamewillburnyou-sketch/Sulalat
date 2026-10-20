@@ -202,8 +202,6 @@
       "settings": {
         "heading": "You may also like",
         "heading_align": "text-start",
-        "layout": "carousel",
-        "card_size": "small",
         "products_to_show": 8
       }
     }
