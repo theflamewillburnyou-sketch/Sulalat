@@ -20,7 +20,7 @@
             "text_color": "#ffffff",
             "image": "shopify://shop_images/banner-card-1.png",
             "image_alt": "Banner card image",
-            "link": "#",
+            "link": "shopify://pages/shop",
             "button_text": "Discover Our Products",
             "button_color": "#ffffff"
           }
@@ -33,7 +33,7 @@
             "text_color": "#ffffff",
             "image": "shopify://shop_images/banner-card-2.png",
             "image_alt": "Banner card image",
-            "link": "#",
+            "link": "shopify://pages/solution",
             "button_text": "Explore Business Solutions",
             "button_color": "#ffffff"
           }
