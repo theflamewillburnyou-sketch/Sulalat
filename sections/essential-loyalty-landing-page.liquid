@@ -86,14 +86,29 @@ Please exercise caution as any changes made to this file may be overwritten.
   /* Skip Alpine injection if the host theme already ships it (e.g. Pixel Union
    * Empire family). A second Alpine triggers Alpine.start() twice and renders
    * every x-for list as duplicate sibling DOM (3 rewards displayed as 6). */
+  /* ⚠️ Pinned version + Subresource Integrity (#1762). This section is written into every
+   * merchant's live theme, so an unpinned "latest" from a public CDN was the one place a
+   * compromised package release or CDN could run script on every storefront at once (the
+   * October 2026 checkout-hijack wave abused exactly that kind of channel). Bumping Alpine
+   * means a new version AND a new hash, computed from the exact file:
+   *   curl -sL <url> | openssl dgst -sha384 -binary | openssl base64 -A
+   * The same version is bundled by the theme extension (package.json `alpinejs`). */
   window.addEventListener('load', function () {
     if (window.Alpine || window.deferLoadingAlpine) return;
     [
-      "https://unpkg.com/alpinejs",
-      "https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.x.x/dist/cdn.min.js"
-    ].forEach(function (src) {
+      {
+        src: "https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js",
+        integrity: "sha384-5/joNqFnRyVWzXp99bHot6RHG+EksGp+USSgZwPar7T9SD9PKKER37n/8bXBAZGd"
+      },
+      {
+        src: "https://cdn.jsdelivr.net/npm/@alpinejs/mask@3.17.4/dist/cdn.min.js",
+        integrity: "sha384-/KspnSacpGaqcz8joSHdVfpHZ88hbPkiK9WAHDalFjff9wBO4VQWravNauBX2g88"
+      }
+    ].forEach(function (lib) {
       var script = document.createElement('script');
-      script.src = src;
+      script.src = lib.src;
+      script.integrity = lib.integrity;
+      script.crossOrigin = 'anonymous';
       script.defer = true;
       document.body.appendChild(script);
     });

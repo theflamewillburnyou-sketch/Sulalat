@@ -617,7 +617,7 @@ convertLabelsToPlaceholders();
           margin-bottom: 20px !important;
           color: #141211 !important;
           font-family: inherit !important;
-          font-size: clamp(24px, 2vw, 36px) !important;
+          font-size: clamp(24px, 3vw, 36px) !important;
           font-weight: inherit !important;
           line-height: 1.2 !important;
           text-align:left !important;
@@ -1347,7 +1347,31 @@ convertLabelsToPlaceholders();
           display: none !important;
         }
 
-        
+        /* sucesss screen */
+
+        section[data-testid="banner-success"] h2 {
+            margin-top: 0 !important;
+            margin-bottom: 20px !important;
+            color: #141211 !important;
+            font-family: inherit !important;
+            font-size: clamp(24px, 3vw, 36px) !important;
+            font-weight: inherit !important;
+            line-height: 1.2 !important;
+            text-align: left !important;
+        }
+
+        section[data-testid="banner-success"] ._textBody_2aowh_10 p {
+          color: #141211 !important;
+          font-family: inherit !important;
+          font-size: 16px !important;
+          font-weight: 400 !important;
+          line-height: 24px !important;
+          letter-spacing: -0.01em !important;
+          margin-top: 14px !important;
+          margin-bottom: 0 !important;
+          text-align: center !important;
+        }
+
 
 
         /* =====================================

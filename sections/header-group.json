@@ -107,7 +107,7 @@
         "minimise_search_desktop": false,
         "menu": "main-menu",
         "menu_center": true,
-        "link_toggle": "mobile_desktop",
+        "link_toggle": "disabled",
         "repeat_links": true,
         "menu_featured_link": "",
         "enable_customer_account_component": false,

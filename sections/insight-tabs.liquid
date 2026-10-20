@@ -364,6 +364,28 @@
       white-space: nowrap;
     }
 
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--video-playable {
+      cursor: pointer;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card--video.is-playing .insight-play {
+      display: none;
+    }
+
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image--video .insight-inline-video,
+    .insight-tabs[data-section-id="{{ section.id }}"] .insight-card-image--video .insight-inline-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #000;
+      object-fit: cover;
+      border-radius: inherit;
+      z-index: 3;
+    }
+
     .insight-tabs[data-section-id="{{ section.id }}"] .insight-empty {
       padding: 60px 0;
       text-align: center;
@@ -841,6 +863,71 @@
         var btn = event.target.closest('[data-insight-tab]');
         if (!btn || !root.contains(btn)) return;
         activateTab(btn.getAttribute('data-insight-tab'));
+      });
+
+      /* Play Media Library videos inside their card */
+      function getInlineEmbedHtml(url) {
+        if (!url) return '';
+        var yt = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/i);
+        if (yt && yt[1]) {
+          return '<iframe class="insight-inline-frame" src="https://www.youtube.com/embed/' + yt[1] + '?autoplay=1&rel=0" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        }
+        var vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+        if (vimeo && vimeo[1]) {
+          return '<iframe class="insight-inline-frame" src="https://player.vimeo.com/video/' + vimeo[1] + '?autoplay=1" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+        }
+        if (/\.(mp4|webm|ogg)(\?|$)/i.test(url) || url.indexOf('cdn.shopify.com/videos') !== -1) {
+          return '<video class="insight-inline-video" src="' + url + '" controls autoplay playsinline preload="auto"></video>';
+        }
+        return '<iframe class="insight-inline-frame" src="' + url + '" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      }
+
+      function stopInlineVideos(exceptCard) {
+        root.querySelectorAll('.insight-card--video.is-playing').forEach(function (card) {
+          if (exceptCard && card === exceptCard) return;
+          var media = card.querySelector('[data-insight-video-media]');
+          if (!media || !card._insightVideoPoster) return;
+          media.innerHTML = card._insightVideoPoster;
+          card.classList.remove('is-playing');
+          delete card._insightVideoPoster;
+        });
+      }
+
+      function playInlineVideo(card) {
+        if (!card || card.classList.contains('is-playing')) return;
+        var url = card.getAttribute('data-insight-video-url');
+        var media = card.querySelector('[data-insight-video-media]');
+        if (!url || !media) return;
+
+        stopInlineVideos(card);
+        card._insightVideoPoster = media.innerHTML;
+        media.insertAdjacentHTML('beforeend', getInlineEmbedHtml(url));
+        card.classList.add('is-playing');
+
+        var videoEl = media.querySelector('video');
+        if (videoEl) {
+          var playPromise = videoEl.play();
+          if (playPromise && typeof playPromise.catch === 'function') {
+            playPromise.catch(function () {});
+          }
+        }
+      }
+
+      root.addEventListener('click', function (event) {
+        var card = event.target.closest('.insight-card--video[data-insight-video-url]');
+        if (!card || !root.contains(card)) return;
+        if (card.classList.contains('is-playing') && event.target.closest('video, iframe')) return;
+        event.preventDefault();
+        event.stopPropagation();
+        playInlineVideo(card);
+      }, true);
+
+      root.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        var card = event.target.closest('.insight-card--video[data-insight-video-url]');
+        if (!card || !root.contains(card)) return;
+        event.preventDefault();
+        playInlineVideo(card);
       });
 
       loadSwiper(function () {

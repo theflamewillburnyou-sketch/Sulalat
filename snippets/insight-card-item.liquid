@@ -47,12 +47,16 @@
     </div>
 
   {% when 'video_card' %}
-    {% if block.settings.video_link != blank %}
-      <a class="insight-card insight-card--video" href="{{ block.settings.video_link }}" {% if block.settings.video_link contains 'http' %}target="_blank" rel="noopener"{% endif %}>
-    {% else %}
-      <div class="insight-card insight-card--video">
-    {% endif %}
-      <div class="insight-card-image insight-card-image--video">
+    <div
+      class="insight-card insight-card--video{% if block.settings.video_link != blank %} insight-card--video-playable{% endif %}"
+      {% if block.settings.video_link != blank %}
+        data-insight-video-url="{{ block.settings.video_link | escape }}"
+        role="button"
+        tabindex="0"
+        aria-label="{{ block.settings.title | default: 'Play video' | escape }}"
+      {% endif %}
+    >
+      <div class="insight-card-image insight-card-image--video" data-insight-video-media>
         {% if block.settings.image != blank %}
           {{
             block.settings.image
@@ -66,11 +70,13 @@
         {% else %}
           {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
         {% endif %}
-        <span class="insight-play" aria-hidden="true">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" focusable="false">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </span>
+        {% if block.settings.video_link != blank %}
+          <span class="insight-play" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" focusable="false">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </span>
+        {% endif %}
       </div>
       <div class="insight-video-meta">
         {% if block.settings.title != blank %}
@@ -78,11 +84,7 @@
         {% endif %}
         <span class="insight-video-tag">{{ block.settings.category_label | default: 'Category' | escape }}</span>
       </div>
-    {% if block.settings.video_link != blank %}
-      </a>
-    {% else %}
-      </div>
-    {% endif %}
+    </div>
 
   {% else %}
     {% if block.settings.link != blank %}

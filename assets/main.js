@@ -1226,7 +1226,9 @@ class MainMenu extends HTMLElement {
       if (this.overlayOpen) this.toggleOverlay(false);
     }
 
-    if (theme.device.hasHover && this.dataset.linkToggle !== 'mobile_desktop') {
+    /* Hover-open only when link_toggle is "mobile" (desktop hover + mobile click).
+       When link_toggle is disabled, open dropdowns by arrow click only. */
+    if (theme.device.hasHover && this.dataset.linkToggle === 'mobile') {
       // Add event handler (so the bound event listener can be removed)
       this.mouseEnterMenuLinkHandler = this.mouseEnterMenuLinkHandler
         || this.handleMouseEnterMenuLink.bind(this);
@@ -2119,7 +2121,10 @@ document.addEventListener('DOMContentLoaded', () => {
           && theme.routes.accountLoginUrl
           && new URL(link.href).hostname === new URL(theme.routes.accountLoginUrl).hostname
         );
-        if (!isLoginLink) link.target = '_blank';
+        /* Media Library videos should stay on the same tab */
+        const isInsightVideo = link.classList.contains('insight-card--video')
+          || !!link.closest('.insight-card--video');
+        if (!isLoginLink && !isInsightVideo) link.target = '_blank';
       }
     });
   }

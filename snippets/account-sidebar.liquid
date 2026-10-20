@@ -259,6 +259,20 @@
           </a>
         {%- endif -%}
       </li>
+
+      <li>
+        <a
+          class="sulalat-dashboard__link"
+          href="{{ routes.account_logout_url }}"
+          {% if settings.preload_links %}data-no-instant{% endif %}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M10 4.5H7.5A2.5 2.5 0 005 7v10a2.5 2.5 0 002.5 2.5H10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M14 8.5L17.5 12 14 15.5M17.5 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>{{ 'customer.account.log_out' | t }}</span>
+        </a>
+      </li>
     </ul>
   </nav>
 
