@@ -30,136 +30,132 @@
     "faq_tabs": {
       "type": "faq-tabs",
       "blocks": {
-        "cat_general": {
-          "type": "category",
-          "settings": {
-            "title": "General"
-          }
-        },
         "q_track": {
           "type": "question",
           "settings": {
-            "question": "How can I track my order after purchase?",
-            "answer": "<p>You can track your order from your account dashboard or using the tracking link sent in your confirmation email.</p>"
+            "question": "What types of coffee beans and beverages does Sulalat provide?",
+            "answer": "<p>We offer a wide variety of wholesale coffee beans and blends, ranging from single-origin coffee to exclusive global auction lots. We have also recently expanded to offer artisanal gelato from the brand \"Salvi,\" artisanal chocolate from \"Sanmar,\" in addition to a specialty tea collection from \"Tea Makers of London.\"</p>"
           }
         },
         "q_deliver": {
           "type": "question",
           "settings": {
-            "question": "Do you deliver outside Saudi Arabia?",
-            "answer": "<p>Yes. We ship across the GCC and selected international destinations. Shipping options are shown at checkout.</p>"
+            "question": "What categories of equipment and tools do you have available? ",
+            "answer": "<p>We provide the latest equipment from leading global brands such as La Marzocco, Compak, and Marco, among other professional devices tailored for cafes. We also carry retail brewing tools such as Chemex, Aeropress, Baratza, Acaia, and Timemore, as well as all types of filters and essential supplies for the wholesale sector.</p>"
           }
         },
         "q_brew": {
           "type": "question",
           "settings": {
-            "question": "How do I choose the right coffee for my brewing method?",
-            "answer": "<p>Each product page lists recommended brew methods. You can also filter by espresso, filter, or cold brew on our collections.</p>"
+            "question": "What after-sales services and technical support do you provide? ",
+            "answer": "<p>We are committed to supporting our partners through a quality control team that provides you with the latest recipes and intensive training, alongside a specialized equipment maintenance team and sales representatives who act as success partners to ensure the continuity and excellence of your business. <em>(Note: The repeated sentence in the Arabic source has been consolidated for clarity).</em></p>"
           }
         },
         "q_return": {
           "type": "question",
           "settings": {
-            "question": "Can I return or exchange a product?",
-            "answer": "<p>Unused products in original packaging can be returned within 14 days of delivery. Contact support to start a return.</p>"
+            "question": "What is the warranty policy and maintenance services?",
+            "answer": "<p>All electrical and electronic parts are covered by a comprehensive two-year warranty. A specialized maintenance team is also available and ready to provide the necessary technical support to ensure the efficient operation of the equipment.</p>"
           }
         },
         "q_capsules": {
           "type": "question",
           "settings": {
-            "question": "Are Sulalat capsules compatible with all machines?",
-            "answer": "<p>Our capsules are designed for Nespresso-compatible machines. Check the product details for exact compatibility.</p>"
+            "question": "How can I contact the sales team?",
+            "answer": "<p>We would be delighted to welcome you to our showroom in Riyadh to purchase wholesale coffee directly. You can also contact our specialized team via the following channels:<br/><br/>WhatsApp: <a href=\"https://api.whatsapp.com/send/?phone=96206533559914\" title=\"https://api.whatsapp.com/send/?phone=96206533559914\">+966533559914</a></p><p>Email: <a href=\"mailto:sales@sulalat.com\" title=\"mailto:sales@sulalat.com\">sales@sulalat.com</a></p>"
           }
         },
         "q_wholesale": {
           "type": "question",
           "settings": {
-            "question": "Do you offer wholesale or bulk purchasing options?",
-            "answer": "<p>Yes. Reach out through our wholesale inquiry form and our team will share pricing and packaging options.</p>"
+            "question": "How does the shipping and delivery process work?",
+            "answer": "<p>The sales team is always available to answer your inquiries regarding logistics services. Please note that delivery time and cost are determined based on the customer's geographical location.</p>"
           }
         },
-        "cat_billing": {
-          "type": "category",
-          "settings": {
-            "title": "Billing"
-          }
-        },
-        "q_payment": {
+        "question_bXA3rN": {
           "type": "question",
           "settings": {
-            "question": "What payment methods do you accept?",
-            "answer": "<p>We accept major credit and debit cards, Apple Pay, and selected local payment plans where available.</p>"
+            "question": "What is the minimum order quantity for wholesale coffee? ",
+            "answer": "<p>The minimum for wholesale orders is 10 kilograms.</p>"
           }
         },
-        "q_charged": {
+        "question_bjfQNj": {
           "type": "question",
           "settings": {
-            "question": "When will I be charged for my order?",
-            "answer": "<p>Your payment is processed when the order is placed, unless you choose a split-payment option at checkout.</p>"
+            "question": "Are shipping and logistical solutions available outside Saudi Arabia?",
+            "answer": "<p>Yes, we are happy to provide our integrated services and solutions and ship our products to customers outside the Kingdom of Saudi Arabia.</p>"
           }
         },
-        "cat_support": {
-          "type": "category",
-          "settings": {
-            "title": "Support"
-          }
-        },
-        "q_contact": {
+        "question_DTDBWK": {
           "type": "question",
           "settings": {
-            "question": "How can I contact customer support?",
-            "answer": "<p>Email us or use the contact form on our website. We typically respond within 1–2 business days.</p>"
+            "question": "Does \"Sulalat\" offer customized services for the corporate and hotel sector? ",
+            "answer": "<p>Absolutely, we specialize in supplying hotels and companies with all their needs regarding coffee beans, equipment, and professional solutions.</p>"
           }
         },
-        "q_hours": {
+        "question_NHR3Ri": {
           "type": "question",
           "settings": {
-            "question": "What are your support hours?",
-            "answer": "<p>Our support team is available Sunday through Thursday, 9 AM – 6 PM (AST).</p>"
+            "question": "Do you provide sample tasting before purchasing?",
+            "answer": "<p>Yes, specific samples are sent to serious customers to ensure you choose the most suitable coffee beans for your taste.</p>"
           }
         },
-        "cat_product": {
-          "type": "category",
-          "settings": {
-            "title": "Product"
-          }
-        },
-        "q_store": {
+        "question_MzXABV": {
           "type": "question",
           "settings": {
-            "question": "How should I store my coffee?",
-            "answer": "<p>Keep beans in an airtight container away from heat, light, and moisture. For best flavor, use within a few weeks of opening.</p>"
+            "question": "Do you provide training services for cafe staff (baristas)? ",
+            "answer": "<p>Certainly. As part of our partnership, we offer intensive training courses covering all barista skills to ensure the highest quality is served to your customers.</p>"
           }
         },
-        "q_decaf": {
+        "question_krdNeB": {
           "type": "question",
           "settings": {
-            "question": "Do you sell decaf options?",
-            "answer": "<p>Yes. Browse our collections or contact us for current decaf availability.</p>"
+            "question": "Do you provide installation and setup services for new equipment?",
+            "answer": "<p>Yes, our team installs the equipment at your location, conducts the necessary operational tests, and explains how to use the devices safely and efficiently.</p>"
+          }
+        },
+        "question_krheP9": {
+          "type": "question",
+          "settings": {
+            "question": "What are the available payment methods for wholesale orders?",
+            "answer": "<p>Bank transfer.</p>"
+          }
+        },
+        "question_aRAVa8": {
+          "type": "question",
+          "settings": {
+            "question": "Are there discounts on very large quantities?",
+            "answer": "<p>We adopt a flexible pricing system tailored to the volume of monthly consumption, where special and competitive prices are available for massive quantities.</p>"
+          }
+        },
+        "question_Qfp9BG": {
+          "type": "question",
+          "settings": {
+            "question": "How can I track my order after shipping? ",
+            "answer": "<p>Once the order leaves our warehouses, you will be provided with a tracking number via email or text messages to follow up on the shipment status with the designated logistics company.</p>"
           }
         }
       },
       "block_order": [
-        "cat_general",
         "q_track",
         "q_deliver",
         "q_brew",
         "q_return",
         "q_capsules",
         "q_wholesale",
-        "cat_billing",
-        "q_payment",
-        "q_charged",
-        "cat_support",
-        "q_contact",
-        "q_hours",
-        "cat_product",
-        "q_store",
-        "q_decaf"
+        "question_bXA3rN",
+        "question_bjfQNj",
+        "question_DTDBWK",
+        "question_NHR3Ri",
+        "question_MzXABV",
+        "question_krdNeB",
+        "question_krheP9",
+        "question_aRAVa8",
+        "question_Qfp9BG"
       ],
       "settings": {
-        "heading": "Frequently Asked Questions",
-        "subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+        "heading": "FAQs",
+        "subtitle": "",
         "background_color": "#ffffff",
         "accent_color": "#53c295",
         "active_tab_bg": "#eaf8f1",
