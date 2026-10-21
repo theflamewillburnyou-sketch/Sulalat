@@ -318,6 +318,17 @@
       width: 100%;
     }
 
+    .sulalat-cart[data-section-id="{{ section.id }}"] .save-for-later-wrapper,
+    .sulalat-cart[data-section-id="{{ section.id }}"] .cart-save-for-later-btn {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+    }
+
     .sulalat-cart[data-section-id="{{ section.id }}"] .sulalat-cart-item__image {
       flex: 0 0 100px;
       width: 100px;
