@@ -38,7 +38,7 @@
       margin: 0;
       flex: 1 1 auto;
       min-width: 0;
-      font-size: clamp(28px, 3.5vw, 55px);
+      font-size: clamp(28px, 3.2vw, 50px);
       font-weight: 400;
       line-height: 1.2;
       color: #141211;
@@ -121,6 +121,8 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
+      aspect-ratio: 16 / 7.8;
+      object-fit: cover;
     }
 
     .insight-article[data-section-id="{{ section.id }}"] .insight-article__featured {
@@ -168,7 +170,7 @@
 
     .insight-article[data-section-id="{{ section.id }}"] .insight-article__related-header h2 {
       margin: 0;
-      font-size: clamp(24px, 3.5vw, 55px);
+      font-size: clamp(24px, 3vw, 36px);
       font-weight: 400;
       line-height: 1.2;
       color: #141211;
