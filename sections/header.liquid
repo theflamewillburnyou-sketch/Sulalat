@@ -763,10 +763,41 @@
               </ul>
             </div>
           {%- else -%}
-            <a class="header__icon" href="/customer_authentication/login?return_to={{ '/pages/dashboard' | url_encode }}">
-              {% render 'icon-customer' %}
-              <span class="visually-hidden">{{ 'sections.header.log_in' | t }}</span>
-            </a>
+            {%- liquid
+              assign account_login_return = '/pages/dashboard' | url_encode
+              assign account_login_url = '/customer_authentication/login?return_to=' | append: account_login_return
+              assign account_register_url = routes.account_register_url
+              if pages.register != blank
+                assign account_register_url = pages.register.url
+              endif
+            -%}
+            <div class="header-account" data-header-account>
+              <button
+                type="button"
+                class="header__icon header-account__toggle"
+                aria-expanded="false"
+                aria-controls="header-account-menu-{{ section.id }}"
+                aria-label="{{ 'sections.header.account' | t | escape }}"
+                data-header-account-toggle
+              >
+                {% render 'icon-customer' %}
+                <span class="visually-hidden">{{ 'sections.header.log_in' | t }}</span>
+              </button>
+              <ul
+                class="header-account__menu"
+                id="header-account-menu-{{ section.id }}"
+                role="menu"
+                hidden
+                data-header-account-menu
+              >
+                <li role="none">
+                  <a role="menuitem" href="{{ account_login_url }}">Login</a>
+                </li>
+                <li role="none">
+                  <a role="menuitem" href="{{ account_register_url }}">Register</a>
+                </li>
+              </ul>
+            </div>
           {%- endif -%}
         {%- endif -%}
       {%- endif -%}
