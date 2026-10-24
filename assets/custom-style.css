@@ -109,6 +109,26 @@ header .main-nav__child {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+@media (min-width: 769px) {
+  header .main-nav__child {
+    overflow: visible;
+  }
+
+  .cc-header--sticky .main-menu__content:has(.main-nav__item--dropdown.is-open) {
+    overflow: visible;
+  }
+
+  /* top: 120% leaves a gap under the menu. This invisible strip keeps the pointer on the panel while moving to a link. */
+  header .main-nav__item--dropdown > .main-nav__child::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: calc(var(--header-height, 180px) * 0.22);
+  }
+}
+
 header .main-nav__child li.child-nav__item--toggle .main-nav__item-content a.child-nav__item {
     padding: 0;
 }
@@ -1093,6 +1113,7 @@ body:has(.shopify-challenge__container) store-header.header.header--overlay .mai
   line-height: 1.6;
   margin-top: 0;
   margin-bottom: 16px;
+  color: #4B4B4B;
 }
 
 .shopify-policy__body ul,
@@ -1113,4 +1134,12 @@ body:has(.shopify-challenge__container) store-header.header.header--overlay .mai
   padding: 0 !important;
   overflow: hidden !important;
   pointer-events: none !important;
+}
+
+@media screen and (max-width:480px){
+  .shopify-policy__body p,
+  .shopify-policy__body li {
+    font-size: 14px;
+  }
+
 }
