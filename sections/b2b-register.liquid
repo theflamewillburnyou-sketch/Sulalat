@@ -317,7 +317,13 @@
         <p class="sulalat-b2b-register__subtitle">{{ section.settings.subtitle | escape }}</p>
       {%- endif -%}
 
-      {%- form 'create_customer', class: 'sulalat-b2b-register__form', id: 'B2BRegisterForm' -%}
+      {%- liquid
+        assign register_dashboard_url = '/pages/dashboard'
+        if pages.dashboard != blank
+          assign register_dashboard_url = pages.dashboard.url
+        endif
+      -%}
+      {%- form 'create_customer', class: 'sulalat-b2b-register__form', id: 'B2BRegisterForm', return_to: register_dashboard_url -%}
         {%- if form.errors -%}
           <div class="sulalat-b2b-register__alert" tabindex="-1" autofocus>
             <strong>{{ 'contact.form.error_heading' | t }}</strong>

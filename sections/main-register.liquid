@@ -3,7 +3,13 @@
     <h1 class="h2">{{ 'customer.register.title' | t }}</h1>
   </div>
 
-  {%- form 'create_customer', class: 'form form-width mx-auto', novalidate: 'novalidate' -%}
+  {%- liquid
+    assign register_dashboard_url = '/pages/dashboard'
+    if pages.dashboard != blank
+      assign register_dashboard_url = pages.dashboard.url
+    endif
+  -%}
+  {%- form 'create_customer', class: 'form form-width mx-auto', novalidate: 'novalidate', return_to: register_dashboard_url -%}
     {%- if form.errors -%}
       <div class="alert mb-8 bg-error-bg text-error-text" tabindex="-1" autofocus>
         <h2 class="h5 text-current">{{ 'contact.form.error_heading' | t }}</h2>

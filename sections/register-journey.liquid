@@ -230,7 +230,12 @@
   </style>
 
   {%- liquid
-    assign b2c_url = routes.account_login_url
+    assign register_dashboard_url = '/pages/dashboard'
+    if pages.dashboard != blank
+      assign register_dashboard_url = pages.dashboard.url
+    endif
+    assign register_dashboard_return = register_dashboard_url | url_encode
+    assign b2c_url = '/customer_authentication/login?return_to=' | append: register_dashboard_return
     assign b2b_url = '/pages/b2b-register'
     if section.settings.default_selected == 'b2b'
       assign start_url = b2b_url

@@ -400,6 +400,67 @@
       border-radius: 999px;
     }
 
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-loading {
+      color: transparent;
+      pointer-events: none;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-loading::before,
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-success::before {
+      animation: none;
+      top: 0;
+      left: auto;
+      width: 0;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      opacity: 0;
+      transform: none;
+      background: #fff;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-loading::after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 10px);
+      left: calc(50% - 10px);
+      right: auto;
+      width: 20px;
+      height: 20px;
+      margin: 0;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      opacity: 1;
+      animation: spinner 0.6s linear infinite;
+      transform: none;
+      z-index: 2;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-success {
+      color: transparent;
+    }
+
+    .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscribe .primary-btn.is-success::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      right: auto;
+      width: 10px;
+      height: 20px;
+      margin-top: -2px;
+      border: 0;
+      border-top: 2px solid #fff;
+      border-inline-end: 2px solid #fff;
+      border-radius: 0;
+      opacity: 1;
+      animation: checkmark 1.4s ease;
+      transform: scaleX(-1) rotate(135deg) translateX(-50%) translateY(-50%);
+      transform-origin: left top;
+      z-index: 2;
+    }
+
     /* Shopify Subscriptions → Delivery Period cards */
     .sulalat-pdp[data-section-id="{{ section.id }}"] .sulalat-pdp__subscriptions {
       margin-bottom: 16px;
@@ -1727,16 +1788,64 @@
       }
 
       if (subscribeBtn) {
-        subscribeBtn.addEventListener('click', function (event) {
-          if (subscribeBtn.disabled || subscribeBtn.getAttribute('aria-disabled') === 'true') {
+        subscribeBtn.addEventListener('click', async function (event) {
+          if (subscribeBtn.disabled || subscribeBtn.getAttribute('aria-disabled') === 'true' || subscribeBtn.classList.contains('is-loading')) {
             event.preventDefault();
             return;
           }
-          subscribeIntent = true;
+          if (subscribeBtn.tagName === 'A') return;
+
+          event.preventDefault();
+          if (!formEl) return;
+
           setSellingPlanValue(getSelectedDeliveryPlanId());
-          var target = root.querySelector('[name="add"]');
-          if (target && !target.disabled) target.click();
-          else subscribeIntent = false;
+          subscribeBtn.classList.add('is-loading');
+          subscribeBtn.setAttribute('aria-disabled', 'true');
+
+          var added = false;
+          var cartDrawer = document.querySelector('cart-drawer');
+          try {
+            var formData = new FormData(formEl);
+            var sections = 'cart-icon-bubble';
+            if (cartDrawer && cartDrawer.closest('.shopify-section')) {
+              sections += ',' + cartDrawer.closest('.shopify-section').id.replace('shopify-section-', '');
+            }
+            formData.append('sections_url', window.location.pathname);
+            formData.append('sections', sections);
+
+            var response = await fetch((window.theme && theme.routes && theme.routes.cartAdd) || '/cart/add.js', {
+              method: 'POST',
+              headers: { Accept: 'application/javascript', 'X-Requested-With': 'XMLHttpRequest' },
+              body: formData
+            });
+            var data = await response.json();
+            if (!response.ok || data.status) throw new Error('Add failed');
+            added = true;
+
+            if (window.theme && theme.settings && theme.settings.afterAtc === 'page') {
+              window.location.href = (theme.routes && theme.routes.cart) || '/cart';
+              return;
+            }
+
+            var cartIcon = document.getElementById('cart-icon-bubble');
+            if (cartIcon && data.sections && data.sections['cart-icon-bubble']) {
+              cartIcon.innerHTML = data.sections['cart-icon-bubble'];
+            }
+
+            if (cartDrawer && typeof cartDrawer.renderContents === 'function' && window.theme && theme.settings && theme.settings.afterAtc === 'drawer') {
+              cartDrawer.renderContents(data, true);
+            }
+
+            subscribeBtn.classList.remove('is-loading');
+            subscribeBtn.classList.add('is-success');
+          } catch (err) {
+            subscribeBtn.classList.remove('is-loading');
+          } finally {
+            setTimeout(function () {
+              subscribeBtn.classList.remove('is-loading', 'is-success');
+              subscribeBtn.removeAttribute('aria-disabled');
+            }, added ? 1400 : 0);
+          }
         });
       }
 
