@@ -1330,6 +1330,32 @@
               </ul>
             </nav>
           {%- endif -%}
+
+          {%- if shop.customer_accounts_enabled -%}
+            <div class="main-menu__account md:hidden">
+              {%- if customer -%}
+                {%- liquid
+                  assign mobile_account_dashboard_url = '/pages/dashboard'
+                  if pages.dashboard != blank
+                    assign mobile_account_dashboard_url = pages.dashboard.url
+                  endif
+                -%}
+                <a href="{{ mobile_account_dashboard_url }}">Dashboard</a>
+                <a href="{{ routes.account_logout_url }}"{% if settings.preload_links %} data-no-instant{% endif %}>{{ 'customer.account.log_out' | t }}</a>
+              {%- else -%}
+                {%- liquid
+                  assign mobile_account_login_return = '/pages/dashboard' | url_encode
+                  assign mobile_account_login_url = '/customer_authentication/login?return_to=' | append: mobile_account_login_return
+                  assign mobile_account_register_url = routes.account_register_url
+                  if pages.register != blank
+                    assign mobile_account_register_url = pages.register.url
+                  endif
+                -%}
+                <a href="{{ mobile_account_login_url }}">Login</a>
+                <a href="{{ mobile_account_register_url }}">Register</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
         </div>
       </main-menu>
     {%- endif -%}
