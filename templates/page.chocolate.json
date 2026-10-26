@@ -30,8 +30,8 @@
     "solution_nav": {
       "type": "solution-page-nav",
       "settings": {
-        "crumb_1_label": "Solutions",
-        "crumb_1_link": "shopify://pages/solutions",
+        "crumb_1_label": "Solution",
+        "crumb_1_link": "shopify://pages/solution",
         "crumb_2_label": "",
         "crumb_2_link": "",
         "crumb_3_label": "Chocolate",

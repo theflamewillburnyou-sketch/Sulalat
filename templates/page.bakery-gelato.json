@@ -31,7 +31,7 @@
       "type": "solution-page-nav",
       "name": "Solution page nav",
       "settings": {
-        "crumb_1_label": "Solutions",
+        "crumb_1_label": "Solution",
         "crumb_1_link": "shopify://pages/solution",
         "crumb_2_label": "",
         "crumb_2_link": "",
