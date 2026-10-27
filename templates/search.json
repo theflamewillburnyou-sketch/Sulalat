@@ -9,12 +9,91 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "main-search",
-      "settings": {}
+    "sulalat_collection": {
+      "type": "main-collection-sulalat",
+      "blocks": {
+        "cat_all": {
+          "type": "category",
+          "settings": {
+            "label": "All Products",
+            "collection": "",
+            "link": "/collections/all",
+            "is_all": true
+          }
+        },
+        "cat_coffee": {
+          "type": "category",
+          "settings": {
+            "label": "Coffee",
+            "collection": "able",
+            "link": "",
+            "is_all": false
+          }
+        },
+        "cat_chocolate": {
+          "type": "category",
+          "settings": {
+            "label": "Chocolate",
+            "collection": "acaia",
+            "link": "",
+            "is_all": false
+          }
+        },
+        "cat_capsules": {
+          "type": "category",
+          "settings": {
+            "label": "Capsules",
+            "collection": "brewing-tools-coffee-accessories",
+            "link": "",
+            "is_all": false
+          }
+        },
+        "cat_brewing": {
+          "type": "category",
+          "settings": {
+            "label": "Brewing Gear",
+            "collection": "brewing-tools",
+            "link": "",
+            "is_all": false
+          }
+        },
+        "cat_spare": {
+          "type": "category",
+          "settings": {
+            "label": "Spare Parts",
+            "collection": "spare-parts",
+            "link": "",
+            "is_all": false
+          }
+        }
+      },
+      "block_order": [
+        "cat_all",
+        "cat_coffee",
+        "cat_chocolate",
+        "cat_capsules",
+        "cat_brewing",
+        "cat_spare"
+      ],
+      "settings": {
+        "nav_background": "#eefaf5",
+        "show_category_tabs_on_search": false,
+        "enable_filtering": false,
+        "filters_open_lg": true,
+        "stick_on_scroll": true,
+        "show_filter_counts": true,
+        "expand_filters": true,
+        "max_filter_options": 7,
+        "enable_sorting": true,
+        "sort_first": true,
+        "search_placeholder": "Search...",
+        "products_per_page": 12,
+        "load_more_label": "Browse more",
+        "padding_bottom": 80
+      }
     }
   },
   "order": [
-    "main"
+    "sulalat_collection"
   ]
 }

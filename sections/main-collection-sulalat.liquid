@@ -3,7 +3,7 @@
   assign sort_by = collection.sort_by | default: collection.default_sort_by | default: 'best-selling'
 
   assign is_search_mode = false
-  if request.page_type == 'search' and search.performed
+  if request.page_type == 'search'
     assign is_search_mode = true
     assign sort_by = search.sort_by | default: search.default_sort_by | default: 'best-selling'
   endif
@@ -34,6 +34,22 @@
       endif
     endfor
   endif
+
+  assign show_category_nav = false
+  if section.blocks.size > 0
+    if is_search_mode
+      if section.settings.show_category_tabs_on_search
+        assign show_category_nav = true
+      endif
+    else
+      assign show_category_nav = true
+    endif
+  endif
+
+  assign show_facet_filters = false
+  if is_search_mode and section.settings.enable_filtering and search.filters != empty
+    assign show_facet_filters = true
+  endif
 -%}
 
 <section class="sulalat-collection" data-section-id="{{ section.id }}" data-sulalat-collection data-search-url="{{ routes.search_url }}">
@@ -41,7 +57,7 @@
     .sulalat-collection[data-section-id="{{ section.id }}"] {
       font-family: var(--body-font-family);
       background: #fff;
-      padding: 0 0 {{ section.settings.padding_bottom }}px;
+      padding: {% if is_search_mode and show_category_nav == false %}40px{% else %}0{% endif %} 0 {{ section.settings.padding_bottom }}px;
     }
 
     .sulalat-collection[data-section-id="{{ section.id }}"] .container {
@@ -173,6 +189,63 @@
       gap: 16px;
       flex-wrap: wrap;
       margin-bottom: 60px;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-toolbar__start {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-filter-btn {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 44px;
+      padding: 0 18px 0 20px;
+      border: 1px solid #d8d8d8;
+      border-radius: 999px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.2;
+      font-weight: 400;
+      color: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-filter-btn.is-active,
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-filter-btn[aria-expanded="true"] {
+      border-color: var(--brand-primary, #53c295);
+      color: var(--brand-primary, #53c295);
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-with-filters {
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-with-filters .main-products-grid__results {
+      min-width: 0;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .facets .disclosure__title,
+    .sulalat-collection[data-section-id="{{ section.id }}"] .facets .filter__label {
+      font-family: var(--body-font-family);
+      color: #1a1a1a;
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] .facets .active-filter > .icon {
+      background-color: var(--brand-primary, #53c295);
+    }
+
+    .sulalat-collection[data-section-id="{{ section.id }}"] products-toolbar.sulalat-collection-filter-toolbar {
+      margin: 0;
+      padding: 0;
+      display: inline-flex;
     }
 
     .sulalat-collection[data-section-id="{{ section.id }}"] .sulalat-collection-sort {
@@ -534,7 +607,7 @@
 
   </style>
 
-  {% if section.blocks.size > 0 %}
+  {% if show_category_nav %}
     <div class="sulalat-collection-nav">
       <div class="container">
         <ul class="sulalat-collection-nav__list" role="list">
@@ -598,86 +671,129 @@
 
     <div data-collection-results>
       {%- if is_search_mode -%}
+        {%- if show_facet_filters -%}
+          <script src="{{ 'products-toolbar.js' | asset_url }}" defer="defer"></script>
+        {%- endif -%}
         {%- paginate search.results by products_per_page -%}
           <div class="sulalat-collection-toolbar">
-            <form class="sulalat-collection-sort" action="{{ routes.search_url }}" method="get" data-sort-dropdown>
-              <input type="hidden" name="q" value="{{ search.terms | escape }}">
-              <input type="hidden" name="type" value="product">
-              <input type="hidden" name="sort_by" value="{{ sort_by | escape }}" data-sort-input>
-              <button
-                type="button"
-                class="sulalat-collection-sort__trigger"
-                data-sort-trigger
-                aria-expanded="false"
-                aria-haspopup="listbox"
-              >
-                <span class="sulalat-collection-sort__trigger-label" data-sort-label>Sort by: {{ sort_label | escape }}</span>
-                <svg class="sulalat-collection-sort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                  <path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <ul class="sulalat-collection-sort__menu" data-sort-menu role="listbox">
-                <li>
-                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'best-selling' %} is-active{% endif %}" data-sort-value="best-selling" data-sort-label-text="Most Popular" role="option">Most Popular</button>
-                </li>
-                <li>
-                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'created-descending' %} is-active{% endif %}" data-sort-value="created-descending" data-sort-label-text="Newest" role="option">Newest</button>
-                </li>
-                <li>
-                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-ascending' %} is-active{% endif %}" data-sort-value="price-ascending" data-sort-label-text="Price Low To high" role="option">Price Low To high</button>
-                </li>
-                <li>
-                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-descending' %} is-active{% endif %}" data-sort-value="price-descending" data-sort-label-text="Price High To Low" role="option">Price High To Low</button>
-                </li>
-                <li>
-                  <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'title-ascending' %} is-active{% endif %}" data-sort-value="title-ascending" data-sort-label-text="Product Name A - Z" role="option">Product Name A - Z</button>
-                </li>
-              </ul>
-            </form>
-
-            <p class="sulalat-collection-count">
-              {%- if search.results_count == 0 -%}
-                Showing 0 of 0 Products
-              {%- else -%}
-                Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: search.results.size }} of {{ search.results_count }} Products
+            <div class="sulalat-collection-toolbar__start">
+              {%- if show_facet_filters -%}
+                <products-toolbar class="sulalat-collection-filter-toolbar no-js-hidden">
+                  <div class="products-toolbar__filter">
+                    <button
+                      type="button"
+                      class="sulalat-collection-filter-btn{% if section.settings.filters_open_lg %} is-active{% endif %} js-toggle-filters"
+                      aria-controls="facet-filters"
+                      aria-expanded="false"
+                    >
+                      <span>{{ 'products.filtering.filter' | t }}</span>
+                      {% render 'icon-filter' %}
+                    </button>
+                  </div>
+                </products-toolbar>
               {%- endif -%}
-            </p>
-          </div>
 
-          {% if search.results_count == 0 %}
-            <div class="sulalat-collection-empty">
-              <p>{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
-            </div>
-          {% else %}
-            <ul class="sulalat-collection-grid" role="list" data-product-grid>
-              {% for item in search.results %}
-                {% if item.object_type == 'product' %}
-                  <li data-product-title="{{ item.title | escape }}">
-                    {% render 'sulalat-product-card',
-                      product: item,
-                      collection: item.collections.first,
-                      color_index: forloop.index0,
-                      section_id: section.id,
-                      details_label: 'View Product'
-                    %}
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-
-            {% if paginate.next %}
-              <div class="sulalat-collection-load-more">
+              <form class="sulalat-collection-sort" action="{{ routes.search_url }}" method="get" data-sort-dropdown>
+                <input type="hidden" name="q" value="{{ search.terms | escape }}">
+                <input type="hidden" name="type" value="product">
+                <input type="hidden" name="sort_by" value="{{ sort_by | escape }}" data-sort-input>
                 <button
                   type="button"
-                  class="sulalat-btn sulalat-btn--primary"
-                  data-load-more
-                  data-load-more-url="{{ routes.search_url }}?q={{ search.terms | url_param_escape }}&type=product&page={{ paginate.current_page | plus: 1 }}{% if sort_by != blank %}&sort_by={{ sort_by | url_param_escape }}{% endif %}"
+                  class="sulalat-collection-sort__trigger"
+                  data-sort-trigger
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
                 >
-                  {{ section.settings.load_more_label | escape }}
+                  <span class="sulalat-collection-sort__trigger-label" data-sort-label>Sort by: {{ sort_label | escape }}</span>
+                  <svg class="sulalat-collection-sort__chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+                    <path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
                 </button>
+                <ul class="sulalat-collection-sort__menu" data-sort-menu role="listbox">
+                  <li>
+                    <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'best-selling' %} is-active{% endif %}" data-sort-value="best-selling" data-sort-label-text="Most Popular" role="option">Most Popular</button>
+                  </li>
+                  <li>
+                    <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'created-descending' %} is-active{% endif %}" data-sort-value="created-descending" data-sort-label-text="Newest" role="option">Newest</button>
+                  </li>
+                  <li>
+                    <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-ascending' %} is-active{% endif %}" data-sort-value="price-ascending" data-sort-label-text="Price Low To high" role="option">Price Low To high</button>
+                  </li>
+                  <li>
+                    <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'price-descending' %} is-active{% endif %}" data-sort-value="price-descending" data-sort-label-text="Price High To Low" role="option">Price High To Low</button>
+                  </li>
+                  <li>
+                    <button type="button" class="sulalat-collection-sort__option{% if sort_by == 'title-ascending' %} is-active{% endif %}" data-sort-value="title-ascending" data-sort-label-text="Product Name A - Z" role="option">Product Name A - Z</button>
+                  </li>
+                </ul>
+              </form>
+            </div>
+
+            {%- unless show_facet_filters -%}
+              <p class="sulalat-collection-count">
+                {%- if search.results_count == 0 -%}
+                  Showing 0 of 0 Products
+                {%- else -%}
+                  Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: search.results.size }} of {{ search.results_count }} Products
+                {%- endif -%}
+              </p>
+            {%- endunless -%}
+          </div>
+
+          <div class="{% if show_facet_filters %}sulalat-collection-with-filters main-products-grid flex{% endif %}">
+            {%- if show_facet_filters -%}
+              <div class="main-products-grid__filters{% if section.settings.filters_open_lg == false %} lg:js-hidden{% endif %}">
+                {% render 'facet-filters', results: search %}
               </div>
-            {% endif %}
-          {% endif %}
+            {%- endif -%}
+
+            <div class="{% if show_facet_filters %}main-products-grid__results relative flex-auto{% endif %}"{% if show_facet_filters %} id="filter-results"{% endif %}>
+              {%- if show_facet_filters -%}
+                <p class="sulalat-collection-count" style="margin-bottom: 24px;">
+                  {%- if search.results_count == 0 -%}
+                    Showing 0 of 0 Products
+                  {%- else -%}
+                    Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: search.results.size }} of {{ search.results_count }} Products
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
+
+              {% if search.results_count == 0 %}
+                <div class="sulalat-collection-empty">
+                  <p>{{ 'templates.search.no_results' | t: terms: search.terms }}</p>
+                </div>
+              {% else %}
+                <ul class="sulalat-collection-grid" role="list" data-product-grid>
+                  {% for item in search.results %}
+                    {% if item.object_type == 'product' %}
+                      <li data-product-title="{{ item.title | escape }}">
+                        {% render 'sulalat-product-card',
+                          product: item,
+                          collection: item.collections.first,
+                          color_index: forloop.index0,
+                          section_id: section.id,
+                          details_label: 'View Product'
+                        %}
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+
+                {% if paginate.next %}
+                  <div class="sulalat-collection-load-more">
+                    <button
+                      type="button"
+                      class="sulalat-btn sulalat-btn--primary"
+                      data-load-more
+                      data-load-more-url="{{ routes.search_url }}?q={{ search.terms | url_param_escape }}&type=product&page={{ paginate.current_page | plus: 1 }}{% if sort_by != blank %}&sort_by={{ sort_by | url_param_escape }}{% endif %}"
+                    >
+                      {{ section.settings.load_more_label | escape }}
+                    </button>
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
         {%- endpaginate -%}
       {%- else -%}
         {%- paginate collection.products by products_per_page -%}
@@ -1213,6 +1329,70 @@
       "id": "nav_background",
       "label": "Category bar background",
       "default": "#eefaf5"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category_tabs_on_search",
+      "label": "Show category tabs on search page",
+      "info": "Uses the same category bar design as the collection page",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Filtering (search page)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "info": "Shows Availability, Price, and other [store filters](https://help.shopify.com/manual/online-store/search-and-discovery/filters) on the search page",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "filters_open_lg",
+      "label": "Open filters by default on large screens",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "stick_on_scroll",
+      "label": "Stick on scroll on large screens",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_counts",
+      "label": "Show product counts",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "expand_filters",
+      "label": "Expand all filters by default",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_filter_options",
+      "label": "Visible options per filter",
+      "info": "Remaining options will be automatically collapsed.",
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "default": 7
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting in filter drawer (mobile)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_first",
+      "label": "Show the sort options first on mobile",
+      "default": true
     },
     {
       "type": "text",
