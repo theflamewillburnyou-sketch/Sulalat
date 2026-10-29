@@ -17,7 +17,7 @@
         "overlay_color": "#00000073",
         "subtitle": "",
         "heading": "<h1>Services</h1>",
-        "text": "<p>We supply, install, and support world-class brewing equipment from leading global brands.</p>",
+        "text": "<p>From choosing and maintaining your equipment to training your team and developing your menu, we work with you at every step to elevate your guests’ experience and support the success of your café and brand.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -35,8 +35,8 @@
           "type": "service_card",
           "settings": {
             "image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef.png",
-            "title": "Routine Maintenance",
-            "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
+            "title": "Equipment Distribution",
+            "text": "Trusted equipment from the world’s leading brands, supplied by their official distributor.",
             "link": "shopify://pages/routine-maintenance"
           }
         },
@@ -44,8 +44,8 @@
           "type": "service_card",
           "settings": {
             "image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504.png",
-            "title": "Corrective Maintenance",
-            "text": "Preventive maintenance, repairs, and on-call troubleshooting by trained specialists.",
+            "title": "Maintenance",
+            "text": "Repairs, spare parts, and technical support, whenever you need them.",
             "link": "shopify://pages/corrective-maintenance"
           }
         }
@@ -55,8 +55,8 @@
         "corrective_maintenance"
       ],
       "settings": {
-        "heading": "Maintenance & Installations",
-        "subheading": "Professional setup and calibration for all major brands, ensuring optimal performance.",
+        "heading": "Equipment & Maintenance",
+        "subheading": "The right equipment, and a team to keep it running. We bring you the world’s leading brands and stay by your side long after delivery.",
         "columns": 2,
         "background_color": "#ffffff",
         "padding_top": 40,
