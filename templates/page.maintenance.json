@@ -12,11 +12,11 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef_2ffd1e83-45cc-445f-ba02-22defe8fb1f9.png",
+        "background_image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504_0227d2ed-80a2-4d75-9e99-5e06f7c486d6.png",
         "overlay_color": "#00000073",
         "subtitle": "",
-        "heading": "<p>Routine Maintenance</p>",
-        "text": "<p>Scheduled care that keeps your equipment performing at its best, every day.</p>",
+        "heading": "<p>Maintenance</p>",
+        "text": "<p>Maintenance, spare parts, and technical support that keep your bar running and every cup tasting as it should.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -27,7 +27,7 @@
         "heading_line_height_mobile": 44
       }
     },
-    "solution_page_nav_LhT9YV": {
+    "solution_page_nav_NjQhrp": {
       "type": "solution-page-nav",
       "name": "Solution page nav",
       "settings": {
@@ -35,7 +35,7 @@
         "crumb_1_link": "shopify://pages/solution",
         "crumb_2_label": "Solutions-MS-Services",
         "crumb_2_link": "shopify://pages/solution-services",
-        "crumb_3_label": "Routine Maintenance",
+        "crumb_3_label": "Maintenance",
         "background_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 8
@@ -45,9 +45,9 @@
       "type": "initiatives-intro",
       "settings": {
         "image": "shopify://shop_images/9823a3fc0f4d4e948d78320d091ccbad59022970.png",
-        "heading": "Prevent issues before they start",
+        "heading": "Here Whenever You Need Us",
         "subheading": "",
-        "text": "<p>Routine Maintenance from Sulalat helps cafes and hospitality partners protect equipment performance with planned service visits and clear checklists.</p><p>Regular care reduces downtime, extends machine life, and keeps every cup consistent for your guests.</p>",
+        "text": "<p>Whenever you notice a change or run into a fault, our maintenance team comes to you to recalibrate your machines, repair faults, and supply the spare parts you need, so your service gets back on track quickly and your coffee stays consistent.</p>",
         "background_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 48,
@@ -61,49 +61,31 @@
         "objective_1": {
           "type": "objective",
           "settings": {
-            "text": "Schedule preventive service cycles for espresso and brew equipment"
+            "text": "On-request service: our team comes to you whenever you need it."
           }
         },
         "objective_2": {
           "type": "objective",
           "settings": {
-            "text": "Inspect, clean, and calibrate critical machine components"
+            "text": "Fast, effective repairs by trained specialists."
           }
         },
         "objective_3": {
           "type": "objective",
           "settings": {
-            "text": "Reduce unexpected downtime across cafe operations"
+            "text": "Spare parts to get your equipment back to work."
           }
         },
         "objective_4": {
           "type": "objective",
           "settings": {
-            "text": "Extend equipment lifespan through consistent care"
+            "text": "Calibration that keeps the taste consistent in every cup."
           }
         },
         "objective_5": {
           "type": "objective",
           "settings": {
-            "text": "Keep extraction quality stable for daily service"
-          }
-        },
-        "objective_6": {
-          "type": "objective",
-          "settings": {
-            "text": "Provide clear service reports after every visit"
-          }
-        },
-        "objective_7": {
-          "type": "objective",
-          "settings": {
-            "text": "Recommend parts and consumables before failure"
-          }
-        },
-        "objective_8": {
-          "type": "objective",
-          "settings": {
-            "text": "Align maintenance plans with each partner's operating hours"
+            "text": "Technical support after installation, whenever your operation needs it."
           }
         }
       },
@@ -112,10 +94,7 @@
         "objective_2",
         "objective_3",
         "objective_4",
-        "objective_5",
-        "objective_6",
-        "objective_7",
-        "objective_8"
+        "objective_5"
       ],
       "settings": {
         "background_image": "shopify://shop_images/7e68cce5fd28ccfc7723732cd407dc1ae534da1b.png",
@@ -123,7 +102,7 @@
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
         "bullet_color": "#53c295",
-        "heading": "Key Objectives & Targets",
+        "heading": "What We Offer",
         "min_height": 790,
         "min_height_mobile": 420,
         "padding_top": 80,
@@ -136,7 +115,7 @@
       "type": "initiative-register",
       "settings": {
         "heading": "Be Part of the Change",
-        "text": "Stay connected with Sulalat's routine maintenance programs and service plans.",
+        "text": "Stay connected with Sulalat's corrective maintenance and repair support.",
         "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
@@ -163,7 +142,7 @@
   },
   "order": [
     "page_banner",
-    "solution_page_nav_LhT9YV",
+    "solution_page_nav_NjQhrp",
     "initiative_story",
     "initiative_objectives",
     "initiative_register"

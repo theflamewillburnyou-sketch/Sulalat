@@ -12,11 +12,11 @@
     "page_banner": {
       "type": "page-banner",
       "settings": {
-        "background_image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504_0227d2ed-80a2-4d75-9e99-5e06f7c486d6.png",
+        "background_image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef_2ffd1e83-45cc-445f-ba02-22defe8fb1f9.png",
         "overlay_color": "#00000073",
         "subtitle": "",
-        "heading": "<p>Corrective Maintenance</p>",
-        "text": "<p>Fast, expert repairs that restore performance when equipment needs immediate attention.</p>",
+        "heading": "<p>Equipment Distribution</p>",
+        "text": "<p>Trusted equipment from the world’s leading brands, chosen with you and supported long after installation.</p>",
         "min_height": 650,
         "min_height_mobile": 480,
         "padding_top": 120,
@@ -27,7 +27,7 @@
         "heading_line_height_mobile": 44
       }
     },
-    "solution_page_nav_NjQhrp": {
+    "solution_page_nav_LhT9YV": {
       "type": "solution-page-nav",
       "name": "Solution page nav",
       "settings": {
@@ -35,7 +35,7 @@
         "crumb_1_link": "shopify://pages/solution",
         "crumb_2_label": "Solutions-MS-Services",
         "crumb_2_link": "shopify://pages/solution-services",
-        "crumb_3_label": "Corrective Maintenance",
+        "crumb_3_label": "Equipment Distribution",
         "background_color": "#ffffff",
         "padding_top": 40,
         "padding_bottom": 8
@@ -45,9 +45,9 @@
       "type": "initiatives-intro",
       "settings": {
         "image": "shopify://shop_images/9823a3fc0f4d4e948d78320d091ccbad59022970.png",
-        "heading": "Restore performance with confidence",
+        "heading": "Equipment Chosen for the Way You Work",
         "subheading": "",
-        "text": "<p>Corrective Maintenance from Sulalat responds when equipment fails or underperforms, with diagnosis and repair focused on getting your service back online quickly.</p><p>Our technicians support hospitality partners with practical fixes, quality parts guidance, and clear next steps after every visit.</p>",
+        "text": "<p>Every café has its own rhythm, menu, and volume. As the official distributor of leading brands such as La Marzocco, Compak, and Baratza, we help you choose the right equipment, train your team to use it, and stay with you long after installation.</p>",
         "background_color": "#ffffff",
         "padding_top": 80,
         "padding_bottom": 48,
@@ -61,49 +61,31 @@
         "objective_1": {
           "type": "objective",
           "settings": {
-            "text": "Respond quickly to equipment faults and service interruptions"
+            "text": "Equipment matched to your menu, space, and daily volume."
           }
         },
         "objective_2": {
           "type": "objective",
           "settings": {
-            "text": "Diagnose root causes before completing repairs"
+            "text": "Espresso machines, grinders, and brewing tools from leading global brands."
           }
         },
         "objective_3": {
           "type": "objective",
           "settings": {
-            "text": "Restore machines to reliable operating condition"
+            "text": "Professional installation and setup for optimal performance."
           }
         },
         "objective_4": {
           "type": "objective",
           "settings": {
-            "text": "Minimize downtime for cafes and hospitality partners"
+            "text": "Training that helps your team get the most from every machine."
           }
         },
         "objective_5": {
           "type": "objective",
           "settings": {
-            "text": "Use quality parts and approved repair methods"
-          }
-        },
-        "objective_6": {
-          "type": "objective",
-          "settings": {
-            "text": "Document findings and recommended follow-up actions"
-          }
-        },
-        "objective_7": {
-          "type": "objective",
-          "settings": {
-            "text": "Advise partners on preventing repeat failures"
-          }
-        },
-        "objective_8": {
-          "type": "objective",
-          "settings": {
-            "text": "Support emergency and priority repair requests"
+            "text": "Maintenance, spare parts, and technical support after installation."
           }
         }
       },
@@ -112,10 +94,7 @@
         "objective_2",
         "objective_3",
         "objective_4",
-        "objective_5",
-        "objective_6",
-        "objective_7",
-        "objective_8"
+        "objective_5"
       ],
       "settings": {
         "background_image": "shopify://shop_images/7e68cce5fd28ccfc7723732cd407dc1ae534da1b.png",
@@ -123,7 +102,7 @@
         "panel_bg": "#1a1a1acc",
         "fallback_bg": "#1a1a1a",
         "bullet_color": "#53c295",
-        "heading": "Key Objectives & Targets",
+        "heading": "What We Offer",
         "min_height": 790,
         "min_height_mobile": 420,
         "padding_top": 80,
@@ -136,7 +115,7 @@
       "type": "initiative-register",
       "settings": {
         "heading": "Be Part of the Change",
-        "text": "Stay connected with Sulalat's corrective maintenance and repair support.",
+        "text": "Stay connected with Sulalat's routine maintenance programs and service plans.",
         "image": "shopify://shop_images/184599dfb27f7af887bc51e1fe9b26b000a45c2a.jpg",
         "name_placeholder": "Full Name*",
         "email_placeholder": "Email Address*",
@@ -163,7 +142,7 @@
   },
   "order": [
     "page_banner",
-    "solution_page_nav_NjQhrp",
+    "solution_page_nav_LhT9YV",
     "initiative_story",
     "initiative_objectives",
     "initiative_register"

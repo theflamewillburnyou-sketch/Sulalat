@@ -122,6 +122,19 @@
     }
   },
   "accessibility": {
-    "loading": "جارٍ التحميل"
+    "loading": "جارٍ التحميل",
+    "view_details": "استعرض التفاصيل"
+  },
+  "products": {
+    "product": {
+      "view_details": "استعرض التفاصيل",
+      "add_to_cart": "أضف إلى السلة",
+      "sold_out": "نفدت الكمية"
+    },
+    "compare": {
+      "modal": {
+        "view_product": "استكشف المنتج"
+      }
+    }
   }
 }

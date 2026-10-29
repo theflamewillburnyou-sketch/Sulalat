@@ -37,7 +37,9 @@
             "image": "shopify://shop_images/665fdbe1e2eee52d0143deb15ba5217ae78686ef.png",
             "title": "Equipment Distribution",
             "text": "Trusted equipment from the world’s leading brands, supplied by their official distributor.",
-            "link": "shopify://pages/routine-maintenance"
+            "link": "shopify://pages/equipment-distribution",
+            "button_label": "Explore Equipment",
+            "button_link": "shopify://pages/equipment-distribution"
           }
         },
         "corrective_maintenance": {
@@ -46,7 +48,9 @@
             "image": "shopify://shop_images/18ec9a188283838ba90ab7dc803145c4a1288504.png",
             "title": "Maintenance",
             "text": "Repairs, spare parts, and technical support, whenever you need them.",
-            "link": "shopify://pages/corrective-maintenance"
+            "link": "shopify://pages/maintenance",
+            "button_label": "Care for Your Equipment",
+            "button_link": "shopify://pages/maintenance"
           }
         }
       },
@@ -74,7 +78,9 @@
             "image": "shopify://shop_images/b4767a81b251dc8b99cc353f0086c6132131fb49.png",
             "title": "Cupping",
             "text": "Sensory evaluation and quality control.",
-            "link": "shopify://pages/cupping"
+            "link": "shopify://pages/cupping",
+            "button_label": "",
+            "button_link": ""
           }
         },
         "barista": {
@@ -83,7 +89,9 @@
             "image": "shopify://shop_images/b74a5b3894f04c1dc5279102f1246adc071b8694.png",
             "title": "Barista",
             "text": "Practical brewing, espresso, and latte art mastery.",
-            "link": "shopify://pages/barista"
+            "link": "shopify://pages/barista",
+            "button_label": "",
+            "button_link": ""
           }
         }
       },

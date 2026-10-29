@@ -61,7 +61,9 @@
 
   assign form_id = 'SulalatCard-' | append: section_id | append: '-' | append: product.id
   assign image_alt = product.featured_media.alt | default: product.title
-  assign details_btn_label = details_label | default: 'View Details'
+  assign details_btn_label = 'products.compare.modal.view_product' | t
+  assign add_to_cart_btn_label = 'products.product.add_to_cart' | t
+  assign sold_out_btn_label = 'products.product.sold_out' | t
 -%}
 
 <article class="sulalat-product-card sulalat-product-card--{{ card_tone }}" data-product-id="{{ product.id }}">
@@ -138,13 +140,13 @@
           class="sulalat-btn sulalat-btn--outline"
           data-sulalat-card-atc
           data-variant-id="{{ current_variant.id }}"
-          data-add-label="Add to Cart"
+          data-add-label="{{ add_to_cart_btn_label | escape }}"
           data-added-label="Added"
         >
-          Add to Cart
+          {{ add_to_cart_btn_label | escape }}
         </button>
       {%- else -%}
-        <span class="sulalat-btn sulalat-btn--outline is-disabled" aria-disabled="true">Sold out</span>
+        <span class="sulalat-btn sulalat-btn--outline is-disabled" aria-disabled="true">{{ sold_out_btn_label | escape }}</span>
       {%- endif -%}
     </div>
   </div>
